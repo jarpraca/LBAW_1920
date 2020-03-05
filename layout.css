@@ -166,6 +166,13 @@ body {
     text-align: center;
 }
 
+.mainBody {
+    width: 70% !important;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+}
+
 #search {
     display: flex;
     align-items: center;

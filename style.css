@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
 :root {
     --myLightGreen: #59aa5b;
+    --myLightGreenShadow: #498B4C;
     --myYellow: #f6d311;
     --titlesFont: Oswald, Courier, sans-serif;
-    --bodyFont: Roboto, sans-serif;
+    --bodyFont: Rubik, sans-serif;
 }
 
 h1, h2, h3 {
@@ -62,6 +63,40 @@ body>footer {
     color: var(--myLightGreen)
 } */
 
+.colorGreen {
+    color: var(--myLightGreen) !important
+}
+
+.bgColorGreen {
+    background-color: var(--myLightGreen);
+}
+
+.borderColorGreen {
+    border-color: var(--myLightGreen) !important;
+}
+
+.btn-outline-green {
+    color: var(--myLightGreen) !important;
+    border-color: var(--myLightGreen) !important;
+}
+
+.btn-outline-green:hover {
+    color: white !important;
+    background-color: var(--myLightGreen) !important;
+}
+
+.btn-green {
+    color: white !important;
+    background-color: var(--myLightGreen) !important;
+    border-color: var(--myLightGreen) !important;
+}
+
+.btn-green:hover {
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
+    border-color: var(--myLightGreenShadow) !important;
+}
+
 .dropdown-content {
     background: var(--myLightGreen);
 }
@@ -80,6 +115,10 @@ body>footer {
     /* border-style: solid; */
     /* border-width: thin; */
     /* border-color: white; */
+}
+
+#footer li:first-child+li+li h5:hover, #menu li:first-child+li+li+li h5:hover {
+    color: var(--myYellow);
 }
 
 .dropdown-content p {
