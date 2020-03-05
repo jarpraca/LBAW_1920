@@ -11,7 +11,13 @@ body {
 
 .content {
     flex: 1 0 auto;
-    margin-top: 5.2em;
+    margin-top: 5.5em;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    padding: 0 !important;
 }
 
 #menu {
@@ -22,6 +28,8 @@ body {
     width: 100%;
     /* Full width */
     z-index: 999;
+    display: flex;
+    justify-content: flex-start;
     overflow: visible;
 }
 
@@ -29,6 +37,7 @@ body {
     text-align: center;
     padding: 0;
     margin: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -83,22 +92,14 @@ body {
     padding: 1em;
 }
 
-.footer {
-    flex-shrink: 0;
+/* .footer {
     text-align: center;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* position: fixed;
-    bottom: 0; */
     width: 100%;
-}
-
-.footer h3, h5 {
-    margin: 0.5em;
-    padding: 0em 1em;
-}
+} */
 
 #profile, #login, #editProperty, #addProperty {
     display: flex;
@@ -157,7 +158,9 @@ body {
 }
 
 #homepage {
-    width: 100%;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
     height: 100%;
     /* margin-top: 3.7em; */
     text-align: center;
@@ -210,6 +213,41 @@ body {
     text-align: left;
     width: calc(50% - 2em);
     float: right;
+}
+
+#trending {
+    /* padding: 1em; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-between; */
+    text-align: left;
+    /* width: calc(33% - 2em); */
+}
+
+.auction {
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: black;
+    border-style: solid;
+    overflow: hidden;
+    /* width: calc(); */
+    /* margin: 2em; */
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.auction p {
+    margin-left: 2em;
+}
+
+#trending :nth-child(2) {
+    margin-right: 2em;
+    margin-left: 2em;
 }
 
 #property aside p:first-child {
