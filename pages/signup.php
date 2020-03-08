@@ -16,7 +16,7 @@ $displaySearch = false;
 if (isset($_SESSION['user']))
     $logedin = true;
 
-include('templates/common/header.php');
+include('../templates/common/header.php');
 ?>
     <div id="signup_bg">
 
@@ -50,9 +50,9 @@ include('templates/common/header.php');
     </div>
 
 <?php
-include('templates/common/footer.php');
+include('../templates/common/footer.php');
 ?>
 
-<script src="scripts/signupAnimation.js"></script>
+<script src="../scripts/signupAnimation.js"></script>
 
 

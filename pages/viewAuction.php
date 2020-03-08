@@ -14,7 +14,7 @@ $logedin = false;
     $logedin = true;
 $displaySearch = true;
 
-include('templates/common/header.php');
+include('../templates/common/header.php');
 
 // if (!isset($_GET['id']))
 //     header('location: homepage.php');
@@ -30,5 +30,5 @@ include('templates/common/header.php');
 // if ($dateFrom != null && $dateTo != null && !isAvailable($_GET['id'], $dateFrom, $dateTo))
 //     header('location: homepage.php');
 
-include('templates/auctions/viewAuction.php');
-include('templates/common/footer.php');
+include('../templates/auctions/viewAuction.php');
+include('../templates/common/footer.php');

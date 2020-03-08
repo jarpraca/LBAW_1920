@@ -22,5 +22,5 @@
         <option value="6">Amphibians</option>
     </select>
     <input id="search_text_input" type="search" name="animal" placeholder="Search for an animal species" required>
-    <input type="image" src="images/glass.png" alt="Submit" height="20" id="glass">
+    <input type="image" src="../images/glass.png" alt="Submit" height="20" id="glass">
 </form>

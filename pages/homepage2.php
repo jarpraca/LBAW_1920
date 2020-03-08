@@ -16,7 +16,7 @@ $displaySearch = true;
 if (isset($_SESSION['user']))
     $logedin = true;
 
-include('templates/common/header.php');
+include('../templates/common/header.php');
 ?>
 <div class="text-left" id="homepage">
     <h2 class="mt-3">Welcome, </h2>
@@ -105,5 +105,5 @@ include('templates/common/header.php');
     </div>
 </div>
 <?php
-include('templates/common/footer.php');
+include('../templates/common/footer.php');
 ?>
