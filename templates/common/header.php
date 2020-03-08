@@ -5,11 +5,14 @@
     <title>BidMonkeys</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet">
-    <link href="layout.css" rel="stylesheet">
-    <link href="responsive.css" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/x-icon"/>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/layout.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -54,15 +57,15 @@
                     </li>
                 <?php } else { ?>
                     <li>
-                        <a href="#">
-                            <h4>Add Auction</h4>
-                        </a>
-                        <a href="login.php">
-                            <h4>Login</h4>
-                        </a>
-                        <a href="register.php">
-                            <h4>Register</h4>
-                        </a>
+                        <form action="#">
+                            <button id="create_auction_btn" type="submit"><h4>Add Auction</h4></button>
+                        </form>
+                        <form action="signup.php">
+                            <button value="login" type="submit"><h4>Login</h4></button>
+                        </form>
+                        <form action="signup.php">
+                            <button value="signup" type="submit"><h4>Register</h4></button>
+                        </form>
                     </li>
                 <?php } ?>
             </ul>

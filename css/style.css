@@ -54,9 +54,42 @@ body {
     text-decoration: none;
 }
 
+#menu li{
+    display: flex;
+}
+
+#menu button {
+    background: none;
+    border: none;
+    color: var(--myLightGreen);
+    text-decoration: none;
+    animation: all 0.5s;
+}
+
+#menu button:hover {
+    color: var(--myYellow);
+}
+
+#menu button:focus {
+    outline: none;
+}
+
 body>footer {
     background: var(--myLightGreen);
     color: white;
+}
+
+#menu #create_auction_btn{
+    background-color: var(--myLightGreen);
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    transition: all .5s;
+}
+
+#menu #create_auction_btn:hover{
+    background-color: var(--myYellow);
 }
 
 /* .content {
@@ -101,11 +134,11 @@ body>footer {
     background: var(--myLightGreen);
 }
 
-#menu li:first-child+li+li h4, #menu li:first-child+li+li+li h4, .dropdown-content p {
+#menu li:first-child+li+li+li h4, .dropdown-content p {
     background: white;
 }
 
-#menu li:first-child+li+li h4:hover, #menu li:first-child+li+li+li h4:hover {
+#menu li:first-child+li+li+li h4:hover {
     color: var(--myYellow);
 }
 
@@ -409,4 +442,140 @@ a {
     to {
         opacity: 1
     }
+}
+
+/* Login / Sign up */
+
+#signup_bg{
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    background-color: var(--myLightGreen);
+}
+
+#box{
+    height: 200px;
+    width: 1000px;
+    background-color:#2D2D2D;
+    border-radius: 5px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#signup_bg::before{
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    background-image: url("../images/signupMonkey.jpg");
+    background-position: center;
+	background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+
+    -webkit-filter: brightness(60%);
+    -moz-filter: brightness(60%);
+    -o-filter: brightness(60%);
+    -ms-filter: brightness(60%);
+    filter: brightness(60%);
+}
+
+#main{
+    height: 400px;
+    width: 450px;
+    background-color:white;
+    border-radius: 5px;
+    position: absolute;
+    top:50%;
+    left: 70%;
+    transform: translate(-50%,-50%);
+    z-index: 99;
+}
+#loginform,#signupform{
+    position: absolute;
+    top:50%;
+    left: 70%;
+    transform: translate(-50%,-50%);
+    z-index: 999;
+}
+#signupform{
+    top:45%;
+    left: 75%;
+    visibility: hidden;
+}
+#loginform h1,#signupform h1{
+    font-family: arial;
+    font-size: 25px;
+    color:var(--myLightGreen);
+}
+#loginform input,#signupform input{
+    height: 40px;
+    width: 300px;
+    border: 0px;
+    outline: none;
+    border-bottom: 1px solid black;
+    margin: 5px;
+}
+#loginform button,#signupform button{
+    height: 35px;
+    width: 130px;
+    background-color:var(--myLightGreen);
+    font-family: monospace;
+    font-size: 16px;
+    color:white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-top: 30px;
+    margin-left: 175px;
+    transition: all .5s;
+}
+#loginform button:hover,#signupform button:hover{
+    background-color:var(--myLightGreenShadow);
+}
+#login_btn,#signup_btn{
+    height: 35px;
+    width: 120px;
+    background-color:transparent;
+    color:white;
+    border:1px solid white;
+    border-radius: 5px;
+    outline: none;
+    position: absolute;
+    left: 75%;
+    top:65%;
+    transform: translate(-50%,-50%);
+    transition: all .5s;
+}
+#signup_btn{
+    left: 25%;
+}
+#login_btn:hover,#signup_btn:hover{
+    background-color:white;
+    color:#2d2d2d;
+    cursor: pointer;
+}
+#login_msg,#signup_msg{
+    font-family: arial;
+    font-size: 25px;
+    color:white;
+    position: absolute;
+    top:35%;
+    left: 75%;
+    transform: translate(-50%,-50%);
+    z-index: 1;
+}
+#signup_msg{
+    left: 25%;
+}
+
+.login_btn:active {
+    border-bottom: 1px solid black;
 }
