@@ -242,12 +242,6 @@ body {
     /* margin: 2em; */
 }
 
-.overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 .auction p {
     margin-left: 2em;
 }
