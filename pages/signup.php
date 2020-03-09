@@ -25,17 +25,22 @@ include('../templates/common/header.php');
             
             <div id="loginform">
                 <h1>LOGIN</h1>
-                <input type="email" placeholder="Email"/><br>
-                <input type="password" placeholder="Password"/><br>
-                <button>LOGIN</button>
+                <input type="email" placeholder="Email"/>
+                <input type="password" placeholder="Password"/>
+                <button>Log in with facebook</button>
+                <button>Log in with google</button>
+                <button id="signup_submit_btn">LOGIN</button>
             </div>
             
             <div id="signupform">
                 <h1>SIGN UP</h1>
-                <input type="text" placeholder="Full Name"/><br>
-                <input type="email" placeholder="Email"/><br>
-                <input type="password" placeholder="Password"/><br>
-                <button>SIGN UP</button>
+                <input type="text" placeholder="Full Name"/>
+                <input type="email" placeholder="Email"/>
+                <input type="password" placeholder="Password"/>
+                <input type="password" placeholder="Confirm password"/>
+                <button>Sign up with facebook</button>
+                <button>Sign up with google</button>
+                <button id="signup_submit_btn">SIGN UP</button>
             </div>
             
             <div id="login_msg">Have an account?</div>
