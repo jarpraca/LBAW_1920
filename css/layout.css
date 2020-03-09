@@ -101,14 +101,6 @@ body {
     width: 100%;
 } */
 
-#profile, #login, #editProperty, #addProperty {
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    align-items: center;
-    margin: 1em 0em;
-}
-
 .verticalForm {
     margin: 1em 0 0 0;
     text-align: left;

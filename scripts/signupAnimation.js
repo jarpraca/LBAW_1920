@@ -19,20 +19,20 @@ $(document).ready(function(){
     // }
 
     $(".signup_btn").click(function(){
-        $("#main").animate({left:"30%"},400); 
+        $("#main").animate({left:"30%"},500); 
         $("#loginform").css("visibility","hidden");
-        $("#loginform").animate({opacity:"0", left:"25%"},400);
+        $("#loginform").animate({opacity:"0", left:"25%"},500);
 
-        $("#signupform").animate({opacity:"1", left:"30%"},400);
+        $("#signupform").animate({opacity:"1", left:"30%"},500);
         $("#signupform").css("visibility","visible");
     }); 
     
     $(".login_btn").click(function(){ 
-        $("#main").animate({left:"70%"},400);
+        $("#main").animate({left:"70%"},500);
         $("#signupform").css("visibility","hidden");
-        $("#signupform").animate({opacity:"0", left:"75%"},400);
+        $("#signupform").animate({opacity:"0", left:"75%"},500);
         
-        $("#loginform").animate({opacity:"1", left:"70%"},400);
+        $("#loginform").animate({opacity:"1", left:"70%"},500);
         $("#loginform").css("visibility","visible");
     });
 });
