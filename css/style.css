@@ -647,7 +647,7 @@ body{
 /* Style the collapsible_btn content. Note: hidden by default */
 .collapsible_content {
     padding: 0 18px;
-    display: none;
+    max-height: 0;
     overflow: hidden;
     background-color: lightgray;
     transition: max-height 0.2s ease-out;
@@ -659,8 +659,10 @@ body{
     color: white;
     float: right;
     margin-left: 5px;
+    outline: none;
 }
   
 .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
+    outline: none;
 }
