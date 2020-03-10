@@ -3,7 +3,7 @@
 :root {
     --myLightGreen: #59aa5b;
     --myLightGreenShadow: #498B4C;
-    --myDarkGreen: #3E773F;
+    --myDarkGreen: #2C552D;
     --myYellow: #f6d311;
     --titlesFont: Oswald, Courier, sans-serif;
     --bodyFont: Rubik, sans-serif;
@@ -110,6 +110,29 @@ body footer {
 }
 
 .btn-green2:hover {
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
+    border-color: var(--myLightGreenShadow) !important;
+}
+
+.btn-outline-darkGreen {
+    /* color: var(--myLightGreen) !important; */
+    /* background-color: white !important; */
+    border-color: var(--myDarkGreen) !important;
+}
+
+.btn-outline-darkGreen:hover {
+    /* color: white !important;
+    background-color: var(--myLightGreen) !important; */
+}
+
+#btn-add-auction {
+    color: var(--myLightGreen) !important;
+    background-color: white !important;
+    border-color: white !important;
+}
+
+#btn-add-auction:hover {
     color: white !important;
     background-color: var(--myLightGreenShadow) !important;
     border-color: var(--myLightGreenShadow) !important;
@@ -395,15 +418,6 @@ body {
 
 .login_btn:active {
     border-bottom: 1px solid black;
-}
-
-.card-img {
-    height: 100%;
-    object-fit: cover;
-}
-
-.category-card {
-    width: 33.3%;
 }
 
 .category-card:hover {

@@ -10,6 +10,21 @@
     }
 }
 
+@media(max-width: 991px) {
+    .navbar-search {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    .navbar-search input {
+        width: 75% !important;
+    }
+
+    .navbar-collapse {
+        align-items: center !important;
+    }
+}
+
 @media(max-width: 1221px){
     #search{
         display: none;

@@ -11,6 +11,9 @@ if (!isset($_SESSION['csrf'])) {
 }
 
 $logedin = false;
+$admin = false;
+$signUpPage = false;
+$createAuctionPage = false;
 $displaySearch = false;
 
 if (isset($_SESSION['user']))
