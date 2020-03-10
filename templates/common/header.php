@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Category
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -44,13 +44,13 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <form class="navbar-search form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link btn" href="createAuction.php">+ Add Auction</a>
+                    <a class="nav-link btn btn-add-auction mr-sm-2 <?php if ($createAuctionPage) { ?> btn-outline-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="#">+ Add Auction</a>
                 </li>
                 <?php
                 if ($loggedin) {
@@ -60,7 +60,14 @@
                             Kurt Evans
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="profile.php">View Profile</a>
+                            <a class="dropdown-item" href="#">View Profile</a>
+                            <?php
+                            if ($admin) {
+                            ?>
+                                <a class="dropdown-item" href="#">Admin Dashboard</a>
+                            <?php
+                            }
+                            ?>
                             <a class="dropdown-item" href="#">Logout</a>
                         </div>
                     </li>
@@ -68,7 +75,7 @@
                 } else {
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link btn" href="signup.php">Sign In</a>
+                        <a class="nav-link btn <?php if ($signUpPage) { ?> btn-outline-darkGreen <?php } ?>" href="signup.php">Sign In</a>
                     </li>
                 <?php
                 }

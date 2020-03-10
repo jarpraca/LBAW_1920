@@ -11,6 +11,9 @@ if (!isset($_SESSION['csrf'])) {
 }
 
 $loggedin = false;
+$admin = false;
+$signUpPage = false;
+$createAuctionPage = false;
 $displaySearch = true;
 
 if (isset($_SESSION['user']))
@@ -57,7 +60,7 @@ include('../templates/common/header.php');
     </div>
 
     <h2 class="mt-3">Categories</h2>
-    <div class="d-flex flex-row flex-wrap mt-5 rounded overflow-hidden">
+    <div class="d-flex flex-row flex-wrap mt-4 rounded overflow-hidden">
         <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
             <img class="card-img rounded-0" src="../images/mammals.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">

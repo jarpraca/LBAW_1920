@@ -123,6 +123,29 @@ body footer {
     border-color: var(--myLightGreenShadow) !important;
 }
 
+.btn-outline-darkGreen {
+    /* color: var(--myLightGreen) !important; */
+    /* background-color: white !important; */
+    border-color: var(--myDarkGreen) !important;
+}
+
+.btn-outline-darkGreen:hover {
+    /* color: white !important;
+    background-color: var(--myLightGreen) !important; */
+}
+
+#btn-add-auction {
+    color: var(--myLightGreen) !important;
+    background-color: white !important;
+    border-color: white !important;
+}
+
+#btn-add-auction:hover {
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
+    border-color: var(--myLightGreenShadow) !important;
+}
+
 .dropdown-content {
     background: var(--myLightGreen);
 }
@@ -403,15 +426,6 @@ body {
 
 .login_btn:active {
     border-bottom: 1px solid black;
-}
-
-.card-img {
-    height: 100%;
-    object-fit: cover;
-}
-
-.category-card {
-    width: 33.3%;
 }
 
 .category-card:hover {
