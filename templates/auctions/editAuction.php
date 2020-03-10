@@ -1,29 +1,29 @@
 <section class="mainBody">
 
-    <h1 class="mt-3 colorGreen">Create Your Auction</h1>
+    <h1 class="mt-3 colorGreen">Edit Your Auction</h1>
 
     <form>
         <div class="d-flex flex-row">
             <div class="w-50">
                 <h3 class="mt-3"> Name </h3>
-                <input type="text" class="form-control outline-green mx-0 w-75" placeholder="Auction Name" />
+                <input type="text" class="form-control outline-green mx-0 w-75" placeholder="Guiné Monkey" />
             </div>
             <div class="w-50">
                 <h3 class="mt-3"> Age </h3>
-                <input type="text" class="form-control outline-green mx-0 w-75" placeholder="Animal Age" />
+                <input type="text" class="form-control outline-green mx-0 w-75" placeholder="3 years" />
             </div>
         </div>
 
         <h3 class="mt-3"> Description </h3>
-        <textarea name="description" class="form-control borderColorGreen w-100" rows="7"></textarea>
+        <textarea name="description" class="form-control borderColorGreen w-100" rows="7">A nice and skilled monkey that loves aerial acrobatics and to climb. It is really friendly and looking for a new home to grow</textarea>
 
 
         <div class="form-group">
             <label class="mt-3 font-weight-bold font-size"> Select Category </label>
 
-            <select name="categories" class="outline-green w-75 form-control" required>
-                <option value="0" selected>All</option>
-                <option value="1">Mammal</option>
+            <select name="categories" class="outline-green w-50 form-control" required>
+                <option value="0" >All</option>
+                <option value="1" selected>Mammal</option>
                 <option value="2">Insect</option>
                 <option value="3">Reptil</option>
                 <option value="4">Bird</option>
@@ -37,13 +37,13 @@
                 <label class="form-check-label my-2 font-weight-bold font-size">
                     Starting Price
                 </label>
-                <input type="text" class="form-control w-75 outline-green" placeholder="Starting Price" />
+                <input type="text" class="form-control w-50 outline-green" placeholder="300" />
             </div>
             <div class="w-50">
                 <label class="form-check-label my-2 font-weight-bold font-size">
                     Buyout Price
                 </label>
-                <input type="text" class="form-control w-75 outline-green" placeholder="Buyout Price" />
+                <input type="text" class="form-control w-50 outline-green" placeholder="1050" />
             </div>
         </div>
 
@@ -52,7 +52,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <input checked class="form-check-input" type="checkbox" id="gridCheck">
                     <label class="form-check-label" for="gridCheck">
                         Climbs
                     </label>
@@ -100,7 +100,7 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <input checked class="form-check-input" type="checkbox" id="gridCheck">
                     <label class="form-check-label" for="gridCheck">
                         Acrobatics
                     </label>
@@ -111,10 +111,10 @@
             <div class="w-50">
                 <label class="mt-3 font-weight-bold font-size"> Select Color </label>
                 <select name="colors" class="outline-green w-75 form-control" required>
-                    <option value="0" selected>All</option>
+                    <option value="0">All</option>
                     <option value="1">Blue</option>
                     <option value="2">Green</option>
-                    <option value="3">Brown</option>
+                    <option value="3" selected>Brown</option>
                     <option value="4">Red</option>
                     <option value="5">Black</option>
                     <option value="6">White</option>
@@ -125,8 +125,8 @@
                 <label class="mt-3 font-weight-bold font-size"> Select Dev. Stage </label>
 
                 <select name="devStage" class="outline-green w-75 form-control" required>
-                    <option value="0" selected>All</option>
-                    <option value="1">Baby</option>
+                    <option value="0">All</option>
+                    <option value="1" selected>Baby</option>
                     <option value="2">Child</option>
                     <option value="3">Teen</option>
                     <option value="4">Adult</option>
@@ -137,11 +137,12 @@
 
         <h3 class="mt-3"> Images </h3>
         <div>
+        <img class="w-25" src="../images/mammals.jpg">
             <input type="file" name="picture[]" accept="image/*">
         </div>
 
         <div class="row justify-content-center">
-            <a class="btn btn-green text-white mx-auto text-center my-3 w-50" href="viewAuctionOwner.php">Create Auction</a>
+            <a class="btn btn-green text-white mx-auto text-center my-3 p-2 w-50" href="viewAuctionOwner.php">Save Changes</a>
         </div>
     </form>
     <div class="my-3"></div>

@@ -11,11 +11,9 @@ if (!isset($_SESSION['csrf'])) {
 }
 
 $loggedin = true;
-$admin = false;
-$signUpPage = false;
-$createAuctionPage = true;
 $displaySearch = true;
+$createAuctionPage = false;
 
 include('../templates/common/header.php');
-include('../templates/auctions/createAuction.php');
+include('../templates/auctions/editAuction.php');
 include('../templates/common/footer.php');

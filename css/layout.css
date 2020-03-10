@@ -7,7 +7,7 @@ body {
     flex-direction: column;
     height: 100%;
     margin: 0;
-    padding-top: 4.2em;
+    padding-top: 4.1em;
 }
 
 .container {
@@ -20,6 +20,24 @@ body {
     flex: 1 0 auto;
 }
 
+.navbar-search {
+    width: 50%;
+    justify-content: center !important;
+}
+
+.navbar-search input {
+    width: 75% !important;
+}
+
+.card-img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-card {
+    width: 33.3%;
+}
+
 .alignCenter {
     display: flex;
     flex-direction: row;
@@ -30,29 +48,10 @@ body {
     margin-left: 0.5rem;
 }
 
-#glass {
-    vertical-align: middle;
-    margin: 1em;
-}
-
 .search_text_input {
     width: 300px;
     margin-right: 0.5em;
     margin-left: 0.5em;
-}
-
-#menu li {
-    padding: 0em 1em;
-}
-
-#menu h4 {
-    margin: 0;
-    padding: 0.7em;
-}
-
-footer {
-    /* position: absolute;
-    bottom: 0; */
 }
 
 #signup_bg {

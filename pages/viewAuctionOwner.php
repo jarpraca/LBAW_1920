@@ -10,12 +10,16 @@ if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
 
+
 $loggedin = true;
-$admin = false;
-$signUpPage = false;
-$createAuctionPage = true;
 $displaySearch = true;
 
+$isOwner = true;
+$isAdmin = false;
+$isUser = false;
+$createAuctionPage = false;
+
+
 include('../templates/common/header.php');
-include('../templates/auctions/createAuction.php');
+include('../templates/auctions/viewAuction.php');
 include('../templates/common/footer.php');

@@ -1,87 +1,52 @@
-@media(max-width: 440px) {
-    .homepageForm {
-        position: relative;
-        left: auto;
-        right: auto;
-        height: 45%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .horizontalElements a, button {
-        margin-top: 1em;
-        margin-left: 0;
-    }
-
-    .propertySearch .horizontalElements h3{
-        margin-top: 1em;
+@media(max-width:1270px){
+    #box {
+        width: 80%;
     }
 }
 
-@media(max-width: 515px) {
-    .horizontalElements {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
+@media(max-width:1220px){
+    .imgAuction {
+        width: 100vw !important;
+        background-color: aqua;
+        display: block;
     }
 
-    .horizontalElements a, button {
-        margin-top: 1em;
-        margin-left: 0;
-    }
-
-    .propertySearch .horizontalElements h3{
-        margin-top: 1em;
+    .bid-bar {
+        display: block;
+        width: 100vw;
     }
 }
 
-@media(max-width: 675px){
-    .propertyShort, .reservationShort, .propertySearch {
-        display: flex;
-        flex-direction: column;
-        margin: 1rem;
+@media(max-width: 1100px) {
+    .category-card {
+        width: 50%;
     }
+}
 
-    .propertyShort img, .reservationShort img, .propertySearch img {
-        object-fit: cover;
+@media(max-width: 700px) {
+    .category-card {
         width: 100%;
     }
+}
 
-    .rightText {
-        width: calc(100% - 2rem);
+@media(max-width: 991px) {
+    .navbar-search {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    .navbar-search input {
+        width: 75% !important;
+    }
+
+    .navbar-collapse {
+        align-items: center !important;
     }
 }
 
 @media(max-width: 1221px){
     #search{
         display: none;
-    }
-}
-
-@media(max-width: 1130px){
-    .listPropertiesMap #map{
-        display: none;
-    }
-
-    .listPropertiesMap #propertiesSection {
-        width: 100%;
-    }
-}
-
-@media(max-width: 650px){
-    .verticalForm {
-        width: calc(100% - 2rem);
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-
-    #property aside {
-        float: left;
-        width: 90%;
-    }
-    #property #property_data {
-        width: 100%;
     }
 }
 
@@ -98,8 +63,90 @@
     }
 } 
 
+@media(max-width: 650px) {
+    #box {
+        width: 100%;
+    }
+
+    #main {
+        height: 55vh;
+        width:55%
+    }
+
+    #loginform {
+        width: 55%
+    }
+
+    #signupform {
+        width: 55%
+    }
+
+    #loginform button {
+        font-size: 0.8em;
+        padding: 5px;
+    }
+
+    #signupform button {
+        font-size: 0.8em;
+        padding: 5px;
+    }
+
+
+    #signup_btn {
+        left: 20%
+    }
+
+    #signup_msg {
+        left: 20%
+    }
+
+    #login_msg {
+        left:80%
+    }
+
+    #login_btn {
+        left: 80%
+    }
+}
+
 @media(max-width: 455px){
     .content{
         margin-top: 5em;
     }
+
+    h1 {
+        font-size: 2rem;
+    }
 } 
+
+@media(max-width: 715px){
+    #profile_top{
+        flex-direction: column;
+        align-items: center;
+    }
+    #profile_info {
+        margin: 0 !important;
+    }
+    #profile_info #profile_edit {
+        margin: 1em auto !important;
+    }
+}
+
+@media(max-width: 965px){
+    #edit_profile_top{
+        flex-direction: column;
+        align-items: center;
+    }
+    #edit_profile_info {
+        margin-top: 1em;
+    }
+    .edit_profile_info_content{
+        margin: 0 !important;
+    }
+}
+
+@media(max-width: 647px){
+    .edit_profile_info_title::after{
+        content: "";
+    }
+}
