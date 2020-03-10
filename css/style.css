@@ -675,3 +675,21 @@ body {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
     outline: none;
 }
+
+
+#aboutUs_photos {
+
+    position: relative;
+    width: 142%;
+    right: 21%;
+}
+
+
+#aboutUs_bg .mt-3{
+
+
+    padding-top: 5%;
+
+
+
+}

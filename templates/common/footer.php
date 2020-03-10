@@ -6,7 +6,7 @@
         <a class="text-white mx-2 mt-3 mb-3 p-0 align-middle text-decoration-none" href="#">
             <h5>Help</h5>
         </a>
-        <a class="text-white mx-2 mt-3 mb-3 p-0 align-middle text-decoration-none" href="#">
+        <a class="text-white mx-2 mt-3 mb-3 p-0 align-middle text-decoration-none" href="../pages/aboutUs.php">
             <h5>About</h5>
         </a>
     </li>
