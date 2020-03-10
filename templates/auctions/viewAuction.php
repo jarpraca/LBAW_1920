@@ -39,7 +39,7 @@
     <div class="d-flex flex-row mt-3">
         <div class="w-100">
             <h3>Description</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>A nice and skilled monkey that loves aerial acrobatics and to climb. It is really friendly and looking for a new home to grow</p>
             <h3 class="mb-3">Seller</h3>
             <div class="d-flex flex-row my-3">
                 <h5>Macaca Industries&nbsp;&nbsp;&nbsp;&nbsp;</h5>

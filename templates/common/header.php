@@ -107,7 +107,7 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link btn border-white" href="#">+ Add Auction</a>
+                        <a class="nav-link btn border-white" href="createAuction.php">+ Add Auction</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn" href="signup.php">Sign In</a>

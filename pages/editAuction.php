@@ -9,11 +9,10 @@ session_regenerate_id(true);
 if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
-$logedin = false;
-// if (isset($_SESSION['user']))
-    $logedin = true;
+
+$logedin = true;
 $displaySearch = true;
 
 include('../templates/common/header.php');
-include('../templates/auctions/viewAuction.php');
+include('../templates/auctions/editAuction.php');
 include('../templates/common/footer.php');
