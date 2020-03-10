@@ -1,40 +1,52 @@
 <section class="mainBody">
 
-    <h1 class="mt-3 colorGreen">Macaco Albino da Guiné</h1>
+    <h1 class="mt-3 colorGreen">Guiné Monkey</h1>
 
     <div class="d-flex flex-row">
-        <div class="w-50">
-            <h3>Albert&nbsp;&nbsp;&nbsp;&nbsp;3 anos</h3>
-            <h3>Seller Marco</h3>
+        <h3>Albert&nbsp;&nbsp;&nbsp;&nbsp;3 years</h3>
+
+    </div>
+    <div class="d-flex flex-row">
+        <div class="w-75">
+            <img class="w-100" src="../images/mammals.jpg">
         </div>
-        <div class="w-50 text-right d-flex flex-column">
-            <h2 class="mb-3">937€</h2>
-            <a class="bgColorGreen text-white ml-auto p-2 w-30" href="#">Bid</a>
+        <div class="w-25 text-center d-flex flex-column bgColorGrey ml-4">
+            <h2 class="mb-3 mx-auto mt-5">930€</h2>
+            <a class="bgColorGreen text-white mx-auto p-2 w-50" href="#">Bid</a>
+            <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
+            <div class="d-flex flex-row ml-4">
+                <p class="w-50 ml-3 text-left">magicBidder</p>
+                <p class="w-50 text-center">910€</p>
+            </div>
+            <div class="d-flex flex-row ml-4">
+                <p class="w-50 ml-3 text-left">dragaoAzul</p>
+                <p class="w-50 text-center">890€</p>
+            </div>
+            <div class="d-flex flex-row ml-4">
+                <p class="w-50 ml-3 text-left">jose1960</p>
+                <p class="w-50 text-center">870€</p>
+            </div>
+            <div class="d-flex flex-row ml-4">
+                <p class="w-50 ml-3 text-left">maria14</p>
+                <p class="w-50 text-center">850€</p>
+            </div>
+            <div class="d-flex flex-row ml-4">
+                <p class="w-50 ml-3 text-left">alvarinho</p>
+                <p class="w-50 text-center">830€</p>
+            </div>
         </div>
     </div>
-
-    <img width="100%" src="./images/1.jpeg">
-    <div class="d-flex flex-row">
-        <div class="w-50">
+    <div class="d-flex flex-row mt-3">
+        <div class="w-100">
             <h3>Description</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <h2 class="mb-3">Seller</h2>
-            <h3>Name</h3>
-            <h3>Rate</h3>
-        </div>
-        <div class="w-50 text-right d-flex flex-column">
-            <h2 class="mb-3">937€</h2>
-            <a class="bgColorGreen text-white ml-auto p-2 w-30" href="#">Bid</a>
-            <h2 class="mb-3">Bidding History</h2>
-            <div class="d-flex flex-row ml-auto mr-5">
-                <p>Bid6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p>850€</p>
-            </div>
-            <div class="d-flex flex-row ml-auto mr-5">
-                <p>Bid5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p>830€</p>
+            <h3 class="mb-3">Seller</h3>
+            <div class="d-flex flex-row my-3">
+                <h5>Macaca Industries&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+                <h5>2,3 stars</h5>
             </div>
         </div>
+
     </div>
 
 

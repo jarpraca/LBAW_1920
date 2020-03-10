@@ -65,13 +65,24 @@ body footer {
     background-color: var(--myLightGreen);
 }
 
+.bgColorGrey {
+    background-color: #fafafa;
+}
+
 .borderColorGreen {
+    border-width: 1px;
+    border-style: solid;
     border-color: var(--myLightGreen) !important;
 }
 
 .btn-outline-green {
     color: var(--myLightGreen) !important;
     background-color: white !important;
+    border-color: var(--myLightGreen) !important;
+}
+
+.outline-green {
+    color: black !important;
     border-color: var(--myLightGreen) !important;
 }
 
@@ -122,73 +133,17 @@ input, textarea {
     border-style: none;
 }
 
-/* select {
-    font-size: small;
-    border-color: var(--myLightGreen);
-    border-radius: 5px;
-} */
 
 #glass {
     background: transparent;
 }
 
-.currency input {
-    text-align: right;
-}
-
-.currency {
-    display: inline-block;
-    position: relative;
-}
-
-.currency::before {
-    position: absolute;
-    content: "";
-}
-
-.verticalForm {
-    background: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
-.verticalForm input, .verticalForm select, .verticalForm textarea {
-    background: var(--myLightGreen);
-    color: var(--myYellow);
-}
-
-#search_text_input {
+.search_text_input {
     border-bottom-width: thin;
     border-bottom-color: var(--myLightGreen);
     border-bottom-style: solid;
     background-color: transparent;
     /* color: var(--myYellow); */
-}
-
-.homepageForm {
-    background: var(--myLightGreen);
-    border-radius: 1em;
-}
-
-.homepageForm #search_text_input {
-    background-color: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
-.homepageForm h3 {
-    color: var(--myYellow);
-    font-weight: bold;
-}
-
-#homepage {
-    /* background: url('../images/1.jpeg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 100% 100%; */
-}
-
-#property aside {
-    background: var(--myYellow);
-    color: var(--myLightGreen);
 }
 
 .submit {
@@ -210,50 +165,6 @@ input, textarea {
     border-color: var(--myLightGreen);
 }
 
-/* #cancel_button {
-    font-size: 12.8px;
-} */
-
-.propertyShort, .reservationShort, .propertySearch {
-    background: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
-.propertySearch h1, .propertySearch h3 {
-    color: var(--myLightGreen);
-}
-
-.propertyShort a, .reservationShort a, .propertySearch a {
-    text-decoration: none;
-}
-
-.darkBlue {
-    color: var(--myLightGreen);
-}
-
-.list_properties_options h5, .list_properties_options #filter_button {
-    background-color: var(--myYellow);
-    color: var(--myLightGreen);
-    border-style: solid;
-    border-width: thin;
-    border-color: var(--myYellow);
-    font-weight: bold;
-}
-
-.list_properties_options h5:hover, .list_properties_options #filter_button:hover {
-    background-color: var(--myLightGreen);
-    color: var(--myYellow);
-    border-style: solid;
-    border-width: thin;
-    border-color: var(--myYellow);
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.list_properties_options a, button {
-    text-decoration: none;
-}
-
 #search p, input {
     font-size: 0.9em;
 }
@@ -262,88 +173,8 @@ input, textarea {
     color: grey;
 }
 
-/* The Modal (background) */
-
-.modal {
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 999;
-    /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-
-.modal-content {
-    background-color: var(--myLightGreen);
-}
-
-/* The Close Button */
-
-.close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover, .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#rating {
-    display: block;
-}
-
-#rating::before {
-    content: '\2B50';
-    font-size: 1.17em;
-}
-
-#star {
-    display: block;
-}
-
-#star::before {
-    content: '\2606';
-    font-size: 1.17em;
-}
-
-#amenity {
-    display: block;
-}
-
-#amenity::before {
-    content: '\2022';
-    font-size: 1.17em;
-}
-
-.comment {
-    background-color: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
 a {
     text-decoration: none;
-}
-
-/* Next & previous buttons */
-
-.prev, .next {
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-
-.prev:hover, .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Caption text */

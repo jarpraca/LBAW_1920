@@ -12,7 +12,7 @@
             //     echo '>' . $t['nome'] . '</option>';
             // }
             ?> -->
-    <input id="search_text_input" type="search" name="animal" placeholder="Search for an animal species" required>
+    <input class="search_text_input" type="search" name="animal" placeholder="Search for an animal species" required>
     <input type="image" src="../images/glass.png" alt="Submit" height="20" id="glass">
     <div class="dropdown">
         <button class="btn btn-green dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
