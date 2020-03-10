@@ -270,8 +270,8 @@ body {
 }
 
 #box {
-    height: 200px;
-    width: 1000px;
+    height: 28vh;
+    width: 65%;
     background-color: #2D2D2D;
     border-radius: 5px;
     position: absolute;
@@ -303,8 +303,8 @@ body {
 }
 
 #main{
-    height: 500px;
-    width: 450px;
+    height: 70vh;
+    width: 45%;
     background-color: white;
     border-radius: 5px;
     position: absolute;
@@ -336,11 +336,11 @@ body {
 
 #loginform input, #signupform input {
     height: 40px;
-    width: 300px;
     border: 0px;
     outline: none;
     border-bottom: 1px solid black;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #loginform button,#signupform button{

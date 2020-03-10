@@ -1,3 +1,9 @@
+@media(max-width:1270px){
+    #box {
+        width: 80%;
+    }
+}
+
 @media(max-width:1220px){
     .imgAuction {
         width: 100vw !important;
