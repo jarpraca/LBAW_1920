@@ -12,7 +12,52 @@
         </div>
         <div class="w-25 text-center d-flex flex-column bgColorGrey ml-4">
             <h2 class="mb-3 mx-auto mt-5">930€</h2>
-            <a class="bgColorGreen text-white mx-auto p-2 w-50" href="#">Bid</a>
+
+
+            <div class="bgColorGreen text-white mx-auto p-2 w-50 popup" onclick="showPopUp()">Bid
+                <span class="popuptext" id="myPopup">
+
+                    <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <h2 class="mt-3">Auction Name</h2>
+
+                    <div class="form-group ml-3 mr-3 mt-3">
+                        <select name="categories" class="outline-green form-control" required>
+                            <option value="0" selected>Payment Method</option>
+                            <option value="1">Debit Card</option>
+                            <option value="2">Paypal</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group ml-3 mr-3 mt-3">
+                        <select name="categories" class="outline-green form-control" required>
+                            <option value="0" selected>Shipping Method</option>
+                            <option value="1">Standard Mail</option>
+                            <option value="2">Express Mail</option>
+                            <option value="3">Urgent Mail</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex ml-2 mr-2 mb-3">
+                        <input type="text" class="form-control search_text_input" placeholder="Address" />
+                    </div>
+
+
+                    <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
+
+
+                </span>
+            </div>
+
+
+
+
+
+
+
+
             <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
             <div class="d-flex flex-row ml-4">
                 <p class="w-50 ml-3 text-left">magicBidder</p>
@@ -52,3 +97,7 @@
 
 
 </section>
+
+
+
+<script src="../scripts/bidPopup.js"></script>
