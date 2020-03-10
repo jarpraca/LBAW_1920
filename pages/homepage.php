@@ -34,7 +34,7 @@ include('../templates/common/header.php');
                 <p class="card-text">500€</p>
                 <p class="card-text">2 anos</p>
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <a href="viewAuction.php" class="btn btn-green align-self-end">View Auction</a>
+                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
             </div>
         </div>
         <div class="card mt-4">
@@ -44,7 +44,7 @@ include('../templates/common/header.php');
                 <p class="card-text">500€</p>
                 <p class="card-text">2 anos</p>
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <a href="viewAuction.php" class="btn btn-green align-self-end">View Auction</a>
+                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
             </div>
         </div>
         <div class="card mt-4">
@@ -54,44 +54,44 @@ include('../templates/common/header.php');
                 <p class="card-text">500€</p>
                 <p class="card-text">2 anos</p>
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <a href="viewAuction.php" class="btn btn-green align-self-end">View Auction</a>
+                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
             </div>
         </div>
     </div>
 
     <h2 class="mt-3">Categories</h2>
     <div class="d-flex flex-row flex-wrap mt-4 rounded overflow-hidden">
-        <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
+        <a class="card text-white border-0 rounded-0 category-card" href="viewAuctionGuest.php">
             <img class="card-img rounded-0" src="../images/mammals.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
                 <h3 class="card-title text-center text-shadow">Mammals</h3>
             </div>
         </a>
-        <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
+        <a class="card text-white border-0 rounded-0 category-card" href="viewAuctionGuest.php">
             <img class="card-img rounded-0" src="../images/insects.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
                 <h3 class="card-title text-center text-shadow">Insects</h3>
             </div>
         </a>
-        <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
+        <a class="card text-white border-0 rounded-0 category-card" href="viewAuctionGuest.php">
             <img class="card-img rounded-0" src="../images/reptiles.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
                 <h3 class="card-title text-center text-shadow">Reptiles</h3>
             </div>
         </a>
-        <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
+        <a class="card text-white border-0 rounded-0 category-card" href="viewAuctionGuest.php">
             <img class="card-img rounded-0" src="../images/birds.png" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
                 <h3 class="card-title text-center text-shadow">Birds</h3>
             </div>
         </a>
-        <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
+        <a class="card text-white border-0 rounded-0 category-card" href="viewAuctionGuest.php">
             <img class="card-img rounded-0" src="../images/fishes.jpeg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
                 <h3 class="card-title text-center text-shadow">Fishes</h3>
             </div>
         </a>
-        <a class="card text-white border-0 rounded-0 category-card" href="viewAuction.php">
+        <a class="card text-white border-0 rounded-0 category-card" href="viewAuctionGuest.php">
             <img class="card-img rounded-0" src="../images/amphibians.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
                 <h3 class="card-title text-center text-shadow">Amphibians</h3>
