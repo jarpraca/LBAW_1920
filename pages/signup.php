@@ -27,11 +27,11 @@ include('../templates/common/header.php');
         <div id="main"></div>
 
         <div id="loginform">
-            <h1>LOGIN</h1>
-            <input type="email" placeholder="Email" class="mx-3"/>
-            <input type="password" placeholder="Password"  class="mx-3"/>
-            <button  class="mx-3">Log in with facebook</button>
-            <button  class="mx-3">Log in with google</button>
+            <h1 class="mx-4">LOGIN</h1>
+            <input type="email" placeholder="Email" class="mx-4"/>
+            <input type="password" placeholder="Password"  class="mx-4"/>
+            <button  class="mx-4">Log in with facebook</button>
+            <button  class="mx-4">Log in with google</button>
             <button id="signup_submit_btn">LOGIN</button>
         </div>
 
