@@ -77,7 +77,7 @@ body {
     margin: 1em;
 }
 
-#search_text_input {
+.search_text_input {
     width: 300px;
     margin-right: 0.5em;
     margin-left: 0.5em;
@@ -186,7 +186,7 @@ body {
     /* transform: translate(-50%, -50%); */
 }
 
-#homepage #search_text_input {
+#homepage .search_text_input {
     border-radius: 0.2em;
 }
 
