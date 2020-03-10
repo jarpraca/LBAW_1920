@@ -3,11 +3,8 @@
 :root {
     --myLightGreen: #59aa5b;
     --myLightGreenShadow: #498B4C;
-<<<<<<< HEAD
     --myBrown: #5a3921;
-=======
     --myDarkGreen: #2C552D;
->>>>>>> 84ed83066542e4cec8f7384606d2ba23f2686769
     --myYellow: #f6d311;
     --titlesFont: Oswald, Courier, sans-serif;
     --bodyFont: Rubik, sans-serif;
@@ -658,6 +655,7 @@ body {
 
 #edit_profile_submit button:hover{
     background-color: var(--myLightGreenShadow);
+}
 
 #aboutUs_photos {
 
