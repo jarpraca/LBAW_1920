@@ -10,11 +10,14 @@ if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
 
-$logedin = false;
+$loggedin = false;
+$admin = false;
+$signUpPage = false;
+$createAuctionPage = false;
 $displaySearch = true;
 
 if (isset($_SESSION['user']))
-    $logedin = true;
+    $loggedin = true;
 
 include('../templates/common/header.php');
 ?>

@@ -10,54 +10,55 @@ if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
 
-$logedin = false;
+$loggedin = false;
+$admin = false;
+$signUpPage = true;
+$createAuctionPage = false;
 $displaySearch = false;
 
 if (isset($_SESSION['user']))
-    $logedin = true;
+    $loggedin = true;
 
 include('../templates/common/header.php');
 ?>
-    <div id="signup_bg">
+<div id="signup_bg">
 
-        <div id="box">
-            <div id="main"></div>
-            
-            <div id="loginform">
-                <h1>LOGIN</h1>
-                <input type="email" placeholder="Email"/>
-                <input type="password" placeholder="Password"/>
-                <button>Log in with facebook</button>
-                <button>Log in with google</button>
-                <button id="signup_submit_btn">LOGIN</button>
-            </div>
-            
-            <div id="signupform">
-                <h1>SIGN UP</h1>
-                <input type="text" placeholder="Full Name"/>
-                <input type="email" placeholder="Email"/>
-                <input type="password" placeholder="Password"/>
-                <input type="password" placeholder="Confirm password"/>
-                <button>Sign up with facebook</button>
-                <button>Sign up with google</button>
-                <button id="signup_submit_btn">SIGN UP</button>
-            </div>
-            
-            <div id="login_msg">Have an account?</div>
-            <div id="signup_msg">Don't have an account?</div>
-            
-            <button class="login_btn" id="login_btn">LOGIN</button>
-            <button class="signup_btn" id="signup_btn">SIGN UP</button>
-            
-            
+    <div id="box">
+        <div id="main"></div>
+
+        <div id="loginform">
+            <h1>LOGIN</h1>
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button>Log in with facebook</button>
+            <button>Log in with google</button>
+            <button id="signup_submit_btn">LOGIN</button>
         </div>
 
+        <div id="signupform">
+            <h1>SIGN UP</h1>
+            <input type="text" placeholder="Full Name" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Confirm password" />
+            <button>Sign up with facebook</button>
+            <button>Sign up with google</button>
+            <button id="signup_submit_btn">SIGN UP</button>
+        </div>
+
+        <div id="login_msg">Have an account?</div>
+        <div id="signup_msg">Don't have an account?</div>
+
+        <button class="login_btn" id="login_btn">LOGIN</button>
+        <button class="signup_btn" id="signup_btn">SIGN UP</button>
+
+
     </div>
+
+</div>
 
 <?php
 include('../templates/common/footer.php');
 ?>
 
 <script src="../scripts/signupAnimation.js"></script>
-
-

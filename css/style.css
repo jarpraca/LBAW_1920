@@ -3,7 +3,11 @@
 :root {
     --myLightGreen: #59aa5b;
     --myLightGreenShadow: #498B4C;
+<<<<<<< HEAD
     --myBrown: #5a3921;
+=======
+    --myDarkGreen: #2C552D;
+>>>>>>> 84ed83066542e4cec8f7384606d2ba23f2686769
     --myYellow: #f6d311;
     --titlesFont: Oswald, Courier, sans-serif;
     --bodyFont: Rubik, sans-serif;
@@ -18,84 +22,52 @@ h4, h5, h6, p, span, input, label, tr, a, button {
     font-family: var(--bodyFont);
 }
 
-h1 {
-    font-size: 2rem;
+.imgAuction {
+    width: 75%;
 }
 
-p {
-    font-size: 0.8em;
+.bid-bar {
+    width: 25%;
+}
+
+h1 {
+    font-size: 1rem;
 }
 
 a {
     color: var(--myLightGreen)
 }
 
+.navbar-brand {
+    font-family: var(--titlesFont);
+    font-size: 1.5rem !important;
+}
+
+.navbar a {
+    color: white !important;
+}
+
+.nav-link:hover, .dropdown-item:hover{
+    color: var(--myDarkGreen) !important;
+}
+
+.dropdown-menu a {
+    color: black !important;
+}
+
+.dropdown-menu a:hover {
+    color: var(--myLightGreen) !important;
+}
+
 body {
-    background-color: white;
     color: var(--myLightGreen);
+    height: 100%;
 }
 
-#menu {
-    border-bottom-width: thin;
-    border-bottom-color: var(--myLightGreen);
-    border-bottom-style: solid;
-    background-color: white;
-}
-
-#menu #hamburger {
-    display: none;
-}
-
-#menu ul {
-    list-style-type: none;
-}
-
-#menu a {
-    color: var(--myLightGreen);
-    text-decoration: none;
-}
-
-#menu li{
-    display: flex;
-}
-
-#menu button {
-    background: none;
-    border: none;
-    color: var(--myLightGreen);
-    text-decoration: none;
-    animation: all 0.5s;
-}
-
-#menu button:hover {
-    color: var(--myYellow);
-}
-
-#menu button:focus {
-    outline: none;
-}
-
-body>footer {
-    background: var(--myLightGreen);
-    color: white;
-}
-
-#menu #create_auction_btn{
+body footer {
     background-color: var(--myLightGreen);
     color: white;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    transition: all .5s;
 }
-
-#menu #create_auction_btn:hover{
-    background-color: var(--myYellow);
-}
-
-/* .content {
-    color: var(--myLightGreen)
-} */
 
 .colorGreen {
     color: var(--myLightGreen) !important
@@ -105,12 +77,24 @@ body>footer {
     background-color: var(--myLightGreen);
 }
 
+.bgColorGrey {
+    background-color: #fafafa;
+}
+
 .borderColorGreen {
+    border-width: 1px;
+    border-style: solid;
     border-color: var(--myLightGreen) !important;
 }
 
 .btn-outline-green {
     color: var(--myLightGreen) !important;
+    background-color: white !important;
+    border-color: var(--myLightGreen) !important;
+}
+
+.outline-green {
+    color: black !important;
     border-color: var(--myLightGreen) !important;
 }
 
@@ -131,28 +115,43 @@ body>footer {
     border-color: var(--myLightGreenShadow) !important;
 }
 
+.btn-green2 {
+    color: white !important;
+    background-color: var(--myLightGreen) !important;
+    border-color: white !important;
+}
+
+.btn-green2:hover {
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
+    border-color: var(--myLightGreenShadow) !important;
+}
+
+.btn-outline-darkGreen {
+    /* color: var(--myLightGreen) !important; */
+    /* background-color: white !important; */
+    border-color: var(--myDarkGreen) !important;
+}
+
+.btn-outline-darkGreen:hover {
+    /* color: white !important;
+    background-color: var(--myLightGreen) !important; */
+}
+
+#btn-add-auction {
+    color: var(--myLightGreen) !important;
+    background-color: white !important;
+    border-color: white !important;
+}
+
+#btn-add-auction:hover {
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
+    border-color: var(--myLightGreenShadow) !important;
+}
+
 .dropdown-content {
     background: var(--myLightGreen);
-}
-
-#menu li:first-child+li+li+li h4, .dropdown-content p {
-    background: white;
-}
-
-#menu li:first-child+li+li+li h4:hover {
-    color: var(--myYellow);
-}
-
-#menu li:first-child+li+li h4:active, #menu li:first-child+li+li+li h4:active, .dropdown-content a:active {
-    /* background: var(--myYellow); */
-    /* color: var(--myLightGreen); */
-    /* border-style: solid; */
-    /* border-width: thin; */
-    /* border-color: white; */
-}
-
-#footer li:first-child+li+li h5:hover, #menu li:first-child+li+li+li h5:hover {
-    color: var(--myYellow);
 }
 
 .dropdown-content p {
@@ -169,73 +168,17 @@ input, textarea {
     border-style: none;
 }
 
-select {
-    font-size: small;
-    border-color: var(--myLightGreen);
-    border-radius: 5px;
-}
 
 #glass {
     background: transparent;
 }
 
-.currency input {
-    text-align: right;
-}
-
-.currency {
-    display: inline-block;
-    position: relative;
-}
-
-.currency::before {
-    position: absolute;
-    content: "";
-}
-
-.verticalForm {
-    background: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
-.verticalForm input, .verticalForm select, .verticalForm textarea {
-    background: var(--myLightGreen);
-    color: var(--myYellow);
-}
-
-#search_text_input {
+.search_text_input {
     border-bottom-width: thin;
     border-bottom-color: var(--myLightGreen);
     border-bottom-style: solid;
     background-color: transparent;
     /* color: var(--myYellow); */
-}
-
-.homepageForm {
-    background: var(--myLightGreen);
-    border-radius: 1em;
-}
-
-.homepageForm #search_text_input {
-    background-color: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
-.homepageForm h3 {
-    color: var(--myYellow);
-    font-weight: bold;
-}
-
-#homepage {
-    /* background: url('images/background2.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: 100% 100%; */
-}
-
-#property aside {
-    background: var(--myYellow);
-    color: var(--myLightGreen);
 }
 
 .submit {
@@ -257,50 +200,6 @@ select {
     border-color: var(--myLightGreen);
 }
 
-/* #cancel_button {
-    font-size: 12.8px;
-} */
-
-.propertyShort, .reservationShort, .propertySearch {
-    background: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
-.propertySearch h1, .propertySearch h3 {
-    color: var(--myLightGreen);
-}
-
-.propertyShort a, .reservationShort a, .propertySearch a {
-    text-decoration: none;
-}
-
-.darkBlue {
-    color: var(--myLightGreen);
-}
-
-.list_properties_options h5, .list_properties_options #filter_button {
-    background-color: var(--myYellow);
-    color: var(--myLightGreen);
-    border-style: solid;
-    border-width: thin;
-    border-color: var(--myYellow);
-    font-weight: bold;
-}
-
-.list_properties_options h5:hover, .list_properties_options #filter_button:hover {
-    background-color: var(--myLightGreen);
-    color: var(--myYellow);
-    border-style: solid;
-    border-width: thin;
-    border-color: var(--myYellow);
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.list_properties_options a, button {
-    text-decoration: none;
-}
-
 #search p, input {
     font-size: 0.9em;
 }
@@ -309,88 +208,8 @@ select {
     color: grey;
 }
 
-/* The Modal (background) */
-
-.modal {
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 999;
-    /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-
-.modal-content {
-    background-color: var(--myLightGreen);
-}
-
-/* The Close Button */
-
-.close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover, .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#rating {
-    display: block;
-}
-
-#rating::before {
-    content: '\2B50';
-    font-size: 1.17em;
-}
-
-#star {
-    display: block;
-}
-
-#star::before {
-    content: '\2606';
-    font-size: 1.17em;
-}
-
-#amenity {
-    display: block;
-}
-
-#amenity::before {
-    content: '\2022';
-    font-size: 1.17em;
-}
-
-.comment {
-    background-color: var(--myYellow);
-    color: var(--myLightGreen);
-}
-
 a {
     text-decoration: none;
-}
-
-/* Next & previous buttons */
-
-.prev, .next {
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-
-.prev:hover, .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Caption text */
@@ -448,35 +267,36 @@ a {
 /* Login / Sign up */
 
 
-body{
+body {
     margin: 0px;
     padding: 0px;
     background-color: var(--myLightGreen);
 }
 
-#box{
+#box {
     height: 200px;
     width: 1000px;
-    background-color:#2D2D2D;
+    background-color: #2D2D2D;
     border-radius: 5px;
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
-#signup_bg::before{
+#signup_bg::before {
     content: "";
     position: fixed;
     left: 0;
     right: 0;
     z-index: -1;
-
     display: block;
     background-image: url("../images/signupMonkey.jpg");
     background-position: center;
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
+    background-size: 100% 100%;
     height: 100%;
 
     -webkit-filter: brightness(50%);
@@ -489,19 +309,20 @@ body{
 #main{
     height: 500px;
     width: 450px;
-    background-color:white;
+    background-color: white;
     border-radius: 5px;
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 70%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     z-index: 99;
 }
-#loginform,#signupform{
+
+#loginform, #signupform {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 70%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     z-index: 999;
     display: flex;
     flex-direction: column;
@@ -510,12 +331,14 @@ body{
     left: 75%;
     visibility: hidden;
 }
-#loginform h1,#signupform h1{
+
+#loginform h1, #signupform h1 {
     font-family: arial;
     font-size: 25px;
-    color:var(--myLightGreen);
+    color: var(--myLightGreen);
 }
-#loginform input,#signupform input{
+
+#loginform input, #signupform input {
     height: 40px;
     width: 300px;
     border: 0px;
@@ -568,36 +391,40 @@ body{
 #login_btn,#signup_btn{
     height: 35px;
     width: 120px;
-    background-color:transparent;
-    color:white;
-    border:1px solid white;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
     border-radius: 5px;
     outline: none;
     position: absolute;
     left: 75%;
-    top:65%;
-    transform: translate(-50%,-50%);
+    top: 65%;
+    transform: translate(-50%, -50%);
     transition: all .5s;
 }
-#signup_btn{
+
+#signup_btn {
     left: 25%;
 }
-#login_btn:hover,#signup_btn:hover{
-    background-color:white;
-    color:#2d2d2d;
+
+#login_btn:hover, #signup_btn:hover {
+    background-color: white;
+    color: #2d2d2d;
     cursor: pointer;
 }
-#login_msg,#signup_msg{
+
+#login_msg, #signup_msg {
     font-family: arial;
     font-size: 25px;
-    color:white;
+    color: white;
     position: absolute;
-    top:35%;
+    top: 35%;
     left: 75%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     z-index: 1;
 }
-#signup_msg{
+
+#signup_msg {
     left: 25%;
 }
 
@@ -605,7 +432,18 @@ body{
     border-bottom: 1px solid black;
 }
 
+.category-card:hover {
+    -webkit-filter: brightness(50%);
+    -moz-filter: brightness(50%);
+    -o-filter: brightness(50%);
+    -ms-filter: brightness(50%);
+    filter: brightness(50%);
+    transition: all .5s;
+}
 
+.text-shadow {
+    text-shadow: 2px 2px black;
+}
 /* Profile */
 
 #profile{
@@ -820,4 +658,20 @@ body{
 
 #edit_profile_submit button:hover{
     background-color: var(--myLightGreenShadow);
+
+#aboutUs_photos {
+
+    position: relative;
+    width: 142%;
+    right: 21%;
+}
+
+
+#aboutUs_bg .mt-3{
+
+
+    padding-top: 5%;
+
+
+
 }

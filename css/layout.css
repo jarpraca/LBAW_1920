@@ -5,13 +5,9 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    height: 100%;
     margin: 0;
-    padding: 0;
-}
-
-.content {
-    flex: 1 0 auto;
-    margin-top: 5.5em;
+    padding-top: 4.1em;
 }
 
 .container {
@@ -20,46 +16,26 @@ body {
     padding: 0 !important;
 }
 
-#menu {
-    position: fixed;
-    /* Set the navbar to fixed position */
-    top: 0;
-    /* Position the navbar at the top of the page */
-    width: 100%;
-    /* Full width */
-    z-index: 999;
-    display: flex;
-    justify-content: flex-start;
-    overflow: visible;
+.content {
+    flex: 1 0 auto;
 }
 
-#menu ul {
-    text-align: center;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.navbar-search {
+    width: 50%;
+    justify-content: center !important;
 }
 
-#menu li:first-child, #menu li:first-child~li~li {
-    text-align: right;
+.navbar-search input {
+    width: 75% !important;
 }
 
-#menu li:first-child~li~li a {
-    display: inline-block;
+.card-img {
+    height: 100%;
+    object-fit: cover;
 }
 
-#menu li:first-child {
-    text-align: left;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-#menu h1{
-    margin-right: 0;
-    padding-right: 0;
+.category-card {
+    width: 33.3%;
 }
 
 .alignCenter {
@@ -72,34 +48,15 @@ body {
     margin-left: 0.5rem;
 }
 
-#glass {
-    vertical-align: middle;
-    margin: 1em;
-}
-
-#search_text_input {
+.search_text_input {
     width: 300px;
     margin-right: 0.5em;
     margin-left: 0.5em;
 }
 
-#menu li {
-    padding: 0em 1em;
+#signup_bg {
+    height: 100vh;
 }
-
-#menu h4 {
-    margin: 0;
-    padding: 0.7em;
-}
-
-/* .footer {
-    text-align: center;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-} */
 
 .verticalForm {
     margin: 1em 0 0 0;
@@ -154,7 +111,6 @@ body {
     margin-left: auto;
     margin-right: auto;
     height: 100%;
-    /* margin-top: 3.7em; */
     text-align: center;
 }
 
@@ -186,7 +142,7 @@ body {
     /* transform: translate(-50%, -50%); */
 }
 
-#homepage #search_text_input {
+#homepage .search_text_input {
     border-radius: 0.2em;
 }
 
@@ -234,12 +190,6 @@ body {
     /* margin: 2em; */
 }
 
-.overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 .auction p {
     margin-left: 2em;
 }
@@ -570,3 +520,4 @@ body {
 .comment h6{
     margin:0;
 }
+
