@@ -19,14 +19,23 @@ if (isset($_SESSION['user']))
 include('../templates/common/header.php');
 ?>
 <div class="mainBody" id="profile">
+    <h2>Profile</h2>
     <div id="profile_top">
         <div id="profile_img">
             <img src="../images/profilePicture.jpg">
         </div>
         <div id="profile_info">
-            <label>Nome:</label>
-            <label>E-mail:</label>
-            <button>Editar:</button>
+            <div id="profile_name">
+                <label class="profile_info_title">Name</label>
+                <label class="profile_info_content">John Doe</label>
+            </div>
+            <div id="profile_email">
+                <label class="profile_info_title">E-mail</label> 
+                <label class="profile_info_content">something@fe.up.pt</label>
+            </div>
+            <div id="profile_edit">
+                <button>Edit</button>
+            </div>
         </div>
     </div>
 
