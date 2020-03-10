@@ -60,19 +60,19 @@ include('../templates/common/header.php');
         <div class="card text-white border-0 category-card">
             <img class="card-img" src="../images/mammals.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                <h3 class="card-title text-center">Mammals</h3>
+                <h3 class="card-title text-center text-shadow">Mammals</h3>
             </div>
         </div>
         <div class="card text-white border-0 category-card">
             <img class="card-img" src="../images/insects.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                <h3 class="card-title text-center">Insects</h3>
+                <h3 class="card-title text-center text-shadow">Insects</h3>
             </div>
         </div>
         <div class="card text-white border-0 category-card">
             <img class="card-img" src="../images/reptiles.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                <h3 class="card-title text-center">Reptiles</h3>
+                <h3 class="card-title text-center text-shadow">Reptiles</h3>
             </div>
         </div>
     </div>
@@ -80,19 +80,19 @@ include('../templates/common/header.php');
         <div class="card text-white border-0 category-card">
             <img class="card-img" src="../images/birds.png" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                <h3 class="card-title text-center">Birds</h3>
+                <h3 class="card-title text-center text-shadow">Birds</h3>
             </div>
         </div>
         <div class="card text-white border-0 category-card">
             <img class="card-img" src="../images/fishes.jpeg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                <h3 class="card-title text-center">Fishes</h3>
+                <h3 class="card-title text-center text-shadow">Fishes</h3>
             </div>
         </div>
         <div class="card text-white border-0 category-card">
             <img class="card-img" src="../images/amphibians.jpg" alt="Card image">
             <div class="card-img-overlay d-flex justify-content-center align-items-center">
-                <h3 class="card-title text-center">Amphibians</h3>
+                <h3 class="card-title text-center text-shadow">Amphibians</h3>
             </div>
         </div>
     </div>

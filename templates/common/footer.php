@@ -1,16 +1,15 @@
-</div>
-<footer class="footer text-center d-flex justify-content-between align-middle w-100">
-    <!-- <h3>BidMonkeys</h3> -->
-    <h5 class="mx-2 mt-3 mb-3 p-0 align-middle">Copyright © 2020</h5>
-    <li class="d-flex flex-row align-middle">
-        <a class="text-white mx-2 mt-3 mb-3 p-0 align-middle text-decoration-none" href="#">
-            <h5>Help</h5>
+<footer class="navbar d-flex justify-content-between align-items-center w-100">
+    <a class="mx-2 align-items-center">Copyright © 2020</a>
+    <li class="d-flex flex-row align-items-center">
+        <a class="nav-link" href="#">
+            Help
         </a>
-        <a class="text-white mx-2 mt-3 mb-3 p-0 align-middle text-decoration-none" href="../pages/aboutUs.php">
-            <h5>About</h5>
+        <a class="nav-link" href="#">
+            About
         </a>
     </li>
 </footer>
+</div>
 </body>
 
 </html>
