@@ -9,9 +9,9 @@ session_regenerate_id(true);
 if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
-$logedin = false;
+$loggedin = false;
 // if (isset($_SESSION['user']))
-    $logedin = true;
+    $loggedin = true;
 $displaySearch = true;
 
 include('../templates/common/header.php');

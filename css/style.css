@@ -106,7 +106,7 @@ body footer {
 .btn-green2 {
     color: white !important;
     background-color: var(--myLightGreen) !important;
-    border-color: var(--myLightGreenShadow) !important;
+    border-color: white !important;
 }
 
 .btn-green2:hover {
@@ -406,6 +406,15 @@ body {
     width: 33.3%;
 }
 
+.category-card:hover {
+    -webkit-filter: brightness(50%);
+    -moz-filter: brightness(50%);
+    -o-filter: brightness(50%);
+    -ms-filter: brightness(50%);
+    filter: brightness(50%);
+    transition: all .5s;
+}
+
 .text-shadow {
     text-shadow: 2px 2px black;
 }
@@ -469,4 +478,22 @@ body {
 .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
     outline: none;
+}
+
+
+#aboutUs_photos {
+
+    position: relative;
+    width: 142%;
+    right: 21%;
+}
+
+
+#aboutUs_bg .mt-3{
+
+
+    padding-top: 5%;
+
+
+
 }

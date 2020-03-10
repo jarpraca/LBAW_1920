@@ -19,7 +19,7 @@
 </head>
 
 <body>
-        <!-- <nav id="menu">
+    <!-- <nav id="menu">
             <input type="checkbox" id="hamburger">
             <label class="hamburger" for="hamburger"></label>
             <ul>
@@ -36,7 +36,7 @@
                     ?>
                 </li>
                 <?php
-                // if ($logedin) { 
+                // if ($loggedin) { 
                 ?>
                     <li class="alignCenter">
                         <a href="#">
@@ -76,44 +76,62 @@
                 ?>
             </ul>
         </nav> -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bgColorGreen">
-            <a class="navbar-brand" href="homepage.php">
-                <img src="../images/logo.png" width="50" alt="Logo">
-                BidMonkeys
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bgColorGreen">
+        <a class="navbar-brand" href="homepage.php">
+            <img src="../images/logo.png" width="50" alt="Logo">
+            BidMonkeys
+        </a>
+        <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Mammals</a>
+                        <a class="dropdown-item" href="#">Insects</a>
+                        <a class="dropdown-item" href="#">Reptiles</a>
+                        <a class="dropdown-item" href="#">Birds</a>
+                        <a class="dropdown-item" href="#">Fishes</a>
+                        <a class="dropdown-item" href="#">Amphibians</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link btn" href="createAuction.php">+ Add Auction</a>
+                </li>
+                <?php
+                if ($loggedin) {
+                ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Category
+                            Kurt Evans
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Mammals</a>
-                            <a class="dropdown-item" href="#">Insects</a>
-                            <a class="dropdown-item" href="#">Reptiles</a>
-                            <a class="dropdown-item" href="#">Birds</a>
-                            <a class="dropdown-item" href="#">Fishes</a>
-                            <a class="dropdown-item" href="#">Amphibians</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">View Profile</a>
+                            <a class="dropdown-item" href="#">Logout</a>
                         </div>
                     </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn border-white" href="createAuction.php">+ Add Auction</a>
-                    </li>
+                <?php
+                } else {
+                ?>
                     <li class="nav-item">
                         <a class="nav-link btn" href="signup.php">Sign In</a>
                     </li>
-                </ul>
-            </div>
-        </nav>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+    </nav>
 
-        <div>
+    <div>
