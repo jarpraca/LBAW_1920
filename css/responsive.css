@@ -1,3 +1,16 @@
+@media(max-width:1220px){
+    .imgAuction {
+        width: 100vw !important;
+        background-color: aqua;
+        display: block;
+    }
+
+    .bid-bar {
+        display: block;
+        width: 100vw;
+    }
+}
+
 @media(max-width: 1100px) {
     .category-card {
         width: 50%;
@@ -32,5 +45,9 @@
 @media(max-width: 455px){
     .content{
         margin-top: 5em;
+    }
+
+    h1 {
+        font-size: 2rem !important;
     }
 } 

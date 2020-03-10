@@ -6,11 +6,11 @@
         <div class="d-flex flex-row">
             <div class="w-50">
                 <h3 class="mt-3"> Name </h3>
-                <input type="text" class="form-control outline-green mx-0 w-50" placeholder="Guiné Monkey" />
+                <input type="text" class="form-control outline-green mx-0 w-75" placeholder="Guiné Monkey" />
             </div>
             <div class="w-50">
                 <h3 class="mt-3"> Age </h3>
-                <input type="text" class="form-control outline-green mx-0 w-50" placeholder="3 years" />
+                <input type="text" class="form-control outline-green mx-0 w-75" placeholder="3 years" />
             </div>
         </div>
 
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label class="mt-3 font-weight-bold font-size"> Select Category </label>
 
-            <select name="categories" class="outline-green w-25 form-control" required>
+            <select name="categories" class="outline-green w-50 form-control" required>
                 <option value="0" >All</option>
                 <option value="1" selected>Mammal</option>
                 <option value="2">Insect</option>
@@ -110,7 +110,7 @@
         <div class="d-flex flex-row">
             <div class="w-50">
                 <label class="mt-3 font-weight-bold font-size"> Select Color </label>
-                <select name="colors" class="outline-green w-25 form-control" required>
+                <select name="colors" class="outline-green w-75 form-control" required>
                     <option value="0">All</option>
                     <option value="1">Blue</option>
                     <option value="2">Green</option>
@@ -124,7 +124,7 @@
             <div class="w-50">
                 <label class="mt-3 font-weight-bold font-size"> Select Dev. Stage </label>
 
-                <select name="devStage" class="outline-green w-25 form-control" required>
+                <select name="devStage" class="outline-green w-75 form-control" required>
                     <option value="0">All</option>
                     <option value="1" selected>Baby</option>
                     <option value="2">Child</option>
@@ -142,7 +142,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <button class="bgColorGreen text-white mx-auto text-center my-3 p-2 w-50" href="#">Save Changes</button>
+            <a class="btn btn-green text-white mx-auto text-center my-3 p-2 w-50" href="viewAuctionOwner.php">Save Changes</a>
         </div>
     </form>
     <div class="my-3"></div>

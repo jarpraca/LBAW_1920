@@ -3,7 +3,7 @@
 :root {
     --myLightGreen: #59aa5b;
     --myLightGreenShadow: #498B4C;
-    --myDarkGreen: #3E773F;
+    --myDarkGreen: #2C552D;
     --myYellow: #f6d311;
     --titlesFont: Oswald, Courier, sans-serif;
     --bodyFont: Rubik, sans-serif;
@@ -16,6 +16,14 @@ h1, h2, h3 {
 
 h4, h5, h6, p, span, input, label, tr, a, button {
     font-family: var(--bodyFont);
+}
+
+.imgAuction {
+    width: 75%;
+}
+
+.bid-bar {
+    width: 25%;
 }
 
 h1 {

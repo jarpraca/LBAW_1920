@@ -19,63 +19,6 @@
 </head>
 
 <body>
-    <!-- <nav id="menu">
-            <input type="checkbox" id="hamburger">
-            <label class="hamburger" for="hamburger"></label>
-            <ul>
-                <li class="alignCenter">
-                    <img src="../images/logo.png" height="50" alt="Logo">
-                    <a href="../pages/homepage.php" class="title">
-                        <h1 class="title">BidMonkeys</h1>
-                    </a>
-                </li>
-                <li>
-                    <?php
-                    // if ($displaySearch)
-                    //     include('../templates/common/search.php');
-                    ?>
-                </li>
-                <?php
-                // if ($loggedin) { 
-                ?>
-                    <li class="alignCenter">
-                        <a href="#">
-                            <img src="../images/bell.jpg" height="40" alt="Notifications">
-                        </a>
-                        <a href="#">
-                            <h5>Add Auction</h5>
-                        </a>
-                        <div class="dropdown">
-                            <h5>Name Name</h5>
-                            <div class="dropdown-content">
-                                <a href="#">
-                                    <p>My Profile</p>
-                                </a>
-                                <a href="#">
-                                    <p>Logout</p>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                <?php
-                // } else { 
-                ?>
-                    <li class="alignCenter ">
-                        <a href="#" class="btn btn-green">
-                            <h5>Add Auction</h5>
-                        </a>
-                        <a href="login.php">
-                            <h5>Sign In</h5>
-                        </a>
-                        <a href="register.php">
-                            <h5>Sign Up</h5>
-                        </a>
-                    </li>
-                <?php
-                // } 
-                ?>
-            </ul>
-        </nav> -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bgColorGreen">
         <a class="navbar-brand" href="homepage.php">
             <img src="../images/logo.png" width="50" alt="Logo">
@@ -117,7 +60,7 @@
                             Kurt Evans
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">View Profile</a>
+                            <a class="dropdown-item" href="profile.php">View Profile</a>
                             <a class="dropdown-item" href="#">Logout</a>
                         </div>
                     </li>

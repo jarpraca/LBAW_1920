@@ -13,6 +13,10 @@ if (!isset($_SESSION['csrf'])) {
 $loggedin = true;
 $displaySearch = true;
 
+$isOwner = false;
+$isAdmin = false;
+$isUser = true;
+
 include('../templates/common/header.php');
-include('../templates/auctions/editAuction.php');
+include('../templates/auctions/viewAuction.php');
 include('../templates/common/footer.php');
