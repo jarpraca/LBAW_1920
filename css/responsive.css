@@ -63,12 +63,58 @@
     }
 } 
 
+@media(max-width: 650px) {
+    #box {
+        width: 100%;
+    }
+
+    #main {
+        height: 55vh;
+        width:55%
+    }
+
+    #loginform {
+        width: 55%
+    }
+
+    #signupform {
+        width: 55%
+    }
+
+    #loginform button {
+        font-size: 0.8em;
+        padding: 5px;
+    }
+
+    #signupform button {
+        font-size: 0.8em;
+        padding: 5px;
+    }
+
+
+    #signup_btn {
+        left: 20%
+    }
+
+    #signup_msg {
+        left: 20%
+    }
+
+    #login_msg {
+        left:80%
+    }
+
+    #login_btn {
+        left: 80%
+    }
+}
+
 @media(max-width: 455px){
     .content{
         margin-top: 5em;
     }
 
     h1 {
-        font-size: 2rem !important;
+        font-size: 2rem;
     }
 } 
