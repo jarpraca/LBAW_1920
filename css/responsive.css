@@ -1,87 +1,18 @@
-@media(max-width: 440px) {
-    .homepageForm {
-        position: relative;
-        left: auto;
-        right: auto;
-        height: 45%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .horizontalElements a, button {
-        margin-top: 1em;
-        margin-left: 0;
-    }
-
-    .propertySearch .horizontalElements h3{
-        margin-top: 1em;
+@media(max-width: 1100px) {
+    .category-card {
+        width: 50%;
     }
 }
 
-@media(max-width: 515px) {
-    .horizontalElements {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-
-    .horizontalElements a, button {
-        margin-top: 1em;
-        margin-left: 0;
-    }
-
-    .propertySearch .horizontalElements h3{
-        margin-top: 1em;
-    }
-}
-
-@media(max-width: 675px){
-    .propertyShort, .reservationShort, .propertySearch {
-        display: flex;
-        flex-direction: column;
-        margin: 1rem;
-    }
-
-    .propertyShort img, .reservationShort img, .propertySearch img {
-        object-fit: cover;
+@media(max-width: 700px) {
+    .category-card {
         width: 100%;
-    }
-
-    .rightText {
-        width: calc(100% - 2rem);
     }
 }
 
 @media(max-width: 1221px){
     #search{
         display: none;
-    }
-}
-
-@media(max-width: 1130px){
-    .listPropertiesMap #map{
-        display: none;
-    }
-
-    .listPropertiesMap #propertiesSection {
-        width: 100%;
-    }
-}
-
-@media(max-width: 650px){
-    .verticalForm {
-        width: calc(100% - 2rem);
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-
-    #property aside {
-        float: left;
-        width: 90%;
-    }
-    #property #property_data {
-        width: 100%;
     }
 }
 

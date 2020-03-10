@@ -10,7 +10,7 @@ if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
 
-$logedin = true;
+$loggedin = true;
 $displaySearch = true;
 
 include('../templates/common/header.php');
