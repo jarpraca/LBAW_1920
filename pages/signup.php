@@ -28,20 +28,20 @@ include('../templates/common/header.php');
 
         <div id="loginform">
             <h1 class="mx-4">LOGIN</h1>
-            <input type="email" placeholder="Email" class="mx-4"/>
-            <input type="password" placeholder="Password"  class="mx-4"/>
-            <button  class="mx-4">Log in with facebook</button>
-            <button  class="mx-4">Log in with google</button>
+            <input type="email" placeholder="Email" class="mx-4" />
+            <input type="password" placeholder="Password" class="mx-4" />
+            <button class="mx-4">Log in with facebook</button>
+            <button class="mx-4">Log in with google</button>
             <button id="signup_submit_btn">LOGIN</button>
         </div>
 
         <div id="signupform">
-            <h1  class="mx-4">SIGN UP</h1>
+            <h1 class="mx-4">SIGN UP</h1>
             <input class="mx-4" type="text" placeholder="Full Name" />
             <input class="mx-4" type="email" placeholder="Email" />
             <input class="mx-4" type="password" placeholder="Password" />
             <input class="mx-4" type="password" placeholder="Confirm password" />
-            <button class="mx-4">Sign up with facebook</button>
+            <button class="mx-4">Sign up with <i class="fa fa-facebook"></i></button>
             <button class="mx-4">Sign up with google</button>
             <button id="signup_submit_btn">SIGN UP</button>
         </div>
