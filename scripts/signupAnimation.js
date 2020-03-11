@@ -21,7 +21,7 @@ $(document).ready(function(){
     $(".signup_btn").click(function(){
         $("#main").animate({left:"30%"},500); 
         $("#loginform").css("visibility","hidden");
-        $("#loginform").animate({opacity:"0", left:"25%"},500);
+        $("#loginform").animate({opacity:"0", left:"30%"},500);
 
         $("#signupform").animate({opacity:"1", left:"30%"},500);
         $("#signupform").css("visibility","visible");
@@ -30,7 +30,7 @@ $(document).ready(function(){
     $(".login_btn").click(function(){ 
         $("#main").animate({left:"70%"},500);
         $("#signupform").css("visibility","hidden");
-        $("#signupform").animate({opacity:"0", left:"75%"},500);
+        $("#signupform").animate({opacity:"0", left:"70%"},500);
         
         $("#loginform").animate({opacity:"1", left:"70%"},500);
         $("#loginform").css("visibility","visible");

@@ -386,6 +386,12 @@ body {
     background-color:var(--myLightGreenShadow);
 }
 
+#signup_bg button i{
+    float: left;
+    line-height: unset;
+    margin-left: 1em;
+}
+
 #login_btn,#signup_btn{
     height: 35px;
     width: 120px;
