@@ -14,7 +14,7 @@ $loggedin = false;
 $displaySearch = true;
 
 $isOwner = false;
-$isAdmin = false;
+$admin = false;
 $isUser = false;
 $createAuctionPage = false;
 $signUpPage = false;
