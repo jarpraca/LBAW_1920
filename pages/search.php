@@ -30,7 +30,6 @@ include('../templates/common/header.php');
             <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
         </form>
 
-
         <div class="d-flex flex-wrap">
             <div class="mx-auto">
                 <p class="justify-content-between">

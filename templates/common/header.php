@@ -61,7 +61,7 @@
                 if ($loggedin) {
                 ?>
                     <li class="nav-item">
-                        <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()"> <img src="../images/bell.png" height="40" alt="Notifications">
+                        <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()"> <img src="../images/bell.png" height="30" alt="Notifications">
                             <span class="popuptext" id="myPopup">
 
                                 <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
