@@ -356,6 +356,11 @@ body {
     margin-bottom: 5px;
 }
 
+#loginform i ::before,
+#signupform i ::before {
+    align-self: center !important;
+}
+
 #loginform button,
 #signupform button {
     border: none;
@@ -403,12 +408,6 @@ body {
 #loginform #signup_submit_btn:hover,
 #signupform #signup_submit_btn:hover {
     background-color: var(--myLightGreenShadow);
-}
-
-#signup_bg button i{
-    float: left;
-    line-height: unset;
-    margin-left: 1em;
 }
 
 #login_btn,#signup_btn{

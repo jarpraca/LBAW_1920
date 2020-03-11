@@ -49,7 +49,7 @@ include('../templates/common/header.php');
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
                 <div class="d-flex flex-row justify-content-between">
                     <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                    <a href="viewAuctionUser.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
                         </div>
         </div>
@@ -62,7 +62,7 @@ include('../templates/common/header.php');
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
                 <div class="d-flex flex-row justify-content-between">
                     <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                    <a href="viewAuctionAdmin.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
             </div>
         </div>
