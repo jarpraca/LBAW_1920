@@ -59,7 +59,7 @@
                 if ($loggedin) {
                 ?>
                     <li class="nav-item">
-                        <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()"> <img src="../images/bell.jpg" height="40" alt="Notifications">
+                        <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()"> <img src="../images/bell.png" height="40" alt="Notifications">
                             <span class="popuptext" id="myPopup">
 
                                 <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
@@ -69,16 +69,18 @@
                                 <h2 class="mt-3">Auction Name</h2>
 
                                 <div class="form-group ml-3 mr-3 mt-3">
+                                    <p class="text-left">Payment Method</p>
                                     <select name="categories" class="outline-green form-control" required>
-                                        <option value="0" selected>Payment Method</option>
+                                        <option value="0" selected></option>
                                         <option value="1">Debit Card</option>
                                         <option value="2">Paypal</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group ml-3 mr-3 mt-3">
+                                    <p class="text-left">Shipping Method</p>
                                     <select name="categories" class="outline-green form-control" required>
-                                        <option value="0" selected>Shipping Method</option>
+                                        <option value="0" selected></option>
                                         <option value="1">Standard Mail</option>
                                         <option value="2">Express Mail</option>
                                         <option value="3">Urgent Mail</option>
@@ -90,7 +92,7 @@
                                 </div>
 
 
-                                <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
+                                <button class="btn btn-green2" id="submit_bt">SUBMIT</button>
 
 
                             </span>
@@ -136,4 +138,4 @@
 
     <div>
 
-    <script src="../scripts/bidPopup.js"></script>
+        <script src="../scripts/bidPopup.js"></script>
