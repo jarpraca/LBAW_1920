@@ -25,7 +25,7 @@ include('../templates/common/header.php');
 
     <div class="text-left" id="aboutUs_main">
         <h1 class="mt-3">About us </h2>
-        <p>Our company attempts to provide with the most intuitive and convinient place to take place in wildlife auctions. We hope to be able to bring you a diversified selection of different animals from all over the world, so that you can find your perfect companion.</p>
+        <p>Our company attempts to provide with the most intuitive and convinient place to take place in wildlife auctions. We hope to be able to bring you a diversified selection of different animals from all over the world, so that you can find your perfect companion. It is also one of our main priorities to ensure that every animal is captured and taken care of under ethical circuntances. We value the connection between human and animal and our number one objective is to ensure that our costumers will be able to live out their dreams with the perfect animal compaion by their side! Best of Luck in your bidding.</p>
 
     </div>
 
@@ -76,8 +76,7 @@ include('../templates/common/header.php');
                             <h4 class="font-weight-bold mb-4">John Doe</h4>
                             <hr>
                             <!--Quotation-->
-                            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pr-2"></i>Lorem ipsum dolor sit amet eos
-                                adipisci, consectetur adipisicing elit.</p>
+                            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pr-2"></i>Easiest bidding experience I have taken part in. Definitely reccomend.</p>
                         </div>
                     </div>
                     <!--Card-->
@@ -100,8 +99,7 @@ include('../templates/common/header.php');
                             <h4 class="font-weight-bold mb-4">Anna Aston</h4>
                             <hr>
                             <!--Quotation-->
-                            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pr-2"></i>Neque cupiditate assumenda in
-                                maiores repudiandae mollitia architecto.</p>
+                            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pr-2"></i>Got my little Albert here, it's been 6 years of monkeying around!</p>
                         </div>
                     </div>
                     <!--Card-->
@@ -123,8 +121,7 @@ include('../templates/common/header.php');
                             <h4 class="font-weight-bold mb-4">Maria Kate</h4>
                             <hr>
                             <!--Quotation-->
-                            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pr-2"></i>Delectus impedit saepe officiis
-                                ab aliquam repellat rem unde ducimus.</p>
+                            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pr-2"></i>This websites easy to use design helped improve my bussiness massively!</p>
                         </div>
                     </div>
                     <!--Card-->
