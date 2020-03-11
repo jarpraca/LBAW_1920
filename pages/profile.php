@@ -148,10 +148,7 @@ include('../templates/common/header.php');
                         <p class="card-text">500€</p>
                         <p class="card-text">2 anos</p>
                         <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                        <div class="d-flex flex-row justify-content-between">
-                            <i class="fas fa-eye fa-2x"></i>
                             <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                        </div>
                     </div>
                 </div>
                 <div class="card mt-4">
@@ -161,10 +158,7 @@ include('../templates/common/header.php');
                         <p class="card-text">800€</p>
                         <p class="card-text">6 meses</p>
                         <p class="card-text">Ending time: 18-03-2020 23:59</p>
-                        <div class="d-flex flex-row justify-content-between">
-                            <i class="fas fa-eye fa-2x"></i>
-                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                        </div>
+                        <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
                 <div class="card mt-4">
@@ -174,10 +168,7 @@ include('../templates/common/header.php');
                         <p class="card-text">900€</p>
                         <p class="card-text">7 anos</p>
                         <p class="card-text">Ending time: 27-03-2020 23:59</p>
-                        <div class="d-flex flex-row justify-content-between">
-                            <i class="fas fa-eye fa-2x"></i>
-                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                        </div>
+                        <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
             </div>
@@ -201,10 +192,7 @@ include('../templates/common/header.php');
                             <p class="card-text">500€</p>
                             <p class="card-text">2 anos</p>
                             <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                            <div class="d-flex flex-row justify-content-between">
-                                <i class="fas fa-eye fa-2x"></i>
-                                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                            </div>
+                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                         </div>
                     </div>
                     <div class="card mt-4">
@@ -214,10 +202,8 @@ include('../templates/common/header.php');
                             <p class="card-text">800€</p>
                             <p class="card-text">6 meses</p>
                             <p class="card-text">Ending time: 18-03-2020 23:59</p>
-                            <div class="d-flex flex-row justify-content-between">
-                                <i class="fas fa-eye fa-2x"></i>
-                                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                            </div>
+
+                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                         </div>
                     </div>
                     <div class="card mt-4">
@@ -227,10 +213,8 @@ include('../templates/common/header.php');
                             <p class="card-text">900€</p>
                             <p class="card-text">7 anos</p>
                             <p class="card-text">Ending time: 27-03-2020 23:59</p>
-                            <div class="d-flex flex-row justify-content-between">
-                                <i class="fas fa-eye fa-2x"></i>
-                                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                            </div>
+
+                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                         </div>
                     </div>
                 </div>
