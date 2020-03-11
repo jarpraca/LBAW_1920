@@ -22,7 +22,9 @@ if (isset($_SESSION['user']))
 include('../templates/common/header.php');
 ?>
 <div class="text-left" id="homepage">
-  
+    <!-- <h2 class="mt-3">Welcome, </h2>
+    <p>We hope you enjoy our website, we put on a lot of work to make sure you had the best, most simplified experience. Take part in our selection of auctions and hopefully you will find your perfect pet companion with us. Good Luck! Don't forget to be wise about how you handle your money and that you must be 18 or older to take part in our auctions. Go on and bid, they're waiting for you!</p>
+     -->
     <h2 class="mt-3">Trending</h2>
     <div class="d-flex flex-wrap text-left justify-content-around">
         <div class="card mt-4">
