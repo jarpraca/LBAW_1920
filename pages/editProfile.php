@@ -33,24 +33,24 @@ include('../templates/common/header.php');
             <div id="edit_profile_info">
                 <div id="edit_profile_name">
                     <label class="edit_profile_info_title">Name</label>
-                    <input type="text" class="edit_profile_info_content" placeholder="eg.John Doe">
+                    <input type="text" class="edit_profile_info_content" placeholder="E.g.: John Doe">
                 </div>
                 <div id="edit_profile_email">
                     <label class="edit_profile_info_title">E-mail</label> 
-                    <input type="email" class="edit_profile_info_content" placeholder="eg.something@fe.up.pt">
+                    <input type="email" class="edit_profile_info_content" placeholder="E.g.: something@fe.up.pt">
                 </div>
                 <div id="edit_profile_password">
                     <label class="edit_profile_info_title">Password</label>
-                    <input type="password" class="edit_profile_info_content" placeholder="password">
+                    <input type="password" class="edit_profile_info_content" placeholder="Password">
                 </div>
                 <div id="edit_profile_confirm">
                     <label class="edit_profile_info_title">Confirm</label> 
-                    <input type="password" class="edit_profile_info_content" placeholder="confirm password">
+                    <input type="password" class="edit_profile_info_content" placeholder="Confirm Password">
                 </div>
             </div>
         </div>
         <div id="edit_profile_submit">
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-green p-2">Save Changes</button>
         </div>
     </form>
 

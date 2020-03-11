@@ -35,12 +35,12 @@
                         Category
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Mammals</a>
-                        <a class="dropdown-item" href="#">Insects</a>
-                        <a class="dropdown-item" href="#">Reptiles</a>
-                        <a class="dropdown-item" href="#">Birds</a>
-                        <a class="dropdown-item" href="#">Fishes</a>
-                        <a class="dropdown-item" href="#">Amphibians</a>
+                        <a class="dropdown-item" href="search.php">Mammals</a>
+                        <a class="dropdown-item" href="search.php">Insects</a>
+                        <a class="dropdown-item" href="search.php">Reptiles</a>
+                        <a class="dropdown-item" href="search.php">Birds</a>
+                        <a class="dropdown-item" href="search.php">Fishes</a>
+                        <a class="dropdown-item" href="search.php">Amphibians</a>
                     </div>
                 </li>
             </ul>
@@ -54,14 +54,47 @@
             <?php
             }
             ?>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav align-items-center">
                 <?php
                 if ($loggedin) {
                 ?>
                     <li class="nav-item">
-                        <a href="#">
-                            <img src="../images/bell.jpg" height="40" alt="Notifications">
-                        </a>
+                        <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()"> <img src="../images/bell.jpg" height="40" alt="Notifications">
+                            <span class="popuptext" id="myPopup">
+
+                                <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <h2 class="mt-3">Auction Name</h2>
+
+                                <div class="form-group ml-3 mr-3 mt-3">
+                                    <select name="categories" class="outline-green form-control" required>
+                                        <option value="0" selected>Payment Method</option>
+                                        <option value="1">Debit Card</option>
+                                        <option value="2">Paypal</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group ml-3 mr-3 mt-3">
+                                    <select name="categories" class="outline-green form-control" required>
+                                        <option value="0" selected>Shipping Method</option>
+                                        <option value="1">Standard Mail</option>
+                                        <option value="2">Express Mail</option>
+                                        <option value="3">Urgent Mail</option>
+                                    </select>
+                                </div>
+
+                                <div class="d-flex ml-2 mr-2 mb-3">
+                                    <input type="text" class="form-control search_text_input" placeholder="Address" />
+                                </div>
+
+
+                                <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
+
+
+                            </span>
+                        </div>
                     </li>
                 <?php
                 }
@@ -102,3 +135,5 @@
     </nav>
 
     <div>
+
+    <script src="../scripts/bidPopup.js"></script>

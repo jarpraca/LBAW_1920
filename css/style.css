@@ -573,12 +573,11 @@ body {
     padding: 0 18px;
     max-height: 0;
     overflow: hidden;
-    background-color: lightgray;
     transition: max-height 0.2s ease-out;
 }
 
 .collapsible_btn:after {
-    content: '\02795';
+    /* content: '\02795'; */
     /* Unicode character for "plus" sign (+) */
     font-size: 13px;
     color: white;
@@ -588,7 +587,7 @@ body {
 }
 
 .active:after {
-    content: "\2796";
+    /* content: "\2796"; */
     /* Unicode character for "minus" sign (-) */
     outline: none;
 }
@@ -597,6 +596,7 @@ body {
 
 #edit_profile{
     margin-top: 1em;
+    height: 79vh !important
 }
 
 #edit_profile h2{
