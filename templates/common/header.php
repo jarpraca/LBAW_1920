@@ -10,7 +10,7 @@
     <link href="../css/layout.css" rel="stylesheet">
     <link href="../css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -44,21 +44,36 @@
                     </div>
                 </li>
             </ul>
-            <?php if ($displaySearch) { ?>
+            <?php
+            if ($displaySearch) {
+            ?>
                 <form class="navbar-search form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
                 </form>
-            <?php } ?>
+            <?php
+            }
+            ?>
             <ul class="navbar-nav">
+                <?php
+                if ($loggedin) {
+                ?>
+                    <li class="nav-item">
+                        <a href="#">
+                            <img src="../images/bell.jpg" height="40" alt="Notifications">
+                        </a>
+                    </li>
+                <?php
+                }
+                ?>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-add-auction mr-sm-2 <?php if ($createAuctionPage) { ?> btn-outline-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
+                    <a class="nav-link btn btn-add-auction mx-sm-2 <?php if ($createAuctionPage) { ?> btn-outline-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
                 </li>
                 <?php
                 if ($loggedin) {
                 ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             John Doe
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

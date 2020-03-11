@@ -31,42 +31,42 @@
 
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <<div class="bgColorGreen text-white mx-auto p-2 w-50 popup" onclick="showPopUp()">Bid
-                <span class="popuptext" id="myPopup">
+                    <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()">Bid
+                        <span class="popuptext" id="myPopup">
 
-                    <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                            <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
 
-                    <h2 class="mt-3">Auction Name</h2>
+                            <h2 class="mt-3">Auction Name</h2>
 
-                    <div class="form-group ml-3 mr-3 mt-3">
-                        <select name="categories" class="outline-green form-control" required>
-                            <option value="0" selected>Payment Method</option>
-                            <option value="1">Debit Card</option>
-                            <option value="2">Paypal</option>
-                        </select>
+                            <div class="form-group ml-3 mr-3 mt-3">
+                                <select name="categories" class="outline-green form-control" required>
+                                    <option value="0" selected>Payment Method</option>
+                                    <option value="1">Debit Card</option>
+                                    <option value="2">Paypal</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group ml-3 mr-3 mt-3">
+                                <select name="categories" class="outline-green form-control" required>
+                                    <option value="0" selected>Shipping Method</option>
+                                    <option value="1">Standard Mail</option>
+                                    <option value="2">Express Mail</option>
+                                    <option value="3">Urgent Mail</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex ml-2 mr-2 mb-3">
+                                <input type="text" class="form-control search_text_input" placeholder="Address" />
+                            </div>
+
+
+                            <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
+
+
+                        </span>
                     </div>
-
-                    <div class="form-group ml-3 mr-3 mt-3">
-                        <select name="categories" class="outline-green form-control" required>
-                            <option value="0" selected>Shipping Method</option>
-                            <option value="1">Standard Mail</option>
-                            <option value="2">Express Mail</option>
-                            <option value="3">Urgent Mail</option>
-                        </select>
-                    </div>
-
-                    <div class="d-flex ml-2 mr-2 mb-3">
-                        <input type="text" class="form-control search_text_input" placeholder="Address" />
-                    </div>
-
-
-                    <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
-
-
-                </span>
-            </div>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
@@ -79,47 +79,48 @@
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <div class="bgColorGreen text-white mx-auto p-2 w-50 popup" onclick="showPopUp()">Bid
-                <span class="popuptext" id="myPopup">
+                        <span class="popuptext" id="myPopup">
 
-                    <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                            <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
 
-                    <h2 class="mt-3">Auction Name</h2>
+                            <h2 class="mt-3">Auction Name</h2>
 
-                    <div class="form-group ml-3 mr-3 mt-3">
-                        <select name="categories" class="outline-green form-control" required>
-                            <option value="0" selected>Payment Method</option>
-                            <option value="1">Debit Card</option>
-                            <option value="2">Paypal</option>
-                        </select>
+                            <div class="form-group ml-3 mr-3 mt-3">
+                                <select name="categories" class="outline-green form-control" required>
+                                    <option value="0" selected>Payment Method</option>
+                                    <option value="1">Debit Card</option>
+                                    <option value="2">Paypal</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group ml-3 mr-3 mt-3">
+                                <select name="categories" class="outline-green form-control" required>
+                                    <option value="0" selected>Shipping Method</option>
+                                    <option value="1">Standard Mail</option>
+                                    <option value="2">Express Mail</option>
+                                    <option value="3">Urgent Mail</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex ml-2 mr-2 mb-3">
+                                <input type="text" class="form-control search_text_input" placeholder="Address" />
+                            </div>
+
+
+                            <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
+
+
+                        </span>
                     </div>
-
-                    <div class="form-group ml-3 mr-3 mt-3">
-                        <select name="categories" class="outline-green form-control" required>
-                            <option value="0" selected>Shipping Method</option>
-                            <option value="1">Standard Mail</option>
-                            <option value="2">Express Mail</option>
-                            <option value="3">Urgent Mail</option>
-                        </select>
-                    </div>
-
-                    <div class="d-flex ml-2 mr-2 mb-3">
-                        <input type="text" class="form-control search_text_input" placeholder="Address" />
-                    </div>
-
-
-                    <button class="btn btn-primary btn-lg" id="submit_bt">SUBMIT</button>
-
-
-                </span>
-            </div>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="signup.php">Auto Bid</a>
                 </div>
                 <a class="btn btn-green mt-3  mx-3" href="signup.php">Report</a>
+                <a class="btn btn-green mt-3  mx-3" href="signup.php">Add to Watchlist</a>
 
             <?php } ?>
 
