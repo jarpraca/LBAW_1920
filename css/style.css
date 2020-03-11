@@ -137,14 +137,7 @@ body footer {
 }
 
 .btn-outline-darkGreen {
-    /* color: var(--myLightGreen) !important; */
-    /* background-color: white !important; */
     border-color: var(--myDarkGreen) !important;
-}
-
-.btn-outline-darkGreen:hover {
-    /* color: white !important;
-    background-color: var(--myLightGreen) !important; */
 }
 
 #btn-add-auction {
