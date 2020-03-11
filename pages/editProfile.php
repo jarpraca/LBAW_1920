@@ -21,31 +21,33 @@ if (isset($_SESSION['user']))
 
 include('../templates/common/header.php');
 ?>
-<div class="mainBody" id="edit_profile">
+<div class="mainBody">
     <form>
-        <h2>Edit Profile</h2>
-        <div id="edit_profile_top">
+    <h2 class="colorGreen ml-0">Edit Profile</h2>
 
-            <div id="edit_profile_img">
-                <img id="profile_img" src="../images/profilePicture.jpg">
+    <div class="d-flex flex-wrap align-items-center">
+
+            <div class="mx-auto image-container">
+                <img class="edit_profile_img"  src="../images/profilePicture.jpg">
+                <input id="image_upload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
+
             </div>
-            <input id="image_upload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
-            <div id="edit_profile_info">
-                <div id="edit_profile_name">
-                    <label class="edit_profile_info_title">Name</label>
-                    <input type="text" class="edit_profile_info_content" placeholder="E.g.: John Doe">
+            <div class="mx-auto w-50 align-items-between image-container">
+                <div>
+                    <label class="font-weight-bold mt-3">Name</label>
+                    <input type="text" class="form-control" placeholder="E.g.: John Doe">
                 </div>
-                <div id="edit_profile_email">
-                    <label class="edit_profile_info_title">E-mail</label> 
-                    <input type="email" class="edit_profile_info_content" placeholder="E.g.: something@fe.up.pt">
+                <div >
+                    <label class="font-weight-bold mt-3" >E-mail</label>
+                    <input type="email" class="form-control" placeholder="E.g.: something@fe.up.pt">
                 </div>
-                <div id="edit_profile_password">
-                    <label class="edit_profile_info_title">Password</label>
-                    <input type="password" class="edit_profile_info_content" placeholder="Password">
+                <div >
+                    <label class="font-weight-bold mt-3" >Password</label>
+                    <input type="password" class="form-control" placeholder="Password">
                 </div>
-                <div id="edit_profile_confirm">
-                    <label class="edit_profile_info_title">Confirm</label> 
-                    <input type="password" class="edit_profile_info_content" placeholder="Confirm Password">
+                <div >
+                    <label class="font-weight-bold mt-3">Confirm</label>
+                    <input type="password" class="form-control" placeholder="Confirm Password">
                 </div>
             </div>
         </div>

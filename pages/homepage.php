@@ -41,7 +41,7 @@ include('../templates/common/header.php');
                         </div>
         </div>
         <div class="card mt-4">
-            <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
+            <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">Macaco da Nazaré 2</h5>
                 <p class="card-text">500€</p>

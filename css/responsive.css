@@ -167,3 +167,17 @@
         content: "";
     }
 }
+
+@media(max-width: 550px){
+    .edit_profile_img {
+        width: 100% !important;
+    }
+
+    .edit_profile_info {
+        width: 100% !important;
+    }
+
+    .image-container {
+        width: 100% !important;
+    }
+}

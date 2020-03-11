@@ -10,7 +10,7 @@ if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
 
-$loggedin = false;
+$loggedin = true;
 $admin = false;
 $signUpPage = false;
 $createAuctionPage = false;
@@ -22,7 +22,7 @@ if (isset($_SESSION['user']))
 include('../templates/common/header.php');
 ?>
 <div class="mainBody" id="profile">
-    <h2>Profile</h2>
+    <h2 class="colorGreen">Profile</h2>
     <div id="profile_top">
         <div id="profile_img">
             <img src="../images/profilePicture.jpg">
