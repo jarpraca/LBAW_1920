@@ -222,6 +222,8 @@ include('../templates/common/header.php');
         </div>
     </div>
 
+    <a id="delete_acc_btn" class="btn btn-red" href="#">Delete account</a>
+
 </div>
 <?php
 include('../templates/common/footer.php');

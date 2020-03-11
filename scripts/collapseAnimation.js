@@ -14,9 +14,13 @@ for (i = 0; i < coll.length; i++) {
     }
     if(this.classList.contains("active")){
       this.style.borderRadius = "5px 5px 0 0";
+      this.children[0].children[1].classList.remove('fa-chevron-down');
+      this.children[0].children[1].classList.toggle('fa-chevron-up');
     }
     else{
       this.style.borderRadius = "5px 5px 5px 5px";
+      this.children[0].children[1].classList.remove('fa-chevron-up');
+      this.children[0].children[1].classList.toggle('fa-chevron-down');
     }
   });
 }

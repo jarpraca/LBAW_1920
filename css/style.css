@@ -3,8 +3,10 @@
 :root {
     --myLightGreen: #59aa5b;
     --myLightGreenShadow: #498B4C;
-    --myBrown: #51361a;
     --myDarkGreen: #2C552D;
+    --myBrown: #51361a;
+    --myLightRed: #f44336;
+    --myRed: red;
     --myYellow: #f6d311;
     --titlesFont: Oswald, Courier, sans-serif;
     --bodyFont: Rubik, sans-serif;
@@ -134,6 +136,18 @@ body footer {
     color: white !important;
     background-color: var(--myLightGreenShadow) !important;
     border-color: var(--myLightGreenShadow) !important;
+}
+
+.btn-red {
+    color: white !important;
+    background-color: var(--myLightRed) !important;
+    border-color: var(--myLightRed) !important;
+}
+
+.btn-red:hover {
+    color: white !important;
+    background-color: var(--myRed) !important;
+    border-color: var(--myRed) !important;
 }
 
 .btn-outline-darkGreen {
@@ -283,14 +297,18 @@ body {
 }
 
 #box {
-    height: 28vh;
-    width: 65%;
+    height: 200px;
+    width: 70%;
     background-color: #2D2D2D;
     border-radius: 5px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+#signuip_bg{
+    content: "";
 }
 
 #signup_bg::before {
@@ -314,22 +332,21 @@ body {
 }
 
 #main{
-    height: 70vh;
-    width: 45%;
+    height: 550px;
+    width: 475px;
     background-color: white;
     border-radius: 5px;
     position: absolute;
     top: 50%;
-    left: 70%;
+    left: 65%;
     transform: translate(-50%, -50%);
     z-index: 99;
 }
 
 #loginform, #signupform {
-    width: 45%;
     position: absolute;
     top: 50%;
-    left: 70%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 999;
     display: flex;
@@ -337,7 +354,7 @@ body {
 }
 
 #signupform {
-    left: 75%;
+    left: 50%;
     visibility: hidden;
 }
 
@@ -349,11 +366,11 @@ body {
 #loginform input,
 #signupform input {
     height: 40px;
+    width: 300px;
     border: 0px;
     outline: none;
     border-bottom: 1px solid black;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px;
 }
 
 #loginform i ::before,
@@ -363,7 +380,6 @@ body {
 
 #loginform button,
 #signupform button {
-    border: none;
     outline: none;
     margin-top: 1em;
     height: 40px;
@@ -523,6 +539,7 @@ body {
 #profile_info #profile_edit{
     margin-top: auto;
     margin-bottom: 1em;
+    box-sizing: content-box !important;
 }
 
 #profile_edit button{
@@ -595,6 +612,13 @@ body {
     /* Unicode character for "minus" sign (-) */
     outline: none;
 }
+
+#delete_acc_btn{
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* Edit Profile */
 
