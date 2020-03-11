@@ -17,6 +17,8 @@ $displaySearch = true;
 $isOwner = true;
 $isAdmin = false;
 $isUser = false;
+$createAuctionPage = false;
+
 
 include('../templates/common/header.php');
 include('../templates/auctions/viewAuction.php');

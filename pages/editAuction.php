@@ -15,6 +15,7 @@ $admin = false;
 $signUpPage = false;
 $createAuctionPage = false;
 $displaySearch = true;
+$createAuctionPage = false;
 
 // Content variables
 $speciesName = "Guinea Monkey";

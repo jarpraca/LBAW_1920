@@ -4,7 +4,7 @@
         <a class="nav-link" href="#">
             Help
         </a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="../pages/aboutUs.php">
             About
         </a>
     </li>

@@ -10,7 +10,7 @@ if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = generate_random_token();
 }
 
-$logedin = false;
+$loggedin = false;
 $admin = false;
 $signUpPage = false;
 $createAuctionPage = false;
