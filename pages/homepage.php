@@ -44,7 +44,7 @@ include('../templates/common/header.php');
                 <p class="card-text">500€</p>
                 <p class="card-text">2 anos</p>
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                <a href="viewAuctionOwner.php" class="btn btn-green align-self-end">View Auction</a>
             </div>
         </div>
         <div class="card mt-4">
@@ -54,7 +54,7 @@ include('../templates/common/header.php');
                 <p class="card-text">500€</p>
                 <p class="card-text">2 anos</p>
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                <a href="viewAuctionAdmin.php" class="btn btn-green align-self-end">View Auction</a>
             </div>
         </div>
     </div>
