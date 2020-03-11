@@ -373,6 +373,11 @@ body {
     margin: 5px;
 }
 
+#loginform i ::before,
+#signupform i ::before {
+    align-self: center !important;
+}
+
 #loginform button,
 #signupform button {
     outline: none;
@@ -419,12 +424,6 @@ body {
 #loginform #signup_submit_btn:hover,
 #signupform #signup_submit_btn:hover {
     background-color: var(--myLightGreenShadow);
-}
-
-#signup_bg button i{
-    float: left;
-    line-height: unset;
-    margin-left: 1em;
 }
 
 #login_btn,#signup_btn{
@@ -654,24 +653,16 @@ body {
     object-fit: cover;
 }
 
-#edit_profile_img{
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    display:flex;
-    justify-content:center;
-    transition: all 0.5s;
+.edit_profile_img {
+    width: 75%;
 }
 
-#edit_profile_img:hover{
+.image-container {
+    width:50%;
+}
+
+.edit_profile_img:hover{
     filter: brightness(60%);
-}
-
-#edit_profile_info{
-    display: flex;
-    flex-direction: column;
-    margin-left: 2em;
-    justify-content: center;
 }
 
 #edit_profile_info div{
@@ -756,7 +747,7 @@ body {
     border-radius: 6px;
     padding: 8px 0;
     position: fixed;
-    top: 45%;
+    top: 30%;
     left: 40%;
     -webkit-box-shadow: 0px 0px 30000px 300000px rgba(0, 0, 0, 0.5);
 }

@@ -43,9 +43,9 @@ include('../templates/common/header.php');
                     </thead>
                     <tbody class="report_inbox">
                         <tr>
-                            <td>User Name #1</td>
-                            <td>User Name #8</td>
-                            <td><span class="badge badge-success">First</span></td>
+                            <td>Steve King</td>
+                            <td>Sharapova</td>
+                            <td><span class="badge badge-success">Approved</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -61,9 +61,9 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>User Name #2</td>
-                            <td>User Name #9</td>
-                            <td><span class="badge badge-warning">Second</span></td>
+                            <td>Steve King</td>
+                            <td>Albert Indio</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -79,9 +79,9 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>User Name #3</td>
-                            <td>User Name #10</td>
-                            <td><span class="badge badge-danger">Third</span></td>
+                            <td>Albert Indio</td>
+                            <td>Sharapova</td>
+                            <td><span class="badge badge-danger">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -97,9 +97,9 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>User Name #4</td>
-                            <td>User Name #11</td>
-                            <td><span class="badge badge-danger">Third</span></td>
+                            <td>Steve King</td>
+                            <td>Roger Rets</td>
+                            <td><span class="badge badge-danger">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -115,9 +115,9 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>User Name #5</td>
-                            <td>User Name #12</td>
-                            <td><span class="badge badge-warning">Second</span></td>
+                            <td>Roger Rets</td>
+                            <td>Albert Indio</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -133,9 +133,9 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>User Name #6</td>
-                            <td>User Name #13</td>
-                            <td><span class="badge badge-danger">Third</span></td>
+                            <td>Albert Indio</td>
+                            <td>Roger Rets</td>
+                            <td><span class="badge badge-danger">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -151,9 +151,9 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>User Name #7</td>
-                            <td>User Name #14</td>
-                            <td><span class="badge badge-success">First</span></td>
+                            <td>Roger Rets</td>
+                            <td>Sharapova</td>
+                            <td><span class="badge badge-success">Approved</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -202,8 +202,8 @@ include('../templates/common/header.php');
                     </thead>
                     <tbody class="report_inbox">
                         <tr>
-                            <td>Result #1</td>
-                            <td><span class="badge badge-success">First</span></td>
+                            <td>Steve King</td>
+                            <td><span class="badge badge-success">Approved</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
@@ -211,8 +211,8 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>Result #2</td>
-                            <td><span class="badge badge-warning">Second</span></td>
+                            <td>Albert Indio</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
@@ -220,8 +220,8 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>Result #3</td>
-                            <td><span class="badge badge-danger">Third</span></td>
+                            <td>Roger Rets</td>
+                            <td><span class="badge badge-danger">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
@@ -229,8 +229,8 @@ include('../templates/common/header.php');
                             </td>
                         </tr>
                         <tr>
-                            <td>Result #4</td>
-                            <td><span class="badge badge-danger">Third</span></td>
+                            <td>Sharapova</td>
+                            <td><span class="badge badge-danger">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>

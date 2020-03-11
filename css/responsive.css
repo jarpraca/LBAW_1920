@@ -15,6 +15,13 @@
     .category-card {
         width: 50%;
     }
+
+    .popup .popuptext {
+        width: 50%;
+        position: fixed;
+        top: 45%;
+        left: 25%;
+    }
 }
 
 @media(max-width: 750px) {
@@ -27,6 +34,13 @@
         margin-left: auto;
         margin-right: auto;
         height: 100%;
+    }
+
+    .popup .popuptext {
+        width: 80%;
+        position: fixed;
+        top: 40%;
+        left: 10%;
     }
 }
 
@@ -145,5 +159,19 @@
 @media(max-width: 647px){
     .edit_profile_info_title::after{
         content: "";
+    }
+}
+
+@media(max-width: 550px){
+    .edit_profile_img {
+        width: 100% !important;
+    }
+
+    .edit_profile_info {
+        width: 100% !important;
+    }
+
+    .image-container {
+        width: 100% !important;
     }
 }

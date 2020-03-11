@@ -41,7 +41,7 @@ include('../templates/common/header.php');
                         </div>
         </div>
         <div class="card mt-4">
-            <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
+            <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title">Macaco da Nazaré 2</h5>
                 <p class="card-text">500€</p>
@@ -49,7 +49,7 @@ include('../templates/common/header.php');
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
                 <div class="d-flex flex-row justify-content-between">
                     <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                    <a href="viewAuctionUser.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
                         </div>
         </div>
@@ -62,7 +62,7 @@ include('../templates/common/header.php');
                 <p class="card-text">Ending time: 30-03-2020 23:59</p>
                 <div class="d-flex flex-row justify-content-between">
                     <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                    <a href="viewAuctionAdmin.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
             </div>
         </div>

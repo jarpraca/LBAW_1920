@@ -25,6 +25,7 @@ include('../templates/common/header.php');
 
     <div id="box">
 
+<<<<<<< HEAD
         <div id="login_infos">
             <div id="login_msg">Have an account?</div>
             <button class="login_btn" id="login_btn">LOGIN</button>
@@ -33,6 +34,38 @@ include('../templates/common/header.php');
         <div id="signup_infos">
             <div id="signup_msg">Don't have an account?</div>
             <button class="signup_btn" id="signup_btn">SIGN UP</button>
+=======
+        <div id="loginform">
+            <h1 class="mx-4">LOGIN</h1>
+            <input type="email" placeholder="Email" class="mx-4" />
+            <input type="password" placeholder="Password" class="mx-4" />
+            <button class="mx-4 d-flex flex-row justify-content-center align-items-center" href="#">
+                <span>Sign in with&nbsp;&nbsp;</span>
+                <i class="fab fa-facebook-square fa-2x"></i>
+            </button>
+            <button class="mx-4 d-flex flex-row justify-content-center align-items-center" href="#">
+                <span>Sign in with&nbsp;&nbsp;</span>
+                <i class="fab fa-google fa-2x align-self-center"></i>
+            </button>
+            <button id="signup_submit_btn">LOGIN</button>
+        </div>
+
+        <div id="signupform">
+            <h1 class="mx-4">SIGN UP</h1>
+            <input class="mx-4" type="text" placeholder="Full Name" />
+            <input class="mx-4" type="email" placeholder="Email" />
+            <input class="mx-4" type="password" placeholder="Password" />
+            <input class="mx-4" type="password" placeholder="Confirm password" />
+            <button class="mx-4 d-flex flex-row justify-content-center align-items-center" href="#">
+                <span>Sign up with&nbsp;&nbsp;</span>
+                <i class="fab fa-facebook-square fa-2x"></i>
+            </button>
+            <button class="mx-4 d-flex flex-row justify-content-center" href="#">
+                <span>Sign up with&nbsp;&nbsp;</span>
+                <i class="fab fa-google fa-2x"></i>
+            </button>
+            <button id="signup_submit_btn">SIGN UP</button>
+>>>>>>> 386b0b279e002fff742e3f83dab667f072bc0291
         </div>
 
     </div>
