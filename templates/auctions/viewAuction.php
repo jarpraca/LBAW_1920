@@ -21,7 +21,7 @@
                 <a class="btn btn-green mt-3  mx-3" href="#">Delete Auction</a>
 
             <?php
-            } else if ($isAdmin) {
+            } else if ($admin) {
             ?>
 
                 <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
@@ -163,11 +163,6 @@
         </div>
 
     </div>
-
-
-
 </section>
-
-
 
 <script src="../scripts/bidPopup.js"></script>
