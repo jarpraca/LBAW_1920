@@ -16,6 +16,21 @@ $signUpPage = false;
 $createAuctionPage = true;
 $displaySearch = true;
 
+// Content variables
+$speciesName = "";
+$name = "";
+$description = "";
+$category = 0;
+$age = "";
+$startingPrice = "";
+$buyoutPrice = "";
+// skils...
+$color = 0;
+$devStage = 0;
+// images...
+
 include('../templates/common/header.php');
 include('../templates/auctions/createAuction.php');
 include('../templates/common/footer.php');
+
+?>

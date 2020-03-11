@@ -44,6 +44,10 @@ body {
     align-items: center;
 }
 
+.editAuction {
+    width: 75%;
+}
+
 .title {
     margin-left: 0.5rem;
 }

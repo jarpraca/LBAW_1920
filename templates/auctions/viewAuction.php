@@ -1,6 +1,6 @@
 <section class="mainBody">
 
-    <h1 class="mt-3 colorGreen">Guiné Monkey</h1>
+    <h1 class="mt-3 colorGreen">Guinea Monkey</h1>
 
     <div class="d-flex flex-row">
         <h3>Albert&nbsp;&nbsp;&nbsp;&nbsp;3 years</h3>
