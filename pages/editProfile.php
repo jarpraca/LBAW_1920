@@ -23,7 +23,7 @@ include('../templates/common/header.php');
 ?>
 <div class="mainBody">
     <form>
-    <h2 class="colorGreen ml-0">Edit Profile</h2>
+    <h2 class="mt-3 colorGreen mx-auto">Edit Profile</h2>
 
     <div class="d-flex flex-wrap align-items-center">
 
@@ -55,6 +55,8 @@ include('../templates/common/header.php');
             <button type="submit" class="btn btn-green p-2">Save Changes</button>
         </div>
     </form>
+
+    <div class="pt-3"></div>
 
 </div>
 
