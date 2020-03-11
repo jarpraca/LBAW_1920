@@ -1,6 +1,6 @@
 <section class="mainBody">
 
-    <h1 class="mt-3 colorGreen">Guiné Monkey</h1>
+    <h1 class="mt-3 colorGreen">Guinea Monkey</h1>
 
     <div class="d-flex flex-row">
         <h3>Albert&nbsp;&nbsp;&nbsp;&nbsp;3 years</h3>
@@ -14,7 +14,6 @@
 
         <div class=" text-center d-flex flex-column bgColorGrey bid-bar">
             <h2 class="mb-3 mx-auto mt-5">930€</h2>
-
             <?php
             if ($isOwner) {
             ?>
@@ -22,7 +21,7 @@
                 <a class="btn btn-green mt-3  mx-3" href="#">Delete Auction</a>
 
             <?php
-            } else if ($isAdmin) {
+            } else if ($admin) {
             ?>
 
                 <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
@@ -32,25 +31,28 @@
 
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="#">Bid</a>
+                    <a class="btn btn-green mx-auto w-75" href="#">Bid</a>                  
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="#">Auto Bid</a>
                 </div>
                 <a class="btn btn-green mt-3  mx-3" href="#">Report</a>
+                <a class="btn btn-green mt-3  mx-3" href="#">Add to Watchlist</a>
 
             <?php } else { ?>
 
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="signup.php">Bid</a>
+                   
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="signup.php">Auto Bid</a>
                 </div>
                 <a class="btn btn-green mt-3  mx-3" href="signup.php">Report</a>
+                <a class="btn btn-green mt-3  mx-3" href="signup.php">Add to Watchlist</a>
 
             <?php } ?>
 
@@ -93,7 +95,5 @@
         </div>
 
     </div>
-
-
-
 </section>
+

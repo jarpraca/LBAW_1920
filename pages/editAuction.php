@@ -11,9 +11,27 @@ if (!isset($_SESSION['csrf'])) {
 }
 
 $loggedin = true;
+$admin = false;
+$signUpPage = false;
+$createAuctionPage = false;
 $displaySearch = true;
 $createAuctionPage = false;
+
+// Content variables
+$speciesName = "Guinea Monkey";
+$name = "Albert";
+$description = "This is a very cute 3-year-old guinea monkey called Albert!";
+$category = "1";
+$age = "3 years";
+$startingPrice = "300";
+$buyoutPrice = "1000";
+// skils...
+$color = 3;
+$devStage = 3;
+// images...
 
 include('../templates/common/header.php');
 include('../templates/auctions/editAuction.php');
 include('../templates/common/footer.php');
+
+?>
