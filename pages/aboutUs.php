@@ -25,7 +25,7 @@ include('../templates/common/header.php');
 
     <div class="text-left" id="aboutUs_main">
         <h1 class="mt-3">About us </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et pulvinar dui, tincidunt faucibus tortor. Curabitur feugiat quam arcu. Nulla malesuada quis neque sed ultrices. Vivamus non purus et ipsum ultricies ornare sit amet eget erat. Nam quam ex, sodales sit amet dapibus pellentesque, suscipit quis eros. Nulla vestibulum dapibus urna, non fringilla magna faucibus vel. Nam pharetra sapien nisl, ut rutrum lacus pulvinar lacinia. Phasellus justo lorem, venenatis id libero a, varius vehicula arcu. Mauris eget urna urna. Etiam quam nulla, ultrices non est ac, laoreet blandit nisi. Morbi quis leo nec tellus consectetur consequat ut et massa. Nam laoreet ipsum quis finibus fermentum. Praesent sit amet nisl luctus, sollicitudin nulla sed, mattis elit.</p>
+        <p>Our company attempts to provide with the most intuitive and convinient place to take place in wildlife auctions. We hope to be able to bring you a diversified selection of different animals from all over the world, so that you can find your perfect companion.</p>
 
     </div>
 

@@ -23,7 +23,7 @@ include('../templates/common/header.php');
 ?>
 <div class="text-left" id="homepage">
     <h2 class="mt-3">Welcome, </h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et pulvinar dui, tincidunt faucibus tortor. Curabitur feugiat quam arcu. Nulla malesuada quis neque sed ultrices. Vivamus non purus et ipsum ultricies ornare sit amet eget erat. Nam quam ex, sodales sit amet dapibus pellentesque, suscipit quis eros. Nulla vestibulum dapibus urna, non fringilla magna faucibus vel. Nam pharetra sapien nisl, ut rutrum lacus pulvinar lacinia. Phasellus justo lorem, venenatis id libero a, varius vehicula arcu. Mauris eget urna urna. Etiam quam nulla, ultrices non est ac, laoreet blandit nisi. Morbi quis leo nec tellus consectetur consequat ut et massa. Nam laoreet ipsum quis finibus fermentum. Praesent sit amet nisl luctus, sollicitudin nulla sed, mattis elit.</p>
+    <p>we hope you enjoy our website, we put on a lot of work to make sure you had the best most simplified experience. Hopefully you will find your perfect pet companion with us. Good Luck|</p>
     
     <h2 class="mt-3">Trending</h2>
     <div class="d-flex flex-wrap text-left justify-content-around">
