@@ -44,10 +44,12 @@
                     </div>
                 </li>
             </ul>
-            <form class="navbar-search form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <?php if ($displaySearch) { ?>
+                <form class="navbar-search form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            <?php } ?>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link btn btn-add-auction mr-sm-2 <?php if ($createAuctionPage) { ?> btn-outline-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
