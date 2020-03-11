@@ -30,13 +30,13 @@ include('../templates/common/header.php');
             <h1 class="mx-4">LOGIN</h1>
             <input type="email" placeholder="Email" class="mx-4" />
             <input type="password" placeholder="Password" class="mx-4" />
-            <button class="mx-4 d-flex flex-row justify-content-center" href="#">
-                <p>Sign in with&nbsp;</p>
+            <button class="mx-4 d-flex flex-row justify-content-center align-items-center" href="#">
+                <span>Sign in with&nbsp;&nbsp;</span>
                 <i class="fab fa-facebook-square fa-2x"></i>
             </button>
-            <button class="mx-4 d-flex flex-row justify-content-center" href="#">
-                <p>Sign in with&nbsp;</p>
-                <i class="fab fa-google fa-2x"></i>
+            <button class="mx-4 d-flex flex-row justify-content-center align-items-center" href="#">
+                <span>Sign in with&nbsp;&nbsp;</span>
+                <i class="fab fa-google fa-2x align-self-center"></i>
             </button>
             <button id="signup_submit_btn">LOGIN</button>
         </div>
@@ -47,12 +47,12 @@ include('../templates/common/header.php');
             <input class="mx-4" type="email" placeholder="Email" />
             <input class="mx-4" type="password" placeholder="Password" />
             <input class="mx-4" type="password" placeholder="Confirm password" />
-            <button class="mx-4 d-flex flex-row justify-content-center" href="#">
-                <p>Sign up with&nbsp;</p>
+            <button class="mx-4 d-flex flex-row justify-content-center align-items-center" href="#">
+                <span>Sign up with&nbsp;&nbsp;</span>
                 <i class="fab fa-facebook-square fa-2x"></i>
             </button>
             <button class="mx-4 d-flex flex-row justify-content-center" href="#">
-                <p>Sign up with&nbsp;</p>
+                <span>Sign up with&nbsp;&nbsp;</span>
                 <i class="fab fa-google fa-2x"></i>
             </button>
             <button id="signup_submit_btn">SIGN UP</button>
