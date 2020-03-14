@@ -142,5 +142,3 @@
                 </div>
             </div>
         </div>
-
-        <script src="../scripts/bidPopup.js"></script>
