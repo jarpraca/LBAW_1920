@@ -10,7 +10,6 @@
     <link href="../css/layout.css" rel="stylesheet">
     <link href="../css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -61,43 +60,8 @@
                 if ($loggedin) {
                 ?>
                     <li class="nav-item">
-                        <div class="btn btn-green mx-auto p-2 popup" onclick="showPopUp()"> <img src="../images/bell.png" height="30" alt="Notifications">
-                            <span class="popuptext" id="myPopup">
-
-                                <button id="close_bt" type="button" class="close mr-2" data-dismiss="modal" aria-label="Close" onclick="hidePopUp()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-
-                                <h2 class="mt-3">Auction Name</h2>
-
-                                <div class="form-group ml-3 mr-3 mt-3">
-                                    <p class="text-left">Payment Method</p>
-                                    <select name="categories" class="outline-green form-control" required>
-                                        <option value="0" selected></option>
-                                        <option value="1">Debit Card</option>
-                                        <option value="2">Paypal</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group ml-3 mr-3 mt-3">
-                                    <p class="text-left">Shipping Method</p>
-                                    <select name="categories" class="outline-green form-control" required>
-                                        <option value="0" selected></option>
-                                        <option value="1">Standard Mail</option>
-                                        <option value="2">Express Mail</option>
-                                        <option value="3">Urgent Mail</option>
-                                    </select>
-                                </div>
-
-                                <div class="d-flex ml-2 mr-2 mb-3">
-                                    <input type="text" class="form-control search_text_input" placeholder="Address" />
-                                </div>
-
-
-                                <button class="btn btn-green2" id="submit_bt">SUBMIT</button>
-
-
-                            </span>
+                        <div class="btn btn-green mx-auto p-2 popup" data-toggle="modal" data-target="#exampleModal">
+                            <img src="../images/bell.png" height="30" alt="Notifications">
                         </div>
                     </li>
                 <?php
@@ -139,5 +103,44 @@
     </nav>
 
     <div>
+        <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content mx-auto">
+                    <div class="modal-header">
+                        <h2 class="mt-3">Auction Name</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group ml-3 mr-3 mt-3">
+                            <p class="text-left">Payment Method</p>
+                            <select name="categories" class="outline-green form-control" required>
+                                <option value="0" selected hidden></option>
+                                <option value="1">Debit Card</option>
+                                <option value="2">Paypal</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group ml-3 mr-3 mt-3">
+                            <p class="text-left">Shipping Method</p>
+                            <select name="categories" class="outline-green form-control" required>
+                                <option value="0" selected hidden></option>
+                                <option value="1">Standard Mail</option>
+                                <option value="2">Express Mail</option>
+                                <option value="3">Urgent Mail</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex ml-2 mr-2 mb-3">
+                            <input type="text" class="form-control search_text_input" placeholder="Address" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-green2" id="submit_bt" data-dismiss="modal">SUBMIT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="../scripts/bidPopup.js"></script>

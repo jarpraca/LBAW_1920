@@ -36,41 +36,42 @@ include('../templates/common/header.php');
         </div>
 
     </div>
-    
+
     <div id="main">
         <div id="loginform">
-        <h1 class="mx-4">LOGIN</h1>
-        <input type="email" placeholder="Email" class="mx-4" />
-        <input type="password" placeholder="Password" class="mx-4" />
-        <button class="mx-4" href="#">
-            <i class="fab fa-facebook-f"></i>
-            Sign in with facebook
-        </button>
-        <button class="mx-4" href="#">
-            <i class="fab fa-google"></i>
-            Sign in with google
-        </button>
-        <button id="signup_submit_btn">LOGIN</button>
+            <h1 class="mx-4">LOGIN</h1>
+            <input type="email" placeholder="Email" class="mx-4" />
+            <input type="password" placeholder="Password" class="mx-4" />
+            <button class="mx-4" href="#">
+                Sign in with&nbsp;
+                <i class="fab fa-facebook-f"></i>
+            </button>
+            <button class="mx-4" href="#">
+                Sign in with&nbsp;
+                <i class="fab fa-google"></i>
+            </button>
+            <button id="signup_submit_btn">LOGIN</button>
+        </div>
+
+        <div id="signupform">
+            <h1 class="mx-4">SIGN UP</h1>
+            <input class="mx-4" type="text" placeholder="Full Name" />
+            <input class="mx-4" type="email" placeholder="Email" />
+            <input class="mx-4" type="password" placeholder="Password" />
+            <input class="mx-4" type="password" placeholder="Confirm password" />
+            <button class="mx-4" href="#">
+                Sign in with&nbsp;
+                <i class="fab fa-facebook-f"></i>
+            </button>
+            <button class="mx-4" href="#">
+                Sign in with&nbsp;
+                <i class="fab fa-google"></i>
+            </button>
+            <button id="signup_submit_btn">SIGN UP</button>
+        </div>
+
+
     </div>
-
-    <div id="signupform">
-        <h1 class="mx-4">SIGN UP</h1>
-        <input class="mx-4" type="text" placeholder="Full Name" />
-        <input class="mx-4" type="email" placeholder="Email" />
-        <input class="mx-4" type="password" placeholder="Password" />
-        <input class="mx-4" type="password" placeholder="Confirm password" />
-        <button class="mx-4" href="#">
-            <i class="fab fa-facebook-f"></i>
-            Sign up with facebook
-        </button>
-        <button class="mx-4" href="#">
-            <i class="fab fa-google"></i>
-            Sign up with google
-        </button>
-        <button id="signup_submit_btn">SIGN UP</button>
-    </div>
-
-
 </div>
 
 <?php
@@ -78,3 +79,4 @@ include('../templates/common/footer.php');
 ?>
 
 <script src="../scripts/signupAnimation.js"></script>
+<script src="../scripts/signupFooter.js"></script>
