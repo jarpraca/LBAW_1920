@@ -1,13 +1,21 @@
-html, body {
-    height: 100%;
-}
-
 body {
     display: flex;
     flex-direction: column;
-    height: 100%;
     margin: 0;
     padding-top: 4.1em;
+    position: relative;
+    min-height: 100vh;
+}
+
+body > div{
+    padding-bottom: 60px;
+}
+
+#footer{
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .container {
@@ -118,6 +126,7 @@ body {
     margin-right: auto;
     height: 100%;
     text-align: center;
+    margin-bottom: 1em;
 }
 
 .mainBody {
