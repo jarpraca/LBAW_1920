@@ -345,3 +345,13 @@
         width: 100% !important;
     }
 }
+
+@media (max-width: 395px){
+    #navbarSupportedContent > form{
+        display: flex;
+        flex-direction: column;
+    }
+    #navbarSupportedContent > form > input{
+        width: 100%!important;
+    }
+}
