@@ -21,28 +21,27 @@ if (isset($_SESSION['user']))
 
 include('../templates/common/header.php');
 ?>
-<div class="mainBody" id="profile">
-    <h2 class="colorGreen">Profile</h2>
-    <div id="profile_top">
-        <div id="profile_img">
-            <img src="../images/profilePicture.jpg">
+<div class="mainBody">
+    <h1 class="mt-3 colorGreen">Profile</h1>
+    <div class=" d-flex flex-row align-items-center">
+        <div class="mx-auto w-25">
+            <img class="w-100" src="../images/profilePicture.jpg">
         </div>
-        <div id="profile_info">
-            <div id="profile_name">
-                <label class="profile_info_title">Name</label>
-                <label class="profile_info_content">John Doe</label>
-            </div>
-            <div id="profile_email">
-                <label class="profile_info_title">E-mail</label>
-                <label class="profile_info_content">something@fe.up.pt</label>
-            </div>
+        <div class="w-75 ml-5">
+
+            <p class="mb-0">Name</p>
+            <p class="font-weight-bold mt-0">John Doe</p>
+
+            <p class="mb-0">E-mail</p>
+            <p class="font-weight-bold mt-0">something@fe.up.pt</p>
+
             <div id="profile_edit">
                 <a class="colorGreen text-decoration-underline mx-auto w-75" href="editProfile.php"><u>Edit</u></a>
             </div>
         </div>
     </div>
 
-    <div class="collapsible mt-2 mb-4">
+    <div class="collapsible mt-5 mb-4">
         <button class="collapsible_btn w-100 py-2 text-left">
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <h5 class="font-weight-bold">Purchase History</h5>
@@ -217,8 +216,9 @@ include('../templates/common/header.php');
             </div>
         </div>
     </div>
-    
-    <a id="delete_acc_btn" class="btn btn-red mb-5" href="#">Delete account</a>
+    <div class="mx-auto d-flex">
+        <a class="btn btn-red mb-5 mx-auto w-25" href="#">Delete account</a>
+    </div>
 </div>
 
 

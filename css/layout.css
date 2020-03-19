@@ -431,6 +431,8 @@ body > div{
     padding: 1rem;
     border: 1px solid var(--myYellow);
     width: 35%;
+
+    height: 75vh;
     z-index: 2;
     /* Could be more or less, depending on screen size */
 }

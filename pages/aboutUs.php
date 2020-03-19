@@ -23,8 +23,8 @@ include('../templates/common/header.php');
 ?>
 <div id="aboutUs_bg" class="mainBody">
 
-    <div class="text-left" id="aboutUs_main">
-        <h1 class="mt-3">About us </h2>
+    <div class="text-left w-75 mx-auto" id="aboutUs_main">
+        <h1 class="mt-3 colorGreen">About us </h2>
         <p>Our company attempts to provide with the most intuitive and convinient place to take place in wildlife auctions. We hope to be able to bring you a diversified selection of different animals from all over the world, so that you can find your perfect companion. It is also one of our main priorities to ensure that every animal is captured and taken care of under ethical circuntances. We value the connection between human and animal and our number one objective is to ensure that our costumers will be able to live out their dreams with the perfect animal compaion by their side! Best of Luck in your bidding.</p>
 
     </div>

@@ -151,7 +151,7 @@
                 <h3> Images </h3>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="customFile" name="picture[]" accept="image/*" multiple>
-                    <label class="custom-file-label" for="customFile">Add Photo</label>
+                    <label class="custom-file-label" for="customFile" id="customFileLabel">Add Photo</label>
                 </div>
             </div>
         </div>

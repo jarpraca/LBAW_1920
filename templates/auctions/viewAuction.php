@@ -31,7 +31,7 @@
 
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="#">Bid</a>                  
+                    <a class="btn btn-green mx-auto w-75" href="#">Bid</a>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
@@ -45,7 +45,7 @@
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="signup.php">Bid</a>
-                   
+
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
@@ -58,32 +58,112 @@
 
             <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
 
-            <div class="overflow-auto h-25">
-                <div class="d-flex flex-row ml-4 ">
-                    <p class="w-50 ml-3 text-left ">Steve King</p>
-                    <p class="w-50 text-center ">910€</p>
+            <div class="h-25">
+                <div class="d-flex flex-row ml-4 mb-0">
+                    <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
+                    <p class="w-50 text-center mb-0">910€</p>
                 </div>
-                <div class="d-flex flex-row ml-4">
-                    <p class="w-50 ml-3 text-left ">Albert Indio</p>
-                    <p class="w-50 text-center ">890€</p>
+                <div class="d-flex flex-row ml-4 mb-0">
+                    <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
+                    <p class="w-50 text-center mb-0">890€</p>
                 </div>
-                <div class="d-flex flex-row ml-4">
-                    <p class="w-50 ml-3 text-left ">Sharapova</p>
-                    <p class="w-50 text-center ">870€</p>
+                <div class="d-flex flex-row ml-4 mb-0">
+                    <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
+                    <p class="w-50 text-center mb-0">870€</p>
                 </div>
-                <div class="d-flex flex-row ml-4">
-                    <p class="w-50 ml-3 text-left ">Roger Rets</p>
-                    <p class="w-50 text-center ">850€</p>
+                <div class="d-flex flex-row ml-4 mb-0">
+                    <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
+                    <p class="w-50 text-center mb-0">850€</p>
                 </div>
-                <div class="d-flex flex-row ml-4">
-                    <p class="w-50 ml-3 text-left ">Paul Love</p>
-                    <p class="w-50 text-center ">830€</p>
+                <div class="p-2 popup" data-toggle="modal" data-target="#bidsModal">
+                <p class="colorGreen text-decoration-underline mx-auto"><u>See More</u></p>  
+                </div>
+                <div class="modal fade" id="bidsModal" role="dialog" aria-labelledby="bidsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content mx-auto">
+                            <div class="modal-header">
+                                <h2 class="mt-3">Bidding History</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="overflow-auto h-75">
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
+                                        <p class="w-50 text-center mb-0">910€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
+                                        <p class="w-50 text-center mb-0">890€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
+                                        <p class="w-50 text-center mb-0">870€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
+                                        <p class="w-50 text-center mb-0">850€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
+                                        <p class="w-50 text-center mb-0">830€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
+                                        <p class="w-50 text-center mb-0">810€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
+                                        <p class="w-50 text-center mb-0">790€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
+                                        <p class="w-50 text-center mb-0">770€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
+                                        <p class="w-50 text-center mb-0">750€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
+                                        <p class="w-50 text-center mb-0">730€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
+                                        <p class="w-50 text-center mb-0">710€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
+                                        <p class="w-50 text-center mb-0">690€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
+                                        <p class="w-50 text-center mb-0">670€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
+                                        <p class="w-50 text-center mb-0">650€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
+                                        <p class="w-50 text-center mb-0">630€</p>
+                                    </div>
+                                    <div class="d-flex flex-row ml-4 mb-0">
+                                        <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
+                                        <p class="w-50 text-center mb-0">610€</p>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="d-flex flex-row mt-3">
-        <div class="w-100">
+        <div class="w-75">
             <h3>Description</h3>
             <p>A nice and skilled monkey that loves aerial acrobatics and to climb. It is really friendly and looking for a new home to grow</p>
             <h3 class="mb-3">Seller</h3>
@@ -96,4 +176,3 @@
 
     </div>
 </section>
-

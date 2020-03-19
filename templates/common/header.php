@@ -68,7 +68,7 @@
                 }
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-add-auction mx-sm-2 <?php if ($createAuctionPage) { ?> btn-outline-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
+                    <a class="nav-link btn btn-add-auction mx-sm-2 <?php if ($createAuctionPage) { ?> btn-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
                 </li>
                 <?php
                 if ($loggedin) {
@@ -93,7 +93,7 @@
                 } else {
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link btn <?php if ($signUpPage) { ?> btn-outline-darkGreen <?php } ?>" href="signup.php">Sign In</a>
+                        <a class="nav-link btn <?php if ($signUpPage) { ?> btn-darkGreen <?php } ?>" href="signup.php">Sign In</a>
                     </li>
                 <?php
                 }

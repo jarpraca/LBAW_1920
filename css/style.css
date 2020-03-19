@@ -152,6 +152,27 @@ body {
     border-color: var(--myLightGreenShadow) !important;
 }
 
+#customFile + #customFileLabel{
+    background-color: white;
+    color: gray;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--myLightGreen);
+    cursor: pointer;
+}
+
+#customFile + #customFileLabel::after {
+    background-color: white;
+    color: var(--myLightGreen);
+    cursor: pointer;
+}
+
+#customFile:hover + #customFileLabel::after {
+    background-color: var(--myLightGreen);
+    color: white;
+    cursor: pointer;
+}
+
 .btn-red {
     color: white !important;
     background-color: var(--myLightRed) !important;
@@ -167,6 +188,16 @@ body {
 .btn-outline-darkGreen {
     border-color: var(--myDarkGreen) !important;
 }
+
+.btn-darkGreen {
+    background-color: var(--myDarkGreen) !important;
+}
+
+.btn-darkGreen:hover {
+    color: var(--myDarkGreen) !important;
+    background-color: var(--myLightGreen);
+}
+
 
 #btn-add-auction {
     color: var(--myLightGreen) !important;
@@ -417,8 +448,10 @@ body {
     outline: none;
     border-radius: 5px;
     margin-top: 1em;
-    margin-right: 60%;
-    margin-left: 1.5em;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 2em;
+    padding-right: 2em;
     transition: all .5s;
 }
 
@@ -430,8 +463,10 @@ body {
     outline: none;
     border-radius: 5px;
     margin-top: 1em;
-    margin-left: 60%;
-    margin-right: 1.5em;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 2em;
+    padding-right: 2em;
     transition: all .5s;
 }
 
