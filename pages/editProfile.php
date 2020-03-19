@@ -50,7 +50,7 @@ include('../templates/common/header.php');
                     <input type="password" class="form-control" placeholder="Confirm Password">
                 </div>
                 <div id="edit_profile_submit">
-                    <button type="submit" class="btn btn-green p-2">Save Changes</button>
+                    <button type="submit" class="btn btn-green p-2 mt-3">Save Changes</button>
                 </div>
             </div>
 

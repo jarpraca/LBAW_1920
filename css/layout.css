@@ -44,7 +44,7 @@ body > div{
 
 .card-img-top {
     height: 200px ; 
-    width: 100% !important;
+    width: 275px !important;
     object-fit: cover;
 }
 
