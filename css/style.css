@@ -792,14 +792,7 @@ body {
     -webkit-box-shadow: 0px 0px 30000px 300000px rgba(0, 0, 0, 0.5);
 }
 
-.report_inbox {
-    position: relative;
-}
 
-.table-responsive {
-    height: 20em;
-    overflow: auto;
-}
 
 
 /* Toggle this class - hide and show the popup */
@@ -827,7 +820,8 @@ body {
 }
 
 
-/* Add animation (fadeIn in the popup) */
+
+/* Add animation (fade in the popup) */
 
 /* @-webkit-keyframes fadeInIn {
     from {
