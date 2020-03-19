@@ -84,6 +84,10 @@ body footer {
     color: var(--myLightGreen) !important
 }
 
+.colorGrey {
+    color: #a2a2a2;
+}
+
 .bgColorGreen {
     background-color: var(--myLightGreen);
 }
@@ -114,6 +118,11 @@ body footer {
     background-color: var(--myLightGreen) !important;
 }
 
+.btn-outline-green:active, .btn-outline-green:focus {
+    color: white !important;
+    background-color: var(--myLightGreen) !important;
+}
+
 .btn-green {
     color: white !important;
     background-color: var(--myLightGreen) !important;
@@ -121,6 +130,12 @@ body footer {
 }
 
 .btn-green:hover {
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
+    border-color: var(--myLightGreenShadow) !important;
+}
+
+.btn-green:active {
     color: white !important;
     background-color: var(--myLightGreenShadow) !important;
     border-color: var(--myLightGreenShadow) !important;
@@ -470,6 +485,12 @@ body {
 
 .login_btn:active {
     border-bottom: 1px solid black;
+}
+
+.smallFont {
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
 }
 
 .category-card:hover {

@@ -314,57 +314,19 @@ include('../templates/common/header.php');
     </div>
 
     <div class="d-flex flex-wrap text-left justify-content-around">
-        <div class="card mt-4">
+    <div class="card mt-4">
             <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Macaco da Nazaré</h5>
-                <p class="card-text">700€</p>
-                <p class="card-text">5 anos</p>
-                <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <div class="d-flex flex-row justify-content-between">
-                    <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
+                <div class="d-flex flex-row justify-content-between mr-2">
+                    <p class="card-text">500€</p>
+                    <p class="card-text">2 anos</p>
                 </div>
-            </div>
-        </div>
-        <div class="card mt-4">
-            <img class="card-img-top" src="../images/fishes.jpeg" alt="Card image cap">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Macaco da Nazaré 2</h5>
-                <p class="card-text">500€</p>
-                <p class="card-text">2 anos</p>
-                <p class="card-text">Ending time: 22-03-2020 23:59</p>
-                <div class="d-flex flex-row justify-content-between">
-                    <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                </div>
-            </div>
-        </div>
-        <div class="card mt-4">
-            <img class="card-img-top" src="../images/insects.jpg" alt="Card image cap">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Macaco da Nazaré 3</h5>
-                <p class="card-text">500€</p>
-                <p class="card-text">2 anos</p>
-                <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <div class="d-flex flex-row justify-content-between">
-                    <i class="fas fa-eye fa-2x"></i>
-                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="d-flex flex-wrap text-left justify-content-around">
-        <div class="card mt-4">
-            <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Macaco da Nazaré</h5>
-                <p class="card-text">500€</p>
-                <p class="card-text">2 anos</p>
-                <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                <div class="d-flex flex-row justify-content-between">
-                    <i class="fas fa-eye fa-2x"></i>
+                <p class="card-text smallFont">Ending time </p>
+                <p>30-03-2020 23:59</p>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <i class="far fa-eye fa-2x colorGrey"></i>
                     <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
             </div>
@@ -372,25 +334,87 @@ include('../templates/common/header.php');
         <div class="card mt-4">
             <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Macaco da Nazaré 2</h5>
-                <p class="card-text">800€</p>
-                <p class="card-text">6 meses</p>
-                <p class="card-text">Ending time: 18-03-2020 23:59</p>
-                <div class="d-flex flex-row justify-content-between">
-                    <i class="fas fa-eye fa-2x"></i>
+                <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
+                <div class="d-flex flex-row justify-content-between mr-2">
+                    <p class="card-text">500€</p>
+                    <p class="card-text">2 anos</p>
+                </div>
+
+                <p class="card-text smallFont">Ending time </p>
+                <p>30-03-2020 23:59</p>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <i class="far fa-eye fa-2x colorGrey"></i>
                     <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
             </div>
         </div>
         <div class="card mt-4">
+            <img class="card-img-top" src="../images/insects.jpg" alt="Card image cap">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
+                <div class="d-flex flex-row justify-content-between mr-2">
+                    <p class="card-text">500€</p>
+                    <p class="card-text">2 anos</p>
+                </div>
+
+                <p class="card-text smallFont">Ending time </p>
+                <p>30-03-2020 23:59</p>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <i class="far fa-eye fa-2x colorGrey"></i>
+                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap text-left justify-content-around">
+    <div class="card mt-4">
             <img class="card-img-top" src="../images/animal2.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Macaco da Nazaré 3</h5>
-                <p class="card-text">900€</p>
-                <p class="card-text">7 anos</p>
-                <p class="card-text">Ending time: 27-03-2020 23:59</p>
-                <div class="d-flex flex-row justify-content-between">
-                    <i class="fas fa-eye fa-2x"></i>
+                <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
+                <div class="d-flex flex-row justify-content-between mr-2">
+                    <p class="card-text">500€</p>
+                    <p class="card-text">2 anos</p>
+                </div>
+
+                <p class="card-text smallFont">Ending time </p>
+                <p>30-03-2020 23:59</p>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <i class="far fa-eye fa-2x colorGrey"></i>
+                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
+                <div class="d-flex flex-row justify-content-between mr-2">
+                    <p class="card-text">500€</p>
+                    <p class="card-text">2 anos</p>
+                </div>
+
+                <p class="card-text smallFont">Ending time </p>
+                <p>30-03-2020 23:59</p>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <i class="far fa-eye fa-2x colorGrey"></i>
+                    <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <img class="card-img-top" src="../images/mammals.jpg" alt="Card image cap">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
+                <div class="d-flex flex-row justify-content-between mr-2">
+                    <p class="card-text">500€</p>
+                    <p class="card-text">2 anos</p>
+                </div>
+
+                <p class="card-text smallFont">Ending time </p>
+                <p>30-03-2020 23:59</p>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <i class="far fa-eye fa-2x colorGrey"></i>
                     <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                 </div>
             </div>
