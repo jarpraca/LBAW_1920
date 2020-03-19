@@ -37,18 +37,17 @@ include('../templates/common/header.php');
                 <label class="profile_info_content">something@fe.up.pt</label>
             </div>
             <div id="profile_edit">
-                <a class="btn btn-green mx-auto w-75" href="editProfile.php">Edit Information</a>
+                <a class="colorGreen text-decoration-underline mx-auto w-75" href="editProfile.php"><u>Edit</u></a>
             </div>
         </div>
     </div>
 
-    <div class="collapsible">
-        <button type="button" class="collapsible_btn btn btn-green w-100 text-white py-3 text-left">
+    <div class="collapsible mt-2 mb-4">
+        <button class="collapsible_btn w-100 py-2 text-left">
             <div class="d-flex flex-row justify-content-between align-items-center">
-                <span>Purchase History</span>
-                <i class=" fas fa-chevron-down mr-2 p-0  "></i>
+                <h5 class="font-weight-bold">Purchase History</h5>
+                <i class=" fas fa-chevron-down mr-2 p-0"></i>
             </div>
-
         </button>
         <div class="collapsible_content bgColorGrey">
             <div class="d-flex flex-wrap text-left justify-content-around">
@@ -86,13 +85,12 @@ include('../templates/common/header.php');
         </div>
     </div>
 
-    <div class="collapsible">
-        <button type="button" class="collapsible_btn btn btn-green w-100 text-white py-3 text-left">
+    <div class="collapsible mt-2 mb-4">
+        <button class="collapsible_btn w-100 py-2 text-left">
             <div class="d-flex flex-row justify-content-between align-items-center">
-                <span>My Auctions</span>
-                <i class=" fas fa-chevron-down mr-2 p-0  "></i>
+                <h5 class="font-weight-bold">My Auctions</h5>
+                <i class=" fas fa-chevron-down mr-2 p-0"></i>
             </div>
-
         </button>
         <div class="collapsible_content bgColorGrey">
             <div class="d-flex flex-wrap text-left justify-content-around">
@@ -131,13 +129,12 @@ include('../templates/common/header.php');
         </div>
     </div>
 
-    <div class="collapsible">
-        <button type="button" class="collapsible_btn btn btn-green w-100 text-white py-3 text-left">
+    <div class="collapsible mt-2 mb-4">
+        <button class="collapsible_btn w-100 py-2 text-left">
             <div class="d-flex flex-row justify-content-between align-items-center">
-                <span>Ongoing</span>
-                <i class=" fas fa-chevron-down mr-2 p-0  "></i>
+                <h5 class="font-weight-bold">Ongoing Auctions</h5>
+                <i class=" fas fa-chevron-down mr-2 p-0"></i>
             </div>
-
         </button>
         <div class="collapsible_content bgColorGrey">
             <div class="d-flex flex-wrap text-left justify-content-around">
@@ -148,7 +145,7 @@ include('../templates/common/header.php');
                         <p class="card-text">500€</p>
                         <p class="card-text">2 anos</p>
                         <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                        <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
                 <div class="card mt-4">
@@ -174,55 +171,56 @@ include('../templates/common/header.php');
             </div>
 
         </div>
+    </div>
 
-        <div class="collapsible">
-            <button type="button" class="collapsible_btn btn btn-green w-100 text-white py-3 text-left">
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                    <span>Watchlist</span>
-                    <i class=" fas fa-chevron-down mr-2 p-0  "></i>
+    <div class="collapsible mt-2 mb-4">
+        <button class="collapsible_btn w-100 py-2 text-left">
+            <div class="d-flex flex-row justify-content-between align-items-center">
+                <h5 class="font-weight-bold">Watchlist</h5>
+                <i class=" fas fa-chevron-down mr-2 p-0"></i>
+            </div>
+        </button>
+        <div class="collapsible_content">
+            <div class="d-flex flex-wrap text-left justify-content-around">
+                <div class="card mt-4">
+                    <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Macaco da Nazaré</h5>
+                        <p class="card-text">500€</p>
+                        <p class="card-text">2 anos</p>
+                        <p class="card-text">Ending time: 30-03-2020 23:59</p>
+                        <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
+                    </div>
                 </div>
+                <div class="card mt-4">
+                    <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Macaco da Nazaré 2</h5>
+                        <p class="card-text">800€</p>
+                        <p class="card-text">6 meses</p>
+                        <p class="card-text">Ending time: 18-03-2020 23:59</p>
 
-            </button>
-            <div class="collapsible_content">
-                <div class="d-flex flex-wrap text-left justify-content-around">
-                    <div class="card mt-4">
-                        <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Macaco da Nazaré</h5>
-                            <p class="card-text">500€</p>
-                            <p class="card-text">2 anos</p>
-                            <p class="card-text">Ending time: 30-03-2020 23:59</p>
-                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                        </div>
+                        <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
-                    <div class="card mt-4">
-                        <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Macaco da Nazaré 2</h5>
-                            <p class="card-text">800€</p>
-                            <p class="card-text">6 meses</p>
-                            <p class="card-text">Ending time: 18-03-2020 23:59</p>
+                </div>
+                <div class="card mt-4">
+                    <img class="card-img-top" src="../images/animal2.jfif" alt="Card image cap">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Macaco da Nazaré 3</h5>
+                        <p class="card-text">900€</p>
+                        <p class="card-text">7 anos</p>
+                        <p class="card-text">Ending time: 27-03-2020 23:59</p>
 
-                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                        </div>
-                    </div>
-                    <div class="card mt-4">
-                        <img class="card-img-top" src="../images/animal2.jfif" alt="Card image cap">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Macaco da Nazaré 3</h5>
-                            <p class="card-text">900€</p>
-                            <p class="card-text">7 anos</p>
-                            <p class="card-text">Ending time: 27-03-2020 23:59</p>
-
-                            <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
-                        </div>
+                        <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <a id="delete_acc_btn" class="btn btn-red mb-5" href="#">Delete account</a>
+</div>
 
-    <a id="delete_acc_btn" class="btn btn-red" href="#">Delete account</a>
 
 </div>
 <?php
