@@ -88,7 +88,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="overflow-auto h-75">
+                                <div class="overflow-auto h-50">
                                     <div class="d-flex flex-row ml-4 mb-0">
                                         <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
                                         <p class="w-50 text-center mb-0">910€</p>

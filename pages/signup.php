@@ -26,7 +26,7 @@ include('../templates/common/header.php');
     <div id="box">
 
         <div id="login_infos">
-            <div id="login_msg">Have an account?</div>
+            <div id="login_msg">Already have an account?</div>
             <button class="login_btn" id="login_btn">LOGIN</button>
         </div>
 

@@ -21,6 +21,7 @@ if (isset($_SESSION['user']))
 
 include('../templates/common/header.php');
 ?>
+
 <section class="mainBody">
 
     <div class="bgColorGrey">
@@ -30,22 +31,22 @@ include('../templates/common/header.php');
             <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
         </form>
 
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap"  id="accordion">
             <div class="mx-auto">
                 <p class="justify-content-between">
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Category
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Color
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Price
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Dev. Stage
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Skills
                     </a>
                 </p>
@@ -422,6 +423,9 @@ include('../templates/common/header.php');
     </div>
 
 </section>
+
+<script src="../scripts/collapseFilters.js"></script>
+
 <?php
 include('../templates/common/footer.php');
 ?>
