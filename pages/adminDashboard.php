@@ -34,32 +34,32 @@ include('../templates/common/header.php');
             <div class="table-responsive">
                 <table class="table m-0">
                     <thead>
-                        <tr>
-                            <th>Reported User</th>
-                            <th>Reported By</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th></th>
+                        <tr class="d-flex">
+                            <th class="col-4 col-sm-3">Reported User</th>
+                            <th class="col-4 col-sm-3">Reported By</th>
+                            <th class="col-3 col-sm-2">Status</th>
+                            <th class="col-4 col-sm-3">Date</th>
+                            <th class="col-4 col-sm-3"></th>
                         </tr>
                     </thead>
                     <tbody class="report_inbox">
-                        <tr>
-                            <td>Steve King</td>
-                            <td>Sharapova</td>
-                            <td><span class="badge badge-success py-2">Approved</span></td>
-                            <td>2019-05-04 19:25</td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Steve King</td>
+                            <td class="col-4 col-sm-3">Sharapova</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-success py-2">Approved</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                              
                             </td>
                         </tr>
-                        <tr>
-                            <td>Steve King</td>
-                            <td>Albert Indio</td>
-                            <td><span class="badge badge-warning py-2">Pending</span></td>
-                            <td>2019-05-04 19:25</td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Steve King</td>
+                            <td class="col-4 col-sm-3">Albert Indio</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                                 <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="btn btn-outline-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action
                                     </a>
 
@@ -70,32 +70,32 @@ include('../templates/common/header.php');
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Albert Indio</td>
-                            <td>Sharapova</td>
-                            <td><span class="badge badge-danger py-2 ">Denied</span></td>
-                            <td>2019-05-04 19:25</td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Albert Indio</td>
+                            <td class="col-4 col-sm-3">Sharapova</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2 ">Denied</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                                
                             </td>
                         </tr>
-                        <tr>
-                            <td>Steve King</td>
-                            <td>Roger Rets</td>
-                            <td><span class="badge badge-danger py-2">Denied</span></td>
-                            <td>2019-05-04 19:25</td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Steve King</td>
+                            <td class="col-4 col-sm-3">Roger Rets</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                               
                             </td>
                         </tr>
-                        <tr>
-                            <td>Roger Rets</td>
-                            <td>Albert Indio</td>
-                            <td><span class="badge badge-warning py-2">Pending</span></td>
-                            <td>2019-05-04 19:25</td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Roger Rets</td>
+                            <td class="col-4 col-sm-3">Albert Indio</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                                 <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="btn btn-outline-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action
                                     </a>
 
@@ -106,37 +106,30 @@ include('../templates/common/header.php');
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Albert Indio</td>
-                            <td>Roger Rets</td>
-                            <td><span class="badge badge-danger py-2">Denied</span></td>
-                            <td>2019-05-04 19:25</td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Albert Indio</td>
+                            <td class="col-4 col-sm-3">Roger Rets</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                                
                             </td>
                         </tr>
-                        <tr>
-                            <td>Roger Rets</td>
-                            <td>Sharapova</td>
-                            <td><span class="badge badge-success py-2 ">Approved</span></td>
-                            <td><span>2019-05-04 19:25</span></td>
-                            <td>
+                        <tr class="d-flex">
+                            <td class="col-4 col-sm-3">Roger Rets</td>
+                            <td class="col-4 col-sm-3">Sharapova</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-success py-2 ">Approved</span></td>
+                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-3">
                              
                             </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <!-- /.table-responsive -->
             <nav aria-label="Page navigation example">
-                <ul class="pagination ml-3">
+                <ul class="pagination mt-2 mt-sm-0 d-flex flex-row justify-content-center">
                     <li class="page-item"><a class="page-link colorGreen " href="#">Previous</a></li>
                     <li class="page-item"><a class="page-link colorGreen " href="#">1</a></li>
                     <li class="page-item"><a class="page-link colorGreen font-weight-bolder" href="#">2</a></li>
@@ -166,47 +159,47 @@ include('../templates/common/header.php');
             <div class="table-responsive">
                 <table class="table m-0">
                     <thead>
-                        <tr>
-                            <th>Reported User</th>
-                            <th>Status</th>
-                            <th>Date of Last Report</th>
+                        <tr class="d-flex">
+                            <th class="col-5 col-sm-2">Reported User</th>
+                            <th class="col-3 col-sm-2">Status</th>
+                            <th class="col-5 col-sm-2">Date of Last Report</th>
                         </tr>
                     </thead>
                     <tbody class="report_inbox">
-                        <tr>
-                            <td>Steve King</td>
-                            <td><span class="badge badge-success py-2 w-50">Approved</span></td>
-                            <td>2019-05-04 19:25</td>
+                        <tr class="d-flex">
+                            <td class="col-5 col-sm-2">Steve King</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-success py-2">Approved</span></td>
+                            <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
-                                <button type="button" class="btn btn-danger py-2 w-50">Delete</button>
+                                <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Albert Indio</td>
-                            <td><span class="badge badge-warning py-2 w-50">Pending</span></td>
-                            <td>2019-05-04 19:25</td>
+                        <tr class="d-flex">
+                            <td class="col-5 col-sm-2">Albert Indio</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
+                            <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
-                                <button type="button" class="btn btn-danger py-2 w-50">Delete</button>
+                                <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Roger Rets</td>
-                            <td><span class="badge badge-danger py-2 w-50">Denied</span></td>
-                            <td>2019-05-04 19:25</td>
+                        <tr class="d-flex">
+                            <td class="col-5 col-sm-2">Roger Rets</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
+                            <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
-                                <button type="button" class="btn btn-danger py-2 w-50">Delete</button>
+                                <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Sharapova</td>
-                            <td><span class="badge badge-danger py-2 w-50">Denied</span></td>
-                            <td>2019-05-04 19:25</td>
+                        <tr class="d-flex">
+                            <td class="col-5 col-sm-2">Sharapova</td>
+                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
+                            <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td>
                                 <button type="button" class="btn btn-warning">Block</button>
-                                <button type="button" class="btn btn-danger py-2 w-50">Delete</button>
+                                <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
                         </tr>
 
@@ -215,7 +208,7 @@ include('../templates/common/header.php');
             </div>
             <!-- /.table-responsive -->
             <nav aria-label="Page navigation example">
-                <ul class="pagination ml-3">
+                <ul class="pagination mt-2 mt-sm-0 d-flex flex-row justify-content-center">
                     <li class="page-item"><a class="page-link colorGreen " href="#">Previous</a></li>
                     <li class="page-item"><a class="page-link colorGreen font-weight-bolder" href="#">1</a></li>
                     <li class="page-item"><a class="page-link colorGreen " href="#">2</a></li>

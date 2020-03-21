@@ -50,7 +50,7 @@
             ?>
                 <form class="navbar-search form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <a class="btn btn-green2 my-2 my-sm-0" href="search.php">Search</a>
+                    <a class="btn btn-green2 mt-2 mt-sm-0" href="search.php">Search</a>
                 </form>
             <?php
             }
@@ -60,7 +60,7 @@
                 if ($loggedin) {
                 ?>
                     <li class="nav-item">
-                        <div class="btn btn-green mx-auto p-2 popup" data-toggle="modal" data-target="#exampleModal">
+                        <div class="btn btn-green mx-auto p-2 my-2 my-sm-0 popup" data-toggle="modal" data-target="#exampleModal">
                             <img src="../images/bell.png" height="30" alt="Notifications">
                         </div>
                     </li>
@@ -68,13 +68,13 @@
                 }
                 ?>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-add-auction mx-sm-2 <?php if ($createAuctionPage) { ?> btn-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
+                    <a class="nav-link btn btn-add-auction mx-sm-2 px-2 <?php if ($createAuctionPage) { ?> btn-darkGreen <?php } ?>" <?php if (!$createAuctionPage) { ?> id="btn-add-auction" <?php } ?> href="createAuction.php">+ Add Auction</a>
                 </li>
                 <?php
                 if ($loggedin) {
                 ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-center my-2 my-sm-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             John Doe
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -93,7 +93,7 @@
                 } else {
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link btn <?php if ($signUpPage) { ?> btn-darkGreen <?php } ?>" href="signup.php">Sign In</a>
+                        <a class="nav-link btn my-2 my-sm-0 px-2<?php if ($signUpPage) { ?> btn-darkGreen <?php } ?>" href="signup.php">Sign In</a>
                     </li>
                 <?php
                 }
