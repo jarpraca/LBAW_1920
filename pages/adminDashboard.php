@@ -38,8 +38,8 @@ include('../templates/common/header.php');
                             <th class="col-4 col-sm-3">Reported User</th>
                             <th class="col-4 col-sm-3">Reported By</th>
                             <th class="col-3 col-sm-2">Status</th>
-                            <th class="col-4 col-sm-3">Date</th>
-                            <th class="col-4 col-sm-3"></th>
+                            <th class="col-4 col-sm-2">Date</th>
+                            <th class="col-4 col-sm-2"></th>
                         </tr>
                     </thead>
                     <tbody class="report_inbox">
@@ -47,8 +47,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Steve King</td>
                             <td class="col-4 col-sm-3">Sharapova</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-success py-2">Approved</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                              
                             </td>
                         </tr>
@@ -56,8 +56,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Steve King</td>
                             <td class="col-4 col-sm-3">Albert Indio</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                                 <div class="dropdown show">
                                     <a class="btn btn-outline-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action
@@ -74,8 +74,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Albert Indio</td>
                             <td class="col-4 col-sm-3">Sharapova</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-danger py-2 ">Denied</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                                
                             </td>
                         </tr>
@@ -83,8 +83,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Steve King</td>
                             <td class="col-4 col-sm-3">Roger Rets</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                               
                             </td>
                         </tr>
@@ -92,8 +92,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Roger Rets</td>
                             <td class="col-4 col-sm-3">Albert Indio</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                                 <div class="dropdown show">
                                     <a class="btn btn-outline-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action
@@ -110,8 +110,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Albert Indio</td>
                             <td class="col-4 col-sm-3">Roger Rets</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                                
                             </td>
                         </tr>
@@ -119,8 +119,8 @@ include('../templates/common/header.php');
                             <td class="col-4 col-sm-3">Roger Rets</td>
                             <td class="col-4 col-sm-3">Sharapova</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-success py-2 ">Approved</span></td>
-                            <td class="col-4 col-sm-3">2019-05-04 19:25</td>
-                            <td class="col-4 col-sm-3">
+                            <td class="col-4 col-sm-2">2019-05-04 19:25</td>
+                            <td class="col-4 col-sm-2">
                              
                             </td>
                         </tr>
@@ -163,6 +163,7 @@ include('../templates/common/header.php');
                             <th class="col-5 col-sm-2">Reported User</th>
                             <th class="col-3 col-sm-2">Status</th>
                             <th class="col-5 col-sm-2">Date of Last Report</th>
+                            <th class="col-4 col-sm-2"></th>
                         </tr>
                     </thead>
                     <tbody class="report_inbox">
@@ -170,7 +171,7 @@ include('../templates/common/header.php');
                             <td class="col-5 col-sm-2">Steve King</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-success py-2">Approved</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
-                            <td>
+                            <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
                                 <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
@@ -179,7 +180,7 @@ include('../templates/common/header.php');
                             <td class="col-5 col-sm-2">Albert Indio</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
-                            <td>
+                            <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
                                 <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
@@ -188,7 +189,7 @@ include('../templates/common/header.php');
                             <td class="col-5 col-sm-2">Roger Rets</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
-                            <td>
+                            <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
                                 <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
@@ -197,7 +198,7 @@ include('../templates/common/header.php');
                             <td class="col-5 col-sm-2">Sharapova</td>
                             <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
-                            <td>
+                            <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
                                 <button type="button" class="btn btn-danger mt-2 mt-sm-0">Delete</button>
                             </td>
