@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a class="btn btn-green2" id="submit_bt" data-dismiss="modal">SUBMIT</a>
+                        <a class="btn btn-green2" id="submit_bt" data-dismiss="modal">Submit</a>
                     </div>
                 </div>
             </div>

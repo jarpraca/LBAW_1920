@@ -34,23 +34,23 @@ include('../templates/common/header.php');
         <div class="d-flex flex-wrap"  id="accordion">
             <div class="mx-auto">
                 <p class="justify-content-between">
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Category
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Color
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Price
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Dev. Stage
                     </a>
-                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" data-parent="#accordion" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" role="button" aria-expanded="false" aria-controls="collapseExample">
                         Skills
                     </a>
                 </p>
-                <div class="collapse" id="categories">
+                <div class="collapse" id="categories" data-parent="#accordion">
                     <div class="card card-body">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="col-6 col-sm-3">
@@ -100,7 +100,7 @@ include('../templates/common/header.php');
                     </div>
                 </div>
 
-                <div class="collapse" id="colors">
+                <div class="collapse" id="colors" data-parent="#accordion">
                     <div class="card card-body">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="col-6 col-sm-3">
@@ -157,7 +157,7 @@ include('../templates/common/header.php');
                     </div>
                 </div>
 
-                <div class="collapse" id="price">
+                <div class="collapse" id="price" data-parent="#accordion">
                     <div class="card card-body">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="col col-sm-3">
@@ -203,7 +203,7 @@ include('../templates/common/header.php');
                     </div>
                 </div>
 
-                <div class="collapse" id="devStage">
+                <div class="collapse" id="devStage" data-parent="#accordion">
                     <div class="card card-body">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="col-6 col-sm-3">
@@ -246,7 +246,7 @@ include('../templates/common/header.php');
                     </div>
                 </div>
 
-                <div class="collapse" id="skills">
+                <div class="collapse" id="skills" data-parent="#accordion">
                     <div class="card card-body">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="col-6 col-sm-3">
@@ -423,8 +423,6 @@ include('../templates/common/header.php');
     </div>
 
 </section>
-
-<script src="../scripts/collapseFilters.js"></script>
 
 <?php
 include('../templates/common/footer.php');
