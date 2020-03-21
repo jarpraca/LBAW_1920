@@ -32,32 +32,6 @@
     }
 }
 
-@media(max-height: 1050px){
-    #signup_bg #main{
-        height: 450px !important;
-        left: 50% !important;
-        right: 50% !important;
-        top: 40%
-    }
-    #box{
-        top: 75%;
-    }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
-    }
-}
-
 @media(max-width: 991px) {
     .navbar-search {
         width: 100% !important;
@@ -97,33 +71,8 @@
         width: 100%;
         height: 100%;
     }
-
-    #signup_bg #main{
-        width: 400px;
-        height: 450px !important;
-        left: 50% !important;
-        right: 50% !important;
-        top: 40%
-    }
-    #box{
-        top: 75%;
-        width: 90% !important;
-    }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
-    }
 }
+
 @media(max-width: 750px) {
     .editAuction {
         width: 100%;
@@ -157,70 +106,11 @@
     }
 }
 
-@media(max-height: 700px){
+@media(max-width: 700px){
 
     .category-card {
-        width: 100%;
-    }
-
-    #signup_bg #main{
-        height: 400px !important;
-        left: 50% !important;
-        right: 50% !important;
-        top: 40%
-    }
-    #signupform input, #loginform input, #signupform button, #loginform button{
-        height: 30px !important;
-    }
-    #box{
-        top: 75%;
-    }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
-    }
-}
-
-@media(max-height: 650px){
-    #signup_bg #main{
-        height: 375px !important;
-        left: 50% !important;
-        right: 50% !important;
-        top: 43%
-    }
-    #signupform input, #loginform input, #signupform button, #loginform button{
-        height: 30px !important;
-    }
-    #box{
-        top: 80%;
-        height: 120px;
-    }
-    #box > div > *{
-        height: 30px !important;
-    }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 40% !important;
-        left: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
+        width: 100% !important;
+        background-color: 'pink';
     }
 }
 
@@ -313,6 +203,122 @@
     }
     #login_msg, #signup_msg{
         top: 50% !important;
+        left: 50% !important;
+    }
+    #login_btn, #signup_btn{
+        left: 50% !important;
+        top: 75% !important;
+    }
+    #login_infos{
+        visibility: hidden;
+    }
+}
+
+
+
+@media(max-height: 1050px){
+    #signup_bg #main{
+        height: 450px !important;
+        left: 50% !important;
+        right: 50% !important;
+        top: 40%
+    }
+    #box{
+        top: 75%;
+    }
+    #loginform, #signupform {
+        left: 50% !important;
+    }
+    #login_msg, #signup_msg{
+        top: 50% !important;
+        left: 50% !important;
+    }
+    #login_btn, #signup_btn{
+        left: 50% !important;
+        top: 75% !important;
+    }
+    #login_infos{
+        visibility: hidden;
+    }
+}
+
+@media(max-height: 900px){
+    #signup_bg #main{
+        height: 450px !important;
+        left: 50% !important;
+        right: 50% !important;
+        top: 40%
+    }
+    #box{
+        top: 75%;
+    }
+    #loginform, #signupform {
+        left: 50% !important;
+    }
+    #login_msg, #signup_msg{
+        top: 50% !important;
+        left: 50% !important;
+    }
+    #login_btn, #signup_btn{
+        left: 50% !important;
+        top: 75% !important;
+    }
+    #login_infos{
+        visibility: hidden;
+    }
+}
+
+@media(max-height: 700px){
+    #signup_bg #main{
+        height: 400px !important;
+        left: 50% !important;
+        right: 50% !important;
+        top: 40%
+    }
+    #signupform input, #loginform input, #signupform button, #loginform button{
+        height: 30px !important;
+    }
+    #box{
+        top: 75%;
+    }
+    #loginform, #signupform {
+        left: 50% !important;
+    }
+    #login_msg, #signup_msg{
+        top: 50% !important;
+        left: 50% !important;
+    }
+    #login_btn, #signup_btn{
+        left: 50% !important;
+        top: 75% !important;
+    }
+    #login_infos{
+        visibility: hidden;
+    }
+}
+
+@media(max-height: 650px){
+    #signup_bg #main{
+        height: 375px !important;
+        left: 50% !important;
+        right: 50% !important;
+        top: 43%
+    }
+    #signupform input, #loginform input, #signupform button, #loginform button{
+        height: 30px !important;
+    }
+    #box{
+        top: 80%;
+        height: 120px;
+    }
+    #box > div > *{
+        height: 30px !important;
+    }
+    #loginform, #signupform {
+        left: 50% !important;
+    }
+    #login_msg, #signup_msg{
+        top: 40% !important;
         left: 50% !important;
     }
     #login_btn, #signup_btn{

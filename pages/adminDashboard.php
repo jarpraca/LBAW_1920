@@ -46,25 +46,16 @@ include('../templates/common/header.php');
                         <tr>
                             <td>Steve King</td>
                             <td>Sharapova</td>
-                            <td><span class="badge badge-success py-2 w-50">Approved</span></td>
+                            <td><span class="badge badge-success py-2">Approved</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Accept Report</a>
-                                        <a class="dropdown-item" href="#">Deny Report</a>
-                                    </div>
-                                </div>
+                             
                             </td>
                         </tr>
                         <tr>
                             <td>Steve King</td>
                             <td>Albert Indio</td>
-                            <td><span class="badge badge-warning py-2 w-50">Pending</span></td>
+                            <td><span class="badge badge-warning py-2">Pending</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -82,43 +73,25 @@ include('../templates/common/header.php');
                         <tr>
                             <td>Albert Indio</td>
                             <td>Sharapova</td>
-                            <td><span class="badge badge-danger py-2 w-50">Denied</span></td>
+                            <td><span class="badge badge-danger py-2 ">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Accept Report</a>
-                                        <a class="dropdown-item" href="#">Deny Report</a>
-                                    </div>
-                                </div>
+                               
                             </td>
                         </tr>
                         <tr>
                             <td>Steve King</td>
                             <td>Roger Rets</td>
-                            <td><span class="badge badge-danger py-2 w-50">Denied</span></td>
+                            <td><span class="badge badge-danger py-2">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Accept Report</a>
-                                        <a class="dropdown-item" href="#">Deny Report</a>
-                                    </div>
-                                </div>
+                              
                             </td>
                         </tr>
                         <tr>
                             <td>Roger Rets</td>
                             <td>Albert Indio</td>
-                            <td><span class="badge badge-warning py-2 w-50">Pending</span></td>
+                            <td><span class="badge badge-warning py-2">Pending</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
                                 <div class="dropdown show">
@@ -136,37 +109,19 @@ include('../templates/common/header.php');
                         <tr>
                             <td>Albert Indio</td>
                             <td>Roger Rets</td>
-                            <td><span class="badge badge-danger py-2 w-50">Denied</span></td>
+                            <td><span class="badge badge-danger py-2">Denied</span></td>
                             <td>2019-05-04 19:25</td>
                             <td>
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Accept Report</a>
-                                        <a class="dropdown-item" href="#">Deny Report</a>
-                                    </div>
-                                </div>
+                               
                             </td>
                         </tr>
                         <tr>
                             <td>Roger Rets</td>
                             <td>Sharapova</td>
-                            <td><span class="badge badge-success py-2 w-50">Approved</span></td>
-                            <td>2019-05-04 19:25</td>
+                            <td><span class="badge badge-success py-2 ">Approved</span></td>
+                            <td><span>2019-05-04 19:25</span></td>
                             <td>
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Accept Report</a>
-                                        <a class="dropdown-item" href="#">Deny Report</a>
-                                    </div>
-                                </div>
+                             
                             </td>
                         </tr>
                         <tr>

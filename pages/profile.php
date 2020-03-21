@@ -23,11 +23,14 @@ include('../templates/common/header.php');
 ?>
 <div class="mainBody">
     <h1 class="mt-3 colorGreen">Profile</h1>
-    <div class=" d-flex flex-row align-items-center">
-        <div class="mx-auto w-25">
-            <img class="w-100" src="../images/profilePicture.jpg">
+    <div class="d-flex flex-wrap align-items-center">
+
+        <div class="mx-auto image-container">
+            <img class="edit_profile_img" src="../images/profilePicture.jpg">
+            <input id="image_upload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
+
         </div>
-        <div class="w-75 ml-5">
+        <div class="w-50 align-items-between image-container">
 
             <p class="mb-0">Name</p>
             <p class="font-weight-bold mt-0">John Doe</p>
@@ -217,7 +220,7 @@ include('../templates/common/header.php');
         </div>
     </div>
     <div class="mx-auto d-flex">
-        <a class="btn btn-red mb-5 mx-auto w-25" href="#">Delete account</a>
+        <a class="btn btn-red mb-5 w-75 mx-auto" href="#">Delete account</a>
     </div>
 </div>
 
