@@ -1,221 +1,261 @@
+DROP TABLE IF Exists "animal_photo";
+DROP TABLE IF Exists "profile_photo";
+DROP TABLE IF Exists "image";
+DROP TABLE IF Exists "auction_finished";
+DROP TABLE IF Exists "auction_cancelled";
+DROP TABLE IF Exists "auction_ongoing";
+DROP TABLE IF Exists "auction_status";
+DROP TABLE IF Exists "features";
+DROP TABLE IF Exists "watchlists";
+DROP TABLE IF Exists "report_denied";
+DROP TABLE IF Exists "report_approved";
+DROP TABLE IF Exists "report_pending";
+DROP TABLE IF Exists "report_status";
+DROP TABLE IF Exists "reports";
+DROP TABLE IF Exists "accepts";
+DROP TABLE IF Exists "ships";
+DROP TABLE IF Exists "blocks";
+DROP TABLE IF Exists "notification";
+DROP TABLE IF Exists "bids";
+DROP TABLE IF Exists "auction";
+DROP TABLE IF Exists "shipping_method";
+DROP TABLE IF Exists "payment_method";
+DROP TABLE IF Exists "category";
+DROP TABLE IF Exists "development_stage";
+DROP TABLE IF Exists "main_color";
+DROP TABLE IF Exists "skill";
+DROP TABLE IF Exists "seller";
+DROP TABLE IF Exists "buyer";
+DROP TABLE IF Exists "admin";
+DROP TABLE IF Exists "user";
+
+DROP TYPE IF Exists "category_name";
+DROP TYPE IF Exists "dev_stage";
+DROP TYPE IF Exists "color";
+DROP TYPE IF Exists "skill_name";
+DROP TYPE IF Exists "payment";
+DROP TYPE IF Exists "shipping";
+DROP TYPE IF Exists "rating";
+
+
 -- Types
  
-CREATE TYPE "Rating" AS ENUM ('1', '2', '3', '4', '5');
-CREATE TYPE "Shipping" AS ENUM ('Standard Mail', 'Express Mail', 'Urgent Mail');
-CREATE TYPE "Payment" AS ENUM ('Debit Card', 'PayPal');
-CREATE TYPE Skill AS ENUM ('Climbs', 'Jumps', 'Talks', 'Skates', 'Olfaction', 'Moonlight Navigation', 'Echolocation', 'Acrobatics');
-CREATE TYPE "Color" AS ENUM ('Blue', 'Brown', 'Black', 'Yellow', 'Green', 'Red', 'White');
-CREATE TYPE "DevStage" AS ENUM ('Baby', 'Child', 'Teen', 'Adult', 'Elderly');
-CREATE TYPE Category AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', 'Birds', 'Amphibians');
+CREATE TYPE "rating" AS ENUM ('1', '2', '3', '4', '5');
+CREATE TYPE "shipping" AS ENUM ('Standard Mail', 'Express Mail', 'Urgent Mail');
+CREATE TYPE "payment" AS ENUM ('Debit Card', 'PayPal');
+CREATE TYPE "skill_name" AS ENUM ('Climbs', 'Jumps', 'Talks', 'Skates', 'Olfaction', 'Moonlight Navigation', 'Echolocation', 'Acrobatics');
+CREATE TYPE "color" AS ENUM ('Blue', 'Brown', 'Black', 'Yellow', 'Green', 'Red', 'White');
+CREATE TYPE "dev_stage" AS ENUM ('Baby', 'Child', 'Teen', 'Adult', 'Elderly');
+CREATE TYPE "category_name" AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', 'Birds', 'Amphibians');
 
  
 -- Tables
 
-CREATE TABLE "User"
+CREATE TABLE "user"
 (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
     email text NOT NULL,
-    "hashedPassword" text NOT NULL,
-    CONSTRAINT "emailUK" UNIQUE (email)
+    "hashed_password" text NOT NULL,
+    CONSTRAINT "email_uk" UNIQUE (email)
 );
 
-CREATE TABLE "Admin"
+CREATE TABLE "admin"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "User" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "Buyer"
+CREATE TABLE "buyer"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "User" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "Seller"
+CREATE TABLE "seller"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "User" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    id integer NOT NULL PRIMARY KEY REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE,
     rating integer NOT NULL,
-    CONSTRAINT "ratingCK" CHECK (rating >= 1 AND rating <= 5)
+    CONSTRAINT "rating_ck" CHECK (rating >= 1 AND rating <= 5)
 );
 
-CREATE TABLE "Skill"
+CREATE TABLE "skill"
 (
     id SERIAL PRIMARY KEY,
-    name Skill NOT NULL
+    name "skill_name" NOT NULL
 );
 
-CREATE TABLE "MainColor"
+CREATE TABLE "main_color"
 (
     id SERIAL PRIMARY KEY,
-    name "Color" NOT NULL
+    name "color" NOT NULL
 );
 
-CREATE TABLE "DevelopmentStage"
+CREATE TABLE "development_stage"
 (
     id SERIAL PRIMARY KEY,
-    name "DevStage" NOT NULL
+    name "dev_stage" NOT NULL
 );
 
-CREATE TABLE "Category"
+CREATE TABLE "category"
 (
     id SERIAL PRIMARY KEY,
-    name Category NOT NULL
+    name "category_name" NOT NULL
 );
 
-CREATE TABLE "PaymentMethod"
+CREATE TABLE "payment_method"
 (
     id SERIAL PRIMARY KEY,
-    name "Payment" NOT NULL
+    name "payment" NOT NULL
 );
 
-CREATE TABLE "ShippingMethod"
+CREATE TABLE "shipping_method"
 (
     id SERIAL PRIMARY KEY,
-    name "Shipping" NOT NULL
+    name "shipping" NOT NULL
 );
 
-CREATE TABLE "Auction"
+CREATE TABLE "auction"
 (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
     description text NOT NULL,
-    "speciesName" text NOT NULL,
+    "species_name" text NOT NULL,
     age integer NOT NULL,
-    "startingPrice" integer NOT NULL,
-    "buyoutPrice" integer,
-    "endingDate" date NOT NULL,
-    "ratingSeller" "Rating",
-    "idCategory" integer NOT NULL REFERENCES "Category" (id) ON UPDATE CASCADE,
-    "idMainColor" integer NOT NULL REFERENCES "MainColor" (id) ON UPDATE CASCADE,
-    "idDevStage" integer NOT NULL REFERENCES "DevelopmentStage" (id) ON UPDATE CASCADE,
-    "idPaymentMethod" integer REFERENCES "PaymentMethod" (id) ON UPDATE CASCADE,
-    "idShippingMethod" integer REFERENCES "ShippingMethod" (id) ON UPDATE CASCADE,
-    "idSeller" integer NOT NULL REFERENCES "Seller" (id) ON UPDATE CASCADE,
-    "idWinner" integer REFERENCES "Buyer" (id) ON UPDATE CASCADE,
-    CONSTRAINT "endingDateCK" CHECK ("endingDate" > 'now'::text::date),
-    CONSTRAINT "buyoutPriceCK" CHECK ("buyoutPrice" > "startingPrice")
+    "starting_price" integer NOT NULL,
+    "buyout_price" integer,
+    "ending_date" date NOT NULL,
+    "rating_seller" "rating",
+    "id_category" integer NOT NULL REFERENCES "category" (id) ON UPDATE CASCADE,
+    "id_main_color" integer NOT NULL REFERENCES "main_color" (id) ON UPDATE CASCADE,
+    "iddev_stage" integer NOT NULL REFERENCES "development_stage" (id) ON UPDATE CASCADE,
+    "id_payment_method" integer REFERENCES "payment_method" (id) ON UPDATE CASCADE,
+    "id_shipping_method" integer REFERENCES "shipping_method" (id) ON UPDATE CASCADE,
+    "id_seller" integer NOT NULL REFERENCES "seller" (id) ON UPDATE CASCADE,
+    "id_winner" integer REFERENCES "buyer" (id) ON UPDATE CASCADE,
+    CONSTRAINT "ending_date_ck" CHECK ("ending_date" > 'now'::text::date),
+    CONSTRAINT "buyout_price_ck" CHECK ("buyout_price" > "starting_price")
 );
 
-CREATE TABLE "Bids"
+CREATE TABLE "bids"
 (
     id SERIAL PRIMARY KEY,
     value integer NOT NULL,
     maximum integer,
-    "idAuction" integer NOT NULL REFERENCES "Auction" (id) ON UPDATE CASCADE,
-    "idBuyer" integer REFERENCES "Buyer" (id) ON UPDATE CASCADE,
-    CONSTRAINT "maximumCK" CHECK ("maximum" >= value)
+    "id_auction" integer NOT NULL REFERENCES "auction" (id) ON UPDATE CASCADE,
+    "id_buyer" integer REFERENCES "buyer" (id) ON UPDATE CASCADE,
+    CONSTRAINT "maximum_ck" CHECK ("maximum" >= value)
 );
 
-CREATE TABLE "Notification"
+CREATE TABLE "notification"
 (
     id SERIAL PRIMARY KEY,
     "message" text NOT NULL,
     "type" text NOT NULL,
     "read" boolean DEFAULT FALSE,
-    "idAuction" integer NOT NULL REFERENCES "Auction" (id) ON UPDATE CASCADE,
-    "idBuyer" integer REFERENCES "Buyer" (id) ON UPDATE CASCADE
+    "id_auction" integer NOT NULL REFERENCES "auction" (id) ON UPDATE CASCADE,
+    "id_buyer" integer REFERENCES "buyer" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "Blocks"
+CREATE TABLE "blocks"
 (
     id SERIAL PRIMARY KEY,
-    "endDate" date,
-    "idAdmin" integer NOT NULL REFERENCES "Admin" (id) ON UPDATE CASCADE,
-    "idSeller" integer NOT NULL REFERENCES "Seller" (id) ON UPDATE CASCADE,
-    CONSTRAINT "endDateCK" CHECK ("endDate" > 'now'::text::date)
+    "end_date" date,
+    "id_admin" integer NOT NULL REFERENCES "admin" (id) ON UPDATE CASCADE,
+    "id_seller" integer NOT NULL REFERENCES "seller" (id) ON UPDATE CASCADE,
+    CONSTRAINT "end_date_ck" CHECK ("end_date" > 'now'::text::date)
 );
 
-CREATE TABLE "Ships"
+CREATE TABLE "ships"
 (
     id SERIAL PRIMARY KEY,
-    "idSeller" integer NOT NULL REFERENCES "Seller" (id) ON UPDATE CASCADE,
-    "idShippingMethod" integer NOT NULL REFERENCES "ShippingMethod" (id) ON UPDATE CASCADE
+    "id_seller" integer NOT NULL REFERENCES "seller" (id) ON UPDATE CASCADE,
+    "id_shipping_method" integer NOT NULL REFERENCES "shipping_method" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "Accepts"
+CREATE TABLE "accepts"
 (
     id SERIAL PRIMARY KEY,
-    "idSeller" integer NOT NULL REFERENCES "Seller" (id) ON UPDATE CASCADE,
-    "idPaymentMethod" integer NOT NULL REFERENCES "PaymentMethod" (id) ON UPDATE CASCADE
+    "id_seller" integer NOT NULL REFERENCES "seller" (id) ON UPDATE CASCADE,
+    "id_payment_method" integer NOT NULL REFERENCES "payment_method" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "Reports"
+CREATE TABLE "reports"
 (
     id SERIAL PRIMARY KEY,
     "date" date NOT NULL DEFAULT 'now'::text::date,
-    "idBuyer" integer NOT NULL REFERENCES "Buyer" (id) ON UPDATE CASCADE,
-    "idSeller" integer NOT NULL REFERENCES "Seller" (id) ON UPDATE CASCADE
+    "id_buyer" integer NOT NULL REFERENCES "buyer" (id) ON UPDATE CASCADE,
+    "id_seller" integer NOT NULL REFERENCES "seller" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "ReportStatus"
+CREATE TABLE "report_status"
 (
     id SERIAL PRIMARY KEY,
-    "idReports" integer NOT NULL REFERENCES "Reports" (id) ON UPDATE CASCADE
+    "id_reports" integer NOT NULL REFERENCES "reports" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "ReportPending"
+CREATE TABLE "report_pending"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "ReportStatus" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "report_status" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "ReportApproved"
+CREATE TABLE "report_approved"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "ReportStatus" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "report_status" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "ReportDenied"
+CREATE TABLE "report_denied"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "ReportStatus" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "report_status" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "Watchlists"
-(
-    id SERIAL PRIMARY KEY,
-    "idAuction" integer NOT NULL REFERENCES "Auction" (id) ON UPDATE CASCADE,
-    "idBuyer" integer NOT NULL REFERENCES "Buyer" (id) ON UPDATE CASCADE
-);
-
-CREATE TABLE "Features"
+CREATE TABLE "watchlists"
 (
     id SERIAL PRIMARY KEY,
-    "idAuction" integer NOT NULL REFERENCES "Auction" (id) ON UPDATE CASCADE,
-    "idSkill" integer NOT NULL REFERENCES "Skill" (id) ON UPDATE CASCADE
+    "id_auction" integer NOT NULL REFERENCES "auction" (id) ON UPDATE CASCADE,
+    "id_buyer" integer NOT NULL REFERENCES "buyer" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "AuctionStatus"
+CREATE TABLE "features"
 (
     id SERIAL PRIMARY KEY,
-    "idAuction" integer NOT NULL REFERENCES "Auction" (id) ON UPDATE CASCADE
+    "id_auction" integer NOT NULL REFERENCES "auction" (id) ON UPDATE CASCADE,
+    "id_skill" integer NOT NULL REFERENCES "skill" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "AuctionOngoing"
+CREATE TABLE "auction_status"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "AuctionStatus" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id SERIAL PRIMARY KEY,
+    "id_auction" integer NOT NULL REFERENCES "auction" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "AuctionCancelled"
+CREATE TABLE "auction_ongoing"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "AuctionStatus" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "auction_status" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "AuctionFinished"
+CREATE TABLE "auction_cancelled"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "AuctionStatus" (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "auction_status" (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "Image"
+CREATE TABLE "auction_finished"
+(
+    id integer NOT NULL PRIMARY KEY REFERENCES "auction_status" (id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE "image"
 (
     id SERIAL PRIMARY KEY,
     url text NOT NULL
 );
 
-CREATE TABLE "ProfilePhoto"
+CREATE TABLE "profile_photo"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "Image" (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    "idUser" integer NOT NULL REFERENCES "User" (id) ON UPDATE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "image" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    "id_user" integer NOT NULL REFERENCES "user" (id) ON UPDATE CASCADE
 );
 
-CREATE TABLE "AnimalPhoto"
+CREATE TABLE "animal_photo"
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES "Image" (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    "idAuction" integer NOT NULL REFERENCES "Auction" (id) ON UPDATE CASCADE
+    id integer NOT NULL PRIMARY KEY REFERENCES "image" (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    "id_auction" integer NOT NULL REFERENCES "auction" (id) ON UPDATE CASCADE
 );
