@@ -1,7 +1,3 @@
---
--- PostgreSQL database dump
---
-
 DROP TABLE watchlists;
 DROP TABLE ships;
 DROP TABLE seller;
