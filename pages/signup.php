@@ -79,4 +79,3 @@ include('../templates/common/footer.php');
 ?>
 
 <script src="../scripts/signupAnimation.js"></script>
-<script src="../scripts/signupFooter.js"></script>

@@ -1,10 +1,16 @@
+html{
+    height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
+    width: 100%;
     margin: 0;
     padding-top: 4.1em;
     position: relative;
     min-height: 100vh;
+
 }
 
 body > div{
@@ -19,9 +25,10 @@ body > div{
 }
 
 .container {
-    position: relative;
+    margin-right: auto;
+    height: 100%;
     text-align: center;
-    padding: 0 !important;
+    margin-bottom: 1em;
 }
 
 .content {
@@ -44,7 +51,7 @@ body > div{
 
 .card-img-top {
     height: 200px ; 
-    width: 275px !important;
+    width: 100% !important;
     object-fit: cover;
 }
 

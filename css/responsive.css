@@ -13,10 +13,6 @@
         display: block;
         width: 100vw;
     }
-
-    #signup_bg #main{
-        width: 375px;
-    }
 }
 
 @media(max-width: 1100px) {
@@ -148,9 +144,48 @@
     }
 }
 
+@media (max-width: 395px){
+    #navbarSupportedContent > form{
+        display: flex;
+        flex-direction: column;
+    }
+    #navbarSupportedContent > form > input{
+        width: 100%!important;
+    }
+}
+
+/* Signup page */
+
+@media(max-width: 1050px){
+    #signup_bg #main{
+        width: 450px ;
+        left: 50% !important;
+        right: 50% !important;
+    }
+    #box{
+        top: 75%;
+        width: 90% !important;
+    }
+    #loginform, #signupform {
+        left: 50% !important;
+    }
+    #login_msg, #signup_msg{
+        top: 50% !important;
+        left: 50% !important;
+        width: 100% !important;
+    }
+    #login_btn, #signup_btn{
+        left: 50% !important;
+        top: 75% !important;
+    }
+    #login_infos{
+        visibility: hidden;
+    }
+}
+
 @media(max-width: 415px){
     #signup_bg #main{
-        width: 325px;
+        width: 325px ;
         left: 50% !important;
         right: 50% !important;
     }
@@ -169,24 +204,11 @@
         left: 50% !important;
         top: 75% !important;
     }
-    #login_infos{
-        visibility: hidden;
-    }
-}
-
-@media (max-width: 395px){
-    #navbarSupportedContent > form{
-        display: flex;
-        flex-direction: column;
-    }
-    #navbarSupportedContent > form > input{
-        width: 100%!important;
-    }
 }
 
 @media(max-width: 360px){
     #signup_bg #main{
-        width: 300px;
+        width: 300px ;
         left: 50% !important;
         right: 50% !important;
     }
@@ -209,71 +231,51 @@
         left: 50% !important;
         top: 75% !important;
     }
-    #login_infos{
-        visibility: hidden;
+}
+
+@media(min-width: 1051px){
+    #signup_bg #main{
+        width: 400px !important;
+    }
+    #login_infos, #signup_infos{
+        visibility: visible;
     }
 }
 
+@media(min-width: 1249px){
+    #signup_bg #main{
+        width: 450px !important;
+    }
+    #login_infos, #signup_infos{
+        visibility: visible;
+    }
+}
 
-
-@media(max-height: 1050px){
+@media(max-height: 1200px){
     #signup_bg #main{
         height: 450px !important;
-        left: 50% !important;
-        right: 50% !important;
+    }
+}
+
+@media(max-height: 975px){
+    #signup_bg #main{
+        height: 450px !important;
         top: 40%
     }
     #box{
         top: 75%;
     }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
     #login_msg, #signup_msg{
         top: 50% !important;
-        left: 50% !important;
     }
     #login_btn, #signup_btn{
-        left: 50% !important;
         top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
-    }
-}
-
-@media(max-height: 900px){
-    #signup_bg #main{
-        height: 450px !important;
-        left: 50% !important;
-        right: 50% !important;
-        top: 40%
-    }
-    #box{
-        top: 75%;
-    }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
     }
 }
 
 @media(max-height: 700px){
     #signup_bg #main{
         height: 400px !important;
-        left: 50% !important;
-        right: 50% !important;
-        top: 40%
     }
     #signupform input, #loginform input, #signupform button, #loginform button{
         height: 30px !important;
@@ -281,27 +283,17 @@
     #box{
         top: 75%;
     }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
     #login_msg, #signup_msg{
         top: 50% !important;
-        left: 50% !important;
     }
     #login_btn, #signup_btn{
-        left: 50% !important;
         top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
     }
 }
 
 @media(max-height: 650px){
     #signup_bg #main{
         height: 375px !important;
-        left: 50% !important;
-        right: 50% !important;
         top: 43%
     }
     #signupform input, #loginform input, #signupform button, #loginform button{
@@ -314,18 +306,10 @@
     #box > div > *{
         height: 30px !important;
     }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
     #login_msg, #signup_msg{
         top: 40% !important;
-        left: 50% !important;
     }
     #login_btn, #signup_btn{
-        left: 50% !important;
         top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
     }
 }
