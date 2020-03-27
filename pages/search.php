@@ -315,7 +315,7 @@ include('../templates/common/header.php');
     </div>
 
     <div class="d-flex flex-wrap text-left justify-content-around mb-5">
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
@@ -332,7 +332,7 @@ include('../templates/common/header.php');
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
@@ -349,7 +349,7 @@ include('../templates/common/header.php');
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/insects.jpg" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
@@ -369,7 +369,7 @@ include('../templates/common/header.php');
     <!-- </div>
 
     <div class="d-flex flex-wrap text-left justify-content-around"> -->
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/animal2.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
@@ -386,7 +386,7 @@ include('../templates/common/header.php');
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>
@@ -403,7 +403,7 @@ include('../templates/common/header.php');
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/mammals.jpg" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>

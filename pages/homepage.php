@@ -27,7 +27,7 @@ include('../templates/common/header.php');
      -->
     <h2 class="mt-3">Trending</h2>
     <div class="d-flex flex-wrap text-left justify-content-around">
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré</h5>
@@ -44,7 +44,7 @@ include('../templates/common/header.php');
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 2</h5>
@@ -61,7 +61,7 @@ include('../templates/common/header.php');
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
+        <div class="card auct-card mt-4">
             <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title font-weight-bold">Macaco da Nazaré 3</h5>

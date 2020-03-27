@@ -53,7 +53,7 @@ include('../templates/common/header.php');
         </button>
         <div class="collapsible_content bgColorGrey">
             <div class="d-flex flex-wrap text-left justify-content-around">
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré</h5>
@@ -63,7 +63,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/fishes.jpeg" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 2</h5>
@@ -73,7 +73,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/insects.jpg" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 3</h5>
@@ -96,7 +96,7 @@ include('../templates/common/header.php');
         </button>
         <div class="collapsible_content bgColorGrey">
             <div class="d-flex flex-wrap text-left justify-content-around">
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/lion.jfif" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré</h5>
@@ -107,7 +107,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/fishes.jpeg" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 2</h5>
@@ -117,7 +117,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/insects.jpg" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 3</h5>
@@ -140,7 +140,7 @@ include('../templates/common/header.php');
         </button>
         <div class="collapsible_content bgColorGrey">
             <div class="d-flex flex-wrap text-left justify-content-around">
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré</h5>
@@ -150,7 +150,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 2</h5>
@@ -160,7 +160,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/animal2.jfif" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 3</h5>
@@ -184,7 +184,7 @@ include('../templates/common/header.php');
         </button>
         <div class="collapsible_content">
             <div class="d-flex flex-wrap text-left justify-content-around">
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/animal3.jfif" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré</h5>
@@ -194,7 +194,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/monkey.jpg" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 2</h5>
@@ -205,7 +205,7 @@ include('../templates/common/header.php');
                         <a href="viewAuctionGuest.php" class="btn btn-green align-self-end">View Auction</a>
                     </div>
                 </div>
-                <div class="card mt-4">
+                <div class="card auct-card mt-4">
                     <img class="card-img-top" src="../images/animal2.jfif" alt="Card image cap">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Macaco da Nazaré 3</h5>
