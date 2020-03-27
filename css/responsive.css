@@ -238,7 +238,8 @@
         width: 400px !important;
     }
     #login_infos, #signup_infos{
-        visibility: visible;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
@@ -247,7 +248,8 @@
         width: 450px !important;
     }
     #login_infos, #signup_infos{
-        visibility: visible;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
