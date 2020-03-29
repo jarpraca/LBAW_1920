@@ -161,7 +161,6 @@ include('../templates/common/header.php');
                     <thead>
                         <tr class="d-flex">
                             <th class="col-5 col-sm-2">Reported User</th>
-                            <th class="col-3 col-sm-2">Status</th>
                             <th class="col-5 col-sm-2">Date of Last Report</th>
                             <th class="col-4 col-sm-2"></th>
                         </tr>
@@ -169,7 +168,6 @@ include('../templates/common/header.php');
                     <tbody class="report_inbox">
                         <tr class="d-flex">
                             <td class="col-5 col-sm-2">Steve King</td>
-                            <td class="col-3 col-sm-2"><span class="badge badge-success py-2">Approved</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
@@ -178,7 +176,6 @@ include('../templates/common/header.php');
                         </tr>
                         <tr class="d-flex">
                             <td class="col-5 col-sm-2">Albert Indio</td>
-                            <td class="col-3 col-sm-2"><span class="badge badge-warning py-2">Pending</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
@@ -187,7 +184,6 @@ include('../templates/common/header.php');
                         </tr>
                         <tr class="d-flex">
                             <td class="col-5 col-sm-2">Roger Rets</td>
-                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
@@ -196,7 +192,6 @@ include('../templates/common/header.php');
                         </tr>
                         <tr class="d-flex">
                             <td class="col-5 col-sm-2">Sharapova</td>
-                            <td class="col-3 col-sm-2"><span class="badge badge-danger py-2">Denied</span></td>
                             <td class="col-5 col-sm-2">2019-05-04 19:25</td>
                             <td class="col-4 col-sm-2">
                                 <button type="button" class="btn btn-warning">Block</button>
