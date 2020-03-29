@@ -133,7 +133,7 @@
                         </div>
 
                         <div class="d-flex ml-2 mr-2 mb-3">
-                            <input type="text" class="form-control search_text_input" placeholder="Address" />
+                            <input type="text" class="form-control search_text_input outline-green" placeholder="Address" />
                         </div>
                     </div>
                     <div class="modal-footer">
