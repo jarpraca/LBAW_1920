@@ -1,33 +1,27 @@
 DROP TABLE IF Exists watchlists;
 DROP TABLE IF Exists ships;
-DROP TABLE IF Exists seller;
-DROP TABLE IF Exists report_pending;
-DROP TABLE IF Exists report_denied;
-DROP TABLE IF Exists report_approved;
 DROP TABLE IF Exists profile_photo;
 DROP TABLE IF Exists features;
-DROP TABLE IF Exists buyer;
-DROP TABLE IF Exists auction_ongoing;
-DROP TABLE IF Exists auction_finished;
-DROP TABLE IF Exists auction_cancelled;
 DROP TABLE IF Exists animal_photo;
-DROP TABLE IF Exists "admin";
 DROP TABLE IF Exists accepts;
-DROP TABLE IF Exists "user";
 DROP TABLE IF Exists skill;
-DROP TABLE IF Exists shipping_method;
-DROP TABLE IF Exists reports;
 DROP TABLE IF Exists report_status;
-DROP TABLE IF Exists payment_method;
+DROP TABLE IF Exists reports;
 DROP TABLE IF Exists "notification";
+DROP TABLE IF Exists bids;
+DROP TABLE IF Exists auction_status;
+DROP TABLE IF Exists auction;
 DROP TABLE IF Exists main_color;
 DROP TABLE IF Exists "image";
 DROP TABLE IF Exists blocks;
-DROP TABLE IF Exists bids;
-DROP TABLE IF Exists auction;
-DROP TABLE IF Exists auction_status;
 DROP TABLE IF Exists development_stage;
 DROP TABLE IF Exists category;
+DROP TABLE IF Exists shipping_method;
+DROP TABLE IF Exists payment_method;
+DROP TABLE IF Exists "admin";
+DROP TABLE IF Exists seller;
+DROP TABLE IF Exists buyer;
+DROP TABLE IF Exists "user";
 
 DROP TYPE IF Exists skill_name;
 DROP TYPE IF Exists category_name;
@@ -36,7 +30,8 @@ DROP TYPE IF Exists rating;
 DROP TYPE IF Exists payment;
 DROP TYPE IF Exists dev_stage;
 DROP TYPE IF Exists color;
-
+DROP TYPE IF EXISTS report_status_name;
+DROP TYPE IF EXISTS auction_status_name;
 
 -- Types
  
@@ -47,7 +42,8 @@ CREATE TYPE skill_name AS ENUM ('Climbs', 'Jumps', 'Talks', 'Skates', 'Olfaction
 CREATE TYPE color AS ENUM ('Blue', 'Brown', 'Black', 'Yellow', 'Green', 'Red', 'White');
 CREATE TYPE dev_stage AS ENUM ('Baby', 'Child', 'Teen', 'Adult', 'Elderly');
 CREATE TYPE category_name AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', 'Birds', 'Amphibians');
-
+CREATE TYPE report_status_name as ENUM('Pending', 'Approved', 'Denied');
+CREATE TYPE auction_status_name as ENUM('Ongoing', 'Cancelled','Finished');
 
 -- Tables
 
@@ -78,37 +74,37 @@ CREATE TABLE seller
 CREATE TABLE skill
 (
     id SERIAL PRIMARY KEY,
-    name skill_name NOT NULL
+    TYPE skill_name NOT NULL
 );
 
 CREATE TABLE main_color
 (
     id SERIAL PRIMARY KEY,
-    name color NOT NULL
+    TYPE color NOT NULL
 );
 
 CREATE TABLE development_stage
 (
     id SERIAL PRIMARY KEY,
-    name dev_stage NOT NULL
+    TYPE dev_stage NOT NULL
 );
 
 CREATE TABLE category
 (
     id SERIAL PRIMARY KEY,
-    name category_name NOT NULL
+    TYPE category_name NOT NULL
 );
 
 CREATE TABLE payment_method
 (
     id SERIAL PRIMARY KEY,
-    name payment NOT NULL
+    TYPE payment NOT NULL
 );
 
 CREATE TABLE shipping_method
 (
     id SERIAL PRIMARY KEY,
-    name shipping NOT NULL
+    TYPE shipping NOT NULL
 );
 
 CREATE TABLE auction
@@ -120,8 +116,9 @@ CREATE TABLE auction
     age integer NOT NULL,
     starting_price integer NOT NULL,
     buyout_price integer,
+    current_price integer,
     ending_date date NOT NULL CHECK (ending_date > 'now'::text::date),
-    rating_seller "Rating",
+    TYPE rating,
     id_category integer NOT NULL REFERENCES category (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_main_color integer NOT NULL REFERENCES main_color (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_dev_stage integer NOT NULL REFERENCES development_stage (id) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -129,7 +126,9 @@ CREATE TABLE auction
     id_shipping_method integer REFERENCES shipping_method (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_seller integer NOT NULL REFERENCES seller (id) ON UPDATE CASCADE ,
     id_winner integer REFERENCES buyer (id) ON UPDATE CASCADE ,
-    CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price)
+    CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
+    CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price)
+
 );
 
 CREATE TABLE bids
@@ -146,7 +145,6 @@ CREATE TABLE "notification"
 (
     id SERIAL PRIMARY KEY,
     "message" text NOT NULL,
-    "type" text NOT NULL,
     "read" boolean DEFAULT FALSE,
     id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE,
     id_buyer integer REFERENCES buyer (id) ON UPDATE CASCADE ON DELETE CASCADE
@@ -185,22 +183,8 @@ CREATE TABLE reports
 CREATE TABLE report_status
 (
     id SERIAL PRIMARY KEY,
-    id_reports integer NOT NULL REFERENCES reports (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE report_pending
-(
-    id integer NOT NULL PRIMARY KEY REFERENCES report_status (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE report_approved
-(
-    id integer NOT NULL PRIMARY KEY REFERENCES report_status (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE report_denied
-(
-    id integer NOT NULL PRIMARY KEY REFERENCES report_status (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_reports integer NOT NULL REFERENCES reports (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    TYPE report_status_name NOT NULL
 );
 
 CREATE TABLE watchlists
@@ -220,22 +204,8 @@ CREATE TABLE features
 CREATE TABLE auction_status
 (
     id SERIAL PRIMARY KEY,
-    id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE auction_ongoing
-(
-    id integer NOT NULL PRIMARY KEY REFERENCES auction_status (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE auction_cancelled
-(
-    id integer NOT NULL PRIMARY KEY REFERENCES auction_status (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE auction_finished
-(
-    id integer NOT NULL PRIMARY KEY REFERENCES auction_status (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    TYPE auction_status_name NOT NULL
 );
 
 CREATE TABLE "image"
