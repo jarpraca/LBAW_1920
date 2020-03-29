@@ -1,40 +1,65 @@
-DROP TABLE IF Exists watchlists;
-DROP TABLE IF Exists ships;
-DROP TABLE IF Exists profile_photo;
-DROP TABLE IF Exists features;
-DROP TABLE IF Exists animal_photo;
-DROP TABLE IF Exists accepts;
-DROP TABLE IF Exists skill;
-DROP TABLE IF Exists report_status;
-DROP TABLE IF Exists reports;
-DROP TABLE IF Exists "notification";
-DROP TABLE IF Exists bids;
-DROP TABLE IF Exists auction_status;
-DROP TABLE IF Exists auction;
-DROP TABLE IF Exists main_color;
-DROP TABLE IF Exists "image";
-DROP TABLE IF Exists blocks;
-DROP TABLE IF Exists development_stage;
-DROP TABLE IF Exists category;
-DROP TABLE IF Exists shipping_method;
-DROP TABLE IF Exists payment_method;
-DROP TABLE IF Exists "admin";
-DROP TABLE IF Exists seller;
-DROP TABLE IF Exists buyer;
-DROP TABLE IF Exists "user";
+DROP TABLE IF EXISTS watchlists;
+DROP TABLE IF EXISTS ships;
+DROP TABLE IF EXISTS profile_photo;
+DROP TABLE IF EXISTS features;
+DROP TABLE IF EXISTS animal_photo;
+DROP TABLE IF EXISTS accepts;
+DROP TABLE IF EXISTS skill;
+DROP TABLE IF EXISTS report_status;
+DROP TABLE IF EXISTS reports;
+DROP TABLE IF EXISTS "notification";
+DROP TABLE IF EXISTS bids;
+DROP TABLE IF EXISTS auction_status;
+DROP TABLE IF EXISTS auction;
+DROP TABLE IF EXISTS main_color;
+DROP TABLE IF EXISTS "image";
+DROP TABLE IF EXISTS blocks;
+DROP TABLE IF EXISTS development_stage;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS shipping_method;
+DROP TABLE IF EXISTS payment_method;
+DROP TABLE IF EXISTS "admin";
+DROP TABLE IF EXISTS seller;
+DROP TABLE IF EXISTS buyer;
+DROP TABLE IF EXISTS "user";
 
-DROP TYPE IF Exists skill_name;
-DROP TYPE IF Exists category_name;
-DROP TYPE IF Exists shipping;
-DROP TYPE IF Exists rating;
-DROP TYPE IF Exists payment;
-DROP TYPE IF Exists dev_stage;
-DROP TYPE IF Exists color;
+DROP TYPE IF EXISTS skill_name;
+DROP TYPE IF EXISTS category_name;
+DROP TYPE IF EXISTS shipping;
+DROP TYPE IF EXISTS rating;
+DROP TYPE IF EXISTS payment;
+DROP TYPE IF EXISTS dev_stage;
+DROP TYPE IF EXISTS color;
 DROP TYPE IF EXISTS report_status_name;
 DROP TYPE IF EXISTS auction_status_name;
 
--- Types
- 
+DROP INDEX IF EXISTS user_email;
+DROP INDEX IF EXISTS search_auction;
+DROP INDEX IF EXISTS admin_search;
+DROP INDEX IF EXISTS auction_id;
+DROP INDEX IF EXISTS notification_id;
+
+DROP TRIGGER IF EXISTS create_buyer ON "user";
+DROP TRIGGER IF EXISTS create_seller ON "user";
+DROP TRIGGER IF EXISTS stop_ongoing_auctions ON blocks;
+DROP TRIGGER IF EXISTS update_current_price ON bids;
+DROP TRIGGER IF EXISTS send_notification ON bids;
+DROP TRIGGER IF EXISTS notify_winner ON auction_status;
+DROP TRIGGER IF EXISTS verify_bid_value ON bids;
+DROP TRIGGER IF EXISTS update_rating ON auction;
+
+DROP FUNCTION IF EXISTS create_buyer();
+DROP FUNCTION IF EXISTS create_seller();
+DROP FUNCTION IF EXISTS stop_ongoing_auctions();
+DROP FUNCTION IF EXISTS update_current_price();
+DROP FUNCTION IF EXISTS send_notification();
+DROP FUNCTION IF EXISTS notify_winner();
+DROP FUNCTION IF EXISTS verify_bid_value();
+DROP FUNCTION IF EXISTS update_rating();
+
+-----------------------------------------
+-- TYPES
+----------------------------------------- 
 CREATE TYPE rating AS ENUM ('1', '2', '3', '4', '5');
 CREATE TYPE shipping AS ENUM ('Standard Mail', 'Express Mail', 'Urgent Mail');
 CREATE TYPE payment AS ENUM ('Debit Card', 'PayPal');
@@ -45,8 +70,9 @@ CREATE TYPE category_name AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', '
 CREATE TYPE report_status_name as ENUM('Pending', 'Approved', 'Denied');
 CREATE TYPE auction_status_name as ENUM('Ongoing', 'Cancelled','Finished');
 
--- Tables
-
+-----------------------------------------
+-- TABLES
+-----------------------------------------
 CREATE TABLE "user"
 (
     id SERIAL PRIMARY KEY,
@@ -225,3 +251,156 @@ CREATE TABLE animal_photo
     id integer NOT NULL PRIMARY KEY REFERENCES "image" (id) ON UPDATE CASCADE ,
     id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-----------------------------------------
+-- INDEXES
+-----------------------------------------
+CREATE INDEX user_email ON "user" USING hash(email); 
+
+CREATE INDEX search_auction ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
+
+CREATE INDEX admin_search ON "user" USING GIST (to_tsvector('english', name || ' ' || email));
+
+CREATE INDEX auction_id ON auction USING hash(id);
+
+CREATE INDEX notification_id ON "notifications" USING hash(id);
+
+-----------------------------------------
+-- TRIGGERS
+-----------------------------------------
+
+CREATE FUNCTION create_buyer() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    INSERT INTO buyer(id) values (NEW.id);
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER create_buyer
+    AFTER INSERT ON "user" 
+    EXECUTE PROCEDURE create_buyer(); 
+
+
+CREATE FUNCTION create_seller() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF NOT EXISTS(SELECT * FROM auction WHERE NEW.id = id)
+       THEN INSERT INTO seller(id) values (NEW.id) ;
+    END IF;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER create_seller
+    AFTER INSERT ON "user" 
+    EXECUTE PROCEDURE create_seller(); 
+
+
+CREATE FUNCTION stop_ongoing_auctions() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE auction_status 
+        SET TYPE = "Cancelled"
+        WHERE id_seller = NEW.id_seller AND TYPE = "Ongoing";
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER stop_ongoing_auctions
+    AFTER INSERT ON blocks 
+    EXECUTE PROCEDURE stop_ongoing_auctions(); 
+
+
+CREATE FUNCTION update_current_price() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE auction 
+        SET current_price = NEW.value
+        WHERE id = NEW.id_auction;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_current_price
+    AFTER INSERT ON bids 
+    EXECUTE PROCEDURE update_current_price(); 
+
+
+CREATE FUNCTION send_notification() RETURNS TRIGGER AS
+$BODY$
+
+BEGIN
+    SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
+        FROM (SELECT value, id_auction, id_buyer
+              FROM  bids
+              WHERE id_auction >= NEW.id_auction) AS auction_info;
+        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
+            values("Your bid has been surpassed", FALSE, NEW.id_auction, NEW.id_buyer ); 
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER send_notification
+    BEFORE INSERT ON bids 
+    EXECUTE PROCEDURE send_notification(); 
+
+
+CREATE FUNCTION notify_winner() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF(NEW.TYPE == "Finished")
+    THEN
+        SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
+            FROM (SELECT value, id_auction, id_buyer
+                    FROM  bids
+                    WHERE id_auction >= NEW.id_auction) AS auction_info;
+        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
+            VALUES ("You won an auction", FALSE, id_auction, id_winner);
+    END IF;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER notify_winner
+    AFTER UPDATE ON auction_status 
+    EXECUTE PROCEDURE notify_winner(); 
+
+
+CREATE FUNCTION verify_bid_value() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    SELECT current_price FROM auction WHERE NEW.id_auction = id_auction;
+    IF (NEW.value <= current_price ) 
+        THEN RAISE EXCEPTION 'A bid can only be made with a value greater than the current bid';
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+ 
+CREATE TRIGGER verify_bid_value
+    BEFORE INSERT ON bids
+    EXECUTE PROCEDURE verify_bid_value();
+
+
+CREATE FUNCTION update_rating() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF(NEW.TYPE != NULL)
+    THEN
+        UPDATE seller
+        SET rating = (
+            SELECT AVG(TYPE)
+            FROM auction
+            WHERE auction.id = NEW.id
+        )
+        WHERE seller.id = New.id_seller;
+    END IF;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_rating
+    AFTER UPDATE ON auction 
+    EXECUTE PROCEDURE update_rating(); 

@@ -5,7 +5,7 @@ SELECT name, email, url
     FROM ("user" NATURAL JOIN profile_photo)
     WHERE "user".email = $email;
 
---Search for Auctions with filters, current_price comes from Materialized View
+--Search for Auctions with filters
 SELECT id, species_name, current_price, age, ending_date
     FROM (auction JOIN features ON auction.id = features.id_auction)
     WHERE   (id_category = $category OR $category IS NULL)
@@ -24,7 +24,7 @@ SELECT id, species_name, current_price, age, ending_date
 --Full Text Search Auction
 SELECT id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
     FROM auction, to_tsquery($search) AS query, 
-        to_tsvector(name || ' ' || species_name || ' ' || description || ' ' || category || ' ' || main_color || ' ' || skill || ' ' || dev_stage) AS textsearch
+        to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
     WHERE query @@ textsearch\\ 
     ORDER BY rank DESC;
 
@@ -115,7 +115,7 @@ UPDATE auction
     WHERE id = $id_auction AND id_seller = $id_seller
 
 
---Up-Update read status in notate read status in notification
+--Update read status in notification
 UPDATE "notification"
     SET "read" = $read
     WHERE id_auction = $id_auction AND id_buyer = $id_buyer;
@@ -150,7 +150,7 @@ DELETE FROM watchlists
  CREATE INDEX user_email ON "user" USING hash(email); 
 
 --SELECT03
- CREATE INDEX search_index ON auction USING GIST (to_tsvector(name || ' ' || species_name || ' ' || description || ' ' || category || ' ' || main_color || ' ' || skill || ' ' || dev_stage))
+CREATE INDEX search_au ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
 
 --SELECT04
  CREATE INDEX admin_search ON "user" USING GIST (to_tsvector(name || ' ' || email));
@@ -260,25 +260,27 @@ CREATE TRIGGER send_notification
     EXECUTE PROCEDURE send_notification(); 
 
 -- Send Notification to winner when the status changes to finished
-DROP TRIGGER IF EXISTS notify_winner ON bids;
+DROP TRIGGER IF EXISTS notify_winner ON auction_status;
 DROP FUNCTION IF EXISTS notify_winner();
 
 CREATE FUNCTION notify_winner() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
-        FROM (SELECT value, id_auction, id_buyer
-              FROM  bids
-              WHERE id_auction >= NEW.id_auction) AS auction_info;
-    
-    INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
-        VALUES ("You won an auction", FALSE, id_auction, id_winner);
+    IF(NEW.TYPE == "Finished")
+    THEN
+        SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
+            FROM (SELECT value, id_auction, id_buyer
+                    FROM  bids
+                    WHERE id_auction >= NEW.id_auction) AS auction_info;
+        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
+            VALUES ("You won an auction", FALSE, id_auction, id_winner);
+    END IF;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER notify_winner
-    AFTER INSERT ON bids 
+    AFTER UPDATE ON auction_status 
     EXECUTE PROCEDURE notify_winner(); 
 
 --Verify 
@@ -301,6 +303,34 @@ LANGUAGE plpgsql;
 CREATE TRIGGER verify_bid_value
     BEFORE INSERT ON bids
     EXECUTE PROCEDURE verify_bid_value();
+
+
+-- Update seller's rating when a rating is added
+DROP TRIGGER IF EXISTS update_rating ON auction;
+DROP FUNCTION IF EXISTS update_rating();
+
+CREATE FUNCTION update_rating() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF(NEW.TYPE != NULL)
+    THEN
+        UPDATE seller
+        SET rating = (
+            SELECT AVG(TYPE)
+            FROM auction
+            WHERE auction.id = NEW.id
+        )
+        WHERE seller.id = New.id_seller;
+    END IF;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_rating
+    AFTER UPDATE ON auction 
+    EXECUTE PROCEDURE update_rating(); 
+
+    
 -------------------------TRANSACTIONS---------------------------
 
 --Select Reports
