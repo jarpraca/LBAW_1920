@@ -47,6 +47,7 @@ DROP TRIGGER IF EXISTS send_notification ON bids;
 DROP TRIGGER IF EXISTS notify_winner ON auction_status;
 DROP TRIGGER IF EXISTS verify_bid_value ON bids;
 DROP TRIGGER IF EXISTS update_rating ON auction;
+DROP TRIGGER IF EXISTS remove_watchlists ON auction_status;
 
 DROP FUNCTION IF EXISTS create_buyer();
 DROP FUNCTION IF EXISTS create_seller();
@@ -56,7 +57,7 @@ DROP FUNCTION IF EXISTS send_notification();
 DROP FUNCTION IF EXISTS notify_winner();
 DROP FUNCTION IF EXISTS verify_bid_value();
 DROP FUNCTION IF EXISTS update_rating();
-
+DROP FUNCTION IF EXISTS remove_watchlists();
 -----------------------------------------
 -- TYPES
 ----------------------------------------- 
@@ -94,7 +95,7 @@ CREATE TABLE buyer
 CREATE TABLE seller
 (
     id integer NOT NULL PRIMARY KEY REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    rating integer NOT NULL CHECK (rating >= 1 AND rating <= 5)
+    rating integer CHECK (rating >= 1 AND rating <= 5)
 );
 
 CREATE TABLE skill
@@ -186,16 +187,16 @@ CREATE TABLE blocks
 
 CREATE TABLE ships
 (
-    id SERIAL PRIMARY KEY,
     id_seller integer NOT NULL REFERENCES seller (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    id_shipping_method integer NOT NULL REFERENCES shipping_method (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_shipping_method integer NOT NULL REFERENCES shipping_method (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY Key(id_seller, id_shipping_method)
 );
 
 CREATE TABLE accepts
 (
-    id SERIAL PRIMARY KEY,
     id_seller integer NOT NULL REFERENCES seller (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    id_payment_method integer NOT NULL REFERENCES payment_method (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_payment_method integer NOT NULL REFERENCES payment_method (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY Key(id_seller, id_payment_method)
 );
 
 CREATE TABLE reports
@@ -215,16 +216,16 @@ CREATE TABLE report_status
 
 CREATE TABLE watchlists
 (
-    id SERIAL PRIMARY KEY,
     id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    id_buyer integer NOT NULL REFERENCES buyer (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_buyer integer NOT NULL REFERENCES buyer (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY Key(id_auction, id_buyer)
 );
 
 CREATE TABLE features
 (
-    id SERIAL PRIMARY KEY,
     id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    id_skill integer NOT NULL REFERENCES skill (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_skill integer NOT NULL REFERENCES skill (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY Key(id_auction, id_skill)
 );
 
 CREATE TABLE auction_status
@@ -255,101 +256,27 @@ CREATE TABLE animal_photo
 -----------------------------------------
 -- INDEXES
 -----------------------------------------
-CREATE INDEX user_email ON "user" USING hash(email); 
 
-CREATE INDEX search_auction ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
+ CREATE INDEX search_auction ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
 
-CREATE INDEX admin_search ON "user" USING GIST (to_tsvector('english', name || ' ' || email));
+ CREATE INDEX admin_search ON "user" USING GIST (to_tsvector('english', name || ' ' || email));
 
-CREATE INDEX auction_id ON auction USING hash(id);
+ CREATE INDEX notification_id ON "notification" USING hash(id_buyer);
 
-CREATE INDEX notification_id ON "notifications" USING hash(id);
+CREATE INDEX watchlists_id ON watchlists USING hash(id_buyer);
+
+CREATE INDEX auction_id ON auction USING hash(id_seller);
+
+CREATE INDEX bids_id ON bids USING hash(id_buyer);
 
 -----------------------------------------
 -- TRIGGERS
 -----------------------------------------
 
-CREATE FUNCTION create_buyer() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    INSERT INTO buyer(id) values (NEW.id);
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER create_buyer
-    AFTER INSERT ON "user" 
-    EXECUTE PROCEDURE create_buyer(); 
-
-
-CREATE FUNCTION create_seller() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF NOT EXISTS(SELECT * FROM auction WHERE NEW.id = id)
-       THEN INSERT INTO seller(id) values (NEW.id) ;
-    END IF;
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER create_seller
-    AFTER INSERT ON "user" 
-    EXECUTE PROCEDURE create_seller(); 
-
-
-CREATE FUNCTION stop_ongoing_auctions() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    UPDATE auction_status 
-        SET TYPE = "Cancelled"
-        WHERE id_seller = NEW.id_seller AND TYPE = "Ongoing";
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER stop_ongoing_auctions
-    AFTER INSERT ON blocks 
-    EXECUTE PROCEDURE stop_ongoing_auctions(); 
-
-
-CREATE FUNCTION update_current_price() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    UPDATE auction 
-        SET current_price = NEW.value
-        WHERE id = NEW.id_auction;
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER update_current_price
-    AFTER INSERT ON bids 
-    EXECUTE PROCEDURE update_current_price(); 
-
-
-CREATE FUNCTION send_notification() RETURNS TRIGGER AS
-$BODY$
-
-BEGIN
-    SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
-        FROM (SELECT value, id_auction, id_buyer
-              FROM  bids
-              WHERE id_auction >= NEW.id_auction) AS auction_info;
-        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
-            values("Your bid has been surpassed", FALSE, NEW.id_auction, NEW.id_buyer ); 
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER send_notification
-    BEFORE INSERT ON bids 
-    EXECUTE PROCEDURE send_notification(); 
-
-
 CREATE FUNCTION notify_winner() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF(NEW.TYPE == "Finished")
+    IF(NEW.TYPE = 'Finished')
     THEN
         SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
             FROM (SELECT value, id_auction, id_buyer
@@ -364,14 +291,30 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER notify_winner
     AFTER UPDATE ON auction_status 
+	FOR EACH ROW
     EXECUTE PROCEDURE notify_winner(); 
 
+
+CREATE FUNCTION update_current_price() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE auction 
+        SET current_price = NEW.value
+        WHERE id = NEW.id_auction;
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_current_price
+    AFTER INSERT ON bids 
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_current_price();
 
 CREATE FUNCTION verify_bid_value() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    SELECT current_price FROM auction WHERE NEW.id_auction = id_auction;
-    IF (NEW.value <= current_price ) 
+    IF EXISTS (SELECT * FROM auction WHERE NEW.id_auction = id AND current_price > NEW.value ) 
         THEN RAISE EXCEPTION 'A bid can only be made with a value greater than the current bid';
     END IF;
     RETURN NEW;
@@ -381,9 +324,10 @@ LANGUAGE plpgsql;
  
 CREATE TRIGGER verify_bid_value
     BEFORE INSERT ON bids
+	FOR EACH ROW
     EXECUTE PROCEDURE verify_bid_value();
-
-
+	
+	
 CREATE FUNCTION update_rating() RETURNS TRIGGER AS
 $BODY$
 BEGIN
@@ -395,8 +339,9 @@ BEGIN
             FROM auction
             WHERE auction.id = NEW.id
         )
-        WHERE seller.id = New.id_seller;
+        WHERE seller.id = NEW.id_seller;
     END IF;
+	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -404,3 +349,90 @@ LANGUAGE plpgsql;
 CREATE TRIGGER update_rating
     AFTER UPDATE ON auction 
     EXECUTE PROCEDURE update_rating(); 
+
+CREATE FUNCTION send_notification() RETURNS TRIGGER AS
+$BODY$
+
+BEGIN
+    INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
+	SELECT 'Your bid has been surpassed', FALSE, info.id_auction, info.id_buyer
+    FROM (
+        SELECT auction_info.id_auction as id_auction, auction_info.id_buyer as id_buyer, max(auction_info.value) 
+            FROM (SELECT value, id_auction, id_buyer
+                FROM  bids
+                WHERE id_auction >= NEW.id_auction) AS auction_info
+            GROUP BY auction_info.id_buyer, auction_info.id_auction) AS info;
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER send_notification
+    BEFORE INSERT ON bids 
+    EXECUTE PROCEDURE send_notification();
+	
+CREATE FUNCTION stop_ongoing_auctions() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE auction_status 
+        SET TYPE = 'Cancelled'
+        WHERE (SELECT DISTINCT id_seller FROM auction WHERE id_seller = NEW.id_seller) = NEW.id_seller AND TYPE = 'Ongoing';
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER stop_ongoing_auctions
+    AFTER INSERT ON blocks
+	FOR EACH ROW
+    EXECUTE PROCEDURE stop_ongoing_auctions(); 
+	
+CREATE FUNCTION create_buyer() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    INSERT INTO buyer(id) VALUES (NEW.id);
+	RETURN NULL;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER create_buyer
+    AFTER INSERT ON "user" 
+	FOR EACH ROW
+    EXECUTE PROCEDURE create_buyer(); 
+ 
+
+CREATE FUNCTION create_seller() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF NOT EXISTS(SELECT * FROM auction WHERE NEW.id = id)
+       THEN INSERT INTO seller(id) values (NEW.id) ;
+    END IF;
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER create_seller
+    BEFORE INSERT ON auction
+	FOR EACH ROW
+    EXECUTE PROCEDURE create_seller(); 
+
+
+CREATE FUNCTION remove_watchlists() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF EXISTS(SELECT * FROM auction_status WHERE auction_status.id = NEW.id AND NEW.TYPE = 'Finished')
+    THEN
+        DELETE FROM watchlists
+        WHERE id_buyer = (SELECT id_buyer FROM watchlists WHERE watchlists.id_auction = NEW.id_auction);
+	END IF;
+    RETURN NULL;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER remove_watchlists
+    AFTER UPDATE ON auction_status
+	FOR EACH ROW
+    EXECUTE PROCEDURE remove_watchlists(); 

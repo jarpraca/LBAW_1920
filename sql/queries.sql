@@ -1,69 +1,93 @@
 PRAGMA foreign_keys = ON;
 
---View Profile
+--View Profile 01
 SELECT name, email, url
-    FROM ("user" NATURAL JOIN profile_photo)
-    WHERE "user".email = $email;
+    FROM ("user" JOIN (profile_photo NATURAL JOIN "image") ON "user".id = profile_photo.id_user)
+    WHERE "user".id = $id_user;
 
---Search for Auctions with filters
-SELECT id, species_name, current_price, age, ending_date
-    FROM (auction JOIN features ON auction.id = features.id_auction)
+--Search for Auctions with filters 02
+SELECT DISTINCT auction.id, species_name, current_price, age, ending_date
+    FROM ((auction JOIN features ON auction.id = features.id_auction) JOIN auction_status ON auction.id = auction_status.id_auction)
     WHERE   (id_category = $category OR $category IS NULL)
         AND (id_main_color = $main_color OR $main_color IS NULL)
         AND (id_dev_stage = $dev_stage OR $dev_stage IS NULL)
         AND (current_price < $max_price OR $max_price IS NULL)
-        AND (id_skill = $climbs OR $climbs IS NULL)
-        AND (id_skill = $jumps OR $jumps IS NULL)
-        AND (id_skill = $talks OR $talks IS NULL)
-        AND (id_skill = $skates OR $skates IS NULL)
-        AND (id_skill = $olfaction OR $olfaction IS NULL)
-        AND (id_skill = $navigation OR $navigation IS NULL)
-        AND (id_skill = $echo OR $echo IS NULL)
-        AND (id_skill = $acrobatics OR $acrobatics IS NULL);
+        AND (id_skill IN ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics))
+        AND auction_status.TYPE = 'Ongoing'
+    ORDER BY ending_date;
 
---Full Text Search Auction
-SELECT id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
-    FROM auction, to_tsquery($search) AS query, 
+--Full Text Search Auction 03
+SELECT auction.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
+    FROM (auction JOIN auction_status ON auction.id = auction_status.id_auction), to_tsquery($search) AS query, 
         to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
-    WHERE query @@ textsearch\\ 
+    WHERE query @@ textsearch AND auction_status.TYPE = 'Ongoing'
     ORDER BY rank DESC;
 
---Full Text Search Admin
+--Full Text Search Admin 04
 SELECT "name", email, ts_rank_cd(textsearch, query) AS rank
     FROM "user", to_tsquery($search) AS query, 
         to_tsvector(name || ' ' || email) AS textsearch
-    WHERE query @@ textsearch\\ 
+    WHERE query @@ textsearch 
     ORDER BY rank DESC;
 
---Homepage Top 3 Auctions
-SELECT id, species_name, $current_price, age, ending_date
-    FROM (SELECT *, count(*) AS num_bids
+--Homepage Top 3 Auctions 05
+SELECT auctions.id, auctions.species_name, auctions.current_price, auctions.age, auctions.ending_date
+    FROM (SELECT auction.*, count(*) AS num_bids
             FROM  ((auction JOIN bids ON auction.id = bids.id_auction) JOIN auction_status ON auction.id = auction_status.id_auction)
-            WHERE auction_status_name = "Ongoing"
-            GROUP BY  auction.id)
+            WHERE auction_status.TYPE = 'Ongoing'
+            GROUP BY  auction.id) AS auctions
     ORDER BY num_bids DESC
     LIMIT 3;
-        
--- View Notifications
-SELECT id, message, read
-    FROM ("user" JOIN "notification" ON "user".id = "notification".id_buyer)
-    WHERE "user".id = $id_user
+
+-- View Notifications 06
+SELECT *
+    FROM "notification"
+    WHERE id_buyer = $id_buyer
     ORDER BY id DESC
     LIMIT 5;
 
--- Get Categories
-SELECT id, TYPE as name
-    FROM category
-    ORDER BY name;
-
-
         --temos de rever a tabela, nao me lembro de ver la nada de notificações
 
+--View Auction 07
+SELECT auction.*, skill.TYPE, category.TYPE, main_color.TYPE, development_stage.TYPE
+    FROM ((((auction JOIN features ON auction.id = features.id_auction) 
+            JOIN skill ON skill.id = features.id_skill) 
+            JOIN category ON category.id = auction.id_category)
+            JOIN main_color ON main_color.id = auction.id_main_color)
+            JOIN development_stage ON development_stage.id = auction.id_dev_stage
+    WHERE auction.id = $id_auction;
 
---View Auction
-SELECT * 
-    FROM auction
-    WHERE id = $id_auction;
+
+-- View Watchlisted Auctions 08
+SELECT auction.id, species_name, current_price, age, ending_date
+    FROM (watchlists JOIN auction ON auction.id = watchlists.id_auction) JOIN auction_status ON auction.id = auction_status.id_auction
+    WHERE watchlists.id_buyer = $id_buyer AND auction_status.TYPE = 'Ongoing'
+    ORDER BY ending_date;
+
+-- View My Auctions 09
+SELECT auction.id, species_name, current_price, age, ending_date
+    FROM auction JOIN auction_status ON auction.id = auction_status.id_auction
+    WHERE auction.id_seller = $id_seller AND auction_status.TYPE = 'Ongoing'
+    ORDER BY ending_date;
+
+-- View Purchase History 10
+SELECT auction.id, species_name, current_price, age, ending_date
+    FROM auction.auction JOIN auction_status ON auction.id = auction_status.id_auction
+    WHERE auction.id_winner = $id_buyer AND auction_status.TYPE = 'Finished'
+    ORDER BY ending_date DESC;
+
+-- View Bidded Ongoing Auctions 11
+SELECT DISTINCT auction.id, species_name, current_price, age, ending_date
+    FROM (auction JOIN auction_status ON auction.id = auction_status.id_auction) JOIN bids ON bids.id_auction = auction.id
+    WHERE bids.id_buyer = $id_buyer AND auction_status.TYPE = 'Ongoing'
+    ORDER BY ending_date;
+
+-- View Last 5 Bids 12
+SELECT bids.value, user.name
+    FROM auction JOIN bids ON bids.id_auction = auction.id
+    WHERE bids.id_buyer = $id_auction
+    ORDER BY bids.id DESC
+    LIMIT 5;
 
 ---------------------------INSERTS-----------------------------
 --Create New User 
@@ -146,189 +170,25 @@ DELETE FROM watchlists
 
 ----------------------------INDEXES-----------------------------
 
---SELECT01
- CREATE INDEX user_email ON "user" USING hash(email); 
-
 --SELECT03
-CREATE INDEX search_au ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
+ CREATE INDEX search_auction ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
 
 --SELECT04
  CREATE INDEX admin_search ON "user" USING GIST (to_tsvector(name || ' ' || email));
 
---SELECT05
- CREATE INDEX auction_id ON auction USING hash(id); --??????
 
- --SELECT06
- CREATE INDEX notification_id ON "notifications" USING hash(id);
+--SELECT06
+ CREATE INDEX notification_id ON "notification" USING hash(id_user);
 
----------------------------TRIGGERS-----------------------------
+--SELECT08
+CREATE INDEX watchlists_id ON watchlists USING hash(id_buyer);
 
-DROP TRIGGER IF EXISTS create_buyer ON "user";
-DROP FUNCTION IF EXISTS create_buyer();
+--SELECT09
+CREATE INDEX auction_id ON auction USING hash(id_seller);
 
---Create Buyer whenever a new User is created
-CREATE FUNCTION create_buyer() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    INSERT INTO buyer(id) values (NEW.id);
-END
-$BODY$
-LANGUAGE plpgsql;
+--SELECT11
 
-CREATE TRIGGER create_buyer
-    AFTER INSERT ON "user" 
-    EXECUTE PROCEDURE create_buyer(); 
-
-
---Create Seller whenever an user creates his first auction
-DROP TRIGGER IF EXISTS create_seller ON "user";
-DROP FUNCTION IF EXISTS create_seller();
-
-CREATE FUNCTION create_seller() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF NOT EXISTS(SELECT * FROM auction WHERE NEW.id = id)
-       THEN INSERT INTO seller(id) values (NEW.id) ;
-    END IF;
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER create_seller
-    AFTER INSERT ON "user" 
-    EXECUTE PROCEDURE create_seller(); 
-
-
--- Stop all ongoing auctions when a seller is blocked
-DROP TRIGGER IF EXISTS stop_ongoing_auctions ON blocks;
-DROP FUNCTION IF EXISTS stop_ongoing_auctions();
-
-CREATE FUNCTION stop_ongoing_auctions() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    UPDATE auction_status 
-        SET TYPE = "Cancelled"
-        WHERE id_seller = NEW.id_seller AND TYPE = "Ongoing";
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER stop_ongoing_auctions
-    AFTER INSERT ON blocks 
-    EXECUTE PROCEDURE stop_ongoing_auctions(); 
-
-
--- Update current price on auction after a bid
-DROP TRIGGER IF EXISTS update_current_price ON bids;
-DROP FUNCTION IF EXISTS update_current_price();
-
-CREATE FUNCTION update_current_price() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    UPDATE auction 
-        SET current_price = NEW.value
-        WHERE id = NEW.id_auction;
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER update_current_price
-    AFTER INSERT ON bids 
-    EXECUTE PROCEDURE update_current_price(); 
-
-
--- Send Notification to buyers when their bid is surpassed
-DROP TRIGGER IF EXISTS send_notification ON bids;
-DROP FUNCTION IF EXISTS send_notification();
-
-CREATE FUNCTION send_notification() RETURNS TRIGGER AS
-$BODY$
-
-BEGIN
-    SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
-        FROM (SELECT value, id_auction, id_buyer
-              FROM  bids
-              WHERE id_auction >= NEW.id_auction) AS auction_info;
-        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
-            values("Your bid has been surpassed", FALSE, NEW.id_auction, NEW.id_buyer ); 
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER send_notification
-    BEFORE INSERT ON bids 
-    EXECUTE PROCEDURE send_notification(); 
-
--- Send Notification to winner when the status changes to finished
-DROP TRIGGER IF EXISTS notify_winner ON auction_status;
-DROP FUNCTION IF EXISTS notify_winner();
-
-CREATE FUNCTION notify_winner() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF(NEW.TYPE == "Finished")
-    THEN
-        SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
-            FROM (SELECT value, id_auction, id_buyer
-                    FROM  bids
-                    WHERE id_auction >= NEW.id_auction) AS auction_info;
-        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
-            VALUES ("You won an auction", FALSE, id_auction, id_winner);
-    END IF;
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER notify_winner
-    AFTER UPDATE ON auction_status 
-    EXECUTE PROCEDURE notify_winner(); 
-
---Verify 
-
-DROP TRIGGER IF EXISTS verify_bid_value ON bids;
-DROP FUNCTION IF EXISTS verify_bid_value();
-
-CREATE FUNCTION verify_bid_value() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    SELECT current_price FROM auction WHERE NEW.id_auction = id_auction;
-    IF (NEW.value <= current_price ) 
-        THEN RAISE EXCEPTION 'A bid can only be made with a value greater than the current bid';
-    END IF;
-    RETURN NEW;
-END
-$BODY$
-LANGUAGE plpgsql;
- 
-CREATE TRIGGER verify_bid_value
-    BEFORE INSERT ON bids
-    EXECUTE PROCEDURE verify_bid_value();
-
-
--- Update seller's rating when a rating is added
-DROP TRIGGER IF EXISTS update_rating ON auction;
-DROP FUNCTION IF EXISTS update_rating();
-
-CREATE FUNCTION update_rating() RETURNS TRIGGER AS
-$BODY$
-BEGIN
-    IF(NEW.TYPE != NULL)
-    THEN
-        UPDATE seller
-        SET rating = (
-            SELECT AVG(TYPE)
-            FROM auction
-            WHERE auction.id = NEW.id
-        )
-        WHERE seller.id = New.id_seller;
-    END IF;
-END
-$BODY$
-LANGUAGE plpgsql;
-
-CREATE TRIGGER update_rating
-    AFTER UPDATE ON auction 
-    EXECUTE PROCEDURE update_rating(); 
+CREATE INDEX bids_id ON bids USING hash(id_buyer);
 
     
 -------------------------TRANSACTIONS---------------------------
@@ -352,5 +212,43 @@ SELECT reports.date, report_status.TYPE, B.name, S.name
  
 COMMIT;
 
+--Select Auction
+BEGIN TRANSACTION;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY
+
+--View Auction, including current price
+SELECT auction.*, skill.TYPE, category.TYPE, main_color.TYPE, development_stage.TYPE
+    FROM ((((auction JOIN features ON auction.id = features.id_auction) 
+            JOIN skill ON skill.id = features.id_skill) 
+            JOIN category ON category.id = auction.id_category)
+            JOIN main_color ON main_color.id = auction.id_main_color)
+            JOIN development_stage ON development_stage.id = auction.id_dev_stage
+    WHERE auction.id = $id_auction;
+
+-- View Last 5 Bids Of Auction (first one is the current price)
+SELECT bids.value, user.name
+    FROM auction JOIN bids ON bids.id_auction = auction.id
+    WHERE bids.id_buyer = $id_auction
+    ORDER BY bids.id DESC
+    LIMIT 5;
+
+COMMIT;
 
 
+--Select Auctions in Profile
+BEGIN TRANSACTION;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY
+
+-- View Purchase History 10
+SELECT auction.id, species_name, current_price, age, ending_date
+    FROM auction.auction JOIN auction_status ON auction.id = auction_status.id_auction
+    WHERE auction.id_winner = $id_buyer AND auction_status.TYPE = 'Finished'
+    ORDER BY ending_date DESC;
+
+-- View Bidded Ongoing Auctions 11
+SELECT DISTINCT auction.id, species_name, current_price, age, ending_date
+    FROM (auction JOIN auction_status ON auction.id = auction_status.id_auction) JOIN bids ON bids.id_auction = auction.id
+    WHERE bids.id_buyer = $id_buyer AND auction_status.TYPE = 'Ongoing'
+    ORDER BY ending_date;
+
+COMMIT;
