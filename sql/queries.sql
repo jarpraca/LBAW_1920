@@ -2,7 +2,7 @@ PRAGMA foreign_keys = ON;
 
 --View Profile 01
 SELECT name, email, url
-    FROM ("user" JOIN (profile_photo NATURAL JOIN "image") ON "user".id = profile_photo.id_user)
+    FROM ("user" LEFT JOIN (profile_photo NATURAL JOIN "image") ON "user".id = profile_photo.id_user)
     WHERE "user".id = $id_user;
 
 --Search for Auctions with filters 02
@@ -72,7 +72,7 @@ SELECT auction.id, species_name, current_price, age, ending_date
 
 -- View Purchase History 10
 SELECT auction.id, species_name, current_price, age, ending_date
-    FROM auction.auction JOIN auction_status ON auction.id = auction_status.id_auction
+    FROM auction JOIN auction_status ON auction.id = auction_status.id_auction
     WHERE auction.id_winner = $id_buyer AND auction_status.TYPE = 'Finished'
     ORDER BY ending_date DESC;
 
@@ -82,10 +82,10 @@ SELECT DISTINCT auction.id, species_name, current_price, age, ending_date
     WHERE bids.id_buyer = $id_buyer AND auction_status.TYPE = 'Ongoing'
     ORDER BY ending_date;
 
--- View Last 5 Bids 12
-SELECT bids.value, user.name
-    FROM auction JOIN bids ON bids.id_auction = auction.id
-    WHERE bids.id_buyer = $id_auction
+-- View Last 5 Bids Of Auction (first one is the current price)
+SELECT bids.value, "user".name
+    FROM (bids JOIN "user" ON "user".id = id_buyer)
+    WHERE bids.id_auction = $id_auction
     ORDER BY bids.id DESC
     LIMIT 5;
 
@@ -174,11 +174,11 @@ DELETE FROM watchlists
  CREATE INDEX search_auction ON auction USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
 
 --SELECT04
- CREATE INDEX admin_search ON "user" USING GIST (to_tsvector(name || ' ' || email));
+ CREATE INDEX admin_search ON "user" USING GIST (to_tsvector('english',name || ' ' || email));
 
 
 --SELECT06
- CREATE INDEX notification_id ON "notification" USING hash(id_user);
+ CREATE INDEX notification_id ON "notification" USING hash(id_buyer);
 
 --SELECT08
 CREATE INDEX watchlists_id ON watchlists USING hash(id_buyer);
@@ -194,27 +194,26 @@ CREATE INDEX bids_id ON bids USING hash(id_buyer);
 -------------------------TRANSACTIONS---------------------------
 
 --Select Reports
-BEGIN TRANSACTION;
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY;
  
 -- Get number of current reports
 SELECT COUNT(*)
-FROM Reports
+FROM Reports;
  
 -- Get first 10 reports
-SELECT reports.date, report_status.TYPE, B.name, S.name
-    FROM (((reports 
-        JOIN report_status ON reports.id = report_status.id_reports) 
-        JOIN ((buyer ON reports.id_buyer = buyer.id JOIN "user" ON user.id = buyer.id) AS B))
-        JOIN ((seller ON seller.id = reports.id_seller JOIN "user" ON user.id = buyer.id) AS S))
-    ORDER BY reports.date DESC
-    LIMIT 10;
- 
+SELECT reports.date, report_status.TYPE, B.name, "user".name
+FROM ((((SELECT "user".name AS name, buyer.id AS id FROM buyer JOIN "user" ON "user".id = buyer.id) AS B
+    JOIN reports ON reports.id_buyer = B.id) JOIN report_status ON report_status.id_reports = reports.id)
+    JOIN seller ON reports.id_seller = seller.id JOIN "user" ON "user".id = seller.id)
+ORDER BY reports.date DESC
+LIMIT 10;
+
 COMMIT;
+
 
 --Select Auction
 BEGIN TRANSACTION;
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY;
 
 --View Auction, including current price
 SELECT auction.*, skill.TYPE, category.TYPE, main_color.TYPE, development_stage.TYPE
@@ -226,9 +225,9 @@ SELECT auction.*, skill.TYPE, category.TYPE, main_color.TYPE, development_stage.
     WHERE auction.id = $id_auction;
 
 -- View Last 5 Bids Of Auction (first one is the current price)
-SELECT bids.value, user.name
-    FROM auction JOIN bids ON bids.id_auction = auction.id
-    WHERE bids.id_buyer = $id_auction
+SELECT bids.value, "user".name
+    FROM (bids JOIN "user" ON "user".id = id_buyer)
+    WHERE bids.id_auction = $id_auction
     ORDER BY bids.id DESC
     LIMIT 5;
 
@@ -237,11 +236,11 @@ COMMIT;
 
 --Select Auctions in Profile
 BEGIN TRANSACTION;
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE READ ONLY;
 
 -- View Purchase History 10
 SELECT auction.id, species_name, current_price, age, ending_date
-    FROM auction.auction JOIN auction_status ON auction.id = auction_status.id_auction
+    FROM auction JOIN auction_status ON auction.id = auction_status.id_auction
     WHERE auction.id_winner = $id_buyer AND auction_status.TYPE = 'Finished'
     ORDER BY ending_date DESC;
 

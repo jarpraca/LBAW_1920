@@ -26,7 +26,6 @@ DROP TABLE IF EXISTS "user";
 DROP TYPE IF EXISTS skill_name;
 DROP TYPE IF EXISTS category_name;
 DROP TYPE IF EXISTS shipping;
-DROP TYPE IF EXISTS rating;
 DROP TYPE IF EXISTS payment;
 DROP TYPE IF EXISTS dev_stage;
 DROP TYPE IF EXISTS color;
@@ -61,7 +60,6 @@ DROP FUNCTION IF EXISTS remove_watchlists();
 -----------------------------------------
 -- TYPES
 ----------------------------------------- 
-CREATE TYPE rating AS ENUM ('1', '2', '3', '4', '5');
 CREATE TYPE shipping AS ENUM ('Standard Mail', 'Express Mail', 'Urgent Mail');
 CREATE TYPE payment AS ENUM ('Debit Card', 'PayPal');
 CREATE TYPE skill_name AS ENUM ('Climbs', 'Jumps', 'Talks', 'Skates', 'Olfaction', 'Moonlight Navigation', 'Echolocation', 'Acrobatics');
@@ -95,7 +93,7 @@ CREATE TABLE buyer
 CREATE TABLE seller
 (
     id integer NOT NULL PRIMARY KEY REFERENCES "user" (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    rating integer CHECK (rating >= 1 AND rating <= 5)
+    rating NUMERIC(3, 2) CHECK (rating >= 1 AND rating <= 5)
 );
 
 CREATE TABLE skill
@@ -145,7 +143,7 @@ CREATE TABLE auction
     buyout_price integer,
     current_price integer,
     ending_date date NOT NULL CHECK (ending_date > 'now'::text::date),
-    TYPE rating,
+    rating_seller integer CHECK (rating_seller >= 1 AND rating_seller <= 5) DEFAULT NULL,
     id_category integer NOT NULL REFERENCES category (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_main_color integer NOT NULL REFERENCES main_color (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_dev_stage integer NOT NULL REFERENCES development_stage (id) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -278,19 +276,22 @@ $BODY$
 BEGIN
     IF(NEW.TYPE = 'Finished')
     THEN
-        SELECT auction_info.id_buyer AS id_winner, auction_info.id_auction AS id_auction , max(auction_info.value)
-            FROM (SELECT value, id_auction, id_buyer
-                    FROM  bids
-                    WHERE id_auction >= NEW.id_auction) AS auction_info;
         INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
-            VALUES ("You won an auction", FALSE, id_auction, id_winner);
+        SELECT 'You won an auction!', FALSE, info.id_auction, info.id_buyer
+        FROM (SELECT value, id_auction, id_buyer
+                FROM  bids
+                WHERE id_auction = NEW.id_auction
+                ORDER BY value DESC 
+                LIMIT 1
+            ) AS info;
     END IF;
+    RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER notify_winner
-    AFTER UPDATE ON auction_status 
+    AFTER INSERT OR UPDATE ON auction_status 
 	FOR EACH ROW
     EXECUTE PROCEDURE notify_winner(); 
 
@@ -331,13 +332,13 @@ CREATE TRIGGER verify_bid_value
 CREATE FUNCTION update_rating() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF(NEW.TYPE != NULL)
+    IF (NEW.rating_seller >= 1 AND NEW.rating_seller <= 5)
     THEN
         UPDATE seller
         SET rating = (
-            SELECT AVG(TYPE)
+            SELECT AVG(rating_seller)
             FROM auction
-            WHERE auction.id = NEW.id
+            WHERE auction.id = NEW.id AND auction.rating_seller >= 1 AND auction.rating_seller <= 5
         )
         WHERE seller.id = NEW.id_seller;
     END IF;
@@ -347,21 +348,24 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER update_rating
-    AFTER UPDATE ON auction 
+    AFTER INSERT OR UPDATE ON auction 
+    FOR EACH ROW
     EXECUTE PROCEDURE update_rating(); 
 
 CREATE FUNCTION send_notification() RETURNS TRIGGER AS
 $BODY$
-
 BEGIN
-    INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
-	SELECT 'Your bid has been surpassed', FALSE, info.id_auction, info.id_buyer
-    FROM (
-        SELECT auction_info.id_auction as id_auction, auction_info.id_buyer as id_buyer, max(auction_info.value) 
-            FROM (SELECT value, id_auction, id_buyer
+    IF EXISTS(SELECT * FROM bids WHERE id_auction = NEW.id_auction)
+    THEN 
+        INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
+        SELECT 'Your bid has been surpassed', FALSE, info.id_auction, info.id_buyer
+        FROM (SELECT value, id_auction, id_buyer
                 FROM  bids
-                WHERE id_auction >= NEW.id_auction) AS auction_info
-            GROUP BY auction_info.id_buyer, auction_info.id_auction) AS info;
+                WHERE id_auction = NEW.id_auction
+                ORDER BY value DESC 
+                LIMIT 1
+            ) AS info;
+    END IF;
 	RETURN NEW;
 END
 $BODY$
@@ -369,6 +373,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER send_notification
     BEFORE INSERT ON bids 
+    FOR EACH ROW
     EXECUTE PROCEDURE send_notification();
 	
 CREATE FUNCTION stop_ongoing_auctions() RETURNS TRIGGER AS
@@ -376,7 +381,7 @@ $BODY$
 BEGIN
     UPDATE auction_status 
         SET TYPE = 'Cancelled'
-        WHERE (SELECT DISTINCT id_seller FROM auction WHERE id_seller = NEW.id_seller) = NEW.id_seller AND TYPE = 'Ongoing';
+        WHERE id_auction IN (SELECT id FROM auction WHERE id_seller = NEW.id_seller) AND TYPE = 'Ongoing';
 	RETURN NEW;
 END
 $BODY$
