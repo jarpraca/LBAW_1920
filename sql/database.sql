@@ -5,12 +5,12 @@ DROP TABLE IF EXISTS features;
 DROP TABLE IF EXISTS animal_photo;
 DROP TABLE IF EXISTS accepts;
 DROP TABLE IF EXISTS skill;
-DROP TABLE IF EXISTS report_status;
 DROP TABLE IF EXISTS reports;
+DROP TABLE IF EXISTS report_status;
 DROP TABLE IF EXISTS "notification";
 DROP TABLE IF EXISTS bids;
-DROP TABLE IF EXISTS auction_status;
 DROP TABLE IF EXISTS auction;
+DROP TABLE IF EXISTS auction_status;
 DROP TABLE IF EXISTS main_color;
 DROP TABLE IF EXISTS "image";
 DROP TABLE IF EXISTS blocks;
@@ -43,10 +43,10 @@ DROP TRIGGER IF EXISTS create_seller ON "user";
 DROP TRIGGER IF EXISTS stop_ongoing_auctions ON blocks;
 DROP TRIGGER IF EXISTS update_current_price ON bids;
 DROP TRIGGER IF EXISTS send_notification ON bids;
-DROP TRIGGER IF EXISTS notify_winner ON auction_status;
+DROP TRIGGER IF EXISTS notify_winner ON auction;
 DROP TRIGGER IF EXISTS verify_bid_value ON bids;
 DROP TRIGGER IF EXISTS update_rating ON auction;
-DROP TRIGGER IF EXISTS remove_watchlists ON auction_status;
+DROP TRIGGER IF EXISTS remove_watchlists ON auction;
 
 DROP FUNCTION IF EXISTS create_buyer();
 DROP FUNCTION IF EXISTS create_seller();
@@ -67,7 +67,7 @@ CREATE TYPE color AS ENUM ('Blue', 'Brown', 'Black', 'Yellow', 'Green', 'Red', '
 CREATE TYPE dev_stage AS ENUM ('Baby', 'Child', 'Teen', 'Adult', 'Elderly');
 CREATE TYPE category_name AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', 'Birds', 'Amphibians');
 CREATE TYPE report_status_name as ENUM('Pending', 'Approved', 'Denied');
-CREATE TYPE auction_status_name as ENUM('Ongoing', 'Cancelled','Finished');
+CREATE TYPE auction_status_name as ENUM('Ongoing', 'Finished', 'Cancelled');
 
 -----------------------------------------
 -- TABLES
@@ -132,6 +132,12 @@ CREATE TABLE shipping_method
     TYPE shipping NOT NULL
 );
 
+CREATE TABLE auction_status
+(
+    id integer PRIMARY KEY,
+    TYPE auction_status_name NOT NULL
+);
+
 CREATE TABLE auction
 (
     id SERIAL PRIMARY KEY,
@@ -142,7 +148,7 @@ CREATE TABLE auction
     starting_price integer NOT NULL,
     buyout_price integer,
     current_price integer,
-    ending_date date NOT NULL CHECK (ending_date > 'now'::text::date),
+    ending_date date NOT NULL,
     rating_seller integer CHECK (rating_seller >= 1 AND rating_seller <= 5) DEFAULT NULL,
     id_category integer NOT NULL REFERENCES category (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_main_color integer NOT NULL REFERENCES main_color (id) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -151,9 +157,10 @@ CREATE TABLE auction
     id_shipping_method integer REFERENCES shipping_method (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_seller integer NOT NULL REFERENCES seller (id) ON UPDATE CASCADE ,
     id_winner integer REFERENCES buyer (id) ON UPDATE CASCADE ,
+    id_status integer NOT NULL REFERENCES auction_status (id) ON UPDATE CASCADE,
     CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
-    CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price)
-
+    CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price),
+    CONSTRAINT "ending_date_ck" CHECK ((ending_date > 'now'::text::date) OR (id_status = 1 OR id_status = 2))
 );
 
 CREATE TABLE bids
@@ -197,19 +204,19 @@ CREATE TABLE accepts
     PRIMARY Key(id_seller, id_payment_method)
 );
 
+CREATE TABLE report_status
+(
+    id integer PRIMARY KEY,
+    TYPE report_status_name NOT NULL
+);
+
 CREATE TABLE reports
 (
     id SERIAL PRIMARY KEY,
     "date" date NOT NULL DEFAULT 'now'::text::date,
     id_buyer integer NOT NULL REFERENCES buyer (id) ON UPDATE CASCADE,
-    id_seller integer NOT NULL REFERENCES seller (id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE report_status
-(
-    id SERIAL PRIMARY KEY,
-    id_reports integer NOT NULL REFERENCES reports (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    TYPE report_status_name NOT NULL
+    id_seller integer NOT NULL REFERENCES seller (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    id_status integer NOT NULL REFERENCES report_status ON UPDATE CASCADE
 );
 
 CREATE TABLE watchlists
@@ -224,13 +231,6 @@ CREATE TABLE features
     id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE,
     id_skill integer NOT NULL REFERENCES skill (id) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY Key(id_auction, id_skill)
-);
-
-CREATE TABLE auction_status
-(
-    id SERIAL PRIMARY KEY,
-    id_auction integer NOT NULL REFERENCES auction (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    TYPE auction_status_name NOT NULL
 );
 
 CREATE TABLE "image"
@@ -263,7 +263,7 @@ CREATE TABLE animal_photo
 
 CREATE INDEX watchlists_id ON watchlists USING hash(id_buyer);
 
-CREATE INDEX auction_id ON auction USING hash(id_seller);
+CREATE INDEX auction_id ON auction USING btree(id_seller);
 
 CREATE INDEX bids_id ON bids USING hash(id_buyer);
 
@@ -274,13 +274,13 @@ CREATE INDEX bids_id ON bids USING hash(id_buyer);
 CREATE FUNCTION notify_winner() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF(NEW.TYPE = 'Finished')
+    IF(NEW.id_status <> OLD.id_status)
     THEN
         INSERT INTO "notification" ("message", "read", id_auction, id_buyer)
         SELECT 'You won an auction!', FALSE, info.id_auction, info.id_buyer
         FROM (SELECT value, id_auction, id_buyer
                 FROM  bids
-                WHERE id_auction = NEW.id_auction
+                WHERE id_auction = NEW.id
                 ORDER BY value DESC 
                 LIMIT 1
             ) AS info;
@@ -291,7 +291,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER notify_winner
-    AFTER INSERT OR UPDATE ON auction_status 
+    AFTER UPDATE ON auction 
 	FOR EACH ROW
     EXECUTE PROCEDURE notify_winner(); 
 
@@ -379,9 +379,9 @@ CREATE TRIGGER send_notification
 CREATE FUNCTION stop_ongoing_auctions() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    UPDATE auction_status 
-        SET TYPE = 'Cancelled'
-        WHERE id_auction IN (SELECT id FROM auction WHERE id_seller = NEW.id_seller) AND TYPE = 'Ongoing';
+    UPDATE auction 
+        SET id_status = 2
+        WHERE id IN (SELECT id FROM auction WHERE id_seller = NEW.id_seller) AND id_status = 0;
 	RETURN NEW;
 END
 $BODY$
@@ -427,10 +427,10 @@ CREATE TRIGGER create_seller
 CREATE FUNCTION remove_watchlists() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF EXISTS(SELECT * FROM auction_status WHERE auction_status.id = NEW.id AND NEW.TYPE = 'Finished')
+    IF EXISTS(SELECT * FROM auction WHERE id_status = NEW.id_status AND NEW.id_status = 1)
     THEN
         DELETE FROM watchlists
-        WHERE id_buyer = (SELECT id_buyer FROM watchlists WHERE watchlists.id_auction = NEW.id_auction);
+        WHERE id_buyer = (SELECT id_buyer FROM watchlists WHERE watchlists.id_auction = NEW.id);
 	END IF;
     RETURN NULL;
 END
@@ -438,6 +438,6 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER remove_watchlists
-    AFTER UPDATE ON auction_status
+    AFTER UPDATE ON auction
 	FOR EACH ROW
     EXECUTE PROCEDURE remove_watchlists(); 
