@@ -10,7 +10,6 @@ body {
     padding-top: 4.1em;
     position: relative;
     min-height: 100vh;
-
 }
 
 body > div{
@@ -189,16 +188,6 @@ body > div{
     padding-top: 0.5em;
 }
 
-#property aside {
-    padding: 1em;
-    display: grid;
-    grid-template-areas: "priceNight priceNight" "datesLabel dates" "priceNightsCalc priceNights" "taxLabel tax" "totalLabel total" " submit submit" "map map";
-    align-items: center;
-    text-align: left;
-    width: calc(50% - 2em);
-    float: right;
-}
-
 #trending {
     /* padding: 1em; */
     display: flex;
@@ -226,71 +215,6 @@ body > div{
 #trending :nth-child(2) {
     margin-right: 2em;
     margin-left: 2em;
-}
-
-#property aside p:first-child {
-    grid-area: priceNight;
-}
-
-#property aside h3:first-child {
-    grid-area: datesLabel;
-}
-
-#property aside h3:first-child~p {
-    grid-area: dates;
-}
-
-#property aside h3:first-child~p {
-    grid-area: priceNightsCalc;
-}
-
-#property aside h3:first-child~p~p {
-    grid-area: priceNights;
-}
-
-#property aside h3:first-child~p~p~p {
-    grid-area: taxLabel;
-}
-
-#property aside h3:first-child~p~p~p~p {
-    grid-area: tax;
-}
-
-#property aside h3:first-child~h3 {
-    grid-area: totalLabel;
-}
-
-#property aside h3:first-child~h3~h3 {
-    grid-area: total;
-}
-
-#property aside form {
-    grid-area: submit;
-    text-align: right;
-}
-
-#property aside #mapid {
-    grid-area: map;
-    margin-top: 10%;
-}
-
-#mapid { 
-    height: 400px; 
-    /* width: calc(50%-1rem); */
-    padding: 1rem;
-}
-
-/* #property aside h3:first-child~h3~h3~h3 {
-    grid-area: location;
-}
-
-#property aside h3:first-child~div {
-    grid-area: map;
-} */
-
-#property #property_data {
-  width: calc(50% - 1em);
-
 }
 
 .dropdown {
@@ -328,23 +252,6 @@ body > div{
     white-space: nowrap;
 }
 
-#property {
-    margin: 1em;
-}
-
-#amenities_table, #agenda {
-    display: block;
-}
-
-.propertyShort, .reservationShort, .propertySearch {
-    display: flex;
-    margin: 1rem;
-}
-
-.propertyShort img, .reservationShort img, .propertySearch img {
-    object-fit: cover;
-    width: 25%;
-}
 
 .rightText {
     display: flex;
@@ -378,37 +285,12 @@ body > div{
     padding: 0.5em;
 }
 
-#rating {
-    margin-right: auto;
-}
-
-#star, #amenity {
-    padding-left: 1rem;
-}
-
-.list_properties_options {
-    display: flex;
-    margin: 1rem;
-}
-
-.list_properties_options h5, #filter_button {
-    margin: 0 1rem 0 0;
-    padding: 1em;
-}
-
 .subtitle {
     margin: 1rem;
 }
 
 #welcome {
     margin: 1rem;
-}
-
-#filter_form {
-    margin: 1rem;
-    width: 90%;
-    height: 100%;
-    z-index: 2;
 }
 
 .close {
@@ -434,7 +316,6 @@ body > div{
 
 
 /* Modal Content/Box */
-
 .modal-content {
     /* justify-content: center;*/
     align-content: center;
@@ -452,102 +333,6 @@ body > div{
 }
 
 /* The Close Button */
-
 .close {
     float: right;
-}
-
-#propertiesSection {
-    float: left;
-    width: calc(50% - 1em);
-}
-
-#map {
-    float: right;
-    padding: 1em;
-    align-items: center;
-    height: 100%;
-    width: calc(50% - 1em);
-}
-
-#mapid{
-    z-index: 1;
-}
-
-/* Slideshow container */
-.slideshow-container {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1rem;
-    width:50%;
-    min-height: 100%;
-    max-height: 60vh;
-}
-
-/* Hide the images by default */
-.mySlides {
-    display: none;
-}
-
-/* Next & previous buttons */
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-}
-
-/* Position the "next button" to the right */
-.next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-/* Caption text */
-.text {
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
-}
-
-/* Number text (1/3 etc) */
-.numbertext {
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
-}
-
-/* The dots/bullets/indicators */
-.dot {
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-}
-
-.align-left, .classification{
-    display: flex;
-    align-items: center;
-}
-
-.align-left h6, .align-left p{
-    margin:0;
-}
-
-.classification p{
-    margin: 0 1em;
-    text-align: center;
-}
-
-.comment{
-    padding:1em;
-}
-
-.comment h6{
-    margin:0;
 }

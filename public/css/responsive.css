@@ -28,6 +28,21 @@
     }
 }
 
+@media(max-width: 1050px){
+    #signup_bg #main{
+        width: 450px ;
+        left: 50% !important;
+        right: 50% !important;
+    }
+    #box{
+        top: 75%;
+        width: 90% !important;
+    }
+    #loginform, #signupform {
+        left: 50% !important;
+    } 
+}
+
 @media(max-width: 991px) {
     .navbar-search {
         width: 100% !important;
@@ -144,45 +159,6 @@
     }
 }
 
-@media (max-width: 395px){
-    #navbarSupportedContent > form{
-        display: flex;
-        flex-direction: column;
-    }
-    #navbarSupportedContent > form > input{
-        width: 100%!important;
-    }
-}
-
-/* Signup page */
-
-@media(max-width: 1050px){
-    #signup_bg #main{
-        width: 450px ;
-        left: 50% !important;
-        right: 50% !important;
-    }
-    #box{
-        top: 75%;
-        width: 90% !important;
-    }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-        width: 100% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
-    }
-    #login_infos{
-        visibility: hidden;
-    }
-}
-
 @media(max-width: 415px){
     #signup_bg #main{
         width: 325px ;
@@ -193,16 +169,19 @@
         top: 75%;
         width: 90% !important;
     }
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-    }
+
     #login_btn, #signup_btn{
-        left: 50% !important;
         top: 75% !important;
+    }
+}
+
+@media (max-width: 395px){
+    #navbarSupportedContent > form{
+        display: flex;
+        flex-direction: column;
+    }
+    #navbarSupportedContent > form > input{
+        width: 100%!important;
     }
 }
 
@@ -212,24 +191,14 @@
         left: 50% !important;
         right: 50% !important;
     }
+
     #box{
         top: 75%;
         width: 90% !important;
     }
+
     #signupform input, #loginform input{
         width: 270px;
-    }
-
-    #loginform, #signupform {
-        left: 50% !important;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-        left: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        left: 50% !important;
-        top: 75% !important;
     }
 }
 
@@ -247,10 +216,6 @@
     #signup_bg #main{
         width: 450px !important;
     }
-    #login_infos, #signup_infos{
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
 }
 
 @media(max-height: 1200px){
@@ -261,15 +226,13 @@
 
 @media(max-height: 975px){
     #signup_bg #main{
-        height: 450px !important;
         top: 40%
     }
+
     #box{
         top: 75%;
     }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-    }
+
     #login_btn, #signup_btn{
         top: 75% !important;
     }
@@ -279,17 +242,9 @@
     #signup_bg #main{
         height: 400px !important;
     }
+
     #signupform input, #loginform input, #signupform button, #loginform button{
         height: 30px !important;
-    }
-    #box{
-        top: 75%;
-    }
-    #login_msg, #signup_msg{
-        top: 50% !important;
-    }
-    #login_btn, #signup_btn{
-        top: 75% !important;
     }
 }
 
@@ -298,20 +253,13 @@
         height: 375px !important;
         top: 43%
     }
-    #signupform input, #loginform input, #signupform button, #loginform button{
-        height: 30px !important;
-    }
+
     #box{
         top: 80%;
         height: 120px;
     }
+    
     #box > div > *{
         height: 30px !important;
-    }
-    #login_msg, #signup_msg{
-        top: 40% !important;
-    }
-    #login_btn, #signup_btn{
-        top: 75% !important;
     }
 }
