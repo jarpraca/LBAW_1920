@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="bg-white pt-4">
-    <div class="text-left mainBody">
-        <h2 class="mt-3">Trending</h2>
+    <div class="pb-5 text-left mainBody">
+        <h2 class="mt-3 text-dark">Trending</h2>
         <div class="d-flex flex-wrap text-left justify-content-around">
             <div class="card auct-card mt-4">
                 <img class="card-img-top" src="{{asset('assets/monkey.jpg')}}" alt="Card image cap">
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <h2 class="mt-3">Categories</h2>
+        <h2 class="mt-3 text-dark">Categories</h2>
         <div class="d-flex flex-row flex-wrap mt-4 rounded overflow-hidden">
             <a class="card text-white border-0 rounded-0 category-card" href="search.php">
                 <img class="card-img rounded-0" src="{{asset('assets/mammals.jpg')}}" alt="Card image">
