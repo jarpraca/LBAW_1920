@@ -198,10 +198,9 @@ body {
 }
 
 .btn-darkGreen:hover {
-    color: var(--myDarkGreen) !important;
-    background-color: var(--myLightGreen);
+    color: white !important;
+    background-color: var(--myLightGreenShadow) !important;
 }
-
 
 #btn-add-auction {
     color: var(--myLightGreen) !important;
@@ -506,7 +505,7 @@ body {
     text-align: center;
     position: absolute;
     left: 25%;
-    top:25%;
+    top:30%;
     right: 25%;
     z-index: 1;
 }

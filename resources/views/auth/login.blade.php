@@ -29,21 +29,25 @@
                 </span>
                 @endif
 
+                <div class="mx-4 custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-3" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <label class="custom-control-label text-dark" for="checkbox-3">Remember me</label>
+                </div>
 
-                <label>
-                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                </label>
+                <div class="mx-4 d-flex align-self-center justify-content-around align-items-center">
+                    <button class="ml-0" href="#">
+                        Sign in with&nbsp;
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="ml-0" href="#">
+                        Sign in with&nbsp;
+                        <i class="fab fa-google"></i>
+                    </button>
+                </div>
 
-
-                <button class="mx-4" href="#">
-                    Sign in with&nbsp;
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="mx-4" href="#">
-                    Sign in with&nbsp;
-                    <i class="fab fa-google"></i>
-                </button>
-                <button type="submit" id="signin_submit_btn">SIGN IN</button>
+                <div class="mx-4 d-flex align-self-center justify-content-center align-items-center">
+                    <button class="mx-auto btn-green" type="submit">SIGN IN</button>
+                </div>
             </form>
         </div>
     </div>
