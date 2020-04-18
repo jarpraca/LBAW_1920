@@ -37,7 +37,7 @@
 
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bgColorGreen">
-    <a class="navbar-brand" href="homepage">
+    <a class="navbar-brand" href="/homepage">
       <img src="{{asset('assets/logo.png')}}" width="50" alt="Logo">
       BidMonkey
     </a>
@@ -81,23 +81,25 @@
         @endauth
 
         <li class="nav-item">
-          <a class="nav-link btn btn-add-auction mx-sm-2 px-2 <?php //if ($createAuctionPage) { ?> btn-darkGreen <?php // } ?>" <?php // if (!$createAuctionPage) { ?> id="btn-add-auction" <?php // } ?> href="createAuction.php">+ Add Auction</a>
+          <a class="nav-link btn btn-add-auction mx-sm-2 px-2 <?php //if ($createAuctionPage) { ?> btn-darkGreen <?php // } ?>" <?php // if (!$createAuctionPage) { ?> id="btn-add-auction" <?php // } ?> href="/auctions/create">+ Add Auction</a>
         </li>
         @auth
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-center my-2 my-sm-0" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              John Doe
+              {{Auth::user()->name}}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="profile.php">View Profile</a>
+              @auth('admin')
                 <a class="dropdown-item" href="adminDashboard.php">Admin Dashboard</a>
-              <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
+              @endauth
+                <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
             </div>
           </li>
           @endauth
           @guest
           <li class="nav-item">
-            <a class="nav-link btn my-2 my-sm-0 px-2<?php //if ($signUpPage) { ?> btn-darkGreen <?php //} ?>" href="signup.php">Sign In</a>
+            <a class="nav-link btn my-2 my-sm-0 px-2<?php //if ($signUpPage) { ?> btn-darkGreen <?php //} ?>" href="/login">Sign In</a>
           </li>
         @endguest
       </ul>

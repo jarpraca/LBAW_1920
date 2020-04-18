@@ -29,11 +29,9 @@
                 </span>
                 @endif
 
-
                 <label>
                     <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                 </label>
-
 
                 <button class="mx-4" href="#">
                     Sign in with&nbsp;

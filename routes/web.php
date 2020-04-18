@@ -11,22 +11,20 @@
 |
 */
 
-
-
-
 Route::get('/', 'Auth\LoginController@home');
+
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
+//Auctions
+Route::get('auctions/create', 'AuctionController@showCreateForm');
+Route::post('auctions/{id}', 'AuctionController@create') ->name('auctions');
+Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
+//Views
+Route::view('homepage','pages.homepage');
+Route::view('about', 'pages.about');
 
-Route::get('homepage', function() {
-    return view('pages.homepage');
- });
-
-Route::get('about', function() {
-    return view('pages.about');
- });
 // API
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
