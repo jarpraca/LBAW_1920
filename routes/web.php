@@ -19,8 +19,12 @@ Route::get('cards/{id}', 'CardController@show');
 
 //Auctions
 Route::get('auctions/create', 'AuctionController@showCreateForm');
-Route::post('auctions/{id}', 'AuctionController@create') ->name('auctions');
+Route::post('auctions/create', 'AuctionController@create') ->name('auctions');
+Route::get('auctions/{id}/edit', 'AuctionController@showEditForm')->name('edit_auction');
+Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction');
 Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
+Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
+
 //Views
 Route::view('homepage','pages.homepage');
 Route::view('about', 'pages.about');

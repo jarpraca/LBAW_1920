@@ -23,4 +23,10 @@ class AuctionPolicy
       // Only an auction owner can delete it
       return $user->id == $auction->id_seller;
     }
+
+    public function update(User $user, Auction $auction)
+    {
+      // Only an auction owner can update it
+      return $user->id == $auction->id_seller;
+    }
 }
