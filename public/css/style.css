@@ -75,10 +75,6 @@ p, h3, label  {
     color: var(--myLightGreen) !important;
 }
 
-body {
-    color: var(--myLightGreen);
-}
-
 #footer {
     background-color: var(--myLightGreen);
     color: white;
@@ -157,7 +153,7 @@ body {
     border-color: var(--myLightGreenShadow) !important;
 }
 
-#customFile + #customFileLabel{
+#animal_picture + #animal_picture_label{
     background-color: white;
     color: gray;
     border-style: solid;
@@ -166,13 +162,13 @@ body {
     cursor: pointer;
 }
 
-#customFile + #customFileLabel::after {
+#animal_picture + #animal_picture_label::after {
     background-color: white;
     color: var(--myLightGreen);
     cursor: pointer;
 }
 
-#customFile:hover + #customFileLabel::after {
+#animal_picture:hover + #animal_picture_label::after {
     background-color: var(--myLightGreen);
     color: white;
     cursor: pointer;

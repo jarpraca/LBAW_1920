@@ -156,13 +156,13 @@
             <div class="d-flex flex-row mt-4">
                 <div class="col-12 col-sm-6">
                     <label for="date-input" class="font-weight-bold font-size">Date</label>
-                    <input class="form-control outline-green" type="date" value="2011-08-19" id="date-input" name="ending_date">
+                    <input class="form-control outline-green" type="date" id="date-input" name="ending_date">
                 </div>
                 <div class="col-12 col-sm-6">
                     <label class="font-weight-bold font-size"> Images </label>
                     <div class="custom-file">
                     <input id="animal_picture" type="file" class="form-control" name="animal_picture">
-                        <label class="custom-file-label" for="animal_picture" id="customFileLabel">Add Photo</label>
+                        <label class="custom-file-label" for="animal_picture" id="animal_picture_label">Add Photo</label>
                     </div>
                 </div>
             </div>
