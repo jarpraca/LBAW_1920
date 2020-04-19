@@ -56,12 +56,12 @@
                 <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
 
                 <div class="h-25">
-                    @each('partials.bid_entry', $bidding_history, 'bid')
+                    @each('partials.bid_entry', $last_bids, 'bid')
 
                     <div class="p-2 popup" data-toggle="modal" data-target="#bidsModal">
                         <p class="colorGreen text-decoration-underline mx-auto"><u>See More</u></p>
                     </div>
-                    <div class="modal fade" id="bidsModal" role="dialog" aria-labelledby="bidsModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="bidsModal" tabindex="-1" role="dialog" aria-labelledby="bidsModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content mx-auto">
                                 <div class="modal-header">
@@ -71,74 +71,10 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="overflow-auto h-50">
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
-                                            <p class="w-50 text-center mb-0">910€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
-                                            <p class="w-50 text-center mb-0">890€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
-                                            <p class="w-50 text-center mb-0">870€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
-                                            <p class="w-50 text-center mb-0">850€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
-                                            <p class="w-50 text-center mb-0">830€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
-                                            <p class="w-50 text-center mb-0">810€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
-                                            <p class="w-50 text-center mb-0">790€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
-                                            <p class="w-50 text-center mb-0">770€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
-                                            <p class="w-50 text-center mb-0">750€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
-                                            <p class="w-50 text-center mb-0">730€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
-                                            <p class="w-50 text-center mb-0">710€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
-                                            <p class="w-50 text-center mb-0">690€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
-                                            <p class="w-50 text-center mb-0">670€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
-                                            <p class="w-50 text-center mb-0">650€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
-                                            <p class="w-50 text-center mb-0">630€</p>
-                                        </div>
-                                        <div class="d-flex flex-row ml-4 mb-0">
-                                            <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
-                                            <p class="w-50 text-center mb-0">610€</p>
-                                        </div>
+                                    <div class="overflow-auto h-100">
+                                        @each('partials.bid_entry', $bidding_history, 'bid')
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

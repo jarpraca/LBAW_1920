@@ -49,7 +49,7 @@ a {
     color: var(--myLightGreen)
 }
 
-p, h3, label  {
+p, h2, h3, label  {
     color: black;
 }
 
