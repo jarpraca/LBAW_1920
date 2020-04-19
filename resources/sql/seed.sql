@@ -86,7 +86,8 @@ CREATE TABLE users
     id SERIAL PRIMARY KEY,
     "name" text NOT NULL,
     email text NOT NULL UNIQUE,
-    "password" text NOT NULL
+    "password" text NOT NULL,
+    remember_token VARCHAR
 );
 
 CREATE TABLE admins

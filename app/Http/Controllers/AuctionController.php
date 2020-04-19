@@ -42,9 +42,9 @@ class AuctionController extends Controller
     else if (Auth::check())
       $role = 'user';
 
-    $bidding_history = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
-
-    return view('pages.view_auction',  ['auction' => $auction, 'seller' => $seller, 'picture_name' => $image->url, 'role' => $role, 'bidding_history' => $bidding_history]);
+    $last_bids = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
+    $bidding_history = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
+    return view('pages.view_auction',  ['auction' => $auction, 'seller' => $seller, 'picture_name' => $image->url, 'role' => $role, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
   }
 
   public function showCreateForm()
