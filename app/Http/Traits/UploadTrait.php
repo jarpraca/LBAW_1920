@@ -1,4 +1,6 @@
-namespace App\Http\Traits;
+<?php
+
+namespace App\Traits;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
@@ -15,3 +17,4 @@ trait UploadTrait
         return $file;
     }
 }
+?>
