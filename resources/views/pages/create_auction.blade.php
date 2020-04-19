@@ -67,13 +67,13 @@
                     <div class="d-flex flex-wrap">
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="climbs">
                                 <label class="form-check-label" for="gridCheck">
                                     Climbs
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="jumps">
                                 <label class="form-check-label" for="gridCheck">
                                     Jumps
                                 </label>
@@ -81,13 +81,13 @@
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="talks">
                                 <label class="form-check-label" for="gridCheck">
                                     Talks
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="skates">
                                 <label class="form-check-label" for="gridCheck">
                                     Skates
                                 </label>
@@ -95,13 +95,13 @@
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="olfaction">
                                 <label class="form-check-label" for="gridCheck">
                                     Olfaction
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="moon_nav">
                                 <label class="form-check-label" for="gridCheck">
                                     Moonlight Navigation
                                 </label>
@@ -109,13 +109,13 @@
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="echolocation">
                                 <label class="form-check-label" for="gridCheck">
                                     Echolocation
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" name="acrobatics">
                                 <label class="form-check-label" for="gridCheck">
                                     Acrobatics
                                 </label>

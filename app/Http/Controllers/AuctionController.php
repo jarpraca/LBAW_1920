@@ -13,6 +13,7 @@ use App\Auction;
 use App\User;
 use App\AnimalPhoto;
 use App\Image;
+use App\Feature;
 
 class AuctionController extends Controller
 {
@@ -77,6 +78,54 @@ class AuctionController extends Controller
     $auction->id_seller = Auth::user()->id;
     $auction->save();
 
+    if($request->has('climbs')) {
+      $climbs = new Feature();
+      $climbs->id_skill = 1;
+      $climbs->id_auction = $auction->id; 
+      $climbs->save();
+    }
+    if($request->has('jumps')) {
+      $jumps = new Feature();
+      $jumps->id_skill = 2;
+      $jumps->id_auction = $auction->id; 
+      $jumps->save();
+    }
+    if($request->has('talks')) {
+      $talks = new Feature();
+      $talks->id_skill = 3;
+      $talks->id_auction = $auction->id;
+      $talks->save(); 
+    }
+    if($request->has('skates')) {
+      $skates = new Feature();
+      $skates->id_skill = 4;
+      $skates->id_auction = $auction->id;
+      $skates->save(); 
+    }
+    if($request->has('olfaction')) {
+      $olfaction = new Feature();
+      $olfaction->id_skill = 5;
+      $olfaction->id_auction = $auction->id;
+      $olfaction->save(); 
+    }
+    if($request->has('moon_nav')) {
+      $moon_nav = new Feature();
+      $moon_nav->id_skill = 6;
+      $moon_nav->id_auction = $auction->id; 
+      $moon_nav->save(); 
+    }
+    if($request->has('echolocation')) {
+      $echolocation = new Feature();
+      $echolocation->id_skill = 7;
+      $echolocation->id_auction = $auction->id; 
+      $echolocation->save(); 
+    }
+    if($request->has('acrobatics')) {
+      $acrobatics = new Feature();
+      $acrobatics->id_skill = 8;
+      $acrobatics->id_auction = $auction->id; 
+      $acrobatics->save(); 
+    }
 
     $image = $request->file('animal_picture');
     $name = Str::slug($request->input('name')).'_'.time();
