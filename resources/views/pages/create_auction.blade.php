@@ -161,8 +161,8 @@
                 <div class="col-12 col-sm-6">
                     <label class="font-weight-bold font-size"> Images </label>
                     <div class="custom-file">
-                        <input type="file" class="form-control" id="customFile" name="animal_picture">
-                        <label class="custom-file-label" for="customFile" id="customFileLabel">Add Photo</label>
+                    <input id="animal_picture" type="file" class="form-control" name="animal_picture">
+                        <label class="custom-file-label" for="animal_picture" id="customFileLabel">Add Photo</label>
                     </div>
                 </div>
             </div>

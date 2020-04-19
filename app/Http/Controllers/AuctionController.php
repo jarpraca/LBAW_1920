@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+use App\Traits\UploadTrait;
 
 use App\Auction;
 use App\User;
@@ -15,6 +16,7 @@ use App\Image;
 
 class AuctionController extends Controller
 {
+  use UploadTrait;
   /**
    * Shows the card for a given id.
    *
@@ -71,18 +73,18 @@ class AuctionController extends Controller
     $auction->id_dev_stage = $request->input('dev_stage');
     $auction->ending_date = $request->input('ending_date');
     $auction->id_status = 0;
-    // $auction->image = $request->input('customFile');
     $auction->id_seller = Auth::user()->id;
     $auction->save();
 
 
-    $photo = $request->file('animal_picture');
-    $extension = $photo->getClientOriginalExtension();
-
-    Storage::disk('public')->put($photo->getFilename() . '.' . $extension,  File::get($photo));
+    $image = $request->file('animal_picture');
+    $name = Str::slug($request->input('name')).'_'.time();
+    $folder = '/uploads/images/';
+    $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
+    $this->uploadOne($image, $folder, 'public', $name);
 
     $image = new Image();
-    $image->url = $photo->getFilename() . '.' . $extension;
+    $image->url = $filePath;
     $image->save();
 
     $animal_photo = new AnimalPhoto();
