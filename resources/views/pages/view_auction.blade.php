@@ -19,10 +19,10 @@
             </div>
 
             <div class=" text-center d-flex flex-column bgColorGrey bid-bar">
-                <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}</h2>
+                <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}€</h2>
                 @if($role == 'seller')
-                <a class="btn btn-green mx-3" href="editAuction.php">Edit Auction</a>
-                <a class="btn btn-green mt-3  mx-3" href="#">Delete Auction</a>
+                <a class="btn btn-green mx-3" href="/auctions/edit">Edit Auction</a>
+                <a class="btn btn-green mt-3  mx-3" href="{{ route('auctions', ['id' => $auction->id]) }}">Delete Auction</a>
                 @endif
                 @if($role == 'admin')
                 <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
@@ -43,35 +43,21 @@
                 @if($role == 'guest')
                 <div class="d-flex flex-row mx-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="signup.php">Bid</a>
+                    <a class="btn btn-green mx-auto w-75" href="/register">Bid</a>
 
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="signup.php">Auto Bid</a>
+                    <a class="btn btn-green mx-auto w-75" href="/register">Auto Bid</a>
                 </div>
-                <a class="btn btn-green mt-3  mx-3" href="signup.php">Report</a>
-                <a class="btn btn-green mt-3  mx-3" href="signup.php">Add to Watchlist</a>
+                <a class="btn btn-green mt-3  mx-3" href="/register">Report</a>
+                <a class="btn btn-green mt-3  mx-3" href="/register">Add to Watchlist</a>
                 @endif
                 <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
 
                 <div class="h-25">
-                    <div class="d-flex flex-row ml-4 mb-0">
-                        <p class="w-50 ml-3 text-left mb-0 ">Steve King</p>
-                        <p class="w-50 text-center mb-0">910€</p>
-                    </div>
-                    <div class="d-flex flex-row ml-4 mb-0">
-                        <p class="w-50 ml-3 text-left mb-0">Albert Indio</p>
-                        <p class="w-50 text-center mb-0">890€</p>
-                    </div>
-                    <div class="d-flex flex-row ml-4 mb-0">
-                        <p class="w-50 ml-3 text-left mb-0">Sharapova</p>
-                        <p class="w-50 text-center mb-0">870€</p>
-                    </div>
-                    <div class="d-flex flex-row ml-4 mb-0">
-                        <p class="w-50 ml-3 text-left mb-0 ">Roger Rets</p>
-                        <p class="w-50 text-center mb-0">850€</p>
-                    </div>
+                    @each('partials.bid_entry', $bidding_history, 'bid')
+
                     <div class="p-2 popup" data-toggle="modal" data-target="#bidsModal">
                         <p class="colorGreen text-decoration-underline mx-auto"><u>See More</u></p>
                     </div>
@@ -164,7 +150,7 @@
                 <h3>Description</h3>
                 <p>{{ $auction->description }}</p>
                 <h3 class="mb-3">Seller</h3>
-                <div class="d-flex flex-row my-3 align-items-center">
+                <div class="d-flex flex-row py-3 align-items-center">
                     <img class="rounded-circle mr-2 cover" width="70px" height="70px" src="../images/mammals.jpg">
                     <h5 class="font-weight-bold">{{ $seller->name }}&nbsp;&nbsp;&nbsp;&nbsp;</h5>
                     <h5>{{$seller->rating}}</h5>

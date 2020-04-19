@@ -612,7 +612,6 @@ INSERT INTO bids (value,maximum,id_auction,id_buyer) VALUES
     (10555,13511,42,30),
     (10503,13858,45,26),
     (10552,14557,18,23),
-    (8814,13451,5,29),
     (12749,13956,26,20),
     (12413,14310,23,27),
     (9247,14547,37,26),
@@ -650,6 +649,7 @@ INSERT INTO bids (value,maximum,id_auction,id_buyer) VALUES
     (7167,14730,4,20),
     (8681,14283,20,30),
     (8653,13159,5,11),
+    (8814,13451,5,29),
     (12412,14460,46,20),
     (12824,14990,13,12),
     (12030,14777,15,21),
@@ -834,7 +834,7 @@ INSERT INTO profile_photos (id,id_user) VALUES
     (20,17);
 
 INSERT INTO animal_photos (id,id_auction) VALUES 
-    (1,4),
+    (1,5),
     (2,38),
     (3,9),
     (4,45),

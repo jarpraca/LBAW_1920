@@ -30,16 +30,18 @@ class AuctionController extends Controller
     $image = Image::find($photo_id);
 
     $admin = DB::table('admins')->where('id', Auth::user()->id);
-   
+
     $role = 'guest';
-    if($admin != null)
+    if ($admin != null)
       $role = 'admin';
-    if(Auth::user()->id == $auction->id_seller)
+    if (Auth::user()->id == $auction->id_seller)
       $role = 'seller';
-    else if(Auth::check())
+    else if (Auth::check())
       $role = 'user';
-    
-    return view('pages.view_auction',  ['auction' => $auction, 'seller'=> $seller, 'picture_name' => $image->url, 'role' => $role]);
+
+    $bidding_history = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
+
+    return view('pages.view_auction',  ['auction' => $auction, 'seller' => $seller, 'picture_name' => $image->url, 'role' => $role, 'bidding_history' => $bidding_history]);
   }
 
   public function showCreateForm()
