@@ -21,8 +21,8 @@
             <div class="text-center d-flex flex-column bgColorGrey bid-bar">
                 <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}€</h2>
                 @if($role == 'seller')
-                <a class="btn btn-green mx-3" href="/auctions/edit">Edit Auction</a>
-                <a class="btn btn-green mt-3  mx-3" href="{{ route('auctions', ['id' => $auction->id]) }}">Delete Auction</a>
+                <a class="btn btn-green mx-3" href="{{ route('edit_auction', ['id' => $auction->id]) }}">Edit Auction</a>
+                <a class="btn btn-green mt-3  mx-3" href="{{ route('delete_auction', ['id' => $auction->id]) }}">Delete Auction</a>
                 @endif
                 @if($role == 'admin')
                 <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
