@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS admins;
 DROP TABLE IF EXISTS sellers;
 DROP TABLE IF EXISTS buyers;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS password_resets;
 
 DROP TYPE IF EXISTS skill_name;
 DROP TYPE IF EXISTS category_name;
@@ -259,6 +260,12 @@ CREATE TABLE animal_photos
 (
     id integer NOT NULL PRIMARY KEY REFERENCES images (id) ON UPDATE CASCADE ,
     id_auction integer NOT NULL REFERENCES auctions (id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE password_resets (
+    email text NOT NULL,
+    token text NOT NULL,
+    created_at date NOT NULL
 );
 
 -----------------------------------------
