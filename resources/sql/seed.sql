@@ -420,7 +420,7 @@ CREATE TRIGGER create_buyer
 CREATE FUNCTION create_seller() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF NOT EXISTS(SELECT * FROM auctions WHERE NEW.id_seller = id_seller)
+    IF NOT EXISTS(SELECT * FROM sellers WHERE NEW.id_seller = id)
        THEN INSERT INTO sellers(id) values (NEW.id_seller);
     END IF;
 	RETURN NEW;

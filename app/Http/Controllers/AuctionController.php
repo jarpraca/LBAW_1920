@@ -42,7 +42,7 @@ class AuctionController extends Controller
     $role = 'guest';
     if (Auth::check()) {
       $role = "user";
-      $admin = DB::table('admins')->where('id', Auth::user()->id);
+      $admin = DB::table('admins')->where('id', Auth::user()->id)->first();
       if ($admin != null)
         $role = 'admin';
       if (Auth::user()->id == $auction->id_seller)
@@ -182,16 +182,24 @@ class AuctionController extends Controller
 
       return redirect()->route('view_auction', ['id' => $auction->id]);
     } catch (Exception $exception) {
-      return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+      return back()->withError($exception->getMessage())->withInput();
+      // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
     }
   }
 
   public function delete($id)
   {
+    $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
+    $image = Image::find($photo_id);
+
+    DB::table('animal_photos')->where('id', $photo_id)->delete();
+    $image->delete(null, $photo_id);
+    DB::table('images')->where('id', $photo_id)->delete();
+
     $auction = Auction::find($id);
     $auction->delete();
 
-    return view('pages.homepage');
+    return redirect()->route('homepage');
   }
 
 
@@ -310,7 +318,8 @@ class AuctionController extends Controller
 
       return redirect()->route('view_auction', ['id' => $auction->id]);
     } catch (Exception $exception) {
-      return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+      return back()->withError($exception->getMessage())->withInput();
+      // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
     }
   }
 }

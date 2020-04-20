@@ -22,7 +22,11 @@
                 <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}€</h2>
                 @if($role == 'seller')
                 <a class="btn btn-green mx-3" href="{{ route('edit_auction', ['id' => $auction->id]) }}">Edit Auction</a>
-                <a class="btn btn-green mt-3  mx-3" href="{{ route('delete_auction', ['id' => $auction->id]) }}">Delete Auction</a>
+                <form method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
+                    {{ csrf_field() }}
+                    {{method_field('DELETE')}}
+                    <button class="btn btn-green mt-3  mx-3" type="submit">Delete Auction</button>
+                </form>
                 @endif
                 @if($role == 'admin')
                 <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
@@ -30,8 +34,11 @@
                 @endif
                 @if($role == 'user')
                 <div class="d-flex flex-row mx-3">
-                    <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="#">Bid</a>
+                    <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
+                        {{ csrf_field() }}
+                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
+                        <button class="btn btn-green mx-auto w-75" type="submit">Bid</button>
+                    </form>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">

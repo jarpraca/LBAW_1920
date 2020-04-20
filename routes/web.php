@@ -18,15 +18,17 @@ Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
 //Auctions
-Route::get('auctions/create', 'AuctionController@showCreateForm');
-Route::post('auctions/create', 'AuctionController@create') ->name('auctions');
+Route::get('auctions', 'AuctionController@showCreateForm');
+Route::post('auctions', 'AuctionController@create') ->name('auctions');
 Route::get('auctions/{id}/edit', 'AuctionController@showEditForm')->name('edit_auction');
 Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction');
 Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::delete('api/images/{id}', 'ImageController@delete');
+Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
+
 //Views
-Route::get('homepage','HomepageController@show');
+Route::get('homepage','HomepageController@show')->name('homepage');
 Route::view('about', 'pages.about');
 
 // API
