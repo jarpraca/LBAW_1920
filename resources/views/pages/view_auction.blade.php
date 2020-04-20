@@ -22,24 +22,29 @@
                 <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}€</h2>
                 @if($role == 'seller')
                 <a class="btn btn-green mx-3" href="{{ route('edit_auction', ['id' => $auction->id]) }}">Edit Auction</a>
-                <form method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
+                <form class="btn-green mt-3 mx-3 borderRadiusForm" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
-                    <button class="btn btn-green mt-3  mx-3" type="submit">Delete Auction</button>
+                    <button class="btn btn-green mx-3" type="submit">Delete Auction</button>
                 </form>
                 @endif
                 @if($role == 'admin')
                 <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
-                <a class="btn btn-green mt-3  mx-3" href="#">Delete Content</a>
+                <form class="btn-green mt-3 mx-3 borderRadiusForm" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
+                    {{ csrf_field() }}
+                    {{method_field('DELETE')}}
+                    <button class="btn btn-green mx-3" type="submit">Delete Auction</button>
+                </form>               
                 @endif
                 @if($role == 'user')
-                <div class="d-flex flex-row mx-3">
-                    <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
+                <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
+                    <div class="d-flex flex-row mx-3">
                         {{ csrf_field() }}
                         <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
                         <button class="btn btn-green mx-auto w-75" type="submit">Bid</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
+
                 <div class="d-flex flex-row mx-3 mt-3">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="#">Auto Bid</a>

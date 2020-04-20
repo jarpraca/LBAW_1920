@@ -20,7 +20,7 @@ class AuctionController extends Controller
 {
   use UploadTrait;
   /**
-   * Shows the card for a given id.
+   * Shows the auction for a given id.
    *
    * @param  int  $id
    * @return Response
@@ -191,12 +191,15 @@ class AuctionController extends Controller
   {
     $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
     $image = Image::find($photo_id);
+    $auction = Auction::find($id);
 
     DB::table('animal_photos')->where('id', $photo_id)->delete();
+    
+    // $image->authorize('deleteAnimalPhoto', $auction);
+
     $image->delete(null, $photo_id);
     DB::table('images')->where('id', $photo_id)->delete();
 
-    $auction = Auction::find($id);
     $auction->delete();
 
     return redirect()->route('homepage');
