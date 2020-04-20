@@ -453,7 +453,7 @@ CREATE TRIGGER remove_watchlists
     EXECUTE PROCEDURE remove_watchlists(); 
 
     INSERT INTO users ("name",email,"password") VALUES 
-    ('Dante Copeland','scelerisque@maurisut.com','FXU64FUN0IB'),
+    ('Dante Copeland','demo_admin@fe.up.pt','$2b$10$O.queTOIhP0.7NieNlBXceoTPoFhP5eBaodhAnrnpDNJT/3Vn7pXe'),
     ('Kevin Sandoval','lectus.Nullam.suscipit@senectuset.net','OJU69NCH6XM'),
     ('Nolan Y. Morgan','arcu@auctorodioa.net','PZN13XLL1XF'),
     ('Dean Galloway','ipsum.sodales.purus@Cras.com','JRD25APR5CM'),

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class HomepageController extends Controller
 {
   /**
-   * Shows the card for a given id.
+   * Shows the hot deals in homepage.
    *
    * @return Response
    */
