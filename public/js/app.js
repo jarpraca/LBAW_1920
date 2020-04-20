@@ -32,14 +32,11 @@ function addEventListeners() {
     form.appendChild(input);
   }
 
-
   let imageDeleters = document.querySelectorAll(".editAuction a.image_delete");
   [].forEach.call(imageDeleters, function (deleter) {
     deleter.addEventListener("click", sendDeleteImageRequest);
   });
 }
-
-
 
 function encodeForAjax(data) {
   if (data == null) return null;
@@ -79,6 +76,10 @@ function imageDeletedHandler() {
   let element = document.querySelector('a[data-id="' + item.id + '"]');
   element.remove();
 }
+
+window.callSendAjax = () => {
+  console.log("workedddddddddddddddddd");
+};
 
 // function sendItemUpdateRequest() {
 //   let item = this.closest('li.item');
