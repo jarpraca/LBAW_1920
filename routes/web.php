@@ -26,7 +26,7 @@ Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::delete('api/images/{id}', 'ImageController@delete');
 //Views
-Route::view('homepage','pages.homepage');
+Route::get('homepage','HomepageController@show');
 Route::view('about', 'pages.about');
 
 // API

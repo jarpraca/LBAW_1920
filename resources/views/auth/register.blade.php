@@ -35,6 +35,10 @@
 
         <input class="mx-4" id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password" required>
 
+        <!-- <div class="custom-file mx-4">
+          <input id="profile_picture" type="file" class="form-control" name="profile_picture">
+          <label class="custom-file-label" for="profile_picture" id="profile_picture_label">Add Photo</label>
+        </div> -->
         <div class="mx-4 d-flex align-self-center justify-content-around align-items-center">
           <button class="ml-0" href="#">
             Sign up with&nbsp;
