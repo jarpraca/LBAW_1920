@@ -8,7 +8,7 @@
         <form class="editAuction mx-auto" method="POST" action="{{ route('edit_auction', ['id' => $auction->id]) }}" enctype="multipart/form-data">
         {{method_field('PUT')}}
         {{csrf_field()}}
-            <div class="col">
+        <div class="col">
                 <h1 class="mt-3 colorGreen mx-auto">Edit Your Auction</h1>
             </div>
             @if (session('error'))
@@ -17,7 +17,7 @@
             <div class="d-flex flex-wrap mt-3">
                 <div class="col-12 col-sm-6">
                     <h3> Species Name </h3>
-                    <input type="text" name="species_name" class="form-control outline-green mx-0" value="{{  $auction->species_name }}" />
+                    <input type="text" name="species_name" id="species_name" class="form-control outline-green mx-0" value="{{  $auction->species_name }}" />
                 </div>
                 <div class="col-12 col-sm-6">
                     <h3> Name </h3>
@@ -71,56 +71,56 @@
                     <div class="d-flex flex-wrap">
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="climbs">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1" name="climbs">
+                                <label class="form-check-label" for="gridCheck1">
                                     Climbs
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="jumps">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck2" name="jumps">
+                                <label class="form-check-label" for="gridCheck2">
                                     Jumps
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="talks">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck3" name="talks">
+                                <label class="form-check-label" for="gridCheck3">
                                     Talks
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="skates">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck4" name="skates">
+                                <label class="form-check-label" for="gridCheck4">
                                     Skates
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="olfaction">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck5" name="olfaction">
+                                <label class="form-check-label" for="gridCheck5">
                                     Olfaction
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="moon_nav">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck6" name="moon_nav">
+                                <label class="form-check-label" for="gridCheck6">
                                     Moonlight Navigation
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="echolocation">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck7" name="echolocation">
+                                <label class="form-check-label" for="gridCheck7">
                                     Echolocation
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="acrobatics">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck8" name="acrobatics">
+                                <label class="form-check-label" for="gridCheck8">
                                     Acrobatics
                                 </label>
                             </div>
@@ -155,19 +155,24 @@
                     </select>
                 </div>
             </div>
-
-            <div class="d-flex flex-row mt-4">
-                <div class="col-12 col-sm-6">
-                    <label for="date-input" class="font-weight-bold font-size">Date</label>
-                    <input class="form-control outline-green" type="date" value="{{  $auction->ending_date }}" id="date-input" name="ending_date">
-                </div>
-                <div class="col-12 col-sm-6">
-                    <label class="font-weight-bold font-size"> Images </label>
+            <div class="col-12 col-sm-6 mt-3">
+                <label for="date-input" class="font-weight-bold font-size">Date</label>
+                <input class="form-control outline-green" type="date" value="{{  $auction->ending_date }}" id="date-input" name="ending_date">
+            </div>
+            <div class="col-12 mt-3">
+                <label class="font-weight-bold font-size"> Images </label>
+                <div class="d-flex flex-row">
+                @isset($photo)
+                    <a href="#" class="image_delete w-25 mr-5" data-id="{{ $photo->id }}">                       
+                        <img src="{{url($photo->url)}}" alt="{{url($photo->url)}}"  class="w-100">
+                    </a>
+                    @endisset
                     <div class="custom-file">
                         <input id="animal_picture" type="file" class="form-control" name="animal_picture">
                         <label class="custom-file-label" for="animal_picture" id="customFileLabel">Add Photo</label>
                     </div>
                 </div>
+               
             </div>
             <div class="row justify-content-center">
                 <button class="btn btn-green text-white mx-auto text-center mt-5" type="submit">Save Changes</button>

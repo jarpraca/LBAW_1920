@@ -54,7 +54,16 @@ class AuctionController extends Controller
   public function showEditForm($id)
   {
     $auction = Auction::find($id);
-    return view('pages.edit_auction', ['auction' => $auction]);
+
+    $photo = DB::table('animal_photos')->where('id_auction', $auction->id)->first();
+
+    if(!empty($photo)){
+      $image = Image::find($photo->id);
+      return view('pages.edit_auction', ['auction' => $auction, 'photo' => $image]);
+    }
+    else
+      return view('pages.edit_auction', ['auction' => $auction]);
+
   }
 
   /**
@@ -173,24 +182,48 @@ class AuctionController extends Controller
 
   public function update(Request $request, $id)
   {
+    if (!Auth::check()) {
+      return back()->withError("Please sign in before editing an auction.")->withInput();
+    }
+    if (gettype($request->input('starting_price')) == "integer")
+      return back()->withError("The starting price must be a number.")->withInput();
 
-    // if (!Auth::check()) {
-    //   return back()->withError("Please sign in before editing an auction.")->withInput();
-    // }
-    // if (gettype($request->input('starting_price')) == "integer")
-    //   return back()->withError("The starting price must be a number.")->withInput();
+    if (gettype($request->input('buyout_price')) == "integer")
+      return back()->withError("The buyout price must be a number.")->withInput();
 
-    // if (gettype($request->input('buyout_price')) == "integer")
-    //   return back()->withError("The buyout price must be a number.")->withInput();
+    if (
+      $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null
+      || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null
+    ) {
+      return back()->withError("Please fill out all the fields.")->withInput();
+    }
 
-    // if (
-    //   $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null
-    //   || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null
-    // ) {
-    //   return back()->withError("Please fill out all the fields.")->withInput();
-    // }
+    $animal_photo = DB::table('animal_photos')->where('id_auction', $id)->first();
 
-    // try {
+    if (!$request->hasFile('animal_picture')) {
+
+      if ($animal_photo == null)
+        return back()->withError("Please add an image.")->withInput();
+    } 
+    else {
+      DB::table('animal_photos')->where('id_auction', $id)->delete();
+      $image = $request->file('animal_picture');
+      $name = Str::slug($request->input('name')) . '_' . time();
+      $folder = '/uploads/images/';
+      $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+      $this->uploadOne($image, $folder, 'public', $name);
+
+      $image = new Image();
+      $image->url = $filePath;
+      $image->save();
+
+      $animal_photo = new AnimalPhoto();
+      $animal_photo->id_auction = $id;
+      $animal_photo->id = $image->id;
+      $animal_photo->save();
+    }
+
+    try {      
       $auction = Auction::find($id);
 
       $this->authorize('update', $auction);
@@ -210,9 +243,7 @@ class AuctionController extends Controller
       $auction->id_seller = Auth::user()->id;
       $auction->save();
 
-
       DB::table('features')->where('id_auction', $auction->id)->delete();
-      DB::table('animal_photos')->where('id_auction', $auction->id)->delete();
 
       if ($request->has('climbs')) {
         $climbs = new Feature();
@@ -262,27 +293,11 @@ class AuctionController extends Controller
         $acrobatics->id_auction = $auction->id;
         $acrobatics->save();
       }
-
-      $image = $request->file('animal_picture');
-      $name = Str::slug($request->input('name')) . '_' . time();
-      $folder = '/uploads/images/';
-      $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
-      $this->uploadOne($image, $folder, 'public', $name);
-
-      $image = new Image();
-      $image->url = $filePath;
-      $image->save();
-
-      $animal_photo = new AnimalPhoto();
-      $animal_photo->id_auction = $auction->id;
-      $animal_photo->id = $image->id;
-      $animal_photo->save();
-
-      return redirect()->route('view_auction', ['id' => $auction->id]);
-    // } 
-    // catch (Exception $exception) {
-    //   return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
-    // }
+      
+    return redirect()->route('view_auction', ['id' => $auction->id]);
+    } catch (Exception $exception) {
+      return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+    }
   }
 
   public function delete($id)

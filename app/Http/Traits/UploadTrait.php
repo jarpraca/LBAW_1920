@@ -16,5 +16,11 @@ trait UploadTrait
 
         return $file;
     }
+
+    public function deleteOne($filename = null)
+    {
+
+        unlink(public_path($filename));
+    }
 }
 ?>

@@ -38,8 +38,8 @@
                         <option value="1">Mammal</option>
                         <option value="2">Insect</option>
                         <option value="3">Reptile</option>
-                        <option value="4">Bird</option>
-                        <option value="5">Fish</option>
+                        <option value="5">Bird</option>
+                        <option value="4">Fish</option>
                         <option value="6">Amphibian</option>
                     </select>
                 </div>
@@ -70,56 +70,56 @@
                     <div class="d-flex flex-wrap">
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="climbs">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck1" name="climbs">
+                                <label class="form-check-label" for="gridCheck1">
                                     Climbs
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="jumps">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck2" name="jumps">
+                                <label class="form-check-label" for="gridCheck2">
                                     Jumps
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="talks">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck3" name="talks">
+                                <label class="form-check-label" for="gridCheck3">
                                     Talks
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="skates">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck4" name="skates">
+                                <label class="form-check-label" for="gridCheck4">
                                     Skates
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="olfaction">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck5" name="olfaction">
+                                <label class="form-check-label" for="gridCheck5">
                                     Olfaction
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="moon_nav">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck6" name="moon_nav">
+                                <label class="form-check-label" for="gridCheck6">
                                     Moonlight Navigation
                                 </label>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="echolocation">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck7" name="echolocation">
+                                <label class="form-check-label" for="gridCheck7">
                                     Echolocation
                                 </label>
                             </div>
                             <div class="form-check row">
-                                <input class="form-check-input" type="checkbox" id="gridCheck" name="acrobatics">
-                                <label class="form-check-label" for="gridCheck">
+                                <input class="form-check-input" type="checkbox" id="gridCheck8" name="acrobatics">
+                                <label class="form-check-label" for="gridCheck8">
                                     Acrobatics
                                 </label>
                             </div>
