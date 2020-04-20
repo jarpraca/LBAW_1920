@@ -169,7 +169,7 @@
                     @endisset
                     <div class="custom-file">
                         <input id="animal_picture" type="file" class="form-control" name="animal_picture">
-                        <label class="custom-file-label" for="animal_picture" id="customFileLabel">Add Photo</label>
+                        <label class="custom-file-label" for="animal_picture" id="animal_picture_label">Add Photo</label>
                     </div>
                 </div>
                

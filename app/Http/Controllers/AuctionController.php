@@ -30,8 +30,15 @@ class AuctionController extends Controller
     $auction = Auction::find($id);
 
     $seller = User::find($auction->id_seller);
-    $photo_id = DB::table('animal_photos')->where('id_auction', $auction->id)->first()->id;
+    // $seller_photo = DB::table('profile_photos')->where('id_user', $auction->id_seller)->join('images', 'profile_photos.id', '=', 'images.id')->first();
+    $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
     $image = Image::find($photo_id);
+
+    $category = DB::table('categories')->where('id', $auction->id_category)->first()->type;
+    $dev_stage = DB::table('development_stages')->where('id', $auction->id_dev_stage)->first()->type;
+    $color = DB::table('main_colors')->where('id', $auction->id_main_color)->first()->type;
+    $skills = DB::table('features')->where('id_auction', $id)->join('skills', 'features.id_skill', '=', 'skills.id')->get('type');
+
     $role = 'guest';
     if (Auth::check()) {
       $role = "user";
@@ -41,20 +48,15 @@ class AuctionController extends Controller
       if (Auth::user()->id == $auction->id_seller)
         $role = 'seller';
     }
+
     $last_bids = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
     $bidding_history = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
-    return view('pages.view_auction',  ['auction' => $auction, 'seller' => $seller, 'picture_name' => $image->url, 'role' => $role, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
-  }
-
-  public function showCreateForm()
-  {
-    return view('pages.create_auction');
+    return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller,/* 'seller_photo' => $seller_photo->url,*/ 'picture_name' => $image->url, 'role' => $role, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
   }
 
   public function showEditForm($id)
   {
     $auction = Auction::find($id);
-
     $photo = DB::table('animal_photos')->where('id_auction', $auction->id)->first();
 
     if(!empty($photo)){
@@ -63,7 +65,11 @@ class AuctionController extends Controller
     }
     else
       return view('pages.edit_auction', ['auction' => $auction]);
+  }
 
+  public function showCreateForm()
+  {
+    return view('pages.create_auction');
   }
 
   /**
@@ -180,6 +186,15 @@ class AuctionController extends Controller
     }
   }
 
+  public function delete($id)
+  {
+    $auction = Auction::find($id);
+    $auction->delete();
+
+    return view('pages.homepage');
+  }
+
+
   public function update(Request $request, $id)
   {
     if (!Auth::check()) {
@@ -204,8 +219,7 @@ class AuctionController extends Controller
 
       if ($animal_photo == null)
         return back()->withError("Please add an image.")->withInput();
-    } 
-    else {
+    } else {
       DB::table('animal_photos')->where('id_auction', $id)->delete();
       $image = $request->file('animal_picture');
       $name = Str::slug($request->input('name')) . '_' . time();
@@ -223,7 +237,7 @@ class AuctionController extends Controller
       $animal_photo->save();
     }
 
-    try {      
+    try {
       $auction = Auction::find($id);
 
       $this->authorize('update', $auction);
@@ -293,18 +307,10 @@ class AuctionController extends Controller
         $acrobatics->id_auction = $auction->id;
         $acrobatics->save();
       }
-      
-    return redirect()->route('view_auction', ['id' => $auction->id]);
+
+      return redirect()->route('view_auction', ['id' => $auction->id]);
     } catch (Exception $exception) {
       return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
     }
-  }
-
-  public function delete($id)
-  {
-    $auction = Auction::find($id);
-    $auction->delete();
-
-    return view('pages.homepage');
   }
 }
