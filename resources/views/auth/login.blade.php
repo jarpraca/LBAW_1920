@@ -2,12 +2,6 @@
 
 @section('content')
 <div id="signup_bg">
-    <!-- <div id="box">
-        <div id="signup_infos">
-            <div id="signup_msg">Don't have an account?</div>
-            <a class="signup_btn" id="signup_btn" href="{{ route('register') }}">SIGN UP</a>
-        </div>
-    </div> -->
     <div id="main">
         <div id="loginform" class="px-4">
             <h2 class="">SIGN IN</h2>
@@ -29,10 +23,16 @@
                 </span>
                 @endif
 
-                <div class="form-group">
-                    <div class="ml-1 custom-control custom-checkbox">
+                <div class="form-group ml-1">
+                    <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="checkbox-3" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="custom-control-label text-dark" for="checkbox-3">Remember me</label>
+                    </div>
+                    <div class="d-flex mt-1 flex-row align-items-center">
+                        <h6>Forgot password?&nbsp;</h6>
+                        <a class="text-dark" href="{{ route('recover') }}">
+                            <h6>Recover</h6>
+                        </a>
                     </div>
                 </div>
 
