@@ -260,12 +260,9 @@ class AuctionController extends Controller
       $auction->age = $request->input('age');
       $auction->starting_price = $request->input('starting_price');
       $auction->buyout_price = $request->input('buyout_price');
-      $auction->current_price = $request->input('starting_price');
       $auction->id_main_color = $request->input('color');
       $auction->id_dev_stage = $request->input('dev_stage');
       $auction->ending_date = $request->input('ending_date');
-      $auction->id_status = 0;
-      $auction->id_seller = Auth::user()->id;
       $auction->save();
 
       DB::table('features')->where('id_auction', $auction->id)->delete();
