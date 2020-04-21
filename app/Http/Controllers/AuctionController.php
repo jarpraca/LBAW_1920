@@ -90,7 +90,7 @@ class AuctionController extends Controller
       return back()->withError("The buyout price must be a number.")->withInput();
 
     if (
-      $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null
+      $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null || $request->input('starting_price') == null || $request->input('buyout_price') == null
       || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null
     ) {
       return back()->withError("Please fill out all the fields.")->withInput();
@@ -182,8 +182,8 @@ class AuctionController extends Controller
 
       return redirect()->route('view_auction', ['id' => $auction->id]);
     } catch (Exception $exception) {
-      return back()->withError($exception->getMessage())->withInput();
-      // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+     // return back()->withError($exception->getMessage())->withInput();
+      return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
     }
   }
 

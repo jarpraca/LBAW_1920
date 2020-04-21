@@ -159,7 +159,7 @@
             <div class="d-flex flex-row mt-4">
                 <div class="col-12 col-sm-6">
                     <label for="date-input" class="font-weight-bold font-size">Ending Date</label>
-                    <input class="form-control outline-green" type="date" id="date-input" name="ending_date">
+                    <input class="form-control outline-green" type="date" id="date-input" name="ending_date" required>
                 </div>
                 <div class="col-12 col-sm-6">
                     <label class="font-weight-bold font-size"> Images </label>
