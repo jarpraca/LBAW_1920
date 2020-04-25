@@ -22,6 +22,9 @@ Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 
+//Profiles
+Route::get('profiles/{id}', 'UserController@show')->name('profiles');
+Route::delete('profiles/{id}','UserController@delete')->name('delete_profile');
 //Views
 Route::get('homepage','HomepageController@show')->name('homepage');
 Route::view('about', 'pages.about');

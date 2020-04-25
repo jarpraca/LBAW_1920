@@ -5,7 +5,7 @@
 @section('content')
 <div class="bg-white pt-4">
     <section class="mainBody align-items-center justify-content-center">
-        <form class="createAuction mx-auto" method="POST" action="{{ route('auctions', ['id' => Auth::id()]) }}" enctype="multipart/form-data">
+        <form class="createAuction mx-auto" method="POST" action="{{ route('auctions') }}" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="col">
                 <h1 class="mt-3 colorGreen mx-auto">Create Your Auction</h1>
