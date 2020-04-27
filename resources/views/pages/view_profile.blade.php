@@ -22,7 +22,7 @@
                 <p class="font-weight-bold mt-0">{{$profile->email}}</p>
 
                 <div id="profile_edit">
-                    <a class="colorGreen text-decoration-underline mx-auto w-75" href="editProfile.php"><u>Edit</u></a>
+                    <a class="colorGreen text-decoration-underline mx-auto w-75" href="{{ route('edit_profile', ['id' => Auth::user()->id]) }}">Edit</u></a>
                 </div>
             </div>
         </div>

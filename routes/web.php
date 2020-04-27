@@ -25,6 +25,9 @@ Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('creat
 //Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');
 Route::delete('profiles/{id}','UserController@delete')->name('delete_profile');
+Route::get('profiles/{id}/edit', 'UserController@showEditForm')->name('edit_profile');
+Route::put('profiles/{id}/edit', 'UserController@update')->name('edit_profile');
+
 //Views
 Route::get('homepage','HomepageController@show')->name('homepage');
 Route::view('about', 'pages.about');
