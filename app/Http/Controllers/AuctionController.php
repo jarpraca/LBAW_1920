@@ -321,33 +321,221 @@ class AuctionController extends Controller
     }
   }
 
-  public function search()
+  public function search(Request $request)
   {
-    $auctions = DB::select('
-    SELECT DISTINCT auctions.id, species_name, current_price, age, ending_date
-    FROM ((auctions JOIN features ON auctions.id = features.id_auction) JOIN auction_status ON auctions.id_status = auction_status.id)
-    WHERE   (id_category = $category OR $category IS NULL)
-        AND (id_main_color = $main_color OR $main_color IS NULL)
-        AND (id_dev_stage = $dev_stage OR $dev_stage IS NULL)
-        AND (current_price < $max_price OR $max_price IS NULL)
-        AND (id_skill IN ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics))
-        AND auction_status.TYPE = "Ongoing"
+    if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
+      $mammals = 1;
+      $insects = 2;
+      $reptiles = 3;
+      $birds = 4;
+      $fishes = 5;
+      $amphibians = 6;
+    } else {
+      if ($request->has('mammals'))
+        $mammals = 1;
+      else
+        $mammals = null;
+      if ($request->has('insects'))
+        $insects = 2;
+      else
+        $insects = null;
+      if ($request->has('reptiles'))
+        $reptiles = 3;
+      else
+        $reptiles = null;
+      if ($request->has('birds'))
+        $birds = 4;
+      else
+        $birds = null;
+      if ($request->has('fishes'))
+        $fishes = 5;
+      else
+        $fishes = null;
+      if ($request->has('amphibians'))
+        $amphibians = 6;
+      else
+        $amphibians = null;
+    }
+
+
+    if (!$request->has('blue') && !$request->has('brown') && !$request->has('black') && !$request->has('yellow') && !$request->has('green') && !$request->has('red') && !$request->has('white')) {
+      $blue = 1;
+      $brown = 2;
+      $black = 3;
+      $yellow = 4;
+      $green = 5;
+      $red = 6;
+      $white = 7;
+    } else {
+      if ($request->has('blue'))
+        $blue = 1;
+      else
+        $blue = null;
+      if ($request->has('brown'))
+        $brown = 2;
+      else
+        $brown = null;
+      if ($request->has('black'))
+        $black = 3;
+      else
+        $black = null;
+      if ($request->has('yellow'))
+        $yellow = 4;
+      else
+        $yellow = null;
+      if ($request->has('green'))
+        $green = 5;
+      else
+        $green = null;
+      if ($request->has('red'))
+        $red = 6;
+      else
+        $red = null;
+      if ($request->has('white'))
+        $white = 7;
+      else
+        $white = null;
+    }
+
+
+    if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
+      $baby = 1;
+      $child = 2;
+      $teen = 3;
+      $adult = 4;
+      $elderly = 5;
+    } else {
+      if ($request->has('baby'))
+        $baby = 1;
+      else
+        $baby = null;
+      if ($request->has('child'))
+        $child = 2;
+      else
+        $child = null;
+      if ($request->has('teen'))
+        $teen = 3;
+      else
+        $teen = null;
+      if ($request->has('adult'))
+        $adult = 4;
+      else
+        $adult = null;
+      if ($request->has('elderly'))
+        $elderly = 5;
+      else
+        $elderly = null;
+    }
+
+
+    if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
+      $climbs = 1;
+      $jumps = 2;
+      $talks = 3;
+      $skates = 4;
+      $olfaction = 5;
+      $navigation = 6;
+      $echo = 7;
+      $acrobatics = 8;
+    } else {
+      if ($request->has('climbs'))
+        $climbs = 1;
+      else
+        $climbs = null;
+      if ($request->has('jumps'))
+        $jumps = 2;
+      else
+        $jumps = null;
+      if ($request->has('talks'))
+        $talks = 3;
+      else
+        $talks = null;
+      if ($request->has('skates'))
+        $skates = 4;
+      else
+        $skates = null;
+      if ($request->has('olfaction'))
+        $olfaction = 5;
+      else
+        $olfaction = null;
+      if ($request->has('navigation'))
+        $navigation = 6;
+      else
+        $navigation = null;
+      if ($request->has('echo'))
+        $echo = 7;
+      else
+        $echo = null;
+      if ($request->has('acrobatics'))
+        $acrobatics = 8;
+      else
+        $acrobatics = null;
+    }
+
+
+    if ($request->input('search') != null) {
+      $auctions = DB::select(DB::raw("
+    SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date
+    FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
+    to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
+    WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
+    AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
+    AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
+    AND (current_price < :max_price OR :max_price IS NULL)
+    AND (current_price > :min_price OR :min_price IS NULL)
+    AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
+    AND query @@ textsearch
+    AND id_status = 0
     ORDER BY ending_date;
-    ');
+    "), array(
+        'text' => $request->input('search'),
+        'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
+        'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
+        'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
+        'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
+        'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
+      ));
+    }
+    else {
+      $auctions = DB::select(DB::raw("
+      SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date
+      FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
+      WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
+      AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
+      AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
+      AND (current_price < :max_price OR :max_price IS NULL)
+      AND (current_price > :min_price OR :min_price IS NULL)
+      AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
+      AND id_status = 0
+      ORDER BY ending_date;
+      "), array(
+        'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
+        'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
+        'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
+        'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
+        'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
+      ));
+  
+    }
+
     return view('pages.search', ['auctions' => $auctions]);
   }
 
   public function fullTextSearch(Request $request)
   {
     $search = $request->input('search');
-    $auctions = DB::select(DB::raw("
+    if ($search != "") {
+      $auctions = DB::select(DB::raw("
     SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
-    FROM auctions, to_tsquery(:text) AS query, 
+    FROM auctions , to_tsquery(:text) AS query, 
         to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
     WHERE query @@ textsearch AND id_status = 0
     ORDER BY rank DESC;
     "), array('text' => $search));
-    // $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('auctions.id_status', '=', 0)->get();
+    } else {
+      $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('auctions.id_status', '=', 0)->get();
+    }
+
     return view('pages.search', ['auctions' => $auctions]);
   }
 }
