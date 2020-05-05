@@ -22,6 +22,7 @@ Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction
 Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
+Route::put('auctions/{id}/stop', 'AuctionController@stop')->name('stop_auction');
 
 //Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');

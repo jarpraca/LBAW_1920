@@ -186,6 +186,14 @@ class AuctionController extends Controller
     }
   }
 
+  public function stop($id){
+    $auction = Auction::find($id);
+    //$this->authorize('update', $auction);
+    $auction->id_status = 1;
+    $auction->save();
+    return redirect()->route('view_auction', ['id' => $auction->id]);
+  }
+
   public function delete($id)
   {
     $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
