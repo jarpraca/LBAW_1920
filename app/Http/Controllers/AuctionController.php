@@ -59,11 +59,10 @@ class AuctionController extends Controller
     $auction = Auction::find($id);
     $photo = DB::table('animal_photos')->where('id_auction', $auction->id)->first();
 
-    if(!empty($photo)){
+    if (!empty($photo)) {
       $image = Image::find($photo->id);
       return view('pages.edit_auction', ['auction' => $auction, 'photo' => $image]);
-    }
-    else
+    } else
       return view('pages.edit_auction', ['auction' => $auction]);
   }
 
@@ -182,7 +181,7 @@ class AuctionController extends Controller
 
       return redirect()->route('view_auction', ['id' => $auction->id]);
     } catch (Exception $exception) {
-     // return back()->withError($exception->getMessage())->withInput();
+      // return back()->withError($exception->getMessage())->withInput();
       return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
     }
   }
@@ -194,7 +193,7 @@ class AuctionController extends Controller
     $auction = Auction::find($id);
 
     DB::table('animal_photos')->where('id', $photo_id)->delete();
-    
+
     // $image->authorize('deleteAnimalPhoto', $auction);
 
     $image->delete(null, $photo_id);
@@ -204,7 +203,6 @@ class AuctionController extends Controller
 
     return redirect()->route('homepage');
   }
-
 
   public function update(Request $request, $id)
   {
@@ -321,5 +319,34 @@ class AuctionController extends Controller
       return back()->withError($exception->getMessage())->withInput();
       // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
     }
+  }
+
+  public function search()
+  {
+    $auctions = DB::select('
+    SELECT DISTINCT auctions.id, species_name, current_price, age, ending_date
+    FROM ((auctions JOIN features ON auctions.id = features.id_auction) JOIN auction_status ON auctions.id_status = auction_status.id)
+    WHERE   (id_category = $category OR $category IS NULL)
+        AND (id_main_color = $main_color OR $main_color IS NULL)
+        AND (id_dev_stage = $dev_stage OR $dev_stage IS NULL)
+        AND (current_price < $max_price OR $max_price IS NULL)
+        AND (id_skill IN ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics))
+        AND auction_status.TYPE = "Ongoing"
+    ORDER BY ending_date;
+    ');
+    return view('pages.search', ['auctions' => $auctions]);
+  }
+
+  public function full_text_search(Request $request)
+  {
+    $search = $request->input('search');
+    $auctions = DB::select('
+    SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
+    FROM (auctions JOIN auction_status ON auctions.id_status = auction_status.id), to_tsquery(' . $search . ') AS query, 
+        to_tsvector(name || " " || species_name || " " || description ) AS textsearch
+    WHERE query @@ textsearch AND auction_status.TYPE = "Ongoing"
+    ORDER BY rank DESC;
+    ');
+    return view('pages.search', ['auctions' => $auctions]);
   }
 }

@@ -28,7 +28,7 @@
         </div>
 
         <div class="collapsible mt-5 mb-4">
-            <button class="collapsible_btn w-100 py-2 text-left" data-toggle="collapse" data-target="#purchase_history" aria-expanded="false" aria-controls="purchase_history">
+            <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#purchase_history" aria-expanded="false" aria-controls="purchase_history">
                 <div class="d-flex flex-row justify-content-between">
                     <h5 class="font-weight-bold">Purchase History</h5>
                     <i class=" fas fa-chevron-down mr-2 p-0"></i>
@@ -38,7 +38,7 @@
             <div class="collapse" id="purchase_history" class="bgColorGrey">
                 <?php
                 if (sizeof($purchase_history) == 0) { ?>
-                    <p>You still haven't won any auctions </p>
+                    <p class="ml-3 mt-3">You still haven't won any auctions </p>
                 <?php } else { ?>
                     <div class="d-flex flex-wrap text-left justify-flex-start">
                         @each('partials.card', $purchase_history, 'auction')
@@ -48,7 +48,7 @@
         </div>
 
         <div class="collapsible mt-2 mb-4">
-            <button class="collapsible_btn w-100 py-2 text-left" data-toggle="collapse" data-target="#my_auctions" aria-expanded="false" aria-controls="my_auctions">
+            <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#my_auctions" aria-expanded="false" aria-controls="my_auctions">
                 <div class="d-flex flex-row justify-content-between align-items-center">
                     <h5 class="font-weight-bold">My Auctions</h5>
                     <i class=" fas fa-chevron-down mr-2 p-0"></i>
@@ -58,7 +58,7 @@
             <div class="collapse" id="my_auctions" class="bgColorGrey">
                 <?php
                 if (sizeof($my_auctions) == 0) { ?>
-                    <p>You still haven't created any auctions </p>
+                    <p class="ml-3 mt-3">You still haven't created any auctions </p>
                 <?php } else { ?>
                     <div class="d-flex flex-wrap text-left justify-flex-start">
                         @each('partials.card', $my_auctions, 'auction')
@@ -68,7 +68,7 @@
         </div>
 
         <div class="collapsible mt-2 mb-4">
-            <button class="collapsible_btn w-100 py-2 text-left" data-toggle="collapse" data-target="#ongoing" aria-expanded="false" aria-controls="ongoing">
+            <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#ongoing" aria-expanded="false" aria-controls="ongoing">
                 <div class="d-flex flex-row justify-content-between">
                     <h5 class="font-weight-bold">Ongoing Auctions</h5>
                     <i class=" fas fa-chevron-down mr-2 p-0"></i>
@@ -78,7 +78,7 @@
             <div class="collapse" id="ongoing" class="bgColorGrey">
                 <?php
                 if (sizeof($ongoing_auctions) == 0) { ?>
-                    <p>You haven't made any bids on ongoing auctions </p>
+                    <p class="ml-3 mt-3">You haven't made any bids on ongoing auctions </p>
                 <?php } else { ?>
                     <div class="d-flex flex-wrap text-left justify-flex-start">
                         @each('partials.card', $ongoing_auctions, 'auction')
@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="collapsible mt-2 mb-4">
-            <button class="collapsible_btn w-100 py-2 text-left" data-toggle="collapse" data-target="#watchlist" aria-expanded="false" aria-controls="watchlist">
+            <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#watchlist" aria-expanded="false" aria-controls="watchlist">
                 <div class="d-flex flex-row justify-content-between align-items-center">
                     <h5 class="font-weight-bold">Watchlist</h5>
                     <i class=" fas fa-chevron-down mr-2 p-0"></i>
@@ -97,7 +97,7 @@
             <div class="collapse" id="watchlist" class="bgColorGrey">
                 <?php
                 if (sizeof($watchlist) == 0) { ?>
-                    <p>You still haven't added any auctions to your watchlist </p>
+                    <p class="ml-3 mt-3">You still haven't added any auctions to your watchlist </p>
                 <?php } else { ?>
                     <div class="d-flex flex-wrap text-left justify-flex-start">
                         @each('partials.card', $watchlist, 'auction')

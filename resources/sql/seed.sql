@@ -258,7 +258,7 @@ CREATE TABLE profile_photos
 
 CREATE TABLE animal_photos
 (
-    id integer NOT NULL PRIMARY KEY REFERENCES images (id) ON UPDATE CASCADE ,
+    id integer NOT NULL PRIMARY KEY REFERENCES images (id) ON UPDATE CASCADE,
     id_auction integer NOT NULL REFERENCES auctions (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 

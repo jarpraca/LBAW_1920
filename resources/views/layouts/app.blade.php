@@ -58,9 +58,10 @@
       <?php
       // if ($displaySearch) {
       ?>
-      <form class="navbar-search form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <a class="btn btn-green2 mt-2 mt-sm-0" href="search.php">Search</a>
+      <form class="navbar-search form-inline my-2 my-lg-0" method="GET" action="{{ route('search') }}">
+        {{ csrf_field() }}
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button type="submit" class="btn btn-green2 mt-2 mt-sm-0" >Search</button>
       </form>
       <?php
       // }
