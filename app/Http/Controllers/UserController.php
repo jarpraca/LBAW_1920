@@ -104,7 +104,7 @@ class UserController extends Controller
 
                 $image = $request->file('profile_picture');
                 $name = Str::slug($request->input('email')) . '_' . time();
-                $folder = '/uploads/images/profiles/';
+                $folder = '/uploads/images/profile/';
                 $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
                 $this->uploadOne($image, $folder, 'public', $name);
 
