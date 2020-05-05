@@ -337,16 +337,17 @@ class AuctionController extends Controller
     return view('pages.search', ['auctions' => $auctions]);
   }
 
-  public function full_text_search(Request $request)
+  public function fullTextSearch(Request $request)
   {
     $search = $request->input('search');
-    $auctions = DB::select('
-    SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
-    FROM (auctions JOIN auction_status ON auctions.id_status = auction_status.id), to_tsquery(' . $search . ') AS query, 
-        to_tsvector(name || " " || species_name || " " || description ) AS textsearch
-    WHERE query @@ textsearch AND auction_status.TYPE = "Ongoing"
-    ORDER BY rank DESC;
-    ');
+    // $auctions = DB::select('
+    // SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
+    // FROM auctions, to_tsquery(' . $search . ') AS query, 
+    //     to_tsvector(name || " " || species_name || " " || description ) AS textsearch
+    // WHERE query @@ textsearch AND id_status = 0
+    // ORDER BY rank DESC;
+    // ');
+    $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('auctions.id_status', '=', 0)->get();
     return view('pages.search', ['auctions' => $auctions]);
   }
 }
