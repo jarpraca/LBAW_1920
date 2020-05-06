@@ -30,7 +30,13 @@ class AuctionController extends Controller
         $auction = Auction::find($id);
 
         $seller = User::find($auction->id_seller);
-        // $seller_photo = DB::table('profile_photos')->where('id_user', $auction->id_seller)->join('images', 'profile_photos.id', '=', 'images.id')->first();
+        $seller_photo_id = DB::table('profile_photos')->where('id_user', $auction->id_seller)->first();
+
+        if ($seller_photo_id != null) {
+            $seller_photo = Image::find($seller_photo_id->id)->url;
+        } else
+            $seller_photo = "assets/blank_profile.png";
+        
         $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
         $image = Image::find($photo_id);
 
@@ -51,7 +57,7 @@ class AuctionController extends Controller
 
         $last_bids = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
         $bidding_history = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
-        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller,/* 'seller_photo' => $seller_photo->url,*/ 'picture_name' => $image->url, 'role' => $role, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
+        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
     }
 
     public function showEditForm($id)

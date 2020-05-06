@@ -133,10 +133,7 @@
                 <h3 class="my-3">Seller</h3>
                 <div class="d-flex flex-row mb-4 align-items-center">
                     <div class="d-flex flex-row align-items-center">
-                        <?php
-                        // <img class="rounded-circle mr-2 cover" width="70px" height="70px" src="{{url($seller_photo)}}">
-                        ?>
-                        <img class="rounded-circle mr-2 cover" width="70px" height="70px" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png">
+                        <img class="rounded-circle mr-2 cover" width="70px" height="70px" src="{{url($seller_photo)}}">
                     </div>
                     <div class="d-flex flex-column align-items-center">
                         <h5 class="font-weight-bold">{{ $seller->name }}</h5>
