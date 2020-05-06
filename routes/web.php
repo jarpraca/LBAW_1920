@@ -36,6 +36,10 @@ Route::view('about', 'pages.about');
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');
 
+// Admin
+Route::get('admin','AdminController@show')->name('admin');
+Route::get('admin/reports','AdminController@indexReports');
+Route::get('admin/users','AdminController@indexUsers');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

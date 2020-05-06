@@ -77,9 +77,9 @@
         <li class="nav-item">
           <a class="nav-link btn btn-add-auction mx-sm-2 px-2 <?php //if ($createAuctionPage) { 
                                                               ?> btn-darkGreen <?php // } 
-                                                                                ?>" <?php // if (!$createAuctionPage) { 
-                                                                                    ?> id="btn-add-auction" <?php // } 
-                                                                                                            ?> href="/auctions">+ Add Auction</a>
+                                                              ?>" <?php // if (!$createAuctionPage) { 
+                                                              ?> id="btn-add-auction" <?php // } 
+                                                              ?> href="/auctions">+ Add Auction</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -88,9 +88,10 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('profiles', ['id' => Auth::id()]) }}">View Profile</a>
-            @auth('admin')
-            <a class="dropdown-item" href="adminDashboard.php">Admin Dashboard</a>
-            @endauth
+            @inject('admin', 'App\Admin')
+            @if($admin::find(Auth::user()->id) != null)
+            <a class="dropdown-item" href="{{ route('admin') }}">Admin Dashboard</a>
+            @endif
             <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
           </div>
         </li>
