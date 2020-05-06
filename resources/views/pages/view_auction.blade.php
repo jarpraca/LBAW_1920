@@ -29,7 +29,7 @@
                 </form>
                 @endif
                 @if($role == 'admin')
-                <a class="btn btn-green mt-3  mx-3" href="#">Stop Auction</a>
+                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3" href="#" >Stop Auction</a>
                 <form class="btn-green mt-3 mx-3 borderRadiusForm" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}

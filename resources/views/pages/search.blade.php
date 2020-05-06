@@ -8,291 +8,272 @@
 
         <div class="bgColorGrey">
 
-            <form class="navbar-search form-inline pt-5 mx-auto">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
-            </form>
-
-            <div class="d-flex flex-wrap" id="accordion">
-                <div class="mx-auto">
-                    <p class="justify-content-between">
-                        <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Category
-                        </a>
-                        <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Color
-                        </a>
-                        <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Price
-                        </a>
-                        <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Dev. Stage
-                        </a>
-                        <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Skills
-                        </a>
-                    </p>
-                    <div class="collapse" id="categories" data-parent="#accordion">
-                        <div class="card card-body">
-                            <div class="d-flex flex-wrap justify-content-between">
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Mammals
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Insects
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Reptiles
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Birds
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Fishes
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Amphibians
-                                        </label>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="collapse" id="colors" data-parent="#accordion">
-                        <div class="card card-body">
-                            <div class="d-flex flex-wrap justify-content-between">
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Blue
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Green
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Brown
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label" for="gridCheck">
-                                            Red
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Black
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            White
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Yellow
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="collapse" id="price" data-parent="#accordion">
-                        <div class="card card-body">
-                            <div class="d-flex flex-wrap justify-content-between">
-                                <div class="col col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            < 100€ </label> </div> <div class="form-check row">
-                                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                                <label class="form-check-label font-size" for="gridCheck">
-                                                    101-300€
-                                                </label>
-                                    </div>
-                                </div>
-                                <div class="col col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            301 - 500 €
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            501 - 700 €
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            701-900€
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            > 900€
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="collapse" id="devStage" data-parent="#accordion">
-                        <div class="card card-body">
-                            <div class="d-flex flex-wrap justify-content-between">
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Baby
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Child
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Teen
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Adult
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Elderly
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="collapse" id="skills" data-parent="#accordion">
-                        <div class="card card-body">
-                            <div class="d-flex flex-wrap justify-content-between">
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Climbs
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Jumps
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Talks
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Skates
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Olfaction
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Moonlight Navigation
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Echolocation
-                                        </label>
-                                    </div>
-                                    <div class="form-check row">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label font-size" for="gridCheck">
-                                            Acrobatics
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <form method="GET" action="{{ route('search') }}">
+                <div class="navbar-search form-inline pt-5 mx-auto">
+                    <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
                 </div>
 
-            </div>
+
+                <div class="d-flex flex-wrap" id="accordion">
+                    <div class="mx-auto">
+                        <p class="justify-content-between">
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Category
+                            </a>
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Color
+                            </a>
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Price
+                            </a>
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Dev. Stage
+                            </a>
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Skills
+                            </a>
+                        </p>
+                        <div class="collapse" id="categories" data-parent="#accordion">
+                            <div class="card card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="mammals" type="checkbox" id="mammals">
+                                            <label class="form-check-label font-size" for="mammals">
+                                                Mammals
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="insects" type="checkbox" id="insects">
+                                            <label class="form-check-label font-size" for="insects">
+                                                Insects
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="reptiles" type="checkbox" id="reptiles">
+                                            <label class="form-check-label font-size" for="reptiles">
+                                                Reptiles
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="birds" type="checkbox" id="birds">
+                                            <label class="form-check-label font-size" for="birds">
+                                                Birds
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="fishes" type="checkbox" id="fishes">
+                                            <label class="form-check-label font-size" for="fishes">
+                                                Fishes
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="amphibians" type="checkbox" id="amphibians">
+                                            <label class="form-check-label font-size" for="amphibians">
+                                                Amphibians
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse" id="colors" data-parent="#accordion">
+                            <div class="card card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="blue" type="checkbox" id="blue">
+                                            <label class="form-check-label font-size" for="blue">
+                                                Blue
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="green" type="checkbox" id="green">
+                                            <label class="form-check-label font-size" for="green">
+                                                Green
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="brown" type="checkbox" id="brown">
+                                            <label class="form-check-label font-size" for="brown">
+                                                Brown
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="red" type="checkbox" id="red">
+                                            <label class="form-check-label" for="red">
+                                                Red
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="black" type="checkbox" id="black">
+                                            <label class="form-check-label font-size" for="black">
+                                                Black
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="white" type="checkbox" id="white">
+                                            <label class="form-check-label font-size" for="white">
+                                                White
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="yellow" type="checkbox" id="yellow">
+                                            <label class="form-check-label font-size" for="yellow">
+                                                Yellow
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse" id="price" data-parent="#accordion">
+                            <div class="card card-body">
+                                <div class="d-flex flex-wrap justify-space-between">
+                                    <div class="col">
+                                        <div class="form-check row">
+                                            <label class="form-check-label font-size" for="max_price">
+                                                Minimum Price
+                                            </label>
+                                            <input class="form-control w-75 outline-green" type="number" id="min_price" name="min_price">
+
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check row">
+                                            <label class="form-check-label font-size" for="max_price">
+                                                Maximum Price
+                                            </label>
+                                            <input class="form-control  w-75 outline-green" type="number" id="max_price" name="max_price">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse" id="devStage" data-parent="#accordion">
+                            <div class="card card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="baby" type="checkbox" id="baby">
+                                            <label class="form-check-label font-size" for="baby">
+                                                Baby
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="child" type="checkbox" id="child">
+                                            <label class="form-check-label font-size" for="child">
+                                                Child
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="teen" type="checkbox" id="teen">
+                                            <label class="form-check-label font-size" for="teen">
+                                                Teen
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="adult" type="checkbox" id="adult">
+                                            <label class="form-check-label font-size" for="adult">
+                                                Adult
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="elderly" type="checkbox" id="elderly">
+                                            <label class="form-check-label font-size" for="elderly">
+                                                Elderly
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse" id="skills" data-parent="#accordion">
+                            <div class="card card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="climbs" type="checkbox" id="climbs">
+                                            <label class="form-check-label font-size" for="climbs">
+                                                Climbs
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="jumps" type="checkbox" id="jumps">
+                                            <label class="form-check-label font-size" for="jumps">
+                                                Jumps
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="talks" type="checkbox" id="talks">
+                                            <label class="form-check-label font-size" for="talks">
+                                                Talks
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="skates" type="checkbox" id="skates">
+                                            <label class="form-check-label font-size" for="skates">
+                                                Skates
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="olfaction" type="checkbox" id="olfaction">
+                                            <label class="form-check-label font-size" for="olfaction">
+                                                Olfaction
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="navigation" type="checkbox" id="navigation">
+                                            <label class="form-check-label font-size" for="navigation">
+                                                Navigation
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-3">
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="echo" type="checkbox" id="echo">
+                                            <label class="form-check-label font-size" for="echo">
+                                                Echolocation
+                                            </label>
+                                        </div>
+                                        <div class="form-check row">
+                                            <input class="form-check-input" name="acrobatics" type="checkbox" id="acrobatics">
+                                            <label class="form-check-label font-size" for="acrobatics">
+                                                Acrobatics
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
 
         </div>
 

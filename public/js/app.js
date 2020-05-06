@@ -13,8 +13,10 @@ function addEventListeners() {
         deleter.addEventListener("click", sendDeleteImageRequest);
     });
 
-    addListenerPageReports();
+    let stopButton = document.querySelector("#stop_button");
+    stopButton.addEventListener("click", disableStopAuctionButton);
 
+    addListenerPageReports();
     addListenerPageUsers();
 }
 
@@ -47,6 +49,18 @@ function sendDeleteImageRequest() {
     let id = this.getAttribute("data-id");
     console.log(id);
     sendAjaxRequest("delete", "/api/images/" + id, null, imageDeletedHandler);
+}
+
+function disableStopAuctionButton() {
+    let id = this.getAttribute("data-id");
+    console.log("1-lucas");
+    sendAjaxRequest("put", "/auctions/" + id + "/stop", null, stopAuctionHandler);
+}
+
+function stopAuctionHandler() {
+    console.log("2-lucas");
+    let stop_button = document.querySelector("#stop_button");
+    stop_button.remove();
 }
 
 function imageDeletedHandler() {
