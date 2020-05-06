@@ -46,12 +46,12 @@
             Category
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="search.php">Mammals</a>
-            <a class="dropdown-item" href="search.php">Insects</a>
-            <a class="dropdown-item" href="search.php">Reptiles</a>
-            <a class="dropdown-item" href="search.php">Birds</a>
-            <a class="dropdown-item" href="search.php">Fishes</a>
-            <a class="dropdown-item" href="search.php">Amphibians</a>
+            <a class="dropdown-item" href="/auctions/search?mammals=">Mammals</a>
+            <a class="dropdown-item" href="/auctions/search?insects=">Insects</a>
+            <a class="dropdown-item" href="/auctions/search?reptiles=">Reptiles</a>
+            <a class="dropdown-item" href="/auctions/search?birds=">Birds</a>
+            <a class="dropdown-item" href="/auctions/search?fishes=">Fishes</a>
+            <a class="dropdown-item" href="/auctions/search?amphibians=">Amphibians</a>
           </div>
         </li>
       </ul>

@@ -36,7 +36,7 @@ class AuctionController extends Controller
             $seller_photo = Image::find($seller_photo_id->id)->url;
         } else
             $seller_photo = "assets/blank_profile.png";
-        
+
         $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
         $image = Image::find($photo_id);
 
@@ -490,19 +490,19 @@ class AuctionController extends Controller
 
         if ($request->input('search') != null) {
             $auctions = DB::select(DB::raw("
-    SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date
-    FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
-    to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
-    WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-    AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
-    AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
-    AND (current_price < :max_price OR :max_price IS NULL)
-    AND (current_price > :min_price OR :min_price IS NULL)
-    AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
-    AND query @@ textsearch
-    AND id_status = 0
-    ORDER BY ending_date;
-    "), array(
+                SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date
+                FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
+                to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
+                WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
+                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
+                AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
+                AND (current_price < :max_price OR :max_price IS NULL)
+                AND (current_price > :min_price OR :min_price IS NULL)
+                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
+                AND query @@ textsearch
+                AND id_status = 0
+                ORDER BY ending_date;
+                "), array(
                 'text' => $request->input('search'),
                 'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
                 'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
@@ -512,17 +512,17 @@ class AuctionController extends Controller
             ));
         } else {
             $auctions = DB::select(DB::raw("
-      SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date
-      FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
-      WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-      AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
-      AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
-      AND (current_price < :max_price OR :max_price IS NULL)
-      AND (current_price > :min_price OR :min_price IS NULL)
-      AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
-      AND id_status = 0
-      ORDER BY ending_date;
-      "), array(
+                SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date
+                FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
+                WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
+                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
+                AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
+                AND (current_price < :max_price OR :max_price IS NULL)
+                AND (current_price > :min_price OR :min_price IS NULL)
+                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
+                AND id_status = 0
+                ORDER BY ending_date;
+                "), array(
                 'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
                 'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
                 'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
@@ -539,12 +539,12 @@ class AuctionController extends Controller
         $search = $request->input('search');
         if ($search != "") {
             $auctions = DB::select(DB::raw("
-    SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
-    FROM auctions , to_tsquery(:text) AS query, 
-        to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
-    WHERE query @@ textsearch AND id_status = 0
-    ORDER BY rank DESC;
-    "), array('text' => $search));
+                SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
+                FROM auctions , to_tsquery(:text) AS query, 
+                    to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
+                WHERE query @@ textsearch AND id_status = 0
+                ORDER BY rank DESC;
+                "), array('text' => $search));
         } else {
             $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('auctions.id_status', '=', 0)->get();
         }
