@@ -14,7 +14,8 @@ function addEventListeners() {
     });
 
     let stopButton = document.querySelector("#stop_button");
-    stopButton.addEventListener("click", disableStopAuctionButton);
+    if (stopButton != null)
+        stopButton.addEventListener("click", disableStopAuctionButton);
 
     addListenerPageReports();
     addListenerPageUsers();
@@ -54,7 +55,7 @@ function sendDeleteImageRequest() {
 function disableStopAuctionButton() {
     let id = this.getAttribute("data-id");
     console.log("1-lucas");
-    sendAjaxRequest("put", "/auctions/" + id + "/stop", null, stopAuctionHandler);
+    sendAjaxRequest("put", "/api/auctions/" + id + "/stop", null, stopAuctionHandler);
 }
 
 function stopAuctionHandler() {
@@ -82,7 +83,7 @@ function loadPageReports(event) {
     event.preventDefault();
     let url = this.getAttribute('href');
     let page = url.split("page=")[1];
-    url = "admin/reports?page=" + page;
+    url = "api/reports?page=" + page;
     sendAjaxRequest("get", url, null, pageReportsHandler);
 }
 
@@ -105,7 +106,7 @@ function loadPageUsers(event) {
     event.preventDefault();
     let url = this.getAttribute('href');
     let page = url.split("page=")[1];
-    url = "admin/users?page=" + page;
+    url = "api/users?page=" + page;
     sendAjaxRequest("get", url, null, pageUsersHandler);
 }
 

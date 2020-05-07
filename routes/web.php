@@ -24,7 +24,6 @@ Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction
 Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
-Route::put('auctions/{id}/stop', 'AuctionController@stop')->name('stop_auction');
 
 //Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');
@@ -38,11 +37,12 @@ Route::view('about', 'pages.about');
 
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');
+Route::put('api/auctions/{id}/stop', 'AuctionController@stop');
+Route::get('api/reports','AdminController@indexReports');
+Route::get('api/users','AdminController@indexUsers');
 
 // Admin
 Route::get('admin','AdminController@show')->name('admin');
-Route::get('admin/reports','AdminController@indexReports');
-Route::get('admin/users','AdminController@indexUsers');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
