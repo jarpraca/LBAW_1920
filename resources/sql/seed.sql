@@ -57,6 +57,7 @@ DROP TRIGGER IF EXISTS notify_winner ON auctions;
 DROP TRIGGER IF EXISTS verify_bid_value ON bids;
 DROP TRIGGER IF EXISTS update_rating ON auctions;
 DROP TRIGGER IF EXISTS remove_watchlists ON auctions;
+DROP TRIGGER IF EXISTS block_user ON blocks;
 
 DROP FUNCTION IF EXISTS create_buyer();
 DROP FUNCTION IF EXISTS create_seller();
@@ -67,6 +68,7 @@ DROP FUNCTION IF EXISTS notify_winner();
 DROP FUNCTION IF EXISTS verify_bid_value();
 DROP FUNCTION IF EXISTS update_rating();
 DROP FUNCTION IF EXISTS remove_watchlists();
+DROP FUNCTION IF EXISTS block_user();
 -----------------------------------------
 -- TYPES
 ----------------------------------------- 
@@ -88,7 +90,8 @@ CREATE TABLE users
     "name" text NOT NULL,
     email text NOT NULL UNIQUE,
     "password" text NOT NULL,
-    remember_token VARCHAR
+    remember_token VARCHAR,
+    blocked boolean DEFAULT FALSE
 );
 
 CREATE TABLE admins
@@ -272,11 +275,11 @@ CREATE TABLE password_resets (
 -- INDEXES
 -----------------------------------------
 
- CREATE INDEX search_auction ON auctions USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
+CREATE INDEX search_auction ON auctions USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
 
- CREATE INDEX admin_search ON users USING GIST (to_tsvector('english', name || ' ' || email));
+CREATE INDEX admin_search ON users USING GIST (to_tsvector('english', name || ' ' || email));
 
- CREATE INDEX notification_id ON notifications USING hash(id_buyer);
+CREATE INDEX notification_id ON notifications USING hash(id_buyer);
 
 CREATE INDEX watchlists_id ON watchlists USING hash(id_buyer);
 
@@ -440,7 +443,6 @@ CREATE TRIGGER create_seller
 	FOR EACH ROW
     EXECUTE PROCEDURE create_seller(); 
 
-
 CREATE FUNCTION remove_watchlists() RETURNS TRIGGER AS
 $BODY$
 BEGIN
@@ -458,6 +460,22 @@ CREATE TRIGGER remove_watchlists
     AFTER UPDATE ON auctions
 	FOR EACH ROW
     EXECUTE PROCEDURE remove_watchlists(); 
+
+CREATE FUNCTION block_user() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE users 
+        SET blocked = TRUE
+        WHERE id = NEW.id_seller;
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER block_user
+    AFTER INSERT ON blocks
+	FOR EACH ROW
+    EXECUTE PROCEDURE block_user(); 
 
 INSERT INTO users ("name",email,"password") VALUES 
 ('Dante Copeland','demo_admin@fe.up.pt','$2b$10$O.queTOIhP0.7NieNlBXceoTPoFhP5eBaodhAnrnpDNJT/3Vn7pXe'),
@@ -862,7 +880,3 @@ INSERT INTO animal_photos (id,id_auction) VALUES
     (18,48),
     (19,31),
     (20,30);
-
-
-UPDATE auctions SET rating_seller = 5 WHERE id = 50;
-UPDATE auctions SET id_status=1 WHERE id = 46;

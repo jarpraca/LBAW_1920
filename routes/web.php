@@ -13,36 +13,39 @@
 
 Route::get('/', 'Auth\LoginController@home');
 
-//Auctions
+// Auctions
 Route::get('auctions/search', 'AuctionController@search')->name('search');
 Route::get('auctions/textSearch', 'AuctionController@fullTextSearch')->name('textSearch');
 
 Route::get('auctions', 'AuctionController@showCreateForm');
-Route::post('auctions', 'AuctionController@create') ->name('auctions');
+Route::post('auctions', 'AuctionController@create')->name('auctions');
 Route::get('auctions/{id}/edit', 'AuctionController@showEditForm')->name('edit_auction');
 Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction');
 Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 
-//Profiles
+// Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');
-Route::delete('profiles/{id}','UserController@delete')->name('delete_profile');
+Route::delete('profiles/{id}', 'UserController@delete')->name('delete_profile');
 Route::get('profiles/{id}/edit', 'UserController@showEditForm')->name('edit_profile');
 Route::put('profiles/{id}/edit', 'UserController@update')->name('edit_profile');
 
-//Views
-Route::get('homepage','HomepageController@show')->name('homepage');
+// Views
+Route::get('homepage', 'HomepageController@show')->name('homepage');
 Route::view('about', 'pages.about');
 
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');
 Route::put('api/auctions/{id}/stop', 'AuctionController@stop');
-Route::get('api/reports','AdminController@indexReports');
-Route::get('api/users','AdminController@indexUsers');
+Route::put('api/reports/{id}/{decision}', 'AdminController@updateReportStatus');
+Route::get('api/reports', 'AdminController@indexReports');
+Route::get('api/users', 'AdminController@indexUsers');
+Route::post('api/users/{id}/block', 'AdminController@block');
+Route::post('api/users/{id}/unblock', 'AdminController@unblock');
 
 // Admin
-Route::get('admin','AdminController@show')->name('admin');
+Route::get('admin', 'AdminController@show')->name('admin');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

@@ -11,7 +11,7 @@
         </thead>
         <tbody class="report_inbox">
             @foreach($reports as $report)
-            <tr class="d-flex">
+            <tr class="d-flex report_{{ $report->id }}">
                 <td class="col-5 col-sm-3">{{ $report->seller_name }}</td>
                 <td class="col-5 col-sm-3">{{ $report->buyer_name }}</td>
                 @if($report->status == 0)
@@ -30,8 +30,8 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Accept</a>
-                            <a class="dropdown-item" href="#">Deny</a>
+                            <a class="dropdown-item accept_report" href="{{ $report->id }}">Accept</a>
+                            <a class="dropdown-item deny_report" href="{{ $report->id }}">Deny</a>
                         </div>
                     </div>
                     @endif

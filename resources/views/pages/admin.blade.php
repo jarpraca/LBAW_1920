@@ -8,7 +8,7 @@
 
     <h1 class="mt-3 mb-3 colorGreen">Admin Dashboard</h1>
 
-    <div class="card">
+    <div id="reports" class="card">
         <div class="card-header border-transparent">
             <h3 class="card-title text-dark">Report Inbox</h3>
         </div>
@@ -19,10 +19,8 @@
         <!-- /.card-footer -->
     </div>
     <!-- /.card -->
-
-
-
-    <div class="card mt-5">
+    
+    <div id="users" class="card mt-5">
         <div class="card-header border-transparent">
             <h3 class="card-title text-dark">Block and Delete Users</h3>
 

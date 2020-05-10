@@ -11,42 +11,40 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-  use UploadTrait;
+    use UploadTrait;
 
-  /**
-   * Deletes an individual item.
-   *
-   * @param  int  $id
-   * @return Response
-   */
-  public function delete(Request $request, $id)
-  {
+    /**
+     * Deletes an individual item.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function delete(Request $request, $id)
+    {
+        $animal_photo = AnimalPhoto::find($id);
+        $profile_photo = ProfilePhoto::find($id);
 
-    $animal_photo = AnimalPhoto::find($id);
-    $profile_photo = ProfilePhoto::find($id);
+        if ($animal_photo != null) {
+            $animal_photo->delete();
 
-    if ($animal_photo != null) {
-      $animal_photo->delete();
+            $photo = Image::find($id);
 
-      $photo = Image::find($id);
+            // $this->authorize('deleteAnimalPhoto', Auction::findOrFail($animal_photo->id_auction));
 
-      // $this->authorize('deleteAnimalPhoto', Auction::findOrFail($animal_photo->id_auction));
+            $this->deleteOne($photo->url);
+            $photo->delete();
+            return $photo;
+        } else if ($profile_photo != null) {
+            $profile_photo->delete();
 
-      $this->deleteOne($photo->url);
-      $photo->delete();
-      return $photo;
+            $photo = Image::find($id);
 
-    } else if ($profile_photo != null) {
-      $profile_photo->delete();
+            // $this->authorize('deleteAnimalPhoto', Auction::findOrFail($animal_photo->id_auction));
 
-      $photo = Image::find($id);
-
-      // $this->authorize('deleteAnimalPhoto', Auction::findOrFail($animal_photo->id_auction));
-
-      $this->deleteOne($photo->url);
-      $photo->delete();
-      return $photo;
+            $this->deleteOne($photo->url);
+            $photo->delete();
+            return $photo;
+        }
+        return $id;
     }
-    return $id;
-  }
 }

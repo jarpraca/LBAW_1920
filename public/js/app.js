@@ -19,6 +19,8 @@ function addEventListeners() {
 
     addListenerPageReports();
     addListenerPageUsers();
+    addListenerApproveReport();
+    addListenerBlockDeleteUser();
 }
 
 function encodeForAjax(data) {
@@ -52,24 +54,22 @@ function sendDeleteImageRequest() {
     sendAjaxRequest("delete", "/api/images/" + id, null, imageDeletedHandler);
 }
 
-function disableStopAuctionButton() {
-    let id = this.getAttribute("data-id");
-    console.log("1-lucas");
-    sendAjaxRequest("put", "/api/auctions/" + id + "/stop", null, stopAuctionHandler);
-}
-
-function stopAuctionHandler() {
-    console.log("2-lucas");
-    let stop_button = document.querySelector("#stop_button");
-    stop_button.remove();
-}
-
 function imageDeletedHandler() {
     if (this.status != 200)
         console.log(this);
     let item = JSON.parse(this.responseText);
     let element = document.querySelector('a[data-id="' + item.id + '"]');
     element.remove();
+}
+
+function disableStopAuctionButton() {
+    let id = this.getAttribute("data-id");
+    sendAjaxRequest("put", "/api/auctions/" + id + "/stop", null, stopAuctionHandler);
+}
+
+function stopAuctionHandler() {
+    let stop_button = document.querySelector("#stop_button");
+    stop_button.remove();
 }
 
 function addListenerPageReports() {
@@ -92,7 +92,9 @@ function pageReportsHandler() {
         console.log(this);
     let element = document.querySelector('.reports');
     element.innerHTML = this.responseText;
+    document.querySelector('#reports').scrollIntoView();
     addListenerPageReports();
+    addListenerApproveReport();
 }
 
 function addListenerPageUsers() {
@@ -115,7 +117,116 @@ function pageUsersHandler() {
         console.log(this);
     let element = document.querySelector('.users');
     element.innerHTML = this.responseText;
+    document.querySelector('#users').scrollIntoView();
     addListenerPageUsers();
+    addListenerBlockDeleteUser();
+}
+
+function addListenerApproveReport() {
+    let accept = document.querySelectorAll(".accept_report");
+    [].forEach.call(accept, function (button) {
+        button.addEventListener("click", acceptReport);
+    });
+
+    let deny = document.querySelectorAll(".deny_report");
+    [].forEach.call(deny, function (button) {
+        button.addEventListener("click", denyReport);
+    });
+}
+
+function acceptReport(event) {
+    event.preventDefault();
+    let id = this.getAttribute('href');
+    url = "api/reports/" + id + "/" + 1;
+    sendAjaxRequest("put", url, null, acceptReportHandler);
+}
+
+function acceptReportHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    let status = document.querySelector(".report_" + id + " span");
+    status.classList.remove('badge-warning');
+    status.classList.add('badge-success');
+    status.innerHTML = "Approved";
+    let action = document.querySelector(".report_" + id + " td:last-child");
+    action.innerHTML = "";
+}
+
+function denyReport(event) {
+    event.preventDefault();
+    let id = this.getAttribute('href');
+    url = "api/reports/" + id + "/" + 2;
+    sendAjaxRequest("put", url, null, denyReportHandler);
+}
+
+function denyReportHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    console.log(this.responseText);
+    let id = JSON.parse(this.responseText);
+    let status = document.querySelector(".report_" + id + " span");
+    status.classList.remove('badge-warning');
+    status.classList.add('badge-danger');
+    status.innerHTML = "Denied";
+    let action = document.querySelector(".report_" + id + " td:last-child");
+    action.innerHTML = "";
+}
+
+function addListenerBlockDeleteUser() {
+    let unblock = document.querySelectorAll(".unblock_button");
+    [].forEach.call(unblock, function (button) {
+        button.addEventListener("click", unblockUser);
+    });
+
+    let block = document.querySelectorAll(".block_button");
+    [].forEach.call(block, function (button) {
+        button.addEventListener("click", blockUser);
+    });
+}
+
+function unblockUser(event) {
+    event.preventDefault();
+    let id = this.getAttribute('data-id');
+    url = "api/users/" + id + "/unblock";
+    sendAjaxRequest("post", url, null, unblockUserHandler);
+}
+
+function unblockUserHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    let button = document.querySelector('.unblock_button[data-id="' + id + '"]');
+    button.className = "btn btn-warning block_button";
+    button.innerHTML = "Block";
+    button.removeEventListener("click", unblockUser);
+    button.addEventListener("click", blockUser);
+}
+
+function blockUser(event) {
+    event.preventDefault();
+    let id = this.getAttribute('data-id');
+    url = "api/users/" + id + "/block";
+    sendAjaxRequest("post", url, null, blockUserHandler);
+}
+
+function blockUserHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    let button = document.querySelector('.block_button[data-id="' + id + '"]');
+    button.className = "btn btn-success unblock_button";
+    button.innerHTML = "Unblock";
+    button.removeEventListener("click", blockUser);
+    button.addEventListener("click", unblockUser);
 }
 
 addEventListeners();
