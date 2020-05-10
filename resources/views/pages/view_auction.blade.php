@@ -45,10 +45,13 @@
                     </div>
                 </form>
 
-                <div class="d-flex flex-row mx-3 mt-3">
-                    <input type="number" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="#">Auto Bid</a>
-                </div>
+                <form method="POST" action="{{ route('create_autobid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
+                    <div class="d-flex flex-row mx-3 mt-3">
+                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
+                        <button class="btn btn-green mx-auto w-75" type="submit">Auto Bid</button>
+                    </div>
+                </form>
+
                 <a class="btn btn-green mt-3  mx-3" href="#">Report</a>
                 <a class="btn btn-green mt-3  mx-3" href="#">Add to Watchlist</a>
                 @endif
