@@ -45,8 +45,9 @@
                     </div>
                 </form>
 
-                <form method="POST" action="{{ route('create_autobid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
-                    <div class="d-flex flex-row mx-3 mt-3">
+                <form method="POST" action="{{ route('auto_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
+                    <div class="d-flex flex-row mt-3 mx-3">
+                        {{ csrf_field() }}
                         <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
                         <button class="btn btn-green mx-auto w-75" type="submit">Auto Bid</button>
                     </div>
