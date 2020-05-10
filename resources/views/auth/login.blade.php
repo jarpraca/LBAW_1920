@@ -42,15 +42,13 @@
                 <div class="form-group">
                     <div class="d-flex justify-content-around align-items-center">
                         
-                        <fb:login-button class="btn btn-outline-black ml-0" scope="public_profile,email" onlogin="checkLoginState();">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                             Sign in with&nbsp;
                             <i class="fab fa-facebook-f"></i>
                         </fb:login-button>
+
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
                         
-                        <button class="btn btn-outline-black ml-0 customGPlusSignIn" id="customBtn">
-                            Sign in with&nbsp;
-                            <i class="fab fa-google"></i>
-                        </button>
                     </div>
                 </div>
 
@@ -66,33 +64,6 @@
             </form>
         </div>
     </div>
-    <script>
-  var googleUser = {};
-  var startApp = function() {
-    gapi.load('auth2', function(){
-      // Retrieve the singleton for the GoogleAuth library and set up the client.
-      auth2 = gapi.auth2.init({
-        client_id: '69365655270-8j8f12sd8t3qh09o2pf235ke185rb9rk.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        // Request scopes in addition to 'profile' and 'email'
-        //scope: 'additional_scope'
-      });
-      attachSignin(document.getElementById('customBtn'));
-    });
-  };
-
-  function attachSignin(element) {
-    console.log(element.id);
-    auth2.attachClickHandler(element, {},
-        function(googleUser) {
-          document.getElementById('name').innerText = "Signed in: " +
-              googleUser.getBasicProfile().getName();
-        }, function(error) {
-          alert(JSON.stringify(error, undefined, 2));
-        });
-  }
-  </script>
-  <script>startApp();</script>
 </div>
 
 
