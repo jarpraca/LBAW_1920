@@ -29,12 +29,12 @@
                 </form>
                 @endif
                 @if($role == 'admin')
-                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3" href="#" >Stop Auction</a>
+                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3" href="#">Stop Auction</a>
                 <form class="btn-green mt-3 mx-3 borderRadiusForm" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
                     <button class="btn btn-green mx-3" type="submit">Delete Auction</button>
-                </form>               
+                </form>
                 @endif
                 @if($role == 'user')
                 <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
@@ -123,10 +123,9 @@
                         <p class="font-weight-bold">Skills&nbsp;</p>
                     </div>
                     <div class="d-flex flex-column ml-3">
-                        <?php
-                        foreach ($skills as $skill) { ?>
-                            <p>&#8226 {{ $skill->type }}</p>
-                        <?php } ?>
+                        @foreach($skills as $skill)
+                        <p>&#8226 {{ $skill->type }}</p>
+                        @endforeach
                     </div>
                 </div>
                 <div class="d-flex flex-row">
@@ -139,14 +138,13 @@
                     <div class="d-flex flex-row align-items-center">
                         <img class="rounded-circle mr-2 cover" width="70px" height="70px" src="{{url($seller_photo)}}">
                     </div>
-                    <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-start">
                         <h5 class="font-weight-bold">{{ $seller->name }}</h5>
-                        <?php
-                        if ($seller->rating == null) { ?>
-                            <h6>No reviews yet</h6>
-                        <?php } else { ?>
-                            <h6>{{$seller->rating}} stars</h6>
-                        <?php } ?>
+                        @if($seller->rating == null)
+                        <h6>No reviews yet</h6>
+                        @elseif($seller->rating > 0)
+                        <h6>{{$seller->rating}} stars</h6>
+                        @endif
                     </div>
                 </div>
             </div>

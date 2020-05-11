@@ -15,6 +15,7 @@ use App\AnimalPhoto;
 use App\Image;
 use App\Feature;
 use Exception;
+use \stdClass;
 
 class AuctionController extends Controller
 {
@@ -29,7 +30,16 @@ class AuctionController extends Controller
     {
         $auction = Auction::find($id);
 
+        if ($auction == null)
+            return redirect()->route('homepage');
+
         $seller = User::find($auction->id_seller);
+        if ($seller == null) {
+            $seller = new stdClass();
+            $seller->name = "Deleted User";
+            $seller->rating = "0";
+        }
+
         $seller_photo_id = DB::table('profile_photos')->where('id_user', $auction->id_seller)->first();
 
         if ($seller_photo_id != null) {
@@ -55,8 +65,8 @@ class AuctionController extends Controller
                 $role = 'seller';
         }
 
-        $last_bids = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
-        $bidding_history = DB::table('bids')->where('id_auction', $id)->join('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
+        $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
+        $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
         return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
     }
 
