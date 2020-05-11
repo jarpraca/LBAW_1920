@@ -31,4 +31,20 @@ class BidController extends Controller
     return redirect()->route('view_auction', ['id' => $id_auction]);
     // return $bid;
   }
+
+  public function auto(Request $request, $id_auction, $id_user)
+  {
+    $bid = new Bid();
+    // $this->authorize('create', $bid);
+
+    $bid->id_auction = $id_auction;
+    $bid->id_buyer = $id_user;
+    $bid->value = $request->input('bid_value');
+    $bid->save();
+
+    event(new BidCreated($bid));
+
+    return redirect()->route('view_auction', ['id' => $id_auction]);
+    // return $bid;
+  }
 }
