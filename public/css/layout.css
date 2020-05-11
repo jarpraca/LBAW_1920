@@ -293,28 +293,16 @@ body > div{
     margin: 1rem;
 }
 
-.close {
+/* .close {
     margin: 0;
     padding: 0;
-}
+} */
 
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     top: 12vh;
     width: 100%;
     height: 100%;
     overflow: hidden;
-}
-
-
-/* Modal Content/Box */
-.modal-content {
-    align-content: center;
-    height: 75vh;
-}
-
-/* The Close Button */
-.close {
-    float: right;
-}
+} */

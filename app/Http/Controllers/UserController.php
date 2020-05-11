@@ -46,11 +46,11 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        $my_auctions = DB::table('auctions')->where('id_seller', $id)->get();
+        $my_auctions = Auction::where('id_seller', '=', $id)->get();
 
         foreach ($my_auctions as $auction) {
-            $auction_delete = Auction::find($auction->id);
-            $auction_delete->delete();
+            if ($auction->id_status == 0)
+                $auction->delete();
         }
 
         $user = User::find($id);

@@ -11,10 +11,11 @@ class AdminPolicy
 {
     use HandlesAuthorization;
 
-    public function create(User $user)
+    public function show(User $user)
     {
-        // Any user can create report a seller
-        return Auth::check();
+        // Only an admin can view the admin page
+        // return TRUE;
+        return Admin::find(Auth::id()) == null;
     }
 
     public function update(User $user)

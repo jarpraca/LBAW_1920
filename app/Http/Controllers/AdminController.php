@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
+use App\Auction;
 use App\Block;
 use App\Report;
 use App\User;
@@ -19,6 +21,10 @@ class AdminController extends Controller
 
     public function show()
     {
+        // if ($this->authorize('show', Auth::user()))
+        if (Admin::find(Auth::id()) == null)
+            return redirect()->route('homepage');
+
         $reports = Report::join('users as s', 's.id', '=', 'reports.id_seller')
             ->join('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
@@ -28,7 +34,7 @@ class AdminController extends Controller
 
         $admins = DB::table('admins')->select(['id']);
         $users = User::whereNotIn('users.id', $admins)
-            ->join('reports', 'reports.id_seller', '=', 'users.id')
+            ->leftJoin('reports', 'reports.id_seller', '=', 'users.id')
             ->select('users.id AS id', 'name', 'blocked', DB::raw('max(date) AS date'))
             ->groupBy('users.id')
             ->orderBy('name', 'asc')
@@ -53,7 +59,7 @@ class AdminController extends Controller
     {
         $admins = DB::table('admins')->select(['id']);
         $users = User::whereNotIn('users.id', $admins)
-            ->join('reports', 'reports.id_seller', '=', 'users.id')
+            ->leftJoin('reports', 'reports.id_seller', '=', 'users.id')
             ->select('users.id AS id', 'name', 'blocked', DB::raw('max(date) AS date'))
             ->groupBy('users.id')
             ->orderBy('name', 'asc')
@@ -90,7 +96,7 @@ class AdminController extends Controller
     {
         try {
             $blocks = new Block();
-            $blocks->id_seller = $id;
+            $blocks->id_user = $id;
             $blocks->id_admin = Auth::user()->id;
             $blocks->end_date = Carbon::now()->addMonth()->toDateString();
             $blocks->save();
@@ -106,11 +112,30 @@ class AdminController extends Controller
         try {
             $user = User::find($id);
 
-            if($user == null)
+            if ($user == null)
                 return -1;
 
             $user->blocked = FALSE;
             $user->save();
+
+            return $id;
+        } catch (Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $my_auctions = Auction::where('id_seller', '=', $id)->get();
+
+            foreach ($my_auctions as $auction) {
+                if ($auction->id_status == 0)
+                    $auction->delete();
+            }
+
+            $user = User::find($id);
+            $user->delete();
 
             return $id;
         } catch (Exception $exception) {

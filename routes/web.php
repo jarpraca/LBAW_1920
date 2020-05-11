@@ -43,6 +43,7 @@ Route::get('api/reports', 'AdminController@indexReports');
 Route::get('api/users', 'AdminController@indexUsers');
 Route::post('api/users/{id}/block', 'AdminController@block');
 Route::post('api/users/{id}/unblock', 'AdminController@unblock');
+Route::delete('api/users/{id}', 'AdminController@delete');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

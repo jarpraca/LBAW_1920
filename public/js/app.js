@@ -136,7 +136,7 @@ function addListenerApproveReport() {
 
 function acceptReport(event) {
     event.preventDefault();
-    let id = this.getAttribute('href');
+    let id = this.getAttribute('data-id');
     url = "api/reports/" + id + "/" + 1;
     sendAjaxRequest("put", url, null, acceptReportHandler);
 }
@@ -147,17 +147,17 @@ function acceptReportHandler() {
         console.log(this);
     }
     let id = JSON.parse(this.responseText);
-    let status = document.querySelector(".report_" + id + " span");
+    let status = document.querySelector('.report[data-id="' + id + '"] span');
     status.classList.remove('badge-warning');
     status.classList.add('badge-success');
     status.innerHTML = "Approved";
-    let action = document.querySelector(".report_" + id + " td:last-child");
+    let action = document.querySelector('.report[data-id="' + id + '"] td:last-child');
     action.innerHTML = "";
 }
 
 function denyReport(event) {
     event.preventDefault();
-    let id = this.getAttribute('href');
+    let id = this.getAttribute('data-id');
     url = "api/reports/" + id + "/" + 2;
     sendAjaxRequest("put", url, null, denyReportHandler);
 }
@@ -169,11 +169,11 @@ function denyReportHandler() {
     }
     console.log(this.responseText);
     let id = JSON.parse(this.responseText);
-    let status = document.querySelector(".report_" + id + " span");
+    let status = document.querySelector('.report[data-id="' + id + '"] span');
     status.classList.remove('badge-warning');
     status.classList.add('badge-danger');
     status.innerHTML = "Denied";
-    let action = document.querySelector(".report_" + id + " td:last-child");
+    let action = document.querySelector('.report[data-id="' + id + '"] td:last-child');
     action.innerHTML = "";
 }
 
@@ -186,6 +186,11 @@ function addListenerBlockDeleteUser() {
     let block = document.querySelectorAll(".block_button");
     [].forEach.call(block, function (button) {
         button.addEventListener("click", blockUser);
+    });
+
+    let delete_user = document.querySelectorAll(".delete_user_confirm");
+    [].forEach.call(delete_user, function (button) {
+        button.addEventListener("click", deleteUser);
     });
 }
 
@@ -229,20 +234,25 @@ function blockUserHandler() {
     button.addEventListener("click", unblockUser);
 }
 
-function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
+function deleteUser(event) {
+    event.preventDefault();
+    let id = this.getAttribute('data-id');
+    url = "api/users/" + id;
+    sendAjaxRequest("delete", url, null, deleteUserHandler);
 }
 
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
+function deleteUserHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    let closeModal = document.querySelector('.delete_user_cancel[data-id="' + id + '"]');
+    closeModal.click();
+    // update pagination
+    let page = document.querySelector('.user_list').getAttribute('data-id');
+    let url = "api/users?page=" + page;
+    sendAjaxRequest("get", url, null, pageUsersHandler);
+}
 
-addEventListeners()
-
-
+addEventListeners();

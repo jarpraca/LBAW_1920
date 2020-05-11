@@ -801,6 +801,14 @@ body {
     width: 100%;
 }
 
+.badge {
+    width: 65px;
+}
+
+.unblock_button, .block_button, .delete_user_button {
+    width: 90px !important;
+}
+
 
 /* Popup container - can be anything you want */
 

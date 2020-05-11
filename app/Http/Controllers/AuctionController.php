@@ -196,7 +196,7 @@ class AuctionController extends Controller
     {
         $auction = Auction::find($id);
         //$this->authorize('update', $auction);
-        $auction->id_status = 1;
+        $auction->id_status = 2;
         $auction->save();
         return redirect()->route('view_auction', ['id' => $auction->id]);
     }

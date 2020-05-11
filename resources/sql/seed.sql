@@ -169,8 +169,8 @@ CREATE TABLE auctions
     id_dev_stage integer NOT NULL REFERENCES development_stages (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_payment_method integer REFERENCES payment_methods (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_shipping_method integer REFERENCES shipping_methods (id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    id_seller integer NOT NULL REFERENCES sellers (id) ON UPDATE CASCADE ,
-    id_winner integer REFERENCES buyers (id) ON UPDATE CASCADE ,
+    id_seller integer REFERENCES sellers (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    id_winner integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL,
     id_status integer NOT NULL REFERENCES auction_status (id) ON UPDATE CASCADE,
     CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
     CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price),
@@ -183,7 +183,7 @@ CREATE TABLE bids
     value integer NOT NULL,
     maximum integer,
     id_auction integer NOT NULL REFERENCES auctions (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    id_buyer integer REFERENCES buyers (id) ON UPDATE CASCADE,
+    id_buyer integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL,
     CONSTRAINT "maximum_ck" CHECK (maximum >= value)
 );
 
@@ -201,7 +201,7 @@ CREATE TABLE blocks
     id SERIAL PRIMARY KEY,
     end_date date NOT NULL CHECK (end_date > 'now'::text::date),
     id_admin integer NOT NULL REFERENCES admins (id) ON UPDATE CASCADE,
-    id_seller integer NOT NULL REFERENCES sellers (id) ON UPDATE CASCADE ON DELETE CASCADE
+    id_user integer NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE ships
@@ -228,7 +228,7 @@ CREATE TABLE reports
 (
     id SERIAL PRIMARY KEY,
     "date" date NOT NULL DEFAULT 'now'::text::date,
-    id_buyer integer NOT NULL REFERENCES buyers (id) ON UPDATE CASCADE,
+    id_buyer integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL,
     id_seller integer NOT NULL REFERENCES sellers (id) ON UPDATE CASCADE ON DELETE CASCADE,
     id_status integer NOT NULL REFERENCES report_status ON UPDATE CASCADE
 );
@@ -401,7 +401,7 @@ $BODY$
 BEGIN
     UPDATE auctions 
         SET id_status = 2
-        WHERE id IN (SELECT id FROM auctions WHERE id_seller = NEW.id_seller) AND id_status = 0;
+        WHERE id IN (SELECT id FROM auctions WHERE id_seller = NEW.id_user) AND id_status = 0;
 	RETURN NEW;
 END
 $BODY$
@@ -449,7 +449,7 @@ BEGIN
     IF EXISTS(SELECT * FROM auctions WHERE id_status = NEW.id_status AND NEW.id_status = 1)
     THEN
         DELETE FROM watchlists
-        WHERE id_buyer = (SELECT id_buyer FROM watchlists WHERE watchlists.id_auction = NEW.id);
+        WHERE id_buyer IN (SELECT DISTINCT id_buyer FROM watchlists WHERE watchlists.id_auction = NEW.id);
 	END IF;
     RETURN NULL;
 END
@@ -466,7 +466,7 @@ $BODY$
 BEGIN
     UPDATE users 
         SET blocked = TRUE
-        WHERE id = NEW.id_seller;
+        WHERE id = NEW.id_user;
 	RETURN NEW;
 END
 $BODY$
@@ -768,7 +768,7 @@ INSERT INTO watchlists (id_auction,id_buyer) VALUES
     (42,30);
 
 
-INSERT INTO blocks (end_date,id_admin,id_seller) VALUES 
+INSERT INTO blocks (end_date,id_admin,id_user) VALUES 
     ('2020-05-27',3,40),
     ('2020-06-12',3,41),
     ('2020-05-15',3,42);
