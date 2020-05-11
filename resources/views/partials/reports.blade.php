@@ -13,7 +13,7 @@
             @foreach($reports as $report)
             <tr class="d-flex report" data-id="{{ $report->id }}">
                 <td class="col-5 col-sm-3 d-flex align-items-center">{{ $report->seller_name }}</td>
-                <td class="col-5 col-sm-3 d-flex align-items-center">{{ $report->buyer_name }}</td>
+                <td class="col-5 col-sm-3 d-flex align-items-center">@if($report->buyer_name != null) {{ $report->buyer_name }} @else Deleted User @endif</td>
                 @if($report->status == 0)
                 <td class="col-3 col-sm-2 d-flex align-items-center"><span class="badge badge-warning py-2">Pending</span></td>
                 @elseif($report->status == 1)

@@ -33,7 +33,7 @@
                         </div>
                         <div class="modal-body">
                             <p>
-                            Are you sure you want to delete {{ $user->name }}'s account?
+                            Are you sure you want to delete <span class="font-weight-bold">{{ $user->name }}</span>'s account?
                             </p>
                         </div>
                         <div class="modal-footer">

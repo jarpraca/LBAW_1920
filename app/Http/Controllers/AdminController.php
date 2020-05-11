@@ -26,7 +26,7 @@ class AdminController extends Controller
             return redirect()->route('homepage');
 
         $reports = Report::join('users as s', 's.id', '=', 'reports.id_seller')
-            ->join('users as b', 'b.id', '=', 'reports.id_buyer')
+            ->leftJoin('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
             ->orderBy('s.name', 'asc')
             ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id'])
@@ -46,7 +46,7 @@ class AdminController extends Controller
     public function indexReports(Request $request)
     {
         $reports = Report::join('users as s', 's.id', '=', 'reports.id_seller')
-            ->join('users as b', 'b.id', '=', 'reports.id_buyer')
+            ->leftJoin('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
             ->orderBy('s.name', 'asc')
             ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id'])
