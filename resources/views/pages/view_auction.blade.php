@@ -49,6 +49,7 @@
                     <div class="d-flex flex-row mt-3 mx-3">
                         {{ csrf_field() }}
                         <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
+                        <input type="hidden" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
                         <button class="btn btn-green mx-auto w-75" type="submit">Auto Bid</button>
                     </div>
                 </form>
