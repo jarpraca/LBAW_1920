@@ -16,7 +16,6 @@ Route::get('/', 'Auth\LoginController@home');
 // Auctions
 Route::get('auctions/search', 'AuctionController@search')->name('search');
 Route::get('auctions/textSearch', 'AuctionController@fullTextSearch')->name('textSearch');
-
 Route::get('auctions', 'AuctionController@showCreateForm');
 Route::post('auctions', 'AuctionController@create')->name('auctions');
 Route::get('auctions/{id}/edit', 'AuctionController@showEditForm')->name('edit_auction');
@@ -25,6 +24,7 @@ Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 Route::post('auctions/{id}/bids/{id_user}/auto', 'BidController@auto')->name('auto_bid');
+
 
 // Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');
@@ -45,6 +45,7 @@ Route::get('api/users', 'AdminController@indexUsers');
 Route::post('api/users/{id}/block', 'AdminController@block');
 Route::post('api/users/{id}/unblock', 'AdminController@unblock');
 Route::delete('api/users/{id}', 'AdminController@delete');
+Route::put('api/auctions/{id}/choose_methods', 'AuctionController@choose_methods');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

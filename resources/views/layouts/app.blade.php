@@ -64,7 +64,7 @@
       ?>
       <form class="navbar-search form-inline my-2 my-lg-0" method="GET" action="{{ route('textSearch') }}">
         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-        <button type="submit" class="btn btn-green2 mt-2 mt-sm-0" >Search</button>
+        <button type="submit" class="btn btn-green2 mt-2 mt-sm-0">Search</button>
       </form>
       <?php
       // }
@@ -80,9 +80,9 @@
         <li class="nav-item">
           <a class="nav-link btn btn-add-auction mx-sm-2 px-2 <?php //if ($createAuctionPage) { 
                                                               ?> btn-darkGreen <?php // } 
-                                                              ?>" <?php // if (!$createAuctionPage) { 
-                                                              ?> id="btn-add-auction" <?php // } 
-                                                              ?> href="/auctions">+ Add Auction</a>
+                                                                                ?>" <?php // if (!$createAuctionPage) { 
+                                                                                    ?> id="btn-add-auction" <?php // } 
+                                                                                                            ?> href="/auctions">+ Add Auction</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -120,7 +120,7 @@
 
   <div>
     <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content mx-auto">
           <div class="modal-header">
             <h2 class="mt-3">Auction Name</h2>
@@ -131,17 +131,33 @@
           <div class="modal-body">
             <div class="form-group ml-3 mr-3 mt-3">
               <p class="text-left">Payment Method</p>
-              <select name="categories" class="outline-green form-control" required>
+              <select id="pay_method" name="categories" class="outline-green form-control" required>
                 <option value="0" selected hidden></option>
                 <option value="1">Debit Card</option>
                 <option value="2">Paypal</option>
               </select>
             </div>
+
+            <div class="form-group ml-3 mr-3 mt-3">
+              <p class="text-left">Shipping Method</p>
+              <select id="ship_method" name="categories" class="outline-green form-control" required>
+                <option value="0" selected hidden></option>
+                <option value="1">Standard Mail</option>
+                <option value="2">Express Mail</option>
+                <option value="3">Urgent Mail</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <a id="method_button" class="btn btn-green2" id="submit_bt" data-dismiss="modal">Submit</a>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-    @yield('content')
+  </div>
+  @yield('content')
 
   </div>
   <footer id="footer" class="navbar d-flex justify-content-between align-items-center w-100">

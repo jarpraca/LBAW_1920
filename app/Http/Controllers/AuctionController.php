@@ -215,6 +215,16 @@ class AuctionController extends Controller
         return redirect()->route('view_auction', ['id' => $auction->id]);
     }
 
+    public function choose_methods(Request $request, $id)
+    {
+        $auction = Auction::find($id);
+        //$this->authorize('update', $auction);
+        $auction->id_payment_method = $request->input('payM');
+        $auction->id_shipping_method = $request->input('shipM');
+        $auction->save();
+        return $id;
+    }
+
     public function delete($id)
     {
         $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
@@ -565,4 +575,5 @@ class AuctionController extends Controller
 
         return view('pages.search', ['auctions' => $auctions]);
     }
+
 }

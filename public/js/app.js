@@ -17,6 +17,11 @@ function addEventListeners() {
     if (stopButton != null)
         stopButton.addEventListener("click", disableStopAuctionButton);
 
+    let methodButton = document.querySelector('#method_button');
+    if(methodButton != null)
+        methodButton.addEventListener("click", saveMethods)
+
+
     addListenerPageReports();
     addListenerPageUsers();
     addListenerApproveReport();
@@ -71,6 +76,25 @@ function stopAuctionHandler() {
     let stop_button = document.querySelector("#stop_button");
     stop_button.remove();
 }
+
+function saveMethods(){
+    let pay_method = document.querySelector('#pay_method').payMethodSelect.options[payMethodSelect.selectedIndex].value;
+    let ship_method = document.querySelector('#ship_method').shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
+    let data = {payM: pay_method, shipM: ship_method};
+    
+    //sendAjaxRequest("put", 'api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
+
+}
+
+function methodSelectionHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let close_button = document.querySelector('.moder-header button');
+    close_button.click();
+}
+
 
 function addListenerPageReports() {
     let paginationReports = document.querySelectorAll(".reports .pagination a");
