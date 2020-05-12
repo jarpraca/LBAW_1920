@@ -39,6 +39,7 @@ Route::view('about', 'pages.about');
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');
 Route::put('api/auctions/{id}/stop', 'AuctionController@stop');
+Route::post('api/reports/{id}', 'AdminController@add')->name('addReport');
 Route::put('api/reports/{id}/{decision}', 'AdminController@updateReportStatus');
 Route::get('api/reports', 'AdminController@indexReports');
 Route::get('api/users', 'AdminController@indexUsers');

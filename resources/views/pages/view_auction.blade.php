@@ -54,7 +54,15 @@
                     </div>
                 </form>
 
-                <a class="btn btn-green mt-3  mx-3" href="#">Report</a>
+                <form method="POST" action="{{ route('addReport', ['id' => $auction->id_seller]) }}">
+                    <div class="d-flex flex-row mt-3 mx-3">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id_auction" value="{{ $auction->id }}" class="form-control mr-1">
+                        <button class="btn btn-green mt-3  mx-3" type="submit">Report</button>
+                    </div>
+                </form>
+
+                
                 <a class="btn btn-green mt-3  mx-3" href="#">Add to Watchlist</a>
                 @endif
                 @if($role == 'guest')

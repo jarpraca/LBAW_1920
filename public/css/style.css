@@ -225,6 +225,11 @@ label {
     background-color: var(--myLightGreenShadow) !important;
 }
 
+body > div.bg-white.pt-4 > section > div.d-flex.flex-wrap > div.text-center.d-flex.flex-column.bgColorGrey.bid-bar > form:nth-child(4) > div > button{
+    width: 100%;
+    margin: 0 !important;
+}
+
 #btn-add-auction {
     color: var(--myLightGreen) !important;
     background-color: white !important;

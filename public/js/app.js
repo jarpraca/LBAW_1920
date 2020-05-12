@@ -279,20 +279,4 @@ function deleteUserHandler() {
     sendAjaxRequest("get", url, null, pageUsersHandler);
 }
 
-// function bid() {
-//     bootbox.confirm("Are you sure?", function(result) {
-//         if (result) {
-//             document.location.href="{!! route('delete_post', post_id); !!}";
-//         }
-//     }
-// }
-
-
-// function autoBid() {
-//     bootbox.confirm("Are you sure?", function(result) {
-//     if (result) {
-//       document.location.href="{!! route('delete_post', post_id); !!}";
-//     }
-// }
-
 addEventListeners();
