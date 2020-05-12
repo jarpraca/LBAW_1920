@@ -27,6 +27,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (Auth::id() != $id)
+            return redirect()->route('homepage');
+
         $user = User::find($id);
         $photo_id = DB::table('profile_photos')->where('id_user', $id)->first();
 
@@ -61,6 +64,9 @@ class UserController extends Controller
 
     public function showEditForm($id)
     {
+        if (Auth::id() != $id)
+            return redirect()->route('homepage');
+
         $profile = User::find($id);
         $photo = DB::table('profile_photos')->where('id_user', $profile->id)->first();
 

@@ -83,7 +83,7 @@
                         </div>
                     <?php } ?>
                     <div class="modal fade" id="bidsModal" tabindex="-1" role="dialog" aria-labelledby="bidsModalLabel">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content mx-auto">
                                 <div class="modal-header">
                                     <h2 class="mt-3">Bidding History</h2>

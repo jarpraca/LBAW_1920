@@ -73,6 +73,10 @@ class AuctionController extends Controller
     public function showEditForm($id)
     {
         $auction = Auction::find($id);
+
+        if (Auth::id() != $auction->id_seller)
+            return redirect()->route('homepage');
+
         $photo = DB::table('animal_photos')->where('id_auction', $auction->id)->first();
 
         if (!empty($photo)) {
