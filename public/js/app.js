@@ -82,6 +82,8 @@ function saveMethods(){
     let ship_method = document.querySelector('#ship_method').shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
     let data = {payM: pay_method, shipM: ship_method};
     
+    console.log(pay_method);
+    console.log(ship_method);
     //sendAjaxRequest("put", 'api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
 
 }

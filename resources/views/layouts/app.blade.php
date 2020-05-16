@@ -118,7 +118,6 @@
     </div>
   </nav>
 
-  <div>
     <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content mx-auto">
@@ -156,7 +155,6 @@
         </div>
       </div>
     </div>
-  </div>
   @yield('content')
 
   </div>
