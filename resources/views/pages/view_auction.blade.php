@@ -20,6 +20,9 @@
 
             <div class="text-center d-flex flex-column bgColorGrey bid-bar">
                 <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}€</h2>
+                @if (session('error'))
+                <div class="alert alert-danger my-4 mx-3">{{ session('error') }}</div>
+                @endif
                 @if($role == 'seller')
                 <a class="btn btn-green mx-3" href="{{ route('edit_auction', ['id' => $auction->id]) }}">Edit Auction</a>
                 <form class="btn-green mt-3 mx-3 borderRadiusForm" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
@@ -40,7 +43,7 @@
                 <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
                     <div class="d-flex flex-row mx-3">
                         {{ csrf_field() }}
-                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
+                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
                         <button class="btn btn-green mx-auto w-75" type="submit">Bid</button>
                     </div>
                 </form>
@@ -48,7 +51,7 @@
                 <form method="POST" action="{{ route('auto_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
                     <div class="d-flex flex-row mt-3 mx-3">
                         {{ csrf_field() }}
-                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1">
+                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
                         <input type="hidden" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
                         <button class="btn btn-green mx-auto w-75" type="submit">Auto Bid</button>
                     </div>
@@ -58,7 +61,7 @@
                     <div class="d-flex flex-row mt-3 mx-3">
                         {{ csrf_field() }}
                         <input type="hidden" name="id_auction" value="{{ $auction->id }}" class="form-control mr-1">
-                        <button class="btn btn-green mt-3  mx-3" type="submit">Report</button>
+                        <button class="btn btn-green mt-3 mx-auto w-100" type="submit">Report</button>
                     </div>
                 </form>
 

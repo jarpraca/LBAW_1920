@@ -6,6 +6,7 @@ use App\Bid;
 use App\Events\BidCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Auction;
 
 class BidController extends Controller
 {
@@ -19,6 +20,12 @@ class BidController extends Controller
    */
   public function create(Request $request, $id_auction, $id_user)
   {
+    $auction = Auction::find($id_auction);
+    
+    if($auction->current_price >= $request->input('bid_value')){
+      return back()->withError("A bid must be higher than the previous bid")->withInput();
+    }
+
     $bid = new Bid();
     // $this->authorize('create', $bid);
 
@@ -50,6 +57,12 @@ class BidController extends Controller
 
   public function auto(Request $request, $id_auction, $id_user)
   {
+
+    $auction = Auction::find($id_auction);
+
+    if($auction->current_price >= $request->input('bid_value')){
+      return back()->withError("A bid must be higher than the previous bid")->withInput();
+    }
 
     $bid = new Bid();
     // $this->authorize('create', $bid);
