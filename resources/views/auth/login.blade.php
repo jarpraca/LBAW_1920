@@ -59,7 +59,7 @@
                 </div>
                 <div class="d-flex mt-2 flex-row justify-content-center align-items-center">
                     <p>Don't have an account?&nbsp;</p>
-                    <a class="text-dark" href="{{ route('register') }}">Sign Up</a>
+                    <a class="text-dark font-weight-bold" href="{{ route('register') }}">Sign Up</a>
                 </div>
             </form>
         </div>

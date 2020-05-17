@@ -1,4 +1,8 @@
 function addEventListeners() {
+    $('body').tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
+    
     let form = document.querySelector(".editAuction");
     if (form != null) {
         var input = document.createElement("input");
@@ -20,7 +24,6 @@ function addEventListeners() {
     let methodButton = document.querySelector('#method_button');
     if(methodButton != null)
         methodButton.addEventListener("click", saveMethods)
-
 
     addListenerPageReports();
     addListenerPageUsers();
@@ -83,7 +86,6 @@ function saveMethods(){
     let data = {payM: pay_method, shipM: ship_method};
     
     //sendAjaxRequest("put", 'api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
-
 }
 
 function methodSelectionHandler() {
@@ -94,7 +96,6 @@ function methodSelectionHandler() {
     let close_button = document.querySelector('.moder-header button');
     close_button.click();
 }
-
 
 function addListenerPageReports() {
     let paginationReports = document.querySelectorAll(".reports .pagination a");

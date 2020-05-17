@@ -15,11 +15,21 @@
             @endif
             <div class="d-flex flex-wrap mt-3">
                 <div class="col-12 col-sm-6">
-                    <h3> Species Name </h3>
+                    <div class="d-flex flex-row">
+                        <h3>Species Name</h3>
+                        <a class="d-flex justify-content-center align-items-center ml-3" data-toggle="tooltip" data-placement="right" title="Common name of the animal's species">
+                            <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Help">
+                        </a>
+                    </div>
                     <input type="text" name="species_name" class="form-control outline-green mx-0" placeholder="E.g.: Guinea Monkey" value="{{ old('species_name') }}" />
                 </div>
-                <div class="col-12 col-sm-6">
-                    <h3> Name </h3>
+                <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                    <div class="d-flex flex-row">
+                        <h3> Name </h3>
+                        <a class="d-flex justify-content-center align-items-center ml-3" data-toggle="tooltip" data-placement="right" title="Name you've given the animal">
+                            <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Help">
+                        </a>
+                    </div>
                     <input type="text" name="name" class="form-control outline-green mx-0" placeholder="E.g.: Albert" value="{{ old('name') }}" />
                 </div>
             </div>
@@ -32,7 +42,7 @@
             </div>
             <div class="form-group d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Select Category </label>
+                    <label class="form-check-label font-weight-bold"> Select Category </label>
                     <select name="category" id="category" class="outline-green form-control" value="" required>
                         <option value="0" hidden></option>
                         <option value="1">Mammal</option>
@@ -44,22 +54,37 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Age </label>
+                    <div class="d-flex flex-row">
+                        <label class="form-check-label font-weight-bold">Age</label>
+                        <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="Age of the animal, must specify the weeks/months/years">
+                            <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Help">
+                        </a>
+                    </div>
                     <input type="text" name="age" class="form-control outline-green" placeholder="E.g.: 3 years" value="{{ old('age') }}" />
                 </div>
             </div>
 
             <div class="d-flex flex-row mt-4">
                 <div class="col">
-                    <label class="form-check-label font-weight-bold font-size">
-                        Starting Price
-                    </label>
+                    <div class="d-flex flex-row">
+                        <label class="form-check-label font-weight-bold">
+                            Starting Price
+                        </label>
+                        <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="Minimum value for the first bid">
+                            <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Help">
+                        </a>
+                    </div>
                     <input type="text" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" />
                 </div>
                 <div class="col">
-                    <label class="form-check-label font-weight-bold font-size">
-                        Buyout Price
-                    </label>
+                    <div class="d-flex flex-row">
+                        <label class="form-check-label font-weight-bold">
+                            Buyout Price
+                        </label>
+                        <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="Minimum value to instantly purchase an animal">
+                            <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Help">
+                        </a>
+                    </div>
                     <input type="text" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" />
                 </div>
             </div>
@@ -130,7 +155,7 @@
 
             <div class="d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Select Color </label>
+                    <label class="font-weight-bold"> Select Color </label>
                     <select id="color" name="color" class="outline-green form-control" value="{{ old('color') }}" required>
                         <option value="0" hidden></option>
                         <option value="1">Blue</option>
@@ -143,7 +168,7 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Select Dev. Stage </label>
+                    <label class="font-weight-bold"> Select Dev. Stage </label>
 
                     <select name="dev_stage" id="dev_stage" class="outline-green form-control" value="{{ old('dev_Stage') }}" required>
                         <option value="0" hidden></option>
@@ -156,13 +181,13 @@
                 </div>
             </div>
 
-            <div class="d-flex flex-row mt-4">
+            <div class="d-flex flex-wrap mt-4">
                 <div class="col-12 col-sm-6">
-                    <label for="date-input" class="font-weight-bold font-size">Ending Date</label>
+                    <label for="date-input" class="font-weight-bold">Ending Date</label>
                     <input class="form-control outline-green" type="date" id="date-input" name="ending_date" required>
                 </div>
-                <div class="col-12 col-sm-6">
-                    <label class="font-weight-bold font-size"> Images </label>
+                <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                    <label class="font-weight-bold"> Images </label>
                     <div class="custom-file">
                         <input id="animal_picture" type="file" class="form-control" name="animal_picture">
                         <label class="custom-file-label" for="animal_picture" id="animal_picture_label">Add Photo</label>

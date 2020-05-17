@@ -19,7 +19,7 @@
             </div>
 
             <div class="text-center d-flex flex-column bgColorGrey bid-bar">
-                <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }}€</h2>
+                <h2 class="mb-3 mx-auto mt-5">{{ $auction->current_price }} €</h2>
                 @if (session('error'))
                 <div class="alert alert-danger my-4 mx-3">{{ session('error') }}</div>
                 @endif

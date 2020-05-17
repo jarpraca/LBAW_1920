@@ -58,7 +58,7 @@
 
                 <div class="d-flex mt-2 flex-row justify-content-center align-items-center">
                     <p class="">Already have an account?&nbsp;</p>
-                    <a class="text-dark" href="{{ route('login') }}">Sign In</a>
+                    <a class="text-dark font-weight-bold" href="{{ route('login') }}">Sign In</a>
                 </div>
             </form>
         </div>

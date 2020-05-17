@@ -9,11 +9,10 @@
         <div class="bgColorGrey">
 
             <form method="GET" action="{{ route('search') }}">
-                <div class="navbar-search form-inline pt-5 mx-auto">
+                <div class="navbar-search form-inline mx-auto">
                     <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
                 </div>
-
 
                 <div class="d-flex flex-wrap" id="accordion">
                     <div class="mx-auto">

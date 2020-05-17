@@ -15,8 +15,7 @@ Route::get('/', 'Auth\LoginController@home');
 
 // Auctions
 Route::get('auctions/search', 'AuctionController@search')->name('search');
-Route::get('auctions/textSearch', 'AuctionController@fullTextSearch')->name('textSearch');
-Route::get('auctions', 'AuctionController@showCreateForm');
+Route::get('auctions', 'AuctionController@showCreateForm')->name('create_auction');
 Route::post('auctions', 'AuctionController@create')->name('auctions');
 Route::get('auctions/{id}/edit', 'AuctionController@showEditForm')->name('edit_auction');
 Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction');

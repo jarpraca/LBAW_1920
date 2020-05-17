@@ -20,7 +20,7 @@
     </div>
     <!-- /.card -->
     
-    <div id="users" class="card mt-5">
+    <div id="users" class="card my-5">
         <div class="card-header border-transparent">
             <h3 class="card-title text-dark">Block and Delete Users</h3>
 

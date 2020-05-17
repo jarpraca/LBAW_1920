@@ -230,13 +230,13 @@ body > div.bg-white.pt-4 > section > div.d-flex.flex-wrap > div.text-center.d-fl
     margin: 0 !important;
 }
 
-#btn-add-auction {
+.navbar a.btn-add-auction {
     color: var(--myLightGreen) !important;
     background-color: white !important;
     border-color: white !important;
 }
 
-#btn-add-auction:hover {
+.navbar a.btn-add-auction:hover {
     color: white !important;
     background-color: var(--myLightGreenShadow) !important;
     border-color: var(--myLightGreenShadow) !important;
@@ -870,6 +870,13 @@ body {
     color: var(--myDarkGreen);
 }
 
+.auct-card-ref:hover {
+    text-decoration: none;
+}
+
+.auct-card:hover {
+    border-color: black;
+}
 
 /* Add animation (fade in the popup) */
 

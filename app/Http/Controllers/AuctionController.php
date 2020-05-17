@@ -88,7 +88,10 @@ class AuctionController extends Controller
 
     public function showCreateForm()
     {
-        return view('pages.create_auction');
+        if(Auth::check())
+            return view('pages.create_auction');
+        else
+            return redirect()->route('login');
     }
 
     /**
@@ -362,6 +365,10 @@ class AuctionController extends Controller
 
     public function search(Request $request)
     {
+        if(!$request->exists('max_price')){
+            return $this->fullTextSearch($request);
+        }
+
         if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
             $mammals = 1;
             $insects = 2;
@@ -563,8 +570,8 @@ class AuctionController extends Controller
         $search = $request->input('search');
         if ($search != "") {
             $auctions = DB::select(DB::raw("
-                SELECT auctions.id, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
-                FROM auctions , to_tsquery(:text) AS query, 
+                SELECT auctions.id, url, species_name, current_price, age, ending_date, ts_rank_cd(textsearch, query) AS rank
+                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id)  , to_tsquery(:text) AS query, 
                     to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE query @@ textsearch AND id_status = 0
                 ORDER BY rank DESC;
