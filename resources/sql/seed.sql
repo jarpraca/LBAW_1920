@@ -636,7 +636,6 @@ INSERT INTO bids (value,maximum,id_auction,id_buyer) VALUES
     (10766,13942,39,21),
     (12730,14247,8,30),
     (10555,13511,42,30),
-    (10503,13858,45,26),
     (10552,14557,18,23),
     (12749,13956,26,20),
     (12413,14310,23,27),
@@ -654,6 +653,7 @@ INSERT INTO bids (value,maximum,id_auction,id_buyer) VALUES
     (12133,13770,47,18),
     (11203,13170,29,17),
     (7109,13191,45,30),
+    (10503,13858,45,26),
     (11636,14923,40,12),
     (11113,13145,48,12),
     (9788,14332,29,28),
@@ -769,9 +769,9 @@ INSERT INTO watchlists (id_auction,id_buyer) VALUES
 
 
 INSERT INTO blocks (end_date,id_admin,id_user) VALUES 
-    ('2020-05-27',3,40),
-    ('2020-06-12',3,41),
-    ('2020-05-15',3,42);
+    ('2020-07-27',3,40),
+    ('2020-06-23',3,41),
+    ('2020-07-15',3,42);
 
 INSERT INTO features (id_auction,id_skill) VALUES 
     (48,6),
