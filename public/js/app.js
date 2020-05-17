@@ -78,8 +78,10 @@ function stopAuctionHandler() {
 }
 
 function saveMethods(){
-    let pay_method = document.querySelector('#pay_method').payMethodSelect.options[payMethodSelect.selectedIndex].value;
-    let ship_method = document.querySelector('#ship_method').shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
+    let payMethodSelect = document.querySelector('#pay_method');
+    let shipMethodSelect = document.querySelector('#ship_method');
+    let pay_method = payMethodSelect.options[payMethodSelect.selectedIndex].value;
+    let ship_method  = shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
     let data = {payM: pay_method, shipM: ship_method};
     
     console.log(pay_method);
