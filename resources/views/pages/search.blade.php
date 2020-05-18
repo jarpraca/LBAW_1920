@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Search Page')
+@section('title', $search == "" ? 'Search results' : 'Searched for "'. $search . '"')
 
 @section('content')
 <div class="bg-white pt-4">
@@ -9,12 +9,12 @@
         <div class="bgColorGrey">
 
             <form method="GET" action="{{ route('search') }}">
-                <div class="navbar-search form-inline mx-auto">
-                    <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search">
+                <div class="navbar-search form-inline mx-auto no-print">
+                    <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ $search }}">
                     <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
                 </div>
 
-                <div class="d-flex flex-wrap" id="accordion">
+                <div class="d-flex flex-wrap no-print" id="accordion">
                     <div class="mx-auto">
                         <p class="justify-content-between">
                             <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="collapseExample">

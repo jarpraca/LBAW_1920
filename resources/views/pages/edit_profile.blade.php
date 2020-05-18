@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Auction')
+@section('title', 'Edit Profile')
 
 @section('content')
 
@@ -50,7 +50,7 @@
                     @endif<div class="mx-auto image-container">
 
                     </div>
-                    <div id="edit_profile_submit">
+                    <div class="no-print" id="edit_profile_submit">
                         <button type="submit" class="btn btn-green p-2 mt-3">Save Changes</button>
                     </div>
                 </div>

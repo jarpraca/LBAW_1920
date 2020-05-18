@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'View Auction')
+@section('title', 'My Profile')
 
 @section('content')
 <div class="bg-white pt-4">
@@ -19,12 +19,13 @@
                 <p class="mb-0">E-mail</p>
                 <p class="font-weight-bold mt-0">{{$profile->email}}</p>
 
-                <div id="profile_edit">
+                <div class="no-print" id="profile_edit">
                     <a class="colorGreen text-decoration-underline mx-auto w-75" href="{{ route('edit_profile', ['id' => Auth::user()->id]) }}">Edit</u></a>
                 </div>
             </div>
         </div>
 
+        @if($bidding != null)
         <div class="collapsible mt-5 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#ongoing" aria-expanded="false" aria-controls="ongoing">
                 <div class="d-flex flex-row justify-content-between">
@@ -44,8 +45,9 @@
                 @endif
             </div>
         </div>
+        @endif
 
-        @if($my_auctions != -1)
+        @if($my_auctions != [] && $my_auctions != null)
         <div class="collapsible mt-2 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#my_auctions" aria-expanded="false" aria-controls="my_auctions">
                 <div class="d-flex flex-row justify-content-between align-items-center">
@@ -67,6 +69,7 @@
         </div>
         @endif
 
+        @if($watchlist != null)
         <div class="collapsible mt-2 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#watchlist" aria-expanded="false" aria-controls="watchlist">
                 <div class="d-flex flex-row justify-content-between align-items-center">
@@ -86,7 +89,9 @@
                 @endif
             </div>
         </div>
+        @endif
 
+        @if($purchase_history != null)
         <div class="collapsible mt-2 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#purchase_history" aria-expanded="false" aria-controls="purchase_history">
                 <div class="d-flex flex-row justify-content-between">
@@ -106,7 +111,9 @@
                 @endif
             </div>
         </div>
+        @endif
 
+        @if($didnt_win != null)
         <div class="collapsible mt-2 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left" data-toggle="collapse" data-target="#didnt_win" aria-expanded="false" aria-controls="didnt_win">
                 <div class="d-flex flex-row justify-content-between">
@@ -126,8 +133,9 @@
                 @endif
             </div>
         </div>
+        @endif
 
-        <div class="mx-auto d-flex">
+        <div class="no-print mx-auto d-flex">
             <form class="btn w-75 mx-auto" method="POST" action="{{ route('delete_profile', ['id' => Auth::user()->id]) }}">
                 {{ csrf_field() }}
                 {{method_field('DELETE')}}

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'View Auction')
+@section('title', $auction->species_name)
 
 @section('content')
 <div class="bg-white pt-4">
@@ -10,7 +10,6 @@
 
         <div class="d-flex flex-row">
             <h3>{{ $auction->name }}&nbsp;&nbsp;&nbsp;&nbsp;{{ $auction->age }}</h3>
-
         </div>
 
         <div class="d-flex flex-wrap">
@@ -54,21 +53,21 @@
                 @if($role == 'seller')
 
                 @if($auction->id_status == 0)
-                <a class="btn btn-green mx-3" href="{{ route('edit_auction', ['id' => $auction->id]) }}">Edit Auction</a>
+                <a class="btn btn-green mx-3 no-print" href="{{ route('edit_auction', ['id' => $auction->id]) }}">Edit Auction</a>
                 @endif
-                <form class="btn-green mt-3 mx-3 borderRadiusForm" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
+                <form class="d-flex flex-row mt-3 mx-3 no-print" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
-                    <button class="btn btn-green mx-3" type="submit">Delete Auction</button>
+                    <button class="btn btn-green mx-auto w-100" type="submit">Delete Auction</button>
                 </form>
                 @endif
 
                 @if($role == 'admin')
 
                 @if($auction->id_status == 0)
-                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3" href="#">Stop Auction</a>
+                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3 no-print" href="#">Stop Auction</a>
                 @endif
-                <form class="d-flex flex-row mt-3 mx-3" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
+                <form class="d-flex flex-row mt-3 mx-3 no-print" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}
                     {{method_field('DELETE')}}
                     <button class="btn btn-green mx-auto w-100" type="submit">Delete Auction</button>
@@ -79,7 +78,7 @@
 
                 @if($auction->id_status == 0)
                 <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
-                    <div class="d-flex flex-row mx-3">
+                    <div class="d-flex flex-row mx-3 no-print">
                         {{ csrf_field() }}
                         <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
                         <button class="btn btn-green mx-auto w-100" type="submit">Bid</button>
@@ -87,7 +86,7 @@
                 </form>
 
                 <form method="POST" action="{{ route('auto_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
-                    <div class="d-flex flex-row mt-3 mx-3">
+                    <div class="d-flex flex-row mt-3 mx-3 no-print">
                         {{ csrf_field() }}
                         <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
                         <input type="hidden" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
@@ -97,31 +96,31 @@
                 @endif
 
                 <form method="POST" action="{{ route('add_report', ['id' => $auction->id_seller]) }}">
-                    <div class="d-flex flex-row mt-3 mx-3">
+                    <div class="d-flex flex-row mt-3 mx-3 no-print">
                         {{ csrf_field() }}
                         <button class="btn btn-green mx-auto w-100" type="submit">Report</button>
                     </div>
                 </form>
 
                 @if($auction->id_status == 0)
-                <a class="btn btn-green mt-3 mx-3" href="#">Add to Watchlist</a>
+                <a class="btn btn-green mt-3 mx-3 no-print" href="#">Add to Watchlist</a>
                 @endif
 
                 @endif
                 @if($role == 'guest')
                 @if($auction->id_status == 0)
-                <div class="d-flex flex-row mx-3">
+                <div class="d-flex flex-row mx-3 no-print">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="/login">Bid</a>
                 </div>
-                <div class="d-flex flex-row mx-3 mt-3">
+                <div class="d-flex flex-row mx-3 mt-3 no-print">
                     <input type="number" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="/login">Auto Bid</a>
                 </div>
                 @endif
-                <a class="btn btn-green mt-3 mx-3" href="/login">Report</a>
+                <a class="btn btn-green mt-3 mx-3 no-print" href="/login">Report</a>
                 @if($auction->id_status == 0)
-                <a class="btn btn-green mt-3 mx-3" href="/login">Add to Watchlist</a>
+                <a class="btn btn-green mt-3 mx-3 no-print" href="/login">Add to Watchlist</a>
                 @endif
                 @endif
                 <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
@@ -130,10 +129,10 @@
                     @each('partials.bid_entry', $last_bids, 'bid')
 
                     @if(sizeof($last_bids) == 0)
-                    <p>No bids yet</p>
-                    @else
+                    <p class="text-center">No bids yet</p>
+                    @elseif(sizeof($last_bids) > 5)
                     <div class="p-2 popup w-100" data-toggle="modal" data-target="#bidsModal">
-                        <p class="colorGreen text-center text-decoration-underline mx-auto"><u class="text-center">See More</u></p>
+                        <p class="colorGreen text-center text-decoration-underline mx-auto no-print"><u class="text-center">See More</u></p>
                     </div>
                     @endif
 

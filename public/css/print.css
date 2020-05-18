@@ -1,0 +1,12 @@
+.no-print,
+.no-print * {
+  display: none !important;
+}
+
+.mainBody {
+    width: 100% !important;
+}
+
+.imgAuction{
+    width:20% !important;
+}

@@ -629,7 +629,7 @@ INSERT INTO auctions ("name","description",species_name,age,starting_price,buyou
     ('Alexandra','Donec fringilla. Donec feugiat metus sit amet ante. Vivamus non lorem vitae odio sagittis semper. Nam tempor diam dictum','Hanna','4 years',387,8698,6773,'2020-06-06',NULL,5,7,2,2,2,49,NULL,0),
     ('Faith','Nam ac nulla. In tincidunt congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum','Henry','14 months',56,8878,3568,'2020-02-14',2,5,3,4,1,2,39,12,1),
     ('Willa','Donec tincidunt. Donec vitae erat vel pede blandit congue. In','Elmo','5 years',621,7317,2290,'2020-07-24',NULL,2,7,1,1,3,44,NULL,0),
-    ('Stewart','amet, consectetuer adipiscing elit. Aliquam auctor, velit eget laoreet posuere, enim nisl','Geoffrey','4 years',592,7582,5397,'2020-09-01',NULL,6,2,4,1,2,47,NULL,0),
+    ('Stewart','amet, consectetuer adipiscing elit. Aliquam auctor, velit eget laoreet posuere, enim nisl','Geoffrey','4 years',592,27582,5397,'2020-09-01',NULL,6,2,4,1,2,47,NULL,0),
     ('Deacon','feugiat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam auctor, velit eget laoreet posuere, enim nisl elementum','Clio','12 months',135,12396,5688,'2020-02-21',4,5,2,5,2,3,50,11,1),
     ('Melissa','commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit','Phillip','5 years',206,14538,6959,'2020-06-28',NULL,3,7,3,2,3,40,NULL,0),
     ('Patrick','ridiculus mus. Donec dignissim magna a tortor. Nunc commodo auctor velit. Aliquam nisl. Nulla eu neque pellentesque massa','Arsenio','2 years',697,8201,5348,'2020-07-12',NULL,6,6,3,2,2,49,NULL,0),

@@ -11,6 +11,7 @@ use App\Traits\UploadTrait;
 
 use App\Auction;
 use App\User;
+use App\Admin;
 use App\AnimalPhoto;
 use App\Image;
 use App\Feature;
@@ -65,14 +66,14 @@ class AuctionController extends Controller
                 $role = 'seller';
         }
 
-        if($auction->id_status == 1)
+        if ($auction->id_status == 1)
             $winner = User::find($auction->id_winner);
         else
             $winner = null;
 
         $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
         $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
-        
+
         return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
     }
 
@@ -94,9 +95,12 @@ class AuctionController extends Controller
 
     public function showCreateForm()
     {
-        if(Auth::check())
+        if (Auth::check()) {
+            if (Admin::find(Auth::id()))
+                return redirect()->route('homepage');
+
             return view('pages.create_auction');
-        else
+        } else
             return redirect()->route('login');
     }
 
@@ -371,7 +375,7 @@ class AuctionController extends Controller
 
     public function search(Request $request)
     {
-        if(!$request->exists('max_price')){
+        if (!$request->exists('max_price')) {
             return $this->fullTextSearch($request);
         }
 
@@ -547,6 +551,7 @@ class AuctionController extends Controller
                 'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
                 'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
             ));
+            $search = $request->input('search');
         } else {
             $auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date, id_status
@@ -566,9 +571,10 @@ class AuctionController extends Controller
                 'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
                 'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
             ));
+            $search = "";
         }
 
-        return view('pages.search', ['auctions' => $auctions]);
+        return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
     }
 
     public function fullTextSearch(Request $request)
@@ -586,7 +592,6 @@ class AuctionController extends Controller
             $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('auctions.id_status', '=', 0)->get();
         }
 
-        return view('pages.search', ['auctions' => $auctions]);
+        return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
     }
-
 }

@@ -11,7 +11,6 @@
     <link rel="icon" href="{{asset('assets/logo.png')}}" type="image/x-icon" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -20,11 +19,12 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
-    <title>{{ config('app.name', 'BidMonkey') }}</title>
+    <title>@yield('title') - {{ config('app.name', 'BidMonkey') }}</title>
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
     <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/print.css') }}" media="print" rel="stylesheet"/>
 
     <script type="text/javascript">
         // Fix for Firefox autofocus CSS bug
@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bgColorGreen">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bgColorGreen no-print">
         <a class="navbar-brand" href="/homepage">
             <img src="{{asset('assets/logo.png')}}" width="50" alt="Logo">
             BidMonkey
@@ -146,7 +146,7 @@
     @yield('content')
 
     </div>
-    <footer id="footer" class="navbar d-flex justify-content-between align-items-center w-100">
+    <footer id="footer" class="navbar d-flex justify-content-between align-items-center w-100 no-print">
         <a class="mx-2 align-items-center">Copyright © 2020</a>
         <li class="d-flex flex-row align-items-center">
             <a class="nav-link" href="/about">
