@@ -11,14 +11,14 @@
 
                 <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
                 @if ($errors->has('email'))
-                <span class="error ">
+                <span class="error text-danger">
                     {{ $errors->first('email') }}
                 </span>
                 @endif
 
                 <input id="password" type="password" name="password" placeholder="Password" required>
                 @if ($errors->has('password'))
-                <span class="error ">
+                <span class="error text-danger">
                     {{ $errors->first('password') }}
                 </span>
                 @endif
@@ -43,8 +43,6 @@
                     <div class="d-flex justify-content-around align-items-center">
                         
                         <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                            Sign in with&nbsp;
-                            <i class="fab fa-facebook-f"></i>
                         </fb:login-button>
 
                         <div class="g-signin2" data-onsuccess="onSignIn"></div>

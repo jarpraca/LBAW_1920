@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Admin;
+use App\Block;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
@@ -51,5 +53,30 @@ class LoginController extends Controller
     public function home()
     {
         return redirect('homepage');
+    }
+
+    public function showLoginForm()
+    {
+        session(['link' => url()->previous()]);
+        return view('auth.login');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $user = User::find(Auth::id());
+        if ($user->blocked) {
+            $block = Block::where('id_user', Auth::id())->orderBy('end_date', 'desc')->first();
+            Auth::logout();
+            return back()->withErrors(['email' => ["This account is blocked until " . $block->end_date . "."]]);
+        }
+        if(session(urlencode('link')) == null)
+            return redirect('/homepage');
+        return redirect(session('link'));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return back();
     }
 }

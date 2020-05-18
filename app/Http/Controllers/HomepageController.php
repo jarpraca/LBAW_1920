@@ -13,7 +13,7 @@ class HomepageController extends Controller
    */
   public function show()
   {
-    $auctions = DB::select('SELECT auctionsB.id, auctionsB.species_name, auctionsB.current_price, auctionsB.age, auctionsB.ending_date, url
+    $auctions = DB::select('SELECT auctionsB.id, auctionsB.species_name, auctionsB.current_price, auctionsB.age, auctionsB.ending_date, url, auctionsB.id_status
     FROM (((
       SELECT auctions.*, count(*) AS num_bids
         FROM  (auctions JOIN bids ON auctions.id = bids.id_auction)

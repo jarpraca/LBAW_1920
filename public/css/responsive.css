@@ -132,7 +132,7 @@
 }
 
 @media(max-width: 550px){
-    .edit_profile_img, .image_edit_div {
+    .edit_profile_img, .image_edit_div, .profile_img {
         width: 100% !important;
         margin-bottom: 1em;
     }

@@ -58,6 +58,7 @@ DROP TRIGGER IF EXISTS verify_bid_value ON bids;
 DROP TRIGGER IF EXISTS update_rating ON auctions;
 DROP TRIGGER IF EXISTS remove_watchlists ON auctions;
 DROP TRIGGER IF EXISTS block_user ON blocks;
+DROP TRIGGER IF EXISTS buyout_price_bidded ON bids;
 
 DROP FUNCTION IF EXISTS create_buyer();
 DROP FUNCTION IF EXISTS create_seller();
@@ -69,6 +70,7 @@ DROP FUNCTION IF EXISTS verify_bid_value();
 DROP FUNCTION IF EXISTS update_rating();
 DROP FUNCTION IF EXISTS remove_watchlists();
 DROP FUNCTION IF EXISTS block_user();
+DROP FUNCTION IF EXISTS buyout_price_bidded();
 -----------------------------------------
 -- TYPES
 ----------------------------------------- 
@@ -446,7 +448,7 @@ CREATE TRIGGER create_seller
 CREATE FUNCTION remove_watchlists() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF EXISTS(SELECT * FROM auctions WHERE id_status = NEW.id_status AND NEW.id_status = 1)
+    IF EXISTS(SELECT * FROM auctions WHERE id_status = NEW.id_status AND NEW.id_status != 0)
     THEN
         DELETE FROM watchlists
         WHERE id_buyer IN (SELECT DISTINCT id_buyer FROM watchlists WHERE watchlists.id_auction = NEW.id);
@@ -475,7 +477,26 @@ LANGUAGE plpgsql;
 CREATE TRIGGER block_user
     AFTER INSERT ON blocks
 	FOR EACH ROW
-    EXECUTE PROCEDURE block_user(); 
+    EXECUTE PROCEDURE block_user();
+
+CREATE FUNCTION buyout_price_bidded() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF NEW.value >= (SELECT buyout_price FROM auctions WHERE id = NEW.id_auction)
+    THEN 
+        UPDATE auctions
+        SET id_winner = NEW.id_buyer, id_status = 1
+        WHERE id = NEW.id_auction;
+    END IF;
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER buyout_price_bidded
+    AFTER INSERT ON bids
+	FOR EACH ROW
+    EXECUTE PROCEDURE buyout_price_bidded();
 
 INSERT INTO users ("name",email,"password") VALUES 
 ('Dante Copeland','demo_admin@fe.up.pt','$2b$10$O.queTOIhP0.7NieNlBXceoTPoFhP5eBaodhAnrnpDNJT/3Vn7pXe'),

@@ -60,6 +60,13 @@ class RegisterController extends Controller
         ]);
     }
 
+    protected function redirectTo()
+    {
+        if(session(urlencode('link')) == null)
+            return '/homepage';
+        return session(urlencode('link'));
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -80,17 +87,17 @@ class RegisterController extends Controller
         //     $folder = '/uploads/profile_images/';
         //     $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
         //     $this->uploadOne($image, $folder, 'public', $name);
-      
+
         //     $image = new Image();
         //     $image->url = $filePath;
         //     $image->save();
-      
+
         //     $profile_photo = new ProfilePhoto();
         //     $profile_photo->id_user = $user->id;
         //     $profile_photo->id = $image->id;
         //     $profile_photo->save();
         // }
-    
+
         return $user;
     }
 }
