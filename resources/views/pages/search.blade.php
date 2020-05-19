@@ -276,10 +276,15 @@
 
         </div>
 
-        <div class="d-flex flex-wrap text-left justify-flex-start mb-5">
+        @if(sizeof($auctions) != 0)
+        <div class="d-flex flex-wrap mb-5">
             @each('partials.card', $auctions, 'auction')
         </div>
-
+        @else
+        <div class="d-flex justify-content-center mt-5">
+            <h4>No results</h4>
+        </div>
+        @endif
     </section>
 </div>
 @endsection

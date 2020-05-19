@@ -44,9 +44,9 @@ body > div{
 }
 
 .auct-card{
-    flex-basis: 250px;
-    flex-grow: 1;
-    max-width: 300px;
+    /* flex-basis: 250px; */
+    /* flex-grow: 1; */
+    width: 280px;
     margin: 1em;
 }
 

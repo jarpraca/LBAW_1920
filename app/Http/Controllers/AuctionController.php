@@ -532,7 +532,7 @@ class AuctionController extends Controller
 
         if ($request->input('search') != null) {
             $auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date, id_status
+                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
                 FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
                 to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
@@ -555,7 +555,7 @@ class AuctionController extends Controller
             $search = $request->input('search');
         } else {
             $auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id, url, species_name, current_price, age, ending_date, id_status
+                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
                 FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
                 AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
@@ -583,14 +583,19 @@ class AuctionController extends Controller
         $search = $request->input('search');
         if ($search != "") {
             $auctions = DB::select(DB::raw("
-                SELECT auctions.id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
+                SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
                 FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id)  , to_tsquery(:text) AS query, 
                     to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE query @@ textsearch AND id_status = 0
                 ORDER BY rank DESC;
                 "), array('text' => $search));
         } else {
-            $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('auctions.id_status', '=', 0)->get();
+            $auctions = DB::table('auctions')
+            ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+            ->join('images', 'animal_photos.id', '=', 'images.id')
+            ->where('auctions.id_status', '=', 0)
+            ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
+            ->get();
         }
 
         return view('pages.search', ['auctions' => $auctions, 'search' => $search]);

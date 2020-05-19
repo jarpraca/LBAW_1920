@@ -50,12 +50,12 @@
                         Category
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/auctions/search?mammals=">Mammals</a>
-                        <a class="dropdown-item" href="/auctions/search?insects=">Insects</a>
-                        <a class="dropdown-item" href="/auctions/search?reptiles=">Reptiles</a>
-                        <a class="dropdown-item" href="/auctions/search?birds=">Birds</a>
-                        <a class="dropdown-item" href="/auctions/search?fishes=">Fishes</a>
-                        <a class="dropdown-item" href="/auctions/search?amphibians=">Amphibians</a>
+                        <a class="dropdown-item" href="/auctions/search?search=&mammals=on&min_price=&max_price=">Mammals</a>
+                        <a class="dropdown-item" href="/auctions/search?search=&insects=on&min_price=&max_price=">Insects</a>
+                        <a class="dropdown-item" href="/auctions/search?search=&reptiles=on&min_price=&max_price=">Reptiles</a>
+                        <a class="dropdown-item" href="/auctions/search?search=&birds=on&min_price=&max_price=">Birds</a>
+                        <a class="dropdown-item" href="/auctions/search?search=&fishes=on&min_price=&max_price=">Fishes</a>
+                        <a class="dropdown-item" href="/auctions/search?search=&amphibians=on&min_price=&max_price=">Amphibians</a>
                     </div>
                 </li>
             </ul>

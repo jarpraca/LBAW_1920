@@ -195,7 +195,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button class="btn btn-green text-white mx-auto text-center mt-5" type="submit">Create Auction</button>
+                <button class="btn btn-green text-white mx-auto text-center mt-5 no-print" type="submit">Create Auction</button>
             </div>
         </form>
         <div class="py-3"></div>
