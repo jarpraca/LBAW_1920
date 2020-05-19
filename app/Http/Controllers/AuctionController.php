@@ -623,6 +623,7 @@ class AuctionController extends Controller
         }
             
         $auction->rating_seller = $request->input('rate');
+        $auction->save();
 
         return back();
     }
