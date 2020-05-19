@@ -95,12 +95,7 @@
                 </form>
                 @endif
 
-                <form method="POST" action="{{ route('add_report', ['id' => $auction->id_seller]) }}">
-                    <div class="d-flex flex-row mt-3 mx-3 no-print">
-                        {{ csrf_field() }}
-                        <button class="btn btn-green mx-auto w-100" type="submit">Report</button>
-                    </div>
-                </form>
+                <a class="btn btn-green mt-3 mx-3 no-print" href="{{ route('add_report', ['id' => $auction]) }}">Report </a>
 
                 @if($auction->id_status == 0)
                 <a class="btn btn-green mt-3 mx-3 no-print" href="#">Add to Watchlist</a>

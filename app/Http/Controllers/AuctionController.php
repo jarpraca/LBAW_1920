@@ -15,6 +15,7 @@ use App\Admin;
 use App\AnimalPhoto;
 use App\Image;
 use App\Feature;
+use App\Report;
 use Exception;
 use \stdClass;
 
@@ -593,5 +594,36 @@ class AuctionController extends Controller
         }
 
         return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
+    }
+
+    public function addReport(Request $request, $id_auction){
+
+        $auction = Auction::find($id_auction);
+        $report = new Report();
+
+       // $this->authorize('create', $report);
+
+        $report->date = now()->toDateString();
+        $report->id_buyer = Auth::user()->id;
+        $report->id_seller = $auction->id_seller;
+        $report->id_status = 0;
+        $report->save();
+
+        return back();
+    }
+
+    public function rate(Request $request, $id_auction){
+
+        $auction = Auction::find($id_auction);
+
+        $possible_values = array(1, 2, 3, 4, 5);
+
+        if (!in_array($request->input('rate'), $possible_values)) {
+            return back()->withError("The rate must be an integer between 1 and 5")->withInput();
+        }
+            
+        $auction->rating_seller = $request->input('rate');
+
+        return back();
     }
 }

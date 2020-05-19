@@ -23,6 +23,8 @@ Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 Route::post('auctions/{id}/bids/{id_user}/auto', 'BidController@auto')->name('auto_bid');
+Route::get('auctions/{id}/report', 'AuctionController@addReport')->name('add_report');
+Route::post('auctions/{id}/rate', 'AuctionController@rate')->name('rate');
 
 // Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');
@@ -37,7 +39,6 @@ Route::view('about', 'pages.about');
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');
 Route::put('api/auctions/{id}/stop', 'AuctionController@stop');
-Route::post('api/reports/{id}', 'ReportController@addReport')->name('add_report');
 Route::put('api/reports/{id}/{decision}', 'AdminController@updateReportStatus');
 Route::get('api/reports', 'AdminController@indexReports');
 Route::get('api/users', 'AdminController@indexUsers');
