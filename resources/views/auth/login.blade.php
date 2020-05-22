@@ -30,7 +30,6 @@
                         <input type="checkbox" class="custom-control-input" id="checkbox-3" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="custom-control-label text-dark" for="checkbox-3">Remember me</label>
                     </div>
-
                 </div>
 
                 <div class="d-flex mt-1 flex-row align-items-center">

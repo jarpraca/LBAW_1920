@@ -30,6 +30,8 @@ class AuctionController extends Controller
      */
     public function show($id)
     {
+        DB::beginTransaction();
+
         $auction = Auction::find($id);
 
         if ($auction == null)
@@ -74,6 +76,8 @@ class AuctionController extends Controller
 
         $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
         $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
+        
+        DB::commit();
 
         return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
     }
@@ -533,7 +537,8 @@ class AuctionController extends Controller
         if ($request->input('search') != null) {
             $auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
-                FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
+                FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
+                to_tsquery(:text) AS query, 
                 to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
                 AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
@@ -545,7 +550,7 @@ class AuctionController extends Controller
                 AND id_status = 0
                 ORDER BY ending_date;
                 "), array(
-                'text' => $request->input('search'),
+                'text' => '%' . $request->input('search') . '%',
                 'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
                 'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
                 'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
@@ -588,7 +593,7 @@ class AuctionController extends Controller
                     to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE query @@ textsearch AND id_status = 0
                 ORDER BY rank DESC;
-                "), array('text' => $search));
+                "), array('text' => '%' . $search . '%'));
         } else {
             $auctions = DB::table('auctions')
             ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')

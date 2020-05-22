@@ -24,7 +24,7 @@
     <link type="text/css" href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/layout.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/responsive.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/print.css') }}" media="print" rel="stylesheet"/>
+    <link type="text/css" href="{{ asset('css/print.css') }}" media="print" rel="stylesheet" />
 
     <script src="{{ asset('js/app.js') }}" defer> </script>
 </head>
@@ -144,10 +144,13 @@
     <footer id="footer" class="navbar d-flex justify-content-between align-items-center w-100 no-print">
         <a class="mx-2 align-items-center">Copyright © 2020</a>
         <div class="d-flex flex-row align-items-center">
+            <a class="nav-link" href="/help">
+                Help
+            </a>
             <a class="nav-link" href="/about">
                 About
             </a>
-</div>
+        </div>
     </footer>
 </body>
 

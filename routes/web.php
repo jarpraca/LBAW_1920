@@ -35,6 +35,8 @@ Route::put('profiles/{id}/edit', 'UserController@update')->name('edit_profile');
 // Views
 Route::get('homepage', 'HomepageController@show')->name('homepage');
 Route::view('about', 'pages.about');
+Route::view('help', 'pages.help');
+
 
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');

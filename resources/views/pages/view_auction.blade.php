@@ -159,7 +159,7 @@
         <div class="d-flex flex-row mt-3">
             <div class="w-75">
                 <h3>Description</h3>
-                <p>{{ $auction->description }}</p>
+                <p class="text-box" >{{ $auction->description }}</p>
                 <div class="d-flex flex-row">
                     <p class="font-weight-bold">Category:&nbsp;</p>
                     <p>{{ $category }}</p>
