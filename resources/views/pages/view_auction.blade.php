@@ -80,7 +80,8 @@
                 <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
                     <div class="d-flex flex-row mx-3 no-print">
                         {{ csrf_field() }}
-                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
+                        <label style="display:none" for="bid_value">Bid Value</label>
+                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
                         <button class="btn btn-green mx-auto w-100" type="submit">Bid</button>
                     </div>
                 </form>
@@ -88,8 +89,10 @@
                 <form method="POST" action="{{ route('auto_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
                     <div class="d-flex flex-row mt-3 mx-3 no-print">
                         {{ csrf_field() }}
-                        <input type="number" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
-                        <input type="hidden" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
+                        <label style="display:none" for="bid_value"></label>
+                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
+                        <label style="display:none"  for="current_price"></label>
+                        <input type="hidden" id="current_price" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
                         <button class="btn btn-green mx-auto w-100" type="submit">Auto Bid</button>
                     </div>
                 </form>
@@ -105,11 +108,13 @@
                 @if($role == 'guest')
                 @if($auction->id_status == 0)
                 <div class="d-flex flex-row mx-3 no-print">
-                    <input type="number" placeholder="Bid Value" class="form-control mr-1">
+                    <label style="display:none" for="bid_value"></label>
+                    <input type="number" id="bid_value" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="/login">Bid</a>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3 no-print">
-                    <input type="number" placeholder="Bid Value" class="form-control mr-1">
+                    <label style="display:none" for="autobid_value"></label>
+                    <input type="number" id="autobid_value" placeholder="Bid Value" class="form-control mr-1">
                     <a class="btn btn-green mx-auto w-75" href="/login">Auto Bid</a>
                 </div>
                 @endif
@@ -125,13 +130,13 @@
 
                     @if(sizeof($last_bids) == 0)
                     <p class="text-center">No bids yet</p>
-                    @elseif(sizeof($last_bids) > 5)
+                    @elseif(sizeof($bidding_history) > 4)
                     <div class="p-2 popup w-100" data-toggle="modal" data-target="#bidsModal">
                         <p class="colorGreen text-center text-decoration-underline mx-auto no-print"><u class="text-center">See More</u></p>
                     </div>
                     @endif
 
-                    <div class="modal fade" id="bidsModal" tabindex="-1" role="dialog" aria-labelledby="bidsModalLabel">
+                    <div class="modal fade" id="bidsModal" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content mx-auto">
                                 <div class="modal-header">
@@ -173,7 +178,7 @@
                     </div>
                     <div class="d-flex flex-column ml-3">
                         @foreach($skills as $skill)
-                        <p>&#8226 {{ $skill->type }}</p>
+                        <p>&#8226; {{ $skill->type }}</p>
                         @endforeach
                     </div>
                 </div>
@@ -185,7 +190,7 @@
                 <h3 class="my-3">Seller</h3>
                 <div class="d-flex flex-row mb-4 align-items-center">
                     <div class="d-flex flex-row align-items-center">
-                        <img class="rounded-circle mr-2 cover" width="70px" height="70px" src="{{url($seller_photo)}}">
+                        <img class="rounded-circle mr-2 cover" width="70" height="70" src="{{url($seller_photo)}}" alt="{{$seller->name}}">
                     </div>
                     <div class="d-flex flex-column align-items-start">
                         <h5 class="font-weight-bold">{{ $seller->name }}</h5>

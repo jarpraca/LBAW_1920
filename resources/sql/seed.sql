@@ -564,12 +564,16 @@ INSERT INTO skills (TYPE) VALUES
 
 INSERT INTO main_colors (TYPE) VALUES 
     ('Blue'),
-    ('Brown'),
-    ('Black'),
-    ('Yellow'),
     ('Green'),
+    ('Brown'),
     ('Red'),
-    ('White');
+    ('Black'),
+    ('White'),
+    ('Yellow'),
+    ('Orange'),
+    ('Pink'),
+    ('Purple'),
+    ('Grey');
     
 INSERT INTO development_stages (TYPE) VALUES 
     ('Baby'),

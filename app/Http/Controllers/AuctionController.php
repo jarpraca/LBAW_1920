@@ -215,7 +215,7 @@ class AuctionController extends Controller
 
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
-            // return back()->withError($exception->getMessage())->withInput();
+           // return back()->withError($exception->getMessage())->withInput();
             return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
         }
     }

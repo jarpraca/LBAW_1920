@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Recover Password')
+
 @section('content')
 <div id="signup_bg">
     <div id="main">
@@ -16,6 +18,7 @@
                     @csrf
                     <div class="form-group">
                         <div>
+                            <label style="display:none" for="email"></label>
                             <input id="email" placeholder="Email Address" type="email" class="form-control @error('email') is-invalid @enderror mt-5" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -34,6 +37,5 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection

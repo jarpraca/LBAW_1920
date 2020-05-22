@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Oswald&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
+
 :root {
   --myLightGreen: #59aa5b;
   --myLightGreenShadow: #498b4c;
@@ -56,6 +57,10 @@ label {
   color: black;
 }
 
+.h5 {
+  font-size: 18px;
+}
+
 .navbar-brand {
   font-family: var(--titlesFont);
   font-size: 1.5rem !important;
@@ -66,7 +71,9 @@ label {
 }
 
 .nav-link:hover,
-.dropdown-item:hover {
+.nav-link:focus,
+.dropdown-item:hover,
+.dropdown-item:focus {
   color: var(--myDarkGreen) !important;
 }
 
@@ -74,7 +81,8 @@ label {
   color: black !important;
 }
 
-.dropdown-menu a:hover {
+.dropdown-menu a:hover,
+.dropdown-menu a:focus {
   color: var(--myLightGreen) !important;
 }
 
@@ -120,7 +128,8 @@ label {
   border-color: var(--myLightGreen) !important;
 }
 
-.btn-outline-green:hover {
+.btn-outline-green:hover,
+.btn-outline-green:focus {
   color: white !important;
   background-color: var(--myLightGreen) !important;
 }
@@ -137,7 +146,8 @@ label {
   border-color: black !important;
 }
 
-.btn-outline-black:hover {
+.btn-outline-black:hover,
+.btn-outline-black:focus  {
   background-color: lightgrey !important;
   border-color: lightgrey !important;
 }
@@ -154,7 +164,7 @@ label {
   border-color: var(--myLightGreen) !important;
 }
 
-.btn-green:hover {
+.btn-green:hover, .btn-green:focus {
   color: white !important;
   background-color: var(--myLightGreenShadow) !important;
   border-color: var(--myLightGreenShadow) !important;
@@ -172,7 +182,7 @@ label {
   border-color: white !important;
 }
 
-.btn-green2:hover {
+.btn-green2:hover, .btn-green2:focus {
   color: white !important;
   background-color: var(--myLightGreenShadow) !important;
   border-color: var(--myLightGreenShadow) !important;
@@ -194,7 +204,9 @@ label {
 }
 
 #animal_picture:hover + #animal_picture_label::after,
-#profile_picture:hover + #profile_picture_label::after {
+#animal_picture:focus + #animal_picture_label::after,
+#profile_picture:hover + #profile_picture_label::after,
+#profile_picture:focus + #profile_picture_label::after {
   background-color: var(--myLightGreen);
   color: white;
   cursor: pointer;
@@ -206,7 +218,7 @@ label {
   border-color: var(--myLightRed) !important;
 }
 
-.btn-red:hover {
+.btn-red:hover, .btn-red:focus {
   color: white !important;
   background-color: var(--myRed) !important;
   border-color: var(--myRed) !important;
@@ -220,7 +232,7 @@ label {
   background-color: var(--myDarkGreen) !important;
 }
 
-.btn-darkGreen:hover {
+.btn-darkGreen:hover, .btn-darkGreen:focus {
   color: white !important;
   background-color: var(--myLightGreenShadow) !important;
 }
@@ -243,7 +255,7 @@ body
   border-color: white !important;
 }
 
-.navbar a.btn-add-auction:hover {
+.navbar a.btn-add-auction:hover, .navbar a.btn-add-auction:focus {
   color: white !important;
   background-color: var(--myLightGreenShadow) !important;
   border-color: var(--myLightGreenShadow) !important;
@@ -257,7 +269,7 @@ body
   border-bottom-color: var(--myYellow);
 }
 
-.dropdown-content p:hover {
+.dropdown-content p:hover, .dropdown-content p:focus {
   background: var(--myYellow);
   border-color: var(--myYellow);
   color: var(--myLightGreen);
@@ -289,7 +301,7 @@ textarea {
   border-color: var(--myLightGreen);
 }
 
-.submit:hover {
+.submit:hover, .submit:focus {
   background: var(--myYellow);
   color: var(--myLightGreen);
   font-weight: bold;
@@ -500,7 +512,9 @@ body {
 }
 
 #loginform #signup_submit_btn:hover,
-#signupform #signup_submit_btn:hover {
+#loginform #signup_submit_btn:focus,
+#signupform #signup_submit_btn:hover,
+#signupform #signup_submit_btn:focus {
   background-color: var(--myLightGreenShadow);
 }
 
@@ -524,7 +538,9 @@ body {
 }
 
 #login_btn:hover,
-#signup_btn:hover {
+#login_btn:focus,
+#signup_btn:hover,
+#signup_btn:focus {
   background-color: white;
   color: #2d2d2d;
   cursor: pointer;
@@ -552,7 +568,7 @@ body {
   margin: 0;
 }
 
-.category-card:hover {
+.category-card:hover, .category-card:focus {
   -webkit-filter: brightness(50%);
   -moz-filter: brightness(50%);
   -o-filter: brightness(50%);
@@ -611,7 +627,7 @@ body {
 #profile_info .profile_info_content {
   margin-left: 1em;
   width: auto;
-  max-width: 400;
+  max-width: 400px;
 }
 
 .profile_info_title::after {
@@ -635,7 +651,7 @@ body {
   transition: all 0.5s;
 }
 
-#profile_edit button:hover {
+#profile_edit button:hover, #profile_edit button:focus {
   background-color: var(--myLightGreenShadow);
 }
 
@@ -657,6 +673,7 @@ body {
 
 .active,
 .collapsible_btn:hover,
+.collapsible_btn:focus,
 .collapsible_btn:active {
   background-color: white;
   outline: none;
@@ -746,7 +763,7 @@ body {
   width: 50%;
 }
 
-.edit_profile_img:hover {
+.edit_profile_img:hover, .edit_profile_img:focus {
   filter: brightness(60%);
 }
 
@@ -793,7 +810,8 @@ body {
   transition: all 0.5s;
 }
 
-#edit_profile_submit button:hover {
+#edit_profile_submit button:hover,
+#edit_profile_submit button:focus  {
   background-color: var(--myLightGreenShadow);
 }
 
@@ -854,7 +872,7 @@ body {
     animation: fadeInIn 0.5s;
 } */
 
-#submit_bt {
+#method_button {
   background-color: var(--myLightGreen);
   color: white;
   border-color: var(--myDarkGreen);
@@ -864,11 +882,11 @@ body {
   color: var(--myDarkGreen);
 }
 
-.auct-card-ref:hover {
+.auct-card-ref:hover, .auct-card-ref:focus {
   text-decoration: none;
 }
 
-.auct-card:hover {
+.auct-card:hover, .auct-card:focus {
   border-color: black;
 }
 
