@@ -3,6 +3,13 @@
 @section('title', 'Create Auction')
 
 @section('content')
+
+<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:description" content="Are you looking to sell? This is the best place to do so." />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
+
+
 <div class="bg-white pt-4">
     <section class="mainBody align-items-center justify-content-center">
         <form class="createAuction mx-auto" method="POST" action="{{ route('auctions') }}" enctype="multipart/form-data">

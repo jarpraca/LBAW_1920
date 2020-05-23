@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-signin-client_id" content="766183794117-j9tk22ig7adjond13b5o532j60r33rr0.apps.googleusercontent.com">
 
+    <meta property="og:title" content="BidMonkey - Your animal auction website" />
+    <meta property="og:description" content="Are you looking to sell? This is the best place to do so." />
+    <meta property="og:image" content="https://s3.amazonaws.com/spectrumnews-web-assets/wp-content/uploads/2018/11/13154625/20181112-SHANK3monkey-844.jpg" />
+    <meta property="og:locale" content="en_GB" />
+
     <link rel="icon" href="{{asset('assets/logo.png')}}" type="image/x-icon" />
     <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 

@@ -4,6 +4,12 @@
 
 @section('content')
 
+<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:description" content="Wanna know more about us?" />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
+
+
 <div id="aboutUs_bg" class="bg-white pt-4">
 
     <div class="text-left w-50 mx-auto" id="aboutUs_main">

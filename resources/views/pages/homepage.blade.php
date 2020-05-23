@@ -3,6 +3,10 @@
 @section('title', 'Homepage')
 
 @section('content')
+<meta property="og:title" content="Tesste - Your animal auction website" />
+<meta property="og:description" content="Find the best most affordable and exotic animals online!" />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
 
 <div class="bg-white pt-4">
     <div class="pb-5 text-left mainBody">

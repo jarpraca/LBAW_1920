@@ -3,6 +3,12 @@
 @section('title', $search == "" ? 'Search results' : 'Searched for "'. $search . '"')
 
 @section('content')
+
+<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:description" content="Need to find the perfect animal, this is the spot!" />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
+
 <div class="bg-white pt-4">
     <section class="mainBody">
 

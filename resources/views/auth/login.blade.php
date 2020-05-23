@@ -3,6 +3,12 @@
 @section('title','Sign In')
 
 @section('content')
+
+<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:description" content="Come back, there's lots more animals waiting..." />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
+
 <div id="signup_bg">
     <div id="main">
         <div id="loginform" class="px-4">

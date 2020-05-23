@@ -16,6 +16,7 @@ use App\AnimalPhoto;
 use App\Image;
 use App\Feature;
 use App\Report;
+use Carbon\Carbon;
 use Exception;
 use \stdClass;
 
@@ -59,6 +60,9 @@ class AuctionController extends Controller
         $color = DB::table('main_colors')->where('id', $auction->id_main_color)->first()->type;
         $skills = DB::table('features')->where('id_auction', $id)->join('skills', 'features.id_skill', '=', 'skills.id')->get('type');
 
+        $countdown = new Carbon($auction->ending_date, 'Europe/London');
+        $countdown->addDay();
+
         $role = 'guest';
         if (Auth::check()) {
             $role = "user";
@@ -79,7 +83,7 @@ class AuctionController extends Controller
         
         DB::commit();
 
-        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
+        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history, 'countdown' => $countdown]);
     }
 
     public function showEditForm($id)

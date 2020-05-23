@@ -1,8 +1,4 @@
 @media(max-width:1220px){
-    #search{
-        display: none;
-    }
-
     .imgAuction {
         width: 100vw !important;
         background-color: aqua;

@@ -3,6 +3,13 @@
 @section('title','Sign Up')
 
 @section('content')
+
+<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:description" content="Sign up you won't regret it" />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
+
+
 <div id="signup_bg">
     <div id="main">
         <div id="signupform">

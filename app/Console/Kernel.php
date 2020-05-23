@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Auction;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,16 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            $auctions = Auction::where('id_status', '=', 0)->get();
+
+            foreach ($auctions as $auction) {
+                if(now() > $auction->ending_date) {
+                    $auction->id_status = 1;
+                    $auction->save();
+                }
+            }
+        })->daily();
     }
 
     /**
@@ -35,7 +46,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

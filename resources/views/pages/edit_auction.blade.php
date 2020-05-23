@@ -4,6 +4,7 @@
 
 @section('content')
 
+
 <div class="bg-white pt-4">
     <section class="mainBody align-items-center justify-content-center">
         <form class="editAuction mx-auto" method="POST" action="{{ route('edit_auction', ['id' => $auction->id]) }}" enctype="multipart/form-data">
