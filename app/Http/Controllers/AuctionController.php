@@ -18,6 +18,7 @@ use App\Feature;
 use App\Report;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use \stdClass;
 
 class AuctionController extends Controller
@@ -224,6 +225,7 @@ class AuctionController extends Controller
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
            // return back()->withError($exception->getMessage())->withInput();
+            Log::error($exception->getMessage());
             return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
         }
     }
@@ -377,6 +379,7 @@ class AuctionController extends Controller
 
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return back()->withError($exception->getMessage())->withInput();
             // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
         }

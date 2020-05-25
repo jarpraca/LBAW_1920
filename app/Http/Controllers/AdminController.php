@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -88,6 +89,7 @@ class AdminController extends Controller
 
             return $report->id;
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return $exception->getMessage();
         }
     }
@@ -101,8 +103,11 @@ class AdminController extends Controller
             $blocks->end_date = Carbon::now()->addMonth()->toDateString();
             $blocks->save();
 
+            Log::emergency("User " . $id . " was bocked");
+
             return $id;
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return $exception->getMessage();
         }
     }
@@ -120,6 +125,7 @@ class AdminController extends Controller
 
             return $id;
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return $exception->getMessage();
         }
     }
@@ -139,6 +145,7 @@ class AdminController extends Controller
 
             return $id;
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             return $exception->getMessage();
         }
     }

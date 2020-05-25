@@ -18,6 +18,7 @@ use App\ProfilePhoto;
 use App\Seller;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -152,6 +153,7 @@ class UserController extends Controller
 
             return redirect()->route('profiles', ['id' => $profile->id]);
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             // return back()->withError('An error occured while trying to edit your profile, please verify if your inputs are valid and try again.')->withInput();
             return back()->withError($exception->__toString())->withInput();
         }

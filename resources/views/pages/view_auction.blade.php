@@ -36,7 +36,7 @@
                     </div>
                     <div class="d-flex flex-row w-100 justify-content-between">
                         <h6>Winner: </h6>
-                        <h6 class="font-weight-bold">{{ $winner->name }}</h6>
+                        <h6 class="font-weight-bold">@if($winner != null) {{ $winner->name }} @else No One @endif</h6>
                     </div>
                     <div class="d-flex flex-row w-100 justify-content-between">
                         <h6>Ended: </h6>

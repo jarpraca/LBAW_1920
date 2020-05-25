@@ -3,8 +3,10 @@
 namespace App\Console;
 
 use App\Auction;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,18 +27,21 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        Log::emergency("Schedule");
+        
         $schedule->call(function () {
+            Log::emergency("Ending date schedule");
             $auctions = Auction::where('id_status', '=', 0)->get();
 
             foreach ($auctions as $auction) {
-                if(now() > $auction->ending_date) {
+                if (Carbon::now()->greaterThan(new Carbon($auction->ending_date))) {
+                    Log::emergency("Auction " . $auction->id . " finished.");
                     $auction->id_status = 1;
                     $auction->save();
                 }
             }
-        })->daily();
+            // })->daily();
+        })->everyMinute();
     }
 
     /**
