@@ -16,6 +16,7 @@ use App\User;
 use App\Image;
 use App\ProfilePhoto;
 use App\Seller;
+use App\Watchlist;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -53,17 +54,83 @@ class UserController extends Controller
 
             if (Seller::find($id) == null)
                 $my_auctions = [];
-            else
+            else {
                 $my_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
+
+                if (Auth::check()) {
+                    foreach ($my_auctions as $auction) {
+                        $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                        if ($watchlist != null)
+                            $auction->watchlisted = true;
+                        else
+                            $auction->watchlisted = false;
+                    }
+                } else
+                    foreach ($my_auctions as $auction) {
+                        $auction->watchlisted = false;
+                    }
+            }
 
             $purchase_history = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_winner', $id)->where('id_status', '=', 1)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
+            if (Auth::check()) {
+                foreach ($purchase_history as $auction) {
+                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlist != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($purchase_history as $auction) {
+                    $auction->watchlisted = false;
+                }
+
             $bidding = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
+
+            if (Auth::check()) {
+                foreach ($bidding as $auction) {
+                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlist != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($bidding as $auction) {
+                    $auction->watchlisted = false;
+                }
 
             $one_month_ago = Carbon::now()->subMonth()->toDateString();
             $didnt_win = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '!=', 0)->where('id_winner', '!=', $id)->where('ending_date', '>=', $one_month_ago)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
+            if (Auth::check()) {
+                foreach ($didnt_win as $auction) {
+                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlist != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($didnt_win as $auction) {
+                    $auction->watchlisted = false;
+                }
+
             $watchlist = DB::table('watchlists')->join('auctions', 'auctions.id', '=', 'watchlists.id_auction')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_buyer', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
+
+            if (Auth::check()) {
+                foreach ($watchlist as $auction) {
+                    $watchlisted = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlisted != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($watchlist as $auction) {
+                    $auction->watchlisted = false;
+                }
         }
 
         return view('pages.view_profile',  ['profile' => $user, 'picture_name' => $url, 'purchase_history' => $purchase_history, 'my_auctions' => $my_auctions, 'bidding' => $bidding, 'didnt_win' => $didnt_win, 'watchlist' => $watchlist]); // 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);

@@ -630,6 +630,19 @@ class AuctionController extends Controller
             $search = "";
         }
 
+        if (Auth::check()) {
+            foreach ($auctions as $auction) {
+                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                if ($watchlist != null)
+                    $auction->watchlisted = true;
+                else
+                    $auction->watchlisted = false;
+            }
+        } else
+            foreach ($auctions as $auction) {
+                $auction->watchlisted = false;
+            }
+
         return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
     }
 
@@ -652,6 +665,19 @@ class AuctionController extends Controller
                 ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
                 ->get();
         }
+
+        if (Auth::check()) {
+            foreach ($auctions as $auction) {
+                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                if ($watchlist != null)
+                    $auction->watchlisted = true;
+                else
+                    $auction->watchlisted = false;
+            }
+        } else
+            foreach ($auctions as $auction) {
+                $auction->watchlisted = false;
+            }
 
         return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
     }

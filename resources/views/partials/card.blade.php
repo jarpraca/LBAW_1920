@@ -9,7 +9,7 @@
             </div>
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <p><span class="card-text smallFont">@if($auction->id_status == 0) Ending: @else Ended: @endif</span> {{ $auction->ending_date }} </p>
-                <i class="far fa-eye fa-2x colorGrey"></i>
+                <i class="{{ $auction->watchlisted ? 'fas' : 'far' }} fa-eye fa-2x colorGrey"></i>
             </div>
         </div>
     </div>
