@@ -25,7 +25,8 @@
             <h3 class="card-title text-dark">Block and Delete Users</h3>
 
             <form class="form-inline ml-3 py-2 my-lg-0">
-                <input class="form-control w-50 mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <label style="visibility:hidden" for="search"></label>
+                <input class="form-control w-50 mr-sm-2" type="search" placeholder="Search" id="search" aria-label="Search">
                 <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
             </form>
 

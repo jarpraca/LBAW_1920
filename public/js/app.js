@@ -2,7 +2,7 @@ function addEventListeners() {
     $('body').tooltip({
         selector: '[data-toggle="tooltip"]'
     });
-    
+
     let form = document.querySelector(".editAuction");
     if (form != null) {
         var input = document.createElement("input");
@@ -22,7 +22,7 @@ function addEventListeners() {
         stopButton.addEventListener("click", disableStopAuctionButton);
 
     let methodButton = document.querySelector('#method_button');
-    if(methodButton != null)
+    if (methodButton != null)
         methodButton.addEventListener("click", saveMethods)
 
     let addwatchlistButton = document.querySelector(".addWatchlist");
@@ -37,6 +37,8 @@ function addEventListeners() {
     addListenerPageUsers();
     addListenerApproveReport();
     addListenerBlockDeleteUser();
+
+    addAuctionCountdown();
 }
 
 function encodeForAjax(data) {
@@ -88,13 +90,13 @@ function stopAuctionHandler() {
     stop_button.remove();
 }
 
-function saveMethods(){
+function saveMethods() {
     let payMethodSelect = document.querySelector('#pay_method');
     let shipMethodSelect = document.querySelector('#ship_method');
     let pay_method = payMethodSelect.options[payMethodSelect.selectedIndex].value;
-    let ship_method  = shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
-    let data = {payM: pay_method, shipM: ship_method};
-    
+    let ship_method = shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
+    let data = { payM: pay_method, shipM: ship_method };
+
     console.log(pay_method);
     console.log(ship_method);
     //sendAjaxRequest("put", 'api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
@@ -328,6 +330,49 @@ function deleteUserHandler() {
     let page = document.querySelector('.user_list').getAttribute('data-id');
     let url = "api/users?page=" + page;
     sendAjaxRequest("get", url, null, pageUsersHandler);
+}
+
+function addAuctionCountdown() {
+    let countdown = document.getElementById("countdown");
+    if (countdown != null) {
+        let countDownDate = new Date(countdown.getAttribute('data-id') + ' +0100').getTime();
+        updateCountdown(countdown, countDownDate);
+
+        setInterval(() => {
+            updateCountdown(countdown, countDownDate);
+        }, 1000);
+    }
+}
+
+function updateCountdown(countdown, countDownDate) {
+    // Get today's date and time
+    let now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    let distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    if (days != 0)
+        countdown.innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+    else if (hours != 0)
+        countdown.innerHTML = hours + "h "
+            + minutes + "m " + seconds + "s ";
+    else if (minutes != 0)
+        countdown.innerHTML = minutes + "m " + seconds + "s ";
+    else
+        countdown.innerHTML = seconds + "s ";
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+        location.reload();
+    }
 }
 
 addEventListeners();

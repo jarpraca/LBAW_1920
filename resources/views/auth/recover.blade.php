@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title','Recover Password')
+
 @section('content')
 <div id="signup_bg">
     <div id="main">
@@ -8,7 +10,7 @@
 
             <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
-
+                <label style="display:none" for="email"></label>
                 <input class="" id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
                 @if ($errors->has('email'))
                 <span class="error ">

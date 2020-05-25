@@ -18,6 +18,7 @@ use App\ProfilePhoto;
 use App\Seller;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -60,7 +61,7 @@ class UserController extends Controller
             $bidding = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
             $one_month_ago = Carbon::now()->subMonth()->toDateString();
-            $didnt_win = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '!=', 0)->where('ending_date', '>=', $one_month_ago)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
+            $didnt_win = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '!=', 0)->where('id_winner', '!=', $id)->where('ending_date', '>=', $one_month_ago)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
             $watchlist = DB::table('watchlists')->join('auctions', 'auctions.id', '=', 'watchlists.id_auction')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_buyer', $id)->where('id_status', '=', 1)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
         }
@@ -152,6 +153,7 @@ class UserController extends Controller
 
             return redirect()->route('profiles', ['id' => $profile->id]);
         } catch (Exception $exception) {
+            Log::error($exception->getMessage());
             // return back()->withError('An error occured while trying to edit your profile, please verify if your inputs are valid and try again.')->withInput();
             return back()->withError($exception->__toString())->withInput();
         }

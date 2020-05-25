@@ -3,6 +3,12 @@
 @section('title', $search == "" ? 'Search results' : 'Searched for "'. $search . '"')
 
 @section('content')
+
+<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:description" content="Need to find the perfect animal, this is the spot!" />
+<meta property="og:image" content="{{asset('assets/logo.png')}}" />
+<meta property="og:locale" content="en_GB" />
+
 <div class="bg-white pt-4">
     <section class="mainBody">
 
@@ -10,26 +16,27 @@
 
             <form method="GET" action="{{ route('search') }}">
                 <div class="navbar-search form-inline mx-auto no-print">
-                    <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ $search }}">
+                    <label style="display:none" for="search">Search</label>
+                    <input class="form-control" type="search" id="search" name="search" placeholder="Search" aria-label="Search" value="{{ $search }}">
                     <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
                 </div>
 
                 <div class="d-flex flex-wrap no-print" id="accordion">
                     <div class="mx-auto">
                         <p class="justify-content-between">
-                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="categories">
                                 Category
                             </a>
-                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#colors" role="button" aria-expanded="false" aria-controls="colors">
                                 Color
                             </a>
-                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#price" role="button" aria-expanded="false" aria-controls="price">
                                 Price
                             </a>
-                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#devStage" role="button" aria-expanded="false" aria-controls="devStage">
                                 Dev. Stage
                             </a>
-                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn btn-outline-green mx-2 mt-3" data-toggle="collapse" href="#skills" role="button" aria-expanded="false" aria-controls="skills">
                                 Skills
                             </a>
                         </p>
@@ -145,7 +152,7 @@
                                 <div class="d-flex flex-wrap justify-space-between">
                                     <div class="col">
                                         <div class="form-check row">
-                                            <label class="form-check-label font-size" for="max_price">
+                                            <label class="form-check-label font-size" for="min_price">
                                                 Minimum Price
                                             </label>
                                             <input class="form-control w-75 outline-green" type="number" id="min_price" name="min_price">

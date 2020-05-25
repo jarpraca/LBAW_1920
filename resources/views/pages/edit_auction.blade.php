@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Auction')
+@section('title','Edit Auction '. $auction->name . '')
 
 @section('content')
+
 
 <div class="bg-white pt-4">
     <section class="mainBody align-items-center justify-content-center">
@@ -17,64 +18,52 @@
             @endif
             <div class="d-flex flex-wrap mt-3">
                 <div class="col-12 col-sm-6">
-                    <h3> Species Name </h3>
+                    <label for="species_name"> Species Name </label>
                     <input type="text" name="species_name" id="species_name" class="form-control outline-green mx-0" value="{{  $auction->species_name }}" />
                 </div>
                 <div class="col-12 col-sm-6">
-                    <h3> Name </h3>
-                    <input type="text" name="name" class="form-control outline-green mx-0" value="{{  $auction->name }}" />
+                    <label for="name"> Name </label>
+                    <input type="text" id="name" name="name" class="form-control outline-green mx-0" value="{{  $auction->name }}" />
                 </div>
             </div>
 
             <div class="d-flex flex-row">
                 <div class="col">
-                    <h3 class="mt-3"> Description </h3>
+                    <label for="description" class="mt-3"> Description </label>
                     <textarea name="description" id="description" class="form-control borderColorGreen w-100" rows="7">{{ $auction->description }}</textarea>
                 </div>
             </div>
             <div class="form-group d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Select Category </label>
-                    <select name="category" id="category" class="outline-green form-control" value="{{ $auction->id_category }}" required>
-                        <option value="0" hidden></option>
-                        <option value="1" <?php if ($auction->id_category == '1') {
-                                                echo ("selected");
-                                            } ?>>Mammal</option>
-                        <option value="2" <?php if ($auction->id_category == '2') {
-                                                echo ("selected");
-                                            } ?>>Insect</option>
-                        <option value="3" <?php if ($auction->id_category == '3') {
-                                                echo ("selected");
-                                            } ?>>Reptile</option>
-                        <option value="4" <?php if ($auction->id_category == '4') {
-                                                echo ("selected");
-                                            } ?>>Bird</option>
-                        <option value="5" <?php if ($auction->id_category == '5') {
-                                                echo ("selected");
-                                            } ?>>Fish</option>
-                        <option value="6" <?php if ($auction->id_category == '6') {
-                                                echo ("selected");
-                                            } ?>>Amphibian</option>
+                    <label class="font-weight-bold font-size" for="category"> Select Category </label>
+                    <select name="category" id="category" class="outline-green form-control" required>
+                        <option value="" hidden>Select Category</option>
+                        <option value="1" @if($auction->id_category == '1') selected @endif >Mammal</option>
+                        <option value="2" @if($auction->id_category == '2') selected @endif >Insect</option>
+                        <option value="3" @if($auction->id_category == '3') selected @endif >Reptile</option>
+                        <option value="4" @if($auction->id_category == '4') selected @endif >Bird</option>
+                        <option value="5" @if($auction->id_category == '5') selected @endif >Fish</option>
+                        <option value="6" @if($auction->id_category == '6') selected @endif >Amphibian</option>
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Age </label>
-                    <input type="text" name="age" class="form-control outline-green" value="{{  $auction->age }}" />
+                    <label class="font-weight-bold font-size" for="age"> Age </label>
+                    <input type="text" name="age" id="age" class="form-control outline-green" value="{{  $auction->age }}" />
                 </div>
             </div>
 
             <div class="d-flex flex-row mt-4">
                 <div class="col">
-                    <label class="form-check-label font-weight-bold font-size">
+                    <label class="form-check-label font-weight-bold font-size" for="starting_price">
                         Starting Price
                     </label>
-                    <input type="text" name="starting_price" class="form-control outline-green" value="{{  $auction->starting_price }}" />
+                    <input type="text" id="starting_price" name="starting_price" class="form-control outline-green" value="{{  $auction->starting_price }}" />
                 </div>
                 <div class="col">
-                    <label class="form-check-label font-weight-bold font-size">
+                    <label class="form-check-label font-weight-bold font-size" for="buyout_price">
                         Buyout Price
                     </label>
-                    <input type="text" name="buyout_price" class="form-control outline-green" value="{{  $auction->buyout_price }}" />
+                    <input type="text" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{  $auction->buyout_price }}" />
                 </div>
             </div>
 
@@ -144,57 +133,37 @@
 
             <div class="d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Select Color </label>
+                    <label class="font-weight-bold font-size" for="color"> Select Color </label>
                     <select id="color" name="color" class="outline-green form-control" required>
-                        <option value="0" hidden></option>
-                        <option value="1" <?php if ($auction->id_main_color == '1') {
-                                                echo ("selected");
-                                            } ?>>Blue</option>
-                        <option value="2" <?php if ($auction->id_main_color == '2') {
-                                                echo ("selected");
-                                            } ?>>Green</option>
-                        <option value="3" <?php if ($auction->id_main_color == '3') {
-                                                echo ("selected");
-                                            } ?>>Brown</option>
-                        <option value="4" <?php if ($auction->id_main_color == '4') {
-                                                echo ("selected");
-                                            } ?>>Red</option>
-                        <option value="5" <?php if ($auction->id_main_color == '5') {
-                                                echo ("selected");
-                                            } ?>>Black</option>
-                        <option value="6" <?php if ($auction->id_main_color == '6') {
-                                                echo ("selected");
-                                            } ?>>White</option>
-                        <option value="7" <?php if ($auction->id_main_color == '7') {
-                                                echo ("selected");
-                                            } ?>>Yellow</option>
+                        <option value="" hidden>Select Color</option>
+                        <option value="1" @if($auction->id_main_color == '1') selected @endif >Blue</option>     
+                        <option value="2" @if($auction->id_main_color == '2') selected @endif >Green</option>     
+                        <option value="3" @if($auction->id_main_color == '3') selected @endif >Brown</option>
+                        <option value="4" @if($auction->id_main_color == '4') selected @endif >Red</option>
+                        <option value="5" @if($auction->id_main_color == '5') selected @endif >Black</option>
+                        <option value="6" @if($auction->id_main_color == '6') selected @endif >White</option>
+                        <option value="7" @if($auction->id_main_color == '7') selected @endif >Yellow</option>
+                        <option value="8" @if($auction->id_main_color == '8') selected @endif >Orange</option>
+                        <option value="9" @if($auction->id_main_color == '9') selected @endif >Pink</option>
+                        <option value="10" @if($auction->id_main_color == '10') selected @endif >Purple</option>
+                        <option value="11" @if($auction->id_main_color == '11') selected @endif >Grey</option>
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold font-size"> Select Dev. Stage </label>
-                    <select name="dev_stage" id="dev_stage" class="outline-green form-control" value="{{  $auction->id_dev_stage }}" required>
-                        <option value="0" hidden></option>
-                        <option value="1" <?php if ($auction->id_dev_stage == '1') {
-                                                echo ("selected");
-                                            } ?>>Baby</option>
-                        <option value="2" <?php if ($auction->id_dev_stage == '2') {
-                                                echo ("selected");
-                                            } ?>>Child</option>
-                        <option value="3" <?php if ($auction->id_dev_stage == '3') {
-                                                echo ("selected");
-                                            } ?>>Teen</option>
-                        <option value="4" <?php if ($auction->id_dev_stage == '4') {
-                                                echo ("selected");
-                                            } ?>>Adult</option>
-                        <option value="5" <?php if ($auction->id_dev_stage == '5') {
-                                                echo ("selected");
-                                            } ?>>Elderly</option>
+                    <label class="font-weight-bold font-size" for="dev_stage"> Select Development Stage </label>
+                    <select name="dev_stage" id="dev_stage" class="outline-green form-control" required>
+                        <option value="" hidden>Select Development Stage</option>
+                        <option value="1" @if($auction->id_dev_stage == '1') selected @endif >Baby</option>
+                        <option value="2" @if($auction->id_dev_stage == '2') selected @endif >Child</option>
+                        <option value="3" @if($auction->id_dev_stage == '3') selected @endif >Teen</option>
+                        <option value="4" @if($auction->id_dev_stage == '4') selected @endif >Adult</option>
+                        <option value="5" @if($auction->id_dev_stage == '5') selected @endif >Elderly</option>
                     </select>
                 </div>
             </div>
             <div class="col-12 col-sm-6 mt-3">
                 <label for="date-input" class="font-weight-bold font-size">Date</label>
-                <input class="form-control outline-green" type="date" value="{{  $auction->ending_date }}" id="date-input" name="ending_date">
+                <input class="form-control outline-green" type="date" value="{{ $auction->ending_date }}" min="{{ now()->toDateString() }}" id="date-input" name="ending_date">
             </div>
             <div class="col-12 mt-3">
                 <label class="font-weight-bold font-size"> Images </label>
