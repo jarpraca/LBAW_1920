@@ -103,8 +103,6 @@ class AdminController extends Controller
             $blocks->end_date = Carbon::now()->addMonth()->toDateString();
             $blocks->save();
 
-            Log::emergency("User " . $id . " was bocked");
-
             return $id;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());

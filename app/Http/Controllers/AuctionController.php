@@ -63,18 +63,22 @@ class AuctionController extends Controller
         $color = DB::table('main_colors')->where('id', $auction->id_main_color)->first()->type;
         $skills = DB::table('features')->where('id_auction', $id)->join('skills', 'features.id_skill', '=', 'skills.id')->get('type');
 
-        $watchlist = false;
-
         $countdown = new Carbon($auction->ending_date, 'Europe/London');
         $countdown->addDay();
+
+        $add_watchlist = false;
 
         $role = 'guest';
         if (Auth::check()) {
             $role = "user";
             $admin = DB::table('admins')->where('id', Auth::user()->id)->first();
-            $check_watchlists = DB::table('watchlists')->where('id_auction', $id)->where('id_buyer', Auth::user()->id)->get();
-            if($check_watchlists == null)
-                $watchlist = true;
+            $check_watchlists = Watchlist::where('id_auction', $id)->where('id_buyer', Auth::id())->first();
+            // $check_watchlists = DB::table('watchlists')->where('id_auction', $id)->where('id_buyer', Auth::user()->id)->get();
+            if ($check_watchlists != null)
+                $add_watchlist = false;
+            else
+                $add_watchlist = true;
+
             if ($admin != null)
                 $role = 'admin';
             if (Auth::user()->id == $auction->id_seller)
@@ -88,10 +92,10 @@ class AuctionController extends Controller
 
         $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
         $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
-        
+
         DB::commit();
 
-        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history, 'watchlist' => $watchlist,  'countdown' => $countdown]);
+        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history, 'add_watchlist' => $add_watchlist,  'countdown' => $countdown]);
     }
 
     public function showEditForm($id)
@@ -122,33 +126,35 @@ class AuctionController extends Controller
     }
 
 
-    public function addWatchlist($id_auction){
-        if(Auth::check()){
+    public function addWatchlist($id_auction)
+    {
+        if (!Auth::check())
             return redirect()->route("login");
-        }
-        else{
-            try{
+
+        try {
             $watchlist = new Watchlist();
             $watchlist->id_buyer = Auth::id();
             $watchlist->id_auction = $id_auction;
             $watchlist->save();
 
-            $check_watchlists = DB::table('watchlists')->where('id_auction', $id_auction)->where('id_buyer', Auth::user()->id);           
-            Log::error("AQUI LUCAS: "+ $check_watchlists);
-            }
-            catch(Exception $e){
-                return $e->getMessage();
-
-            }
-            return $check_watchlists;
+            return $id_auction;
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e->getMessage();
         }
+
     }
 
-    public function removeWatchlist($id_auction){
-    
-    
-        DB::table('watchlists')->where('id_auction', $id_auction)->where('id_buyer', Auth::id())->delete();
-    
+    public function removeWatchlist($id_auction)
+    {
+        try {
+            Watchlist::where('id_auction', $id_auction)->where('id_buyer', Auth::id())->delete();
+
+            return $id_auction;
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -261,7 +267,7 @@ class AuctionController extends Controller
 
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
-           // return back()->withError($exception->getMessage())->withInput();
+            // return back()->withError($exception->getMessage())->withInput();
             Log::error($exception->getMessage());
             return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
         }
@@ -640,22 +646,23 @@ class AuctionController extends Controller
                 "), array('text' => '%' . $search . '%'));
         } else {
             $auctions = DB::table('auctions')
-            ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
-            ->join('images', 'animal_photos.id', '=', 'images.id')
-            ->where('auctions.id_status', '=', 0)
-            ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
-            ->get();
+                ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+                ->join('images', 'animal_photos.id', '=', 'images.id')
+                ->where('auctions.id_status', '=', 0)
+                ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
+                ->get();
         }
 
         return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
     }
 
-    public function addReport(Request $request, $id_auction){
+    public function addReport(Request $request, $id_auction)
+    {
 
         $auction = Auction::find($id_auction);
         $report = new Report();
 
-       // $this->authorize('create', $report);
+        // $this->authorize('create', $report);
 
         $report->date = now()->toDateString();
         $report->id_buyer = Auth::user()->id;
@@ -666,7 +673,8 @@ class AuctionController extends Controller
         return back();
     }
 
-    public function rate(Request $request, $id_auction){
+    public function rate(Request $request, $id_auction)
+    {
 
         $auction = Auction::find($id_auction);
 
@@ -675,7 +683,7 @@ class AuctionController extends Controller
         if (!in_array($request->input('rate'), $possible_values)) {
             return back()->withError("The rate must be an integer between 1 and 5")->withInput();
         }
-            
+
         $auction->rating_seller = $request->input('rate');
         $auction->save();
 

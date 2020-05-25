@@ -121,7 +121,6 @@ function addToWatchlistHandler(){
         console.log(this.status);
         console.log(this);
     }
-    console.log(this);
     let button = document.querySelector('.addWatchlist');
     button.classList.remove("addWatchlist");
     button.classList.add("remWatchlist");
@@ -133,14 +132,13 @@ function addToWatchlistHandler(){
 function remToWatchlistButton() {
     let id_auction = this.getAttribute("data-id");
     sendAjaxRequest("delete", "/api/watchlists/" + id_auction, null, remToWatchlistHandler);
-  }
-  
+}
+
 function remToWatchlistHandler(){
     if (this.status != 200) {
         console.log(this.status);
         console.log(this);
     }
-    console.log(this);
     let button = document.querySelector('.remWatchlist');
     button.classList.remove("remWatchlist");
     button.classList.add("addWatchlist");
