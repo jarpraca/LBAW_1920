@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 
 use App\Traits\UploadTrait;
 
+use App\Watchlist;
 use App\Auction;
 use App\User;
 use App\Admin;
@@ -17,7 +18,9 @@ use App\Image;
 use App\Feature;
 use App\Report;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use \stdClass;
+
 
 class AuctionController extends Controller
 {
@@ -57,10 +60,16 @@ class AuctionController extends Controller
         $color = DB::table('main_colors')->where('id', $auction->id_main_color)->first()->type;
         $skills = DB::table('features')->where('id_auction', $id)->join('skills', 'features.id_skill', '=', 'skills.id')->get('type');
 
+        $watchlist = false;
+
+
         $role = 'guest';
         if (Auth::check()) {
             $role = "user";
             $admin = DB::table('admins')->where('id', Auth::user()->id)->first();
+            $check_watchlists = DB::table('watchlists')->where('id_auction', $id)->where('id_buyer', Auth::user()->id)->get();
+            if($check_watchlists == null)
+                $watchlist = true;
             if ($admin != null)
                 $role = 'admin';
             if (Auth::user()->id == $auction->id_seller)
@@ -75,7 +84,7 @@ class AuctionController extends Controller
         $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
         $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
 
-        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
+        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history, 'watchlist' => $watchlist]);
     }
 
     public function showEditForm($id)
@@ -103,6 +112,36 @@ class AuctionController extends Controller
             return view('pages.create_auction');
         } else
             return redirect()->route('login');
+    }
+
+
+    public function addWatchlist($id_auction){
+        if(Auth::check()){
+            return redirect()->route("login");
+        }
+        else{
+            try{
+            $watchlist = new Watchlist();
+            $watchlist->id_buyer = Auth::id();
+            $watchlist->id_auction = $id_auction;
+            $watchlist->save();
+
+            $check_watchlists = DB::table('watchlists')->where('id_auction', $id_auction)->where('id_buyer', Auth::user()->id);           
+            Log::error("AQUI LUCAS: "+ $check_watchlists);
+            }
+            catch(Exception $e){
+                return $e->getMessage();
+
+            }
+            return $check_watchlists;
+        }
+    }
+
+    public function removeWatchlist($id_auction){
+    
+    
+        DB::table('watchlists')->where('id_auction', $id_auction)->where('id_buyer', Auth::id())->delete();
+    
     }
 
     /**

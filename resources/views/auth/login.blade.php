@@ -25,7 +25,7 @@
 
                 <div class="form-group ml-1">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="checkbox-3" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input " id="checkbox-3" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="custom-control-label text-dark" for="checkbox-3">Remember me</label>
                     </div>
 

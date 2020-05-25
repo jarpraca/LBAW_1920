@@ -98,7 +98,11 @@
                 <a class="btn btn-green mt-3 mx-3 no-print" href="{{ route('add_report', ['id' => $auction]) }}">Report </a>
 
                 @if($auction->id_status == 0)
-                <a class="btn btn-green mt-3 mx-3 no-print" href="#">Add to Watchlist</a>
+                    @if(!$watchlist)
+                        <a data-id="{{ $auction->id}}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#" >Add to Watchlist</a>
+                    @else
+                        <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 removeWatchlist" href="#" >Remove from Watchlist</a>
+                    @endif
                 @endif
 
                 @endif

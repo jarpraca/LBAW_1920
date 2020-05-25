@@ -25,6 +25,14 @@ function addEventListeners() {
     if(methodButton != null)
         methodButton.addEventListener("click", saveMethods)
 
+    let addwatchlistButton = document.querySelector(".addWatchlist");
+    if(addwatchlistButton != null)
+        addwatchlistButton.addEventListener("click", addToWatchlistButton);
+
+    let remwatchlistButton = document.querySelector(".remWatchlist");
+    if(remwatchlistButton != null)
+        remwatchlistButton.addEventListener("click", remToWatchlistButton);
+
     addListenerPageReports();
     addListenerPageUsers();
     addListenerApproveReport();
@@ -99,6 +107,44 @@ function methodSelectionHandler() {
     }
     let close_button = document.querySelector('.moder-header button');
     close_button.click();
+}
+
+function addToWatchlistButton() {
+    let id_auction = this.getAttribute("data-id");
+    sendAjaxRequest("post", "/api/watchlists/" + id_auction, null, addToWatchlistHandler);
+  }
+  
+function addToWatchlistHandler(){
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    console.log(this);
+    let button = document.querySelector('.addWatchlist');
+    button.classList.remove("addWatchlist");
+    button.classList.add("remWatchlist");
+    button.innerHTML = "Remove from Watchlist";
+    button.removeEventListener("click", addToWatchlistButton);
+    button.addEventListener("click", remToWatchlistButton);
+}
+
+function remToWatchlistButton() {
+    let id_auction = this.getAttribute("data-id");
+    sendAjaxRequest("delete", "/api/watchlists/" + id_auction, null, remToWatchlistHandler);
+  }
+  
+function remToWatchlistHandler(){
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    console.log(this);
+    let button = document.querySelector('.remWatchlist');
+    button.classList.remove("remWatchlist");
+    button.classList.add("addWatchlist");
+    button.innerHTML = "Add to Watchlist";
+    button.removeEventListener("click", remToWatchlistButton);
+    button.addEventListener("click", addToWatchlistButton);
 }
 
 function addListenerPageReports() {
