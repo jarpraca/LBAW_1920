@@ -469,7 +469,7 @@ class AuctionController extends Controller
         }
 
 
-        if (!$request->has('blue') && !$request->has('brown') && !$request->has('black') && !$request->has('yellow') && !$request->has('green') && !$request->has('red') && !$request->has('white')) {
+        if (!$request->has('blue') && !$request->has('brown') && !$request->has('black') && !$request->has('yellow') && !$request->has('green') && !$request->has('red') && !$request->has('white') && !$request->has('grey')) {
             $blue = 1;
             $brown = 2;
             $black = 3;
@@ -477,6 +477,10 @@ class AuctionController extends Controller
             $green = 5;
             $red = 6;
             $white = 7;
+            $orange = 8;
+            $pink = 9;
+            $purple = 10;
+            $grey = 11;
         } else {
             if ($request->has('blue'))
                 $blue = 1;
@@ -506,6 +510,22 @@ class AuctionController extends Controller
                 $white = 7;
             else
                 $white = null;
+            if ($request->has('orange'))
+                $orange = 8;
+            else
+                $orange = null;
+            if ($request->has('pink'))
+                $pink = 9;
+            else
+                $pink = null;
+            if ($request->has('purple'))
+                $purple = 10;
+            else
+                $purple = null;
+            if ($request->has('grey'))
+                $grey = 11;
+            else
+                $grey = null;
         }
 
 
