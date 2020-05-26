@@ -48,8 +48,8 @@ Route::post('api/users/{id}/block', 'AdminController@block');
 Route::post('api/users/{id}/unblock', 'AdminController@unblock');
 Route::delete('api/users/{id}', 'AdminController@delete');
 Route::put('api/auctions/{id}/choose_methods', 'AuctionController@choose_methods');
-Route::post('api/watchlists/{id_auction}', 'AuctionController@addWatchlist');
-Route::delete('api/watchlists/{id_auction}', 'AuctionController@removeWatchlist');
+Route::post('api/watchlists/{id_auction}', 'AuctionController@addWatchlist')->name('addWatchlist');
+Route::delete('api/watchlists/{id_auction}', 'AuctionController@removeWatchlist')->name('removeWatchlist');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');
