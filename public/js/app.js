@@ -173,8 +173,10 @@ function addToWatchlistEyeHandler() {
     [].forEach.call(buttons, function (button) {
         button.classList.remove("addWatchlistEye");
         button.classList.remove("far");
+        button.classList.remove("colorGrey");
         button.classList.add("remWatchlistEye");
         button.classList.add("fas");
+        button.classList.add("colorGreen");
         button.removeEventListener("click", addToWatchlistEye);
         button.addEventListener("click", remToWatchlistEye);
     });
@@ -229,8 +231,10 @@ function remToWatchlistEyeHandler() {
     [].forEach.call(buttons, function (button) {
         button.classList.remove("remWatchlistEye");
         button.classList.remove("fas");
+        button.classList.remove("colorGreen");
         button.classList.add("addWatchlistEye");
         button.classList.add("far");
+        button.classList.add("colorGrey");
         button.removeEventListener("click", remToWatchlistEye);
         button.addEventListener("click", addToWatchlistEye);
     });
