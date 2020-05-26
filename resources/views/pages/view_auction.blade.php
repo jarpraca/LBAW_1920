@@ -111,7 +111,7 @@
 
                 @if($auction->id_status == 0)
                     @if($add_watchlist)
-                        <a data-id="{{ $auction->id}}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#" >Add to Watchlist</a>
+                        <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#" >Add to Watchlist</a>
                     @else
                         <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 remWatchlist" href="#" >Remove from Watchlist</a>
                     @endif

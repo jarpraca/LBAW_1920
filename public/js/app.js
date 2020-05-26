@@ -26,12 +26,22 @@ function addEventListeners() {
         methodButton.addEventListener("click", saveMethods)
 
     let addwatchlistButton = document.querySelector(".addWatchlist");
-    if(addwatchlistButton != null)
+    if (addwatchlistButton != null)
         addwatchlistButton.addEventListener("click", addToWatchlistButton);
 
     let remwatchlistButton = document.querySelector(".remWatchlist");
-    if(remwatchlistButton != null)
+    if (remwatchlistButton != null)
         remwatchlistButton.addEventListener("click", remToWatchlistButton);
+
+    let addwatchlistEye = document.querySelectorAll(".addWatchlistEye");
+    [].forEach.call(addwatchlistEye, function (eye) {
+        eye.addEventListener("click", addToWatchlistEye);
+    });
+
+    let remwatchlistEye = document.querySelectorAll(".remWatchlistEye");
+    [].forEach.call(remwatchlistEye, function (eye) {
+        eye.addEventListener("click", remToWatchlistEye);
+    });
 
     addListenerPageReports();
     addListenerPageUsers();
@@ -114,9 +124,9 @@ function methodSelectionHandler() {
 function addToWatchlistButton() {
     let id_auction = this.getAttribute("data-id");
     sendAjaxRequest("post", "/api/watchlists/" + id_auction, null, addToWatchlistHandler);
-  }
-  
-function addToWatchlistHandler(){
+}
+
+function addToWatchlistHandler() {
     if (this.status != 200) {
         console.log(this.status);
         console.log(this);
@@ -134,7 +144,7 @@ function remToWatchlistButton() {
     sendAjaxRequest("delete", "/api/watchlists/" + id_auction, null, remToWatchlistHandler);
 }
 
-function remToWatchlistHandler(){
+function remToWatchlistHandler() {
     if (this.status != 200) {
         console.log(this.status);
         console.log(this);
@@ -145,6 +155,89 @@ function remToWatchlistHandler(){
     button.innerHTML = "Add to Watchlist";
     button.removeEventListener("click", remToWatchlistButton);
     button.addEventListener("click", addToWatchlistButton);
+}
+
+function addToWatchlistEye(event) {
+    event.preventDefault();
+    let id_auction = this.getAttribute("data-id");
+    sendAjaxRequest("post", "/api/watchlists/" + id_auction, null, addToWatchlistEyeHandler);
+}
+
+function addToWatchlistEyeHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    let buttons = document.querySelectorAll('.addWatchlistEye[data-id="' + id + '"]');
+    [].forEach.call(buttons, function (button) {
+        button.classList.remove("addWatchlistEye");
+        button.classList.remove("far");
+        button.classList.remove("colorGrey");
+        button.classList.add("remWatchlistEye");
+        button.classList.add("fas");
+        button.classList.add("colorGreen");
+        button.removeEventListener("click", addToWatchlistEye);
+        button.addEventListener("click", remToWatchlistEye);
+    });
+
+    let watchlist = document.querySelector('#watchlist');
+    if (watchlist != null) {
+        let watchlist_list = document.querySelector('#watchlist div');
+        let watchlist_card = document.querySelector('.auct-card-ref[data-id="' + id + '"]').cloneNode(true);
+        if (watchlist_list != null) {
+            watchlist_list.appendChild(watchlist_card);
+        }
+        else {
+            let text = document.querySelector('#watchlist p')
+            text.remove();
+            let div = document.createElement("div");
+            div.setAttribute("class", "d-flex flex-wrap text-left justify-flex-start");
+            div.appendChild(watchlist_card);
+            watchlist.appendChild(div);
+        }
+    }
+}
+
+function remToWatchlistEye(event) {
+    event.preventDefault();
+    let id_auction = this.getAttribute("data-id");
+    sendAjaxRequest("delete", "/api/watchlists/" + id_auction, null, remToWatchlistEyeHandler);
+}
+
+function remToWatchlistEyeHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    let watchlist_card = document.querySelector('#watchlist .auct-card-ref[data-id="' + id + '"]');
+    if (watchlist_card != null) {
+        watchlist_card.remove();
+        let watchlist = document.querySelector('#watchlist');
+        if (watchlist != null) {
+            let watchlist_list = document.querySelector('#watchlist div');
+            if (watchlist_list != null && watchlist_list.childElementCount == 0) {
+                watchlist.innerHTML = "";
+                let text = document.createElement("p");
+                text.setAttribute("class", "ml-3 mt-3");
+                text.innerHTML = "You still haven't added any auctions to your watchlist";
+                watchlist.appendChild(text);
+            }
+        }
+    }
+
+    let buttons = document.querySelectorAll('.remWatchlistEye[data-id="' + id + '"]');
+    [].forEach.call(buttons, function (button) {
+        button.classList.remove("remWatchlistEye");
+        button.classList.remove("fas");
+        button.classList.remove("colorGreen");
+        button.classList.add("addWatchlistEye");
+        button.classList.add("far");
+        button.classList.add("colorGrey");
+        button.removeEventListener("click", remToWatchlistEye);
+        button.addEventListener("click", addToWatchlistEye);
+    });
 }
 
 function addListenerPageReports() {
