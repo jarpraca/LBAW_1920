@@ -178,6 +178,23 @@ function addToWatchlistEyeHandler() {
         button.removeEventListener("click", addToWatchlistEye);
         button.addEventListener("click", remToWatchlistEye);
     });
+
+    let watchlist = document.querySelector('#watchlist');
+    if (watchlist != null) {
+        let watchlist_list = document.querySelector('#watchlist div');
+        let watchlist_card = document.querySelector('.auct-card-ref[data-id="' + id + '"]').cloneNode(true);
+        if (watchlist_list != null) {
+            watchlist_list.appendChild(watchlist_card);
+        }
+        else {
+            let text = document.querySelector('#watchlist p')
+            text.remove();
+            let div = document.createElement("div");
+            div.setAttribute("class", "d-flex flex-wrap text-left justify-flex-start");
+            div.appendChild(watchlist_card);
+            watchlist.appendChild(div);
+        }
+    }
 }
 
 function remToWatchlistEye(event) {
