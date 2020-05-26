@@ -685,18 +685,26 @@ class AuctionController extends Controller
     public function addReport(Request $request, $id_auction)
     {
 
-        $auction = Auction::find($id_auction);
-        $report = new Report();
+        try{
 
-        // $this->authorize('create', $report);
+            $auction = Auction::find($id_auction);
+            $report = new Report();
 
-        $report->date = now()->toDateString();
-        $report->id_buyer = Auth::user()->id;
-        $report->id_seller = $auction->id_seller;
-        $report->id_status = 0;
-        $report->save();
+            // $this->authorize('create', $report);
 
-        return back();
+            $report->date = now()->toDateString();
+            $report->id_buyer = Auth::user()->id;
+            $report->id_seller = $auction->id_seller;
+            $report->id_status = 0;
+            $report->save();
+
+            return back()->withSuccess("Report successfully sent");
+        }
+        catch(Exception $e){
+            return back()->withError($exception->getMessage());
+        }
+
+        
     }
 
     public function rate(Request $request, $id_auction)
