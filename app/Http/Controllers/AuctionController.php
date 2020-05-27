@@ -701,7 +701,6 @@ class AuctionController extends Controller
 
     public function rate(Request $request, $id_auction)
     {
-
         $auction = Auction::find($id_auction);
 
         $possible_values = array(1, 2, 3, 4, 5);

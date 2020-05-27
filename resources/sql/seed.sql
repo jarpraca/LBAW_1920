@@ -176,7 +176,7 @@ CREATE TABLE auctions
     id_status integer NOT NULL REFERENCES auction_status (id) ON UPDATE CASCADE,
     CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
     CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price),
-    CONSTRAINT "ending_date_ck" CHECK ((ending_date > 'now'::text::date) OR (id_status = 1 OR id_status = 2))
+    CONSTRAINT "ending_date_ck" CHECK ((ending_date >= 'now'::text::date) OR (id_status = 1 OR id_status = 2))
 );
 
 CREATE TABLE bids
