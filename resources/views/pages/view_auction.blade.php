@@ -55,6 +55,8 @@
 
                 @if (session('error'))
                 <div class="alert alert-danger my-4 mx-3">{{ session('error') }}</div>
+                @elseif(session('success'))
+                <div class="alert alert-success my-4 mx-3">{{ session('success') }}</div>
                 @endif
 
                 @if($role == 'seller')

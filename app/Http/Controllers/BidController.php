@@ -23,7 +23,7 @@ class BidController extends Controller
         $auction = Auction::find($id_auction);
 
         if ($auction->current_price >= $request->input('bid_value')) {
-            return back()->withError("A bid must be higher than the previous bid")->withInput();
+            return back()->withError("Your bid must be higher than the previous bid")->withInput();
         }
 
         $bid = new Bid;
@@ -61,7 +61,7 @@ class BidController extends Controller
         $auction = Auction::find($id_auction);
 
         if ($auction->current_price >= $request->input('bid_value')) {
-            return back()->withError("A bid must be higher than the previous bid")->withInput();
+            return back()->withError("Your bid must be higher than the previous bid")->withInput();
         }
 
         $bid = new Bid;
