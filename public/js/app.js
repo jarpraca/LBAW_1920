@@ -173,8 +173,10 @@ function addToWatchlistEyeHandler() {
     [].forEach.call(buttons, function (button) {
         button.classList.remove("addWatchlistEye");
         button.classList.remove("far");
+        button.classList.remove("colorGrey");
         button.classList.add("remWatchlistEye");
         button.classList.add("fas");
+        button.classList.add("colorGreen");
         button.removeEventListener("click", addToWatchlistEye);
         button.addEventListener("click", remToWatchlistEye);
     });
@@ -229,8 +231,10 @@ function remToWatchlistEyeHandler() {
     [].forEach.call(buttons, function (button) {
         button.classList.remove("remWatchlistEye");
         button.classList.remove("fas");
+        button.classList.remove("colorGreen");
         button.classList.add("addWatchlistEye");
         button.classList.add("far");
+        button.classList.add("colorGrey");
         button.removeEventListener("click", remToWatchlistEye);
         button.addEventListener("click", addToWatchlistEye);
     });
@@ -460,6 +464,30 @@ function updateCountdown(countdown, countDownDate) {
     if (distance < 0) {
         location.reload();
     }
+}
+
+function fb_login(){
+    FB.login(function(response) {
+
+        if (response.authResponse) {
+            console.log('Welcome!  Fetching your information.... ');
+            //console.log(response); // dump complete info
+            access_token = response.authResponse.accessToken; //get access token
+            user_id = response.authResponse.userID; //get FB UID
+
+            FB.api('/me', function(response) {
+                user_email = response.email; //get user email
+          // you can store this data into your database             
+            });
+
+        } else {
+            //user hit cancel button
+            console.log('User cancelled login or did not fully authorize.');
+
+        }
+    }, {
+        scope: 'public_profile,email'
+    });
 }
 
 addEventListeners();
