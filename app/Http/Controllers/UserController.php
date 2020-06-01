@@ -55,7 +55,7 @@ class UserController extends Controller
             if (Seller::find($id) == null)
                 $my_auctions = [];
             else {
-                $my_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
+                $my_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
                 if (Auth::check()) {
                     foreach ($my_auctions as $auction) {

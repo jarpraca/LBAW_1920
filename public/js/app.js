@@ -460,6 +460,7 @@ function updateCountdown(countdown, countDownDate) {
     else
         countdown.innerHTML = seconds + "s ";
 
+    countdown.innerHTML += " remaining";
     // If the count down is finished, write some text
     if (distance < 0) {
         location.reload();

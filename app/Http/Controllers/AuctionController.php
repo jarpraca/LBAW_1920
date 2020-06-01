@@ -142,7 +142,6 @@ class AuctionController extends Controller
             Log::emergency($e->getMessage());
             return $e->getMessage();
         }
-
     }
 
     public function removeWatchlist($id_auction)
@@ -173,6 +172,9 @@ class AuctionController extends Controller
 
         if (gettype($request->input('buyout_price')) == "integer")
             return back()->withError("The buyout price must be a number.")->withInput();
+
+        if (Carbon::now()->greaterThan(new Carbon($request->input('ending_date'))))
+            return back()->withError("The ending date cannot be in the past.")->withInput();
 
         if (
             $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null || $request->input('starting_price') == null || $request->input('buyout_price') == null
@@ -705,7 +707,7 @@ class AuctionController extends Controller
     public function addReport(Request $request, $id_auction)
     {
 
-        try{
+        try {
 
             $auction = Auction::find($id_auction);
             $report = new Report();
@@ -719,12 +721,9 @@ class AuctionController extends Controller
             $report->save();
 
             return back()->withSuccess("Report successfully sent");
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return back()->withError($exception->getMessage());
         }
-
-        
     }
 
     public function rate(Request $request, $id_auction)
