@@ -193,6 +193,9 @@
                         @foreach($skills as $skill)
                         <p>&#8226; {{ $skill->type }}</p>
                         @endforeach
+                        @if(sizeof($skills) == 0)
+                        <p>None</p>
+                        @endif
                     </div>
                 </div>
                 <div class="d-flex flex-row">

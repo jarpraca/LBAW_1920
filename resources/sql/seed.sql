@@ -164,7 +164,7 @@ CREATE TABLE auctions
     starting_price integer NOT NULL,
     buyout_price integer,
     current_price integer,
-    ending_date date NOT NULL,
+    ending_date timestamp NOT NULL,
     rating_seller integer CHECK (rating_seller >= 1 AND rating_seller <= 5) DEFAULT NULL,
     id_category integer NOT NULL REFERENCES categories (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_main_color integer NOT NULL REFERENCES main_colors (id) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -176,7 +176,7 @@ CREATE TABLE auctions
     id_status integer NOT NULL REFERENCES auction_status (id) ON UPDATE CASCADE,
     CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
     CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price),
-    CONSTRAINT "ending_date_ck" CHECK ((ending_date >= 'now'::text::date) OR (id_status = 1 OR id_status = 2))
+    CONSTRAINT "ending_date_ck" CHECK ((ending_date >= 'now'::timestamp) OR (id_status = 1 OR id_status = 2))
 );
 
 CREATE TABLE bids
@@ -230,6 +230,7 @@ CREATE TABLE reports
 (
     id SERIAL PRIMARY KEY,
     "date" date NOT NULL DEFAULT 'now'::text::date,
+    description text NOT NULL,
     id_buyer integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL,
     id_seller integer NOT NULL REFERENCES sellers (id) ON UPDATE CASCADE ON DELETE CASCADE,
     id_status integer NOT NULL REFERENCES report_status ON UPDATE CASCADE
@@ -755,25 +756,25 @@ INSERT INTO report_status (id,TYPE) VALUES
     (1,'Approved'),
     (2,'Denied');
 
-INSERT INTO reports ("date",id_buyer,id_seller, id_status) VALUES 
-    ('2020-03-26',22,33, 0),
-    ('2020-03-27',14,40, 0),
-    ('2020-03-28',21,50, 0),
-    ('2020-03-20',26,34, 0),
-    ('2020-03-22',19,43, 0),
-    ('2020-03-30',12,31, 0),
-    ('2020-03-23',16,39, 0),
-    ('2020-03-24',12,40, 0),
-    ('2020-03-25',24,43, 0),
-    ('2020-03-28',13,43, 0),
-    ('2020-03-09',22,41, 0),
-    ('2020-03-13',16,44, 0),
-    ('2020-03-02',29,41, 0),
-    ('2020-03-12',12,46, 0),
-    ('2020-03-15',23,48, 0),
-    ('2020-03-19',22,43, 0),
-    ('2020-03-22',11,44, 0),
-    ('2020-03-20',24,47, 0);
+INSERT INTO reports ("date",id_buyer,id_seller, id_status, description) VALUES 
+    ('2020-03-26',22,33, 0, 'I have my reasons'),
+    ('2020-03-27',14,40, 0, 'Fraud'),
+    ('2020-03-28',21,50, 0, 'I have my reasons'),
+    ('2020-03-20',26,34, 0, 'Fake'),
+    ('2020-03-22',19,43, 0, 'I have my reasons'),
+    ('2020-03-30',12,31, 0, 'Bot User'),
+    ('2020-03-23',16,39, 0, 'I have my reasons'),
+    ('2020-03-24',12,40, 0, 'Dont like him'),
+    ('2020-03-25',24,43, 0, 'I have my reasons'),
+    ('2020-03-28',13,43, 0, 'Cant stand her'),
+    ('2020-03-09',22,41, 0, 'I have my reasons'),
+    ('2020-03-13',16,44, 0, 'Animal abuse'),
+    ('2020-03-02',29,41, 0, 'I have my reasons'),
+    ('2020-03-12',12,46, 0, 'Dangerous'),
+    ('2020-03-15',23,48, 0, 'I have my reasons'),
+    ('2020-03-19',22,43, 0, 'Scam'),
+    ('2020-03-22',11,44, 0, 'I have my reasons'),
+    ('2020-03-20',24,47, 0, 'Not real');
 
 INSERT INTO watchlists (id_auction,id_buyer) VALUES 
     (17,11),

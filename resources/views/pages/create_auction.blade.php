@@ -194,7 +194,7 @@
             <div class="d-flex flex-wrap mt-4">
                 <div class="col-12 col-sm-6">
                     <label for="date-input" class="font-weight-bold">Ending Date</label>
-                    <input class="form-control outline-green" type="date" min="{{ now()->toDateString() }}" id="date-input" name="ending_date" required>
+                    <input class="form-control outline-green" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}" step="" id="date-input" name="ending_date" required>
                 </div>
                 <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                     <label class="font-weight-bold"> Images </label>

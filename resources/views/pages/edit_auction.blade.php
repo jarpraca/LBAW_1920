@@ -163,7 +163,7 @@
             </div>
             <div class="col-12 col-sm-6 mt-3">
                 <label for="date-input" class="font-weight-bold font-size">Date</label>
-                <input class="form-control outline-green" type="date" value="{{ $auction->ending_date }}" min="{{ now()->toDateString() }}" id="date-input" name="ending_date">
+                <input class="form-control outline-green" type="datetime-local" value="{{ $auction->ending_date }}" min="{{ now()->format('Y-m-d\TH:i') }}" id="date-input" name="ending_date">
             </div>
             <div class="col-12 mt-3">
                 <label class="font-weight-bold font-size"> Images </label>

@@ -64,7 +64,6 @@ class AuctionController extends Controller
         $skills = DB::table('features')->where('id_auction', $id)->join('skills', 'features.id_skill', '=', 'skills.id')->get('type');
 
         $countdown = new Carbon($auction->ending_date, 'Europe/London');
-        $countdown->addDay();
 
         $add_watchlist = false;
 
@@ -164,7 +163,6 @@ class AuctionController extends Controller
      */
     public function create(Request $request)
     {
-
         if (!Auth::check()) {
             return back()->withError("Please sign in before creating an auction.")->withInput();
         }
@@ -431,8 +429,10 @@ class AuctionController extends Controller
     public function search(Request $request)
     {
         if (!$request->exists('max_price')) {
+            Log::emergency("FTS");
             return $this->fullTextSearch($request);
         }
+        Log::emergency("SEARCH");
 
         if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
             $mammals = 1;
@@ -469,14 +469,17 @@ class AuctionController extends Controller
         }
 
 
-        if (!$request->has('blue') && !$request->has('brown') && !$request->has('black') && !$request->has('yellow') && !$request->has('green') && !$request->has('red') && !$request->has('white') && !$request->has('grey')) {
+        if (!$request->has('blue') && !$request->has('brown') && !$request->has('black') 
+        && !$request->has('yellow') && !$request->has('green') && !$request->has('red') 
+        && !$request->has('white') && !$request->has('grey') && !$request->has('orange')
+        && !$request->has('pink') && !$request->has('purple')) {
             $blue = 1;
-            $brown = 2;
-            $black = 3;
-            $yellow = 4;
-            $green = 5;
-            $red = 6;
-            $white = 7;
+            $green = 2;
+            $brown = 3;
+            $red = 4;
+            $black = 5;
+            $white = 6;
+            $yellow = 7;
             $orange = 8;
             $pink = 9;
             $purple = 10;
@@ -486,27 +489,27 @@ class AuctionController extends Controller
                 $blue = 1;
             else
                 $blue = null;
-            if ($request->has('brown'))
+            if ($request->has('green'))
                 $brown = 2;
             else
                 $brown = null;
-            if ($request->has('black'))
+            if ($request->has('brown'))
                 $black = 3;
             else
                 $black = null;
-            if ($request->has('yellow'))
+            if ($request->has('red'))
                 $yellow = 4;
             else
                 $yellow = null;
-            if ($request->has('green'))
+            if ($request->has('black'))
                 $green = 5;
             else
                 $green = null;
-            if ($request->has('red'))
+            if ($request->has('white'))
                 $red = 6;
             else
                 $red = null;
-            if ($request->has('white'))
+            if ($request->has('yellow'))
                 $white = 7;
             else
                 $white = null;
@@ -611,7 +614,7 @@ class AuctionController extends Controller
                 to_tsquery(:text) AS query, 
                 to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
+                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
                 AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
                 AND (current_price < :max_price OR :max_price IS NULL)
                 AND (current_price > :min_price OR :min_price IS NULL)
@@ -622,7 +625,7 @@ class AuctionController extends Controller
                 "), array(
                 'text' => '%' . $request->input('search') . '%',
                 'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
+                'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
                 'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
                 'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
                 'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
