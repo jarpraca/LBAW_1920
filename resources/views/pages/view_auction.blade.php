@@ -90,8 +90,8 @@
                     <div class="d-flex flex-row mx-3 no-print">
                         {{ csrf_field() }}
                         <label style="display:none" for="bid_value">Bid Value</label>
-                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
-                        <button class="btn btn-green mx-auto w-100" type="submit">Bid</button>
+                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
+                        <button class="btn btn-green mx-auto w-50" type="submit">Bid</button>
                     </div>
                 </form>
 
@@ -99,10 +99,8 @@
                     <div class="d-flex flex-row mt-3 mx-3 no-print">
                         {{ csrf_field() }}
                         <label style="display:none" for="bid_value"></label>
-                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
-                        <label style="display:none" for="current_price"></label>
-                        <input type="hidden" id="current_price" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
-                        <button class="btn btn-green mx-auto w-100" type="submit">Auto Bid</button>
+                        <input type="number" id="auto_bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
+                        <button class="btn btn-green mx-auto w-50" type="submit">Auto Bid</button>
                     </div>
                 </form>
                 @endif
@@ -122,13 +120,13 @@
                 @if($auction->id_status == 0)
                 <div class="d-flex flex-row mx-3 no-print">
                     <label style="display:none" for="bid_value"></label>
-                    <input type="number" id="bid_value" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="/login">Bid</a>
+                    <input type="number" id="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
+                    <a class="btn btn-green mx-auto w-50" href="/login">Bid</a>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3 no-print">
                     <label style="display:none" for="autobid_value"></label>
-                    <input type="number" id="autobid_value" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="/login">Auto Bid</a>
+                    <input type="number" id="autobid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
+                    <a class="btn btn-green mx-auto w-50" href="/login">Auto Bid</a>
                 </div>
                 @endif
                 <a class="btn btn-green mt-3 mx-3 no-print" href="/login">Report</a>

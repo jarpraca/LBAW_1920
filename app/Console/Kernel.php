@@ -28,22 +28,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        Log::emergency("Schedule");
-
         $schedule->call(function () {
-            Log::emergency("Ending date schedule");
             $auctions = Auction::where('id_status', '=', 0)->get();
 
             foreach ($auctions as $auction) {
-                // if (Carbon::now()->greaterThan(new Carbon($auction->ending_date))) {
-                    Log::emergency("Auction " . $auction->id . " finished.");
+                if (Carbon::now()->greaterThan(new Carbon($auction->ending_date))) {
                     $winner = Bid::where('id_auction', $auction->id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.id as id')->orderBy('value', 'desc')->first()->get();
                     $auction->id_winner = $winner->id;
                     $auction->id_status = 1;
                     $auction->save();
-                // }
+                }
             }
-            // })->daily();
         })->everyMinute();
         ;
     }

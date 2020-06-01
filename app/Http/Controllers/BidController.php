@@ -70,7 +70,7 @@ class BidController extends Controller
         $bid->id_auction = $id_auction;
         $highest = DB::select('select maximum, id_buyer from bids where id_auction=' . $bid->id_auction . ' and maximum is not null order by maximum desc limit 1');
         $bid->id_buyer = $id_user;
-        $bid->value = $request->input('current_price') + 1;
+        $bid->value = $auction->current_price + 1;
         $bid->maximum = $request->input('bid_value');
         $bid->save();
 

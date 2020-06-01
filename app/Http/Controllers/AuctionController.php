@@ -608,11 +608,10 @@ class AuctionController extends Controller
                 $acrobatics = null;
         }
 
-
         if ($request->input('search') != null) {
             $auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
-                FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
+                FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
                 to_tsquery(:text) AS query, 
                 to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
@@ -620,7 +619,7 @@ class AuctionController extends Controller
                 AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
                 AND (current_price < :max_price OR :max_price IS NULL)
                 AND (current_price > :min_price OR :min_price IS NULL)
-                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
+                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
                 AND query @@ textsearch
                 AND id_status = 0
                 ORDER BY ending_date;
@@ -636,18 +635,18 @@ class AuctionController extends Controller
         } else {
             $auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
-                FROM (((auctions JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
+                FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow))
+                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
                 AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
                 AND (current_price < :max_price OR :max_price IS NULL)
                 AND (current_price > :min_price OR :min_price IS NULL)
-                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics))
+                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
                 AND id_status = 0
                 ORDER BY ending_date;
                 "), array(
                 'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow,
+                'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
                 'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
                 'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
                 'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
@@ -677,7 +676,7 @@ class AuctionController extends Controller
         if ($search != "") {
             $auctions = DB::select(DB::raw("
                 SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
-                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id)  , to_tsquery(:text) AS query, 
+                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
                     to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
                 WHERE query @@ textsearch AND id_status = 0
                 ORDER BY rank DESC;

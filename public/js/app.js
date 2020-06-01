@@ -426,7 +426,8 @@ function deleteUserHandler() {
 function addAuctionCountdown() {
     let countdown = document.getElementById("countdown");
     if (countdown != null) {
-        let countDownDate = new Date(countdown.getAttribute('data-id') + ' +0100').getTime();
+        let date = countdown.getAttribute('data-id').replace(/-/g, '/');
+        let countDownDate = new Date(date + ' +0100').getTime();
         updateCountdown(countdown, countDownDate);
 
         setInterval(() => {

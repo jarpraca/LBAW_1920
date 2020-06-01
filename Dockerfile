@@ -16,6 +16,8 @@ COPY ./etc/nginx/default.conf /etc/nginx/sites-enabled/default
 COPY .env_production /var/www/.env
 COPY docker_run.sh /docker_run.sh
 RUN mkdir /var/run/php
+# RUN chown -R www-data:www-data /var/www
+# RUN chown 755 /var/www
 
 # Start command
 CMD sh /docker_run.sh
