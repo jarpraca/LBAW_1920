@@ -724,7 +724,7 @@ class AuctionController extends Controller
 
             return back()->withSuccess("Report successfully sent");
         } catch (Exception $e) {
-            return back()->withError($exception->getMessage());
+            return back()->withError($e->getMessage());
         }
     }
 

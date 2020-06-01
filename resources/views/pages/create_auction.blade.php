@@ -193,8 +193,13 @@
 
             <div class="d-flex flex-wrap mt-4">
                 <div class="col-12 col-sm-6">
-                    <label for="date-input" class="font-weight-bold">Ending Date</label>
-                    <input class="form-control outline-green" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}" step="" id="date-input" name="ending_date" required>
+                <div class="d-flex flex-row">
+                    <label for="date-input" class="form-check-label font-weight-bold">Ending Date</label>
+                        <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="If you're using an older browser, please enter the date and time in this format: YYYY/MM/DD, HH:MM AM/PM">
+                            <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Species Help">
+                        </a>
+                    </div>
+                    <input class="form-control outline-green" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}" step="" id="date-input" name="ending_date" placeholder="2021/06/08, 11:00 AM" required>
                 </div>
                 <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                     <label class="font-weight-bold"> Images </label>
