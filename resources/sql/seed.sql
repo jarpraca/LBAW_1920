@@ -278,7 +278,7 @@ CREATE TABLE password_resets (
 -- INDEXES
 -----------------------------------------
 
-CREATE INDEX search_auction ON auctions USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
+-- CREATE INDEX search_auction ON auctions USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
 
 CREATE INDEX admin_search ON users USING GIST (to_tsvector('english', name || ' ' || email));
 
@@ -908,3 +908,12 @@ INSERT INTO animal_photos (id,id_auction) VALUES
     (18,48),
     (19,31),
     (20,30);
+
+ALTER TABLE auctions ADD COLUMN tsv tsvector;
+
+UPDATE auctions SET tsv =
+setweight(to_tsvector(coalesce(species_name,'')), 'A') ||
+setweight(to_tsvector(coalesce("name",'')), 'B') || 
+setweight(to_tsvector(coalesce("description",'')), 'C');
+
+CREATE INDEX ix_auctions_tsv ON auctions USING GIN(tsv);

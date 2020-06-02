@@ -32,13 +32,13 @@ class Kernel extends ConsoleKernel
             $auctions = Auction::where('id_status', '=', 0)->get();
 
             foreach ($auctions as $auction) {
-                $date = new Carbon($auction->ending_date, 'GMT+01');
-                if (Carbon::now('GMT+01')->greaterThan($date)) {
-                    $winner = Bid::where('id_auction', $auction->id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.id as id')->orderBy('value', 'desc')->first()->get();
-                    $auction->id_winner = $winner->id;
+                // $date = new Carbon($auction->ending_date, 'GMT+01');
+                // if (Carbon::now('GMT+01')->greaterThan($date)) {
+                    // $winner = Bid::where('id_auction', $auction->id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.id as id')->orderBy('value', 'desc')->first()->get();
+                    // $auction->id_winner = $winner->id;
                     $auction->id_status = 1;
                     $auction->save();
-                }
+                // }
             }
         })->everyMinute();
         ;

@@ -9,6 +9,9 @@
 <meta property="og:locale" content="en_GB" />
 
 <div class="bg-white pt-4">
+    @if (session('error'))
+    <div class="alert alert-danger my-4">{{ session('error') }}</div>
+    @endif
     <div class="pb-5 text-left mainBody">
         <h2 class="mt-3 text-dark">Trending</h2>
         <div class="d-flex flex-wrap text-left justify-content-around">
