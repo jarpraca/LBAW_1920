@@ -81,7 +81,7 @@
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Starting Price Help">
                         </a>
                     </div>
-                    <input type="number" id="starting_price" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" />
+                    <input type="number" min="0" id="starting_price" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" />
                 </div>
                 <div class="col">
                     <div class="d-flex flex-row">
@@ -92,7 +92,7 @@
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Buyout Price Help">
                         </a>
                     </div>
-                    <input type="number" id="buyout_price" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" />
+                    <input type="number" min="0" id="buyout_price" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" />
                 </div>
             </div>
 
@@ -202,7 +202,7 @@
                     <input class="form-control outline-green" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}" step="" id="date-input" name="ending_date" placeholder="2021/06/08, 11:00 AM" required>
                 </div>
                 <div class="col-12 col-sm-6 mt-4 mt-sm-0">
-                    <label class="font-weight-bold"> Images </label>
+                    <label class="form-check-label font-weight-bold"> Images </label>
                     <div class="custom-file">
                         <input id="animal_picture" type="file" class="form-control" name="animal_picture">
                         <label class="custom-file-label" for="animal_picture" id="animal_picture_label">Add Photo</label>

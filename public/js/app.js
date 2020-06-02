@@ -17,10 +17,6 @@ function addEventListeners() {
         deleter.addEventListener("click", sendDeleteImageRequest);
     });
 
-    let stopButton = document.querySelector("#stop_button");
-    if (stopButton != null)
-        stopButton.addEventListener("click", disableStopAuctionButton);
-
     let methodButton = document.querySelector('#method_button');
     if (methodButton != null)
         methodButton.addEventListener("click", saveMethods)
@@ -49,6 +45,9 @@ function addEventListeners() {
     addListenerBlockDeleteUser();
 
     addAuctionCountdown();
+
+    imageUploads();
+    deleteProfileImage();
 }
 
 function encodeForAjax(data) {
@@ -90,16 +89,6 @@ function imageDeletedHandler() {
     element.remove();
 }
 
-function disableStopAuctionButton() {
-    let id = this.getAttribute("data-id");
-    sendAjaxRequest("put", "/api/auctions/" + id + "/stop", null, stopAuctionHandler);
-}
-
-function stopAuctionHandler() {
-    let stop_button = document.querySelector("#stop_button");
-    stop_button.remove();
-}
-
 function saveMethods() {
     let payMethodSelect = document.querySelector('#pay_method');
     let shipMethodSelect = document.querySelector('#ship_method');
@@ -109,7 +98,7 @@ function saveMethods() {
 
     console.log(pay_method);
     console.log(ship_method);
-    //sendAjaxRequest("put", 'api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
+    //sendAjaxRequest("put", '/api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
 }
 
 function methodSelectionHandler() {
@@ -251,7 +240,7 @@ function loadPageReports(event) {
     event.preventDefault();
     let url = this.getAttribute('href');
     let page = url.split("page=")[1];
-    url = "api/reports?page=" + page;
+    url = "/api/reports?page=" + page;
     sendAjaxRequest("get", url, null, pageReportsHandler);
 }
 
@@ -276,7 +265,7 @@ function loadPageUsers(event) {
     event.preventDefault();
     let url = this.getAttribute('href');
     let page = url.split("page=")[1];
-    url = "api/users?page=" + page;
+    url = "/api/users?page=" + page;
     sendAjaxRequest("get", url, null, pageUsersHandler);
 }
 
@@ -305,7 +294,7 @@ function addListenerApproveReport() {
 function acceptReport(event) {
     event.preventDefault();
     let id = this.getAttribute('data-id');
-    url = "api/reports/" + id + "/" + 1;
+    let url = "/api/reports/" + id + "/" + 1;
     sendAjaxRequest("put", url, null, acceptReportHandler);
 }
 
@@ -326,7 +315,7 @@ function acceptReportHandler() {
 function denyReport(event) {
     event.preventDefault();
     let id = this.getAttribute('data-id');
-    url = "api/reports/" + id + "/" + 2;
+    let url = "/api/reports/" + id + "/" + 2;
     sendAjaxRequest("put", url, null, denyReportHandler);
 }
 
@@ -365,7 +354,7 @@ function addListenerBlockDeleteUser() {
 function unblockUser(event) {
     event.preventDefault();
     let id = this.getAttribute('data-id');
-    url = "api/users/" + id + "/unblock";
+    let url = "/api/users/" + id + "/unblock";
     sendAjaxRequest("post", url, null, unblockUserHandler);
 }
 
@@ -385,7 +374,7 @@ function unblockUserHandler() {
 function blockUser(event) {
     event.preventDefault();
     let id = this.getAttribute('data-id');
-    url = "api/users/" + id + "/block";
+    let url = "/api/users/" + id + "/block";
     sendAjaxRequest("post", url, null, blockUserHandler);
 }
 
@@ -405,7 +394,7 @@ function blockUserHandler() {
 function deleteUser(event) {
     event.preventDefault();
     let id = this.getAttribute('data-id');
-    url = "api/users/" + id;
+    let url = "/api/users/" + id;
     sendAjaxRequest("delete", url, null, deleteUserHandler);
 }
 
@@ -419,7 +408,7 @@ function deleteUserHandler() {
     closeModal.click();
     // update pagination
     let page = document.querySelector('.user_list').getAttribute('data-id');
-    let url = "api/users?page=" + page;
+    let url = "/api/users?page=" + page;
     sendAjaxRequest("get", url, null, pageUsersHandler);
 }
 
@@ -449,26 +438,36 @@ function updateCountdown(countdown, countDownDate) {
     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the result in the element with id="demo"
-    if (days != 0)
-        countdown.innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
-    else if (hours != 0)
-        countdown.innerHTML = hours + "h "
-            + minutes + "m " + seconds + "s ";
-    else if (minutes != 0)
-        countdown.innerHTML = minutes + "m " + seconds + "s ";
-    else
-        countdown.innerHTML = seconds + "s ";
-
     // If the count down is finished, write some text
     if (distance < 0) {
-        location.reload();
+        setTimeout(() => {
+            location.reload();
+        }, 2000); 
+        countdown.innerHTML = "0s ";
+    }
+    else {
+
+        // Change text color to red
+        if(distance < 10000){
+            countdown.classList.add("text-danger");
+        }
+
+        // Display the result in the element with id="demo"
+        if (days != 0)
+            countdown.innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+        else if (hours != 0)
+            countdown.innerHTML = hours + "h "
+                + minutes + "m " + seconds + "s ";
+        else if (minutes != 0)
+            countdown.innerHTML = minutes + "m " + seconds + "s ";
+        else
+            countdown.innerHTML = seconds + "s ";
     }
 }
 
-function fb_login(){
-    FB.login(function(response) {
+function fb_login() {
+    FB.login(function (response) {
 
         if (response.authResponse) {
             console.log('Welcome!  Fetching your information.... ');
@@ -476,9 +475,9 @@ function fb_login(){
             access_token = response.authResponse.accessToken; //get access token
             user_id = response.authResponse.userID; //get FB UID
 
-            FB.api('/me', function(response) {
+            FB.api('/me', function (response) {
                 user_email = response.email; //get user email
-          // you can store this data into your database             
+                // you can store this data into your database             
             });
 
         } else {
@@ -489,6 +488,54 @@ function fb_login(){
     }, {
         scope: 'public_profile,email'
     });
+}
+
+function imageUploads() {
+    let animalPicture = document.getElementById('animal_picture');
+    if (animalPicture != null)
+        animalPicture.addEventListener('change', function (event) {
+            let animalPictureLabel = document.getElementById('animal_picture_label');
+            let n = animalPicture.value.lastIndexOf('\\');
+            let animalPictureName = animalPicture.value.substring(n + 1);
+
+            animalPictureLabel.innerHTML = animalPictureName;
+        });
+
+    let userPicture = document.getElementById('profile_picture');
+    if (userPicture != null)
+        userPicture.addEventListener('change', function (event) {
+            let userPictureLabel = document.getElementById('profile_picture_label');
+            let n = userPicture.value.lastIndexOf('\\');
+            let userPictureName = userPicture.value.substring(n + 1);
+
+            userPictureLabel.innerHTML = userPictureName;
+        });
+}
+
+function deleteProfileImage() {
+    let delete_profile_image = document.querySelector(".delete_photo_confirm");
+    if(delete_profile_image != null)
+        delete_profile_image.addEventListener("click", deleteProfileImageClick);
+}
+
+function deleteProfileImageClick(event) {
+    event.preventDefault();
+    let id = this.getAttribute('data-id');
+    let url = "/api/users/" + id + "/image";
+    sendAjaxRequest("delete", url, null, deleteProfileImageHandler);
+}
+
+function deleteProfileImageHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let delete_profile_image = document.querySelector(".image_delete_button");
+    let image = delete_profile_image.nextElementSibling;
+    let close = document.querySelector(".delete_photo_cancel");
+    delete_profile_image.remove();
+    image.remove();
+    close.click();
 }
 
 addEventListeners();

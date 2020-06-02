@@ -83,7 +83,11 @@
                 @if($role == 'admin')
 
                 @if($auction->id_status == 0)
-                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3 no-print" href="#">Stop Auction</a>
+                <form class="d-flex flex-row mt-3 mx-3 no-print" method="POST" action="{{ route('stop_auction', ['id' => $auction->id]) }}">
+                    {{ csrf_field() }}
+                    {{method_field('PUT')}}
+                    <button class="btn btn-green mx-auto w-100" type="submit">Stop Auction</button>
+                </form>
                 @endif
                 <form class="d-flex flex-row mt-3 mx-3 no-print" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}

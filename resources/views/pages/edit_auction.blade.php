@@ -57,13 +57,13 @@
                     <label class="form-check-label font-weight-bold font-size" for="starting_price">
                         Starting Price
                     </label>
-                    <input type="number" id="starting_price" name="starting_price" class="form-control outline-green" value="{{  $auction->starting_price }}" />
+                    <input type="number" min="0" id="starting_price" name="starting_price" class="form-control outline-green" value="{{ $auction->starting_price }}" @if(!$starting_price) disabled @endif/>
                 </div>
                 <div class="col">
                     <label class="form-check-label font-weight-bold font-size" for="buyout_price">
                         Buyout Price
                     </label>
-                    <input type="number" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{  $auction->buyout_price }}" />
+                    <input type="number" min="{{ $highest_bid }}" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{ $auction->buyout_price }}" />
                 </div>
             </div>
 
@@ -163,7 +163,7 @@
             </div>
             <div class="col-12 col-sm-6 mt-3">
                 <label for="date-input" class="font-weight-bold font-size">Date</label>
-                <input class="form-control outline-green" type="datetime-local" value="{{ $auction->ending_date }}" min="{{ now()->format('Y-m-d\TH:i') }}" id="date-input" name="ending_date">
+                <input class="form-control outline-green" type="datetime-local" value="{{ (new DateTime($auction->ending_date))->format('Y-m-d\TH:i') }}" min="{{ now()->format('Y-m-d\TH:i') }}" id="date-input" name="ending_date">
             </div>
             <div class="col-12 mt-3">
                 <label class="font-weight-bold font-size"> Images </label>

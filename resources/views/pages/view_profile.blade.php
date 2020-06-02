@@ -54,7 +54,7 @@
             </button>
 
             <div class="collapse bgColorGrey" id="my_auctions">
-                @if((sizeof($my_auctions) == 0)  &&  (sizeof($previous_auctions) == 0))
+                @if((sizeof($my_auctions) == 0) && (sizeof($previous_auctions) == 0))
                 <p class="ml-3 mt-3">You still haven't created any auctions </p>
                 @else
                 <div class="d-flex flex-wrap text-left justify-flex-start">
@@ -126,7 +126,7 @@
         </div>
         @endif
 
-        <div class="no-print mx-auto d-flex">
+        <div class="no-print mx-auto mt-5 d-flex">
             <form class="btn w-75 mx-auto" method="POST" action="{{ route('delete_profile', ['id' => Auth::user()->id]) }}">
                 {{ csrf_field() }}
                 {{method_field('DELETE')}}

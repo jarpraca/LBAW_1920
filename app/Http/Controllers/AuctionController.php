@@ -14,6 +14,7 @@ use App\Auction;
 use App\User;
 use App\Admin;
 use App\AnimalPhoto;
+use App\Bid;
 use App\Image;
 use App\Feature;
 use App\Report;
@@ -101,16 +102,34 @@ class AuctionController extends Controller
     {
         $auction = Auction::find($id);
 
+        if($auction == null)
+            return redirect()->route('homepage');
+
         if (Auth::id() != $auction->id_seller)
             return redirect()->route('homepage');
+
+        if ($auction->id_status != 0)
+            return redirect()->route('homepage');
+
+        $bids = Bid::where('id_auction', $id)->get();
+
+        if(sizeof($bids) == 0){
+            $starting_price = true;
+            $highest_bid = $auction->starting_price;
+        }
+        else{
+            $starting_price = false;
+            $highest_bid = Bid::where('id_auction', $id)->orderBy('value', 'desc')->limit(1)->get();
+            $highest_bid = $highest_bid[0]->value;
+        }
 
         $photo = DB::table('animal_photos')->where('id_auction', $auction->id)->first();
 
         if (!empty($photo)) {
             $image = Image::find($photo->id);
-            return view('pages.edit_auction', ['auction' => $auction, 'photo' => $image]);
+            return view('pages.edit_auction', ['auction' => $auction, 'starting_price' => $starting_price, 'highest_bid' => $highest_bid, 'photo' => $image]);
         } else
-            return view('pages.edit_auction', ['auction' => $auction]);
+            return view('pages.edit_auction', ['auction' => $auction, 'starting_price' => $starting_price, 'highest_bid' => $highest_bid]);
     }
 
     public function showCreateForm()
@@ -173,10 +192,12 @@ class AuctionController extends Controller
 
         if (
             $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null || $request->input('starting_price') == null || $request->input('buyout_price') == null
-            || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null
+            || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null || $request->file('animal_picture') == null
         ) {
             return back()->withError("Please fill out all the fields.")->withInput();
         }
+
+        // if($request->input('name') == )
 
         try {
             $auction = new Auction();
@@ -351,6 +372,13 @@ class AuctionController extends Controller
 
         try {
             $auction = Auction::find($id);
+
+            if($request->input('buyout_price') <= $auction->current_price)
+                return back()->withError("Buyout price cannot be lower than or equal to the current price")->withInput();
+
+            $bids = Bid::where('id_auction', $id)->get();
+            if($auction->starting_price != $request->input('starting_price') && sizeof($bids) > 0)
+                return back()->withError("Starting price cannot be changed because the auction has already been bidded")->withInput();
 
             $this->authorize('update', $auction);
 
@@ -613,22 +641,21 @@ class AuctionController extends Controller
                 else
                     $acrobatics = null;
             }
-
+            
             if ($request->input('search') != null) {
                 $search = "'" . $request->input('search') . "':*";
 
                 $auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
+                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
                 FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                to_tsquery(:text) AS query, 
-                to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
+                to_tsquery('english', :text) AS query
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
                 AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
                 AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
                 AND (current_price < :max_price OR :max_price IS NULL)
                 AND (current_price > :min_price OR :min_price IS NULL)
                 AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
-                AND query @@ textsearch
+                AND tsv @@ query
                 AND id_status = 0
                 ORDER BY rank DESC;
                 "), array(
@@ -640,10 +667,6 @@ class AuctionController extends Controller
                     'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
                 ));
                 $search = $request->input('search');
-
-                foreach ($auctions as $auction) {
-                    Log::emergency($auction->species_name . ' - ' . $auction->rank);
-                }
             } else {
                 $auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
@@ -695,21 +718,6 @@ class AuctionController extends Controller
             if ($search != "") {
                 $search = "'" . $search . "':*";
 
-
-                // $auctions = DB::select(DB::raw("
-                // SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
-                // FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                // to_tsquery(:text) AS query, 
-                // to_tsvector(setweight(species_name, 'A') || ' ' ||
-                // setweight(name, 'B') || ' ' ||
-                // setweight(description, 'C')) AS textseacrh
-                //                 WHERE query @@ textsearch
-                // AND id_status = 0
-                // ORDER BY rank DESC;
-                // "), array(
-                //     'text' => $search,
-                // ));
-
                 $auctions = DB::select(DB::raw("
                 SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
                 FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
@@ -720,16 +728,13 @@ class AuctionController extends Controller
                 "), array('text' => $search));
 
                 $search = $request->input('search');
-
-                foreach ($auctions as $auction) {
-                    Log::emergency($auction->species_name . ' - ' . $auction->rank);
-                }
             } else {
                 $auctions = DB::table('auctions')
                     ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
                     ->join('images', 'animal_photos.id', '=', 'images.id')
                     ->where('auctions.id_status', '=', 0)
                     ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
+                    ->orderBy('ending_date', 'desc')
                     ->get();
             }
 

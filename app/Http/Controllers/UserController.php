@@ -49,13 +49,13 @@ class UserController extends Controller
             $bidding = null;
             $didnt_win = null;
             $watchlist = null;
+            $previous_auctions = null;
         } else {
 
-            if (Seller::find($id) == null){
+            if (Seller::find($id) == null) {
                 $my_auctions = [];
                 $previous_auctions = [];
-            }
-            else {
+            } else {
                 $my_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->where('id_status', '=', 0)->orderBy('ending_date')->get();
                 $previous_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->where('id_status', '<>', 0)->orderBy('ending_date')->get();
 
@@ -75,64 +75,44 @@ class UserController extends Controller
 
             $purchase_history = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_winner', $id)->where('id_status', '=', 1)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
-            if (Auth::check()) {
-                foreach ($purchase_history as $auction) {
-                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                    if ($watchlist != null)
-                        $auction->watchlisted = true;
-                    else
-                        $auction->watchlisted = false;
-                }
-            } else
-                foreach ($purchase_history as $auction) {
+            foreach ($purchase_history as $auction) {
+                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                if ($watchlist != null)
+                    $auction->watchlisted = true;
+                else
                     $auction->watchlisted = false;
-                }
+            }
 
             $bidding = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
-            if (Auth::check()) {
-                foreach ($bidding as $auction) {
-                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                    if ($watchlist != null)
-                        $auction->watchlisted = true;
-                    else
-                        $auction->watchlisted = false;
-                }
-            } else
-                foreach ($bidding as $auction) {
+            foreach ($bidding as $auction) {
+                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                if ($watchlist != null)
+                    $auction->watchlisted = true;
+                else
                     $auction->watchlisted = false;
-                }
+            }
 
             $one_month_ago = Carbon::now()->subMonth()->toDateString();
             $didnt_win = DB::table('auctions')->distinct()->join('bids', 'bids.id_auction', '=', 'auctions.id')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('bids.id_buyer', $id)->where('id_status', '!=', 0)->where('id_winner', '!=', $id)->where('ending_date', '>=', $one_month_ago)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
-            if (Auth::check()) {
-                foreach ($didnt_win as $auction) {
-                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                    if ($watchlist != null)
-                        $auction->watchlisted = true;
-                    else
-                        $auction->watchlisted = false;
-                }
-            } else
-                foreach ($didnt_win as $auction) {
+            foreach ($didnt_win as $auction) {
+                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                if ($watchlist != null)
+                    $auction->watchlisted = true;
+                else
                     $auction->watchlisted = false;
-                }
+            }
 
             $watchlist = DB::table('watchlists')->join('auctions', 'auctions.id', '=', 'watchlists.id_auction')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_buyer', $id)->where('id_status', '=', 0)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
 
-            if (Auth::check()) {
-                foreach ($watchlist as $auction) {
-                    $watchlisted = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                    if ($watchlisted != null)
-                        $auction->watchlisted = true;
-                    else
-                        $auction->watchlisted = false;
-                }
-            } else
-                foreach ($watchlist as $auction) {
+            foreach ($watchlist as $auction) {
+                $watchlisted = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                if ($watchlisted != null)
+                    $auction->watchlisted = true;
+                else
                     $auction->watchlisted = false;
-                }
+            }
         }
 
         return view('pages.view_profile',  ['profile' => $user, 'picture_name' => $url, 'purchase_history' => $purchase_history, 'my_auctions' => $my_auctions, 'previous_auctions' => $previous_auctions, 'bidding' => $bidding, 'didnt_win' => $didnt_win, 'watchlist' => $watchlist]); // 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
@@ -151,6 +131,23 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('homepage');
+    }
+
+    public function deletePhoto($id)
+    {
+        $photo = DB::table('profile_photos')->where('id_user', $id)->first();
+        Log::emergency("1");
+        if ($photo != null) {
+            Log::emergency("2");
+            DB::table('profile_photos')->where('id_user', $id)->delete();
+            Log::emergency("3");
+            $old_image = Image::find($photo->id);
+            Log::emergency("4");
+            $old_image->delete();
+            Log::emergency("5");
+        }
+
+        return $id;
     }
 
     public function showEditForm($id)
@@ -196,8 +193,9 @@ class UserController extends Controller
             }
 
             if ($request->hasFile('profile_picture')) {
-                $old_photo = DB::table('profile_photos')->where('id_user', $id)->first()->id;
-                DB::table('profile_photos')->where('id_user', $id)->delete();
+                $old_photo = DB::table('profile_photos')->where('id_user', $id)->first();
+                if ($old_photo != null)
+                    DB::table('profile_photos')->where('id_user', $id)->delete();
 
                 $image = $request->file('profile_picture');
                 $name = Str::slug($request->input('email')) . '_' . time();
@@ -214,8 +212,10 @@ class UserController extends Controller
                 $profile_photo->id = $image->id;
                 $profile_photo->save();
 
-                $old_image = Image::find($old_photo);
-                $old_image->delete(null, $old_photo);
+                if ($old_photo != null) {
+                    $old_image = Image::find($old_photo->id);
+                    $old_image->delete(null, $old_photo);
+                }
             }
 
             $profile->save();
