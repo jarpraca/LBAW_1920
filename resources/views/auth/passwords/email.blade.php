@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <div>
                             <label style="display:none" for="email"></label>
-                            <input id="email" placeholder="Email Address" type="email" class="form-control @error('email') is-invalid @enderror mt-5" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <input id="email" name="email" placeholder="Email Address" type="email" class="form-control @error('email') is-invalid @enderror mt-5" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

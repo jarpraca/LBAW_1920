@@ -427,195 +427,198 @@ class AuctionController extends Controller
 
     public function search(Request $request)
     {
-        DB::raw("
-                UPDATE auctions SET ti =
-                setweight(to_tsvector(coalesce(species_name,'')), 'A') ||
-                setweight(to_tsvector(coalesce(name,'')), 'B') ||
-                setweight(to_tsvector(coalesce(description,'')), 'C');
+        try {
+            DB::raw("
+            UPDATE auctions SET tsv =
+            setweight(to_tsvector(coalesce(species_name,'')), 'A') ||
+            setweight(to_tsvector(coalesce('name','')), 'B') || 
+            setweight(to_tsvector(coalesce('description','')), 'C');
             ");
-        if (!$request->exists('max_price')) {
-            Log::emergency("FTS");
-            return $this->fullTextSearch($request);
-        }
-        Log::emergency("SEARCH");
+            if (!$request->exists('max_price')) {
+                Log::emergency("FTS");
+                return $this->fullTextSearch($request);
+            }
+            Log::emergency("SEARCH");
 
-        if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
-            $mammals = 1;
-            $insects = 2;
-            $reptiles = 3;
-            $birds = 4;
-            $fishes = 5;
-            $amphibians = 6;
-        } else {
-            if ($request->has('mammals'))
+            if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
                 $mammals = 1;
-            else
-                $mammals = null;
-            if ($request->has('insects'))
                 $insects = 2;
-            else
-                $insects = null;
-            if ($request->has('reptiles'))
                 $reptiles = 3;
-            else
-                $reptiles = null;
-            if ($request->has('birds'))
                 $birds = 4;
-            else
-                $birds = null;
-            if ($request->has('fishes'))
                 $fishes = 5;
-            else
-                $fishes = null;
-            if ($request->has('amphibians'))
                 $amphibians = 6;
-            else
-                $amphibians = null;
-        }
+            } else {
+                if ($request->has('mammals'))
+                    $mammals = 1;
+                else
+                    $mammals = null;
+                if ($request->has('insects'))
+                    $insects = 2;
+                else
+                    $insects = null;
+                if ($request->has('reptiles'))
+                    $reptiles = 3;
+                else
+                    $reptiles = null;
+                if ($request->has('birds'))
+                    $birds = 4;
+                else
+                    $birds = null;
+                if ($request->has('fishes'))
+                    $fishes = 5;
+                else
+                    $fishes = null;
+                if ($request->has('amphibians'))
+                    $amphibians = 6;
+                else
+                    $amphibians = null;
+            }
 
 
-        if (
-            !$request->has('blue') && !$request->has('brown') && !$request->has('black')
-            && !$request->has('yellow') && !$request->has('green') && !$request->has('red')
-            && !$request->has('white') && !$request->has('grey') && !$request->has('orange')
-            && !$request->has('pink') && !$request->has('purple')
-        ) {
-            $blue = 1;
-            $green = 2;
-            $brown = 3;
-            $red = 4;
-            $black = 5;
-            $white = 6;
-            $yellow = 7;
-            $orange = 8;
-            $pink = 9;
-            $purple = 10;
-            $grey = 11;
-        } else {
-            if ($request->has('blue'))
+            if (
+                !$request->has('blue') && !$request->has('brown') && !$request->has('black')
+                && !$request->has('yellow') && !$request->has('green') && !$request->has('red')
+                && !$request->has('white') && !$request->has('grey') && !$request->has('orange')
+                && !$request->has('pink') && !$request->has('purple')
+            ) {
                 $blue = 1;
-            else
-                $blue = null;
-            if ($request->has('green'))
-                $brown = 2;
-            else
-                $brown = null;
-            if ($request->has('brown'))
-                $black = 3;
-            else
-                $black = null;
-            if ($request->has('red'))
-                $yellow = 4;
-            else
-                $yellow = null;
-            if ($request->has('black'))
-                $green = 5;
-            else
-                $green = null;
-            if ($request->has('white'))
-                $red = 6;
-            else
-                $red = null;
-            if ($request->has('yellow'))
-                $white = 7;
-            else
-                $white = null;
-            if ($request->has('orange'))
+                $green = 2;
+                $brown = 3;
+                $red = 4;
+                $black = 5;
+                $white = 6;
+                $yellow = 7;
                 $orange = 8;
-            else
-                $orange = null;
-            if ($request->has('pink'))
                 $pink = 9;
-            else
-                $pink = null;
-            if ($request->has('purple'))
                 $purple = 10;
-            else
-                $purple = null;
-            if ($request->has('grey'))
                 $grey = 11;
-            else
-                $grey = null;
-        }
+            } else {
+                if ($request->has('blue'))
+                    $blue = 1;
+                else
+                    $blue = null;
+                if ($request->has('green'))
+                    $brown = 2;
+                else
+                    $brown = null;
+                if ($request->has('brown'))
+                    $black = 3;
+                else
+                    $black = null;
+                if ($request->has('red'))
+                    $yellow = 4;
+                else
+                    $yellow = null;
+                if ($request->has('black'))
+                    $green = 5;
+                else
+                    $green = null;
+                if ($request->has('white'))
+                    $red = 6;
+                else
+                    $red = null;
+                if ($request->has('yellow'))
+                    $white = 7;
+                else
+                    $white = null;
+                if ($request->has('orange'))
+                    $orange = 8;
+                else
+                    $orange = null;
+                if ($request->has('pink'))
+                    $pink = 9;
+                else
+                    $pink = null;
+                if ($request->has('purple'))
+                    $purple = 10;
+                else
+                    $purple = null;
+                if ($request->has('grey'))
+                    $grey = 11;
+                else
+                    $grey = null;
+            }
 
 
-        if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
-            $baby = 1;
-            $child = 2;
-            $teen = 3;
-            $adult = 4;
-            $elderly = 5;
-        } else {
-            if ($request->has('baby'))
+            if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
                 $baby = 1;
-            else
-                $baby = null;
-            if ($request->has('child'))
                 $child = 2;
-            else
-                $child = null;
-            if ($request->has('teen'))
                 $teen = 3;
-            else
-                $teen = null;
-            if ($request->has('adult'))
                 $adult = 4;
-            else
-                $adult = null;
-            if ($request->has('elderly'))
                 $elderly = 5;
-            else
-                $elderly = null;
-        }
+            } else {
+                if ($request->has('baby'))
+                    $baby = 1;
+                else
+                    $baby = null;
+                if ($request->has('child'))
+                    $child = 2;
+                else
+                    $child = null;
+                if ($request->has('teen'))
+                    $teen = 3;
+                else
+                    $teen = null;
+                if ($request->has('adult'))
+                    $adult = 4;
+                else
+                    $adult = null;
+                if ($request->has('elderly'))
+                    $elderly = 5;
+                else
+                    $elderly = null;
+            }
 
 
-        if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
-            $climbs = 1;
-            $jumps = 2;
-            $talks = 3;
-            $skates = 4;
-            $olfaction = 5;
-            $navigation = 6;
-            $echo = 7;
-            $acrobatics = 8;
-        } else {
-            if ($request->has('climbs'))
+            if (!$request->has('climbs') && !$request->has('jumps') && !$request->has('talks') && !$request->has('skates') && !$request->has('olfaction') && !$request->has('navigation') && !$request->has('echo') && !$request->has('acrobatics')) {
                 $climbs = 1;
-            else
-                $climbs = null;
-            if ($request->has('jumps'))
                 $jumps = 2;
-            else
-                $jumps = null;
-            if ($request->has('talks'))
                 $talks = 3;
-            else
-                $talks = null;
-            if ($request->has('skates'))
                 $skates = 4;
-            else
-                $skates = null;
-            if ($request->has('olfaction'))
                 $olfaction = 5;
-            else
-                $olfaction = null;
-            if ($request->has('navigation'))
                 $navigation = 6;
-            else
-                $navigation = null;
-            if ($request->has('echo'))
                 $echo = 7;
-            else
-                $echo = null;
-            if ($request->has('acrobatics'))
                 $acrobatics = 8;
-            else
-                $acrobatics = null;
-        }
+            } else {
+                if ($request->has('climbs'))
+                    $climbs = 1;
+                else
+                    $climbs = null;
+                if ($request->has('jumps'))
+                    $jumps = 2;
+                else
+                    $jumps = null;
+                if ($request->has('talks'))
+                    $talks = 3;
+                else
+                    $talks = null;
+                if ($request->has('skates'))
+                    $skates = 4;
+                else
+                    $skates = null;
+                if ($request->has('olfaction'))
+                    $olfaction = 5;
+                else
+                    $olfaction = null;
+                if ($request->has('navigation'))
+                    $navigation = 6;
+                else
+                    $navigation = null;
+                if ($request->has('echo'))
+                    $echo = 7;
+                else
+                    $echo = null;
+                if ($request->has('acrobatics'))
+                    $acrobatics = 8;
+                else
+                    $acrobatics = null;
+            }
 
-        if ($request->input('search') != null) {
-            $auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
+            if ($request->input('search') != null) {
+                $search = "'" . $request->input('search') . "':*";
+
+                $auctions = DB::select(DB::raw("
+                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
                 FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
                 to_tsquery(:text) AS query, 
                 to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
@@ -627,18 +630,22 @@ class AuctionController extends Controller
                 AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
                 AND query @@ textsearch
                 AND id_status = 0
-                ORDER BY ending_date;
+                ORDER BY rank DESC;
                 "), array(
-                'text' => $request->input('search') . ':*',
-                'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
-                'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
-                'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
-                'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-            ));
-            $search = $request->input('search');
-        } else {
-            $auctions = DB::select(DB::raw("
+                    'text' => $search,
+                    'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
+                    'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
+                    'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
+                    'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
+                    'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
+                ));
+                $search = $request->input('search');
+
+                foreach ($auctions as $auction) {
+                    Log::emergency($auction->species_name . ' - ' . $auction->rank);
+                }
+            } else {
+                $auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
                 FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
@@ -650,69 +657,101 @@ class AuctionController extends Controller
                 AND id_status = 0
                 ORDER BY ending_date;
                 "), array(
-                'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
-                'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
-                'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
-                'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-            ));
-            $search = "";
-        }
+                    'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
+                    'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
+                    'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
+                    'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
+                    'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
+                ));
+                $search = "";
+            }
 
-        if (Auth::check()) {
-            foreach ($auctions as $auction) {
-                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                if ($watchlist != null)
-                    $auction->watchlisted = true;
-                else
+
+
+            if (Auth::check()) {
+                foreach ($auctions as $auction) {
+                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlist != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($auctions as $auction) {
                     $auction->watchlisted = false;
-            }
-        } else
-            foreach ($auctions as $auction) {
-                $auction->watchlisted = false;
-            }
+                }
 
-        return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
+            return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
+        } catch (Exception $e) {
+            //  Log::emergency($e->getMessage());
+            return back()->withError($e->getMessage());
+        }
     }
 
     public function fullTextSearch(Request $request)
     {
-        $search = $request->input('search');
-        if ($search != "") {
-            $auctions = DB::select(DB::raw("
-                SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
-                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
-                    to_tsvector(species_name || ' ' || name || ' ' || description ) AS textsearch
-                WHERE query @@ textsearch AND id_status = 0
+        try {
+            $search = $request->input('search');
+            if ($search != "") {
+                $search = "'" . $search . "':*";
+
+
+                // $auctions = DB::select(DB::raw("
+                // SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
+                // FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
+                // to_tsquery(:text) AS query, 
+                // to_tsvector(setweight(species_name, 'A') || ' ' ||
+                // setweight(name, 'B') || ' ' ||
+                // setweight(description, 'C')) AS textseacrh
+                //                 WHERE query @@ textsearch
+                // AND id_status = 0
+                // ORDER BY rank DESC;
+                // "), array(
+                //     'text' => $search,
+                // ));
+
+                $auctions = DB::select(DB::raw("
+                SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
+                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
+                to_tsquery('english', :text) AS query
+
+                WHERE tsv @@ query AND id_status = 0
                 ORDER BY rank DESC;
-                "), array('text' => $search . ':*'));
-        } else {
-            $auctions = DB::table('auctions')
-                ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
-                ->join('images', 'animal_photos.id', '=', 'images.id')
-                ->where('auctions.id_status', '=', 0)
-                ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
-                ->get();
-        }
+                "), array('text' => $search));
 
-        foreach ($auctions as $auction) {
-            Log::emergency($auction->species_name . ' - ' . $auction->rank);
-        }
+                $search = $request->input('search');
 
-        if (Auth::check()) {
-            foreach ($auctions as $auction) {
-                $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                if ($watchlist != null)
-                    $auction->watchlisted = true;
-                else
+                foreach ($auctions as $auction) {
+                    Log::emergency($auction->species_name . ' - ' . $auction->rank);
+                }
+            } else {
+                $auctions = DB::table('auctions')
+                    ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+                    ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->where('auctions.id_status', '=', 0)
+                    ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
+                    ->get();
+            }
+
+
+            if (Auth::check()) {
+                foreach ($auctions as $auction) {
+                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlist != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($auctions as $auction) {
                     $auction->watchlisted = false;
-            }
-        } else
-            foreach ($auctions as $auction) {
-                $auction->watchlisted = false;
-            }
+                }
 
-        return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
+            return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return back()->withError($e->getMessage());
+        }
     }
 
     public function addReport(Request $request, $id_auction)
