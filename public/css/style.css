@@ -37,6 +37,10 @@ button {
   width: 75%;
 }
 
+#description{
+  resize: none;
+}
+
 .bid-bar {
   width: 25%;
 }

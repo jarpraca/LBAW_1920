@@ -717,6 +717,7 @@ class AuctionController extends Controller
 
     public function addReport(Request $request, $id_auction)
     {
+
         try {
 
             $auction = Auction::find($id_auction);
@@ -725,14 +726,24 @@ class AuctionController extends Controller
             // $this->authorize('create', $report);
 
             $report->date = now()->toDateString();
+            $report->description = $request->input("description");
             $report->id_buyer = Auth::user()->id;
             $report->id_seller = $auction->id_seller;
             $report->id_status = 0;
             $report->save();
 
-            return back()->withSuccess("Report successfully sent");
-        } catch (Exception $e) {
-            return back()->withError($e->getMessage());
+
+            $response['state'] = "success";
+            $response['data'] = "Report successfully sent";
+            
+            return json_encode($response);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            
+            $response['state'] = "error";
+            $response['data'] = $exception->getMessage();
+            
+            return json_encode($response);
         }
     }
 
