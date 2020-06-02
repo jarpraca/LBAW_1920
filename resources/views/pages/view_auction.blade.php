@@ -62,11 +62,7 @@
                 </div>
                 @endif
 
-                @if (session('error'))
-                <div class="alert alert-danger my-4 mx-3">{{ session('error') }}</div>
-                @elseif(session('success'))
-                <div class="alert alert-success my-4 mx-3">{{ session('success') }}</div>
-                @endif
+                <div id="alert" class="alert my-4 mx-3" hidden></div>
 
                 @if($role == 'seller')
 
@@ -118,7 +114,32 @@
                 </form>
                 @endif
 
-                <a class="btn btn-green mt-3 mx-3 no-print" href="{{ route('add_report', ['id' => $auction]) }}">Report </a>
+
+                <button type="button" id="report-auction" class="btn btn-green mt-3 mx-3 no-print" data-toggle="modal" data-target="#modal_{{ $auction->id }}" data-id="{{ $auction->id }}">Report</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal_{{ $auction->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirm report</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Why are you reporting this auction?
+                                </p>
+                                <textarea class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary report_auction_cancel" data-id="{{ $auction->id }}" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger report_auction_confirm" data-id="{{ $auction->id }}">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 @if($auction->id_status == 0)
                 @if($add_watchlist)

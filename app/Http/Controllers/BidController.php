@@ -60,11 +60,11 @@ class BidController extends Controller
 
         $auction = Auction::find($id_auction);
 
-        if ($auction->current_price >= $request->input('bid_value')) {
+        if ($auction->current_price >= $request->input('auto_bid_value')) {
             return back()->withError("Your bid must be higher than the previous bid")->withInput();
         }
 
-        if ($auction->buyout_price <= $request->input('bid_value')) {
+        if ($auction->buyout_price <= $request->input('auto_bid_value')) {
             return back()->withError("Auto bid cannot be higher than the buyout price")->withInput();
         }
 
@@ -75,7 +75,7 @@ class BidController extends Controller
         $highest = DB::select('select maximum, id_buyer from bids where id_auction=' . $bid->id_auction . ' and maximum is not null order by maximum desc limit 1');
         $bid->id_buyer = $id_user;
         $bid->value = $auction->current_price + 1;
-        $bid->maximum = $request->input('bid_value');
+        $bid->maximum = $request->input('auto_bid_value');
         $bid->save();
 
         event(new BidCreated($bid));

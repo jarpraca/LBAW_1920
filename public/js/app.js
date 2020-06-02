@@ -39,6 +39,11 @@ function addEventListeners() {
         eye.addEventListener("click", remToWatchlistEye);
     });
 
+    let reportAuction = document.querySelectorAll(".report_auction_confirm");
+    [].forEach.call(reportAuction, function (eye) {
+        eye.addEventListener("click", reportAuctionEye);
+    });
+
     addListenerPageReports();
     addListenerPageUsers();
     addListenerApproveReport();
@@ -227,6 +232,37 @@ function remToWatchlistEyeHandler() {
         button.removeEventListener("click", remToWatchlistEye);
         button.addEventListener("click", addToWatchlistEye);
     });
+}
+
+function reportAuctionEye(event) {
+    event.preventDefault();
+    let id_auction = this.getAttribute("data-id");
+    let description = document.querySelector("#description");
+    let data = {description: description.value};
+    url = "/api/auctions/" + id_auction + "/report";
+    sendAjaxRequest("post", url, data, reportAuctionEyeHandler);
+}
+
+function reportAuctionEyeHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let message = JSON.parse(this.responseText);
+    let closeModal = document.querySelector('.report_auction_cancel');
+    closeModal.click();
+    let alert = document.querySelector("#alert");
+    alert.classList.add("alert-" + message.state);
+    alert.innerHTML = message.data;
+
+    alert.removeAttribute("hidden"); 
+
+    setTimeout(function() {
+        alert.classList.remove("alert-" + message.state);
+        alert.style.display = "none";
+        alert.setAttribute("hidden");
+    }, 5000);
+
 }
 
 function addListenerPageReports() {
@@ -466,29 +502,29 @@ function updateCountdown(countdown, countDownDate) {
     }
 }
 
-function fb_login() {
-    FB.login(function (response) {
+// function fb_login(){
+//     FB.login(function(response) {
 
-        if (response.authResponse) {
-            console.log('Welcome!  Fetching your information.... ');
-            //console.log(response); // dump complete info
-            access_token = response.authResponse.accessToken; //get access token
-            user_id = response.authResponse.userID; //get FB UID
+//         if (response.authResponse) {
+//             console.log('Welcome!  Fetching your information.... ');
+//             //console.log(response); // dump complete info
+//             access_token = response.authResponse.accessToken; //get access token
+//             user_id = response.authResponse.userID; //get FB UID
 
-            FB.api('/me', function (response) {
-                user_email = response.email; //get user email
-                // you can store this data into your database             
-            });
+//             FB.api('/me', function(response) {
+//                 user_email = response.email; //get user email
+//           // you can store this data into your database             
+//             });
 
-        } else {
-            //user hit cancel button
-            console.log('User cancelled login or did not fully authorize.');
+//         } else {
+//             //user hit cancel button
+//             console.log('User cancelled login or did not fully authorize.');
 
-        }
-    }, {
-        scope: 'public_profile,email'
-    });
-}
+//         }
+//     }, {
+//         scope: 'public_profile,email'
+//     });
+// }
 
 function imageUploads() {
     let animalPicture = document.getElementById('animal_picture');
