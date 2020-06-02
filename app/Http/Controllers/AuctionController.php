@@ -165,14 +165,11 @@ class AuctionController extends Controller
         if (!Auth::check()) {
             return back()->withError("Please sign in before creating an auction.")->withInput();
         }
-        if (gettype($request->input('starting_price')) == "integer")
-            return back()->withError("The starting price must be a number.")->withInput();
 
-        if (gettype($request->input('buyout_price')) == "integer")
-            return back()->withError("The buyout price must be a number.")->withInput();
+        $date = new Carbon($request->input('ending_date'), 'GMT+01');
 
-        if (Carbon::now()->greaterThan(new Carbon($request->input('ending_date'))))
-            return back()->withError("The ending date cannot be in the past.")->withInput();
+        if (Carbon::now('GMT+01')->greaterThanOrEqualTo($date))
+            return back()->withError("The ending date must be in the future")->withInput();
 
         if (
             $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null || $request->input('starting_price') == null || $request->input('buyout_price') == null
@@ -313,19 +310,19 @@ class AuctionController extends Controller
     public function update(Request $request, $id)
     {
         if (!Auth::check()) {
-            return back()->withError("Please sign in before editing an auction.")->withInput();
+            return back()->withError("Please sign in before editing an auction")->withInput();
         }
-        if (gettype($request->input('starting_price')) == "integer")
-            return back()->withError("The starting price must be a number.")->withInput();
 
-        if (gettype($request->input('buyout_price')) == "integer")
-            return back()->withError("The buyout price must be a number.")->withInput();
+        $date = new Carbon($request->input('ending_date'), 'GMT+01');
+
+        if (Carbon::now('GMT+01')->greaterThanOrEqualTo($date))
+            return back()->withError("The ending date must be in the future")->withInput();
 
         if (
             $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null
             || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null
         ) {
-            return back()->withError("Please fill out all the fields.")->withInput();
+            return back()->withError("Please fill out all the fields")->withInput();
         }
 
         $animal_photo = DB::table('animal_photos')->where('id_auction', $id)->first();
@@ -430,6 +427,12 @@ class AuctionController extends Controller
 
     public function search(Request $request)
     {
+        DB::raw("
+                UPDATE auctions SET ti =
+                setweight(to_tsvector(coalesce(species_name,'')), 'A') ||
+                setweight(to_tsvector(coalesce(name,'')), 'B') ||
+                setweight(to_tsvector(coalesce(description,'')), 'C');
+            ");
         if (!$request->exists('max_price')) {
             Log::emergency("FTS");
             return $this->fullTextSearch($request);
@@ -471,10 +474,12 @@ class AuctionController extends Controller
         }
 
 
-        if (!$request->has('blue') && !$request->has('brown') && !$request->has('black') 
-        && !$request->has('yellow') && !$request->has('green') && !$request->has('red') 
-        && !$request->has('white') && !$request->has('grey') && !$request->has('orange')
-        && !$request->has('pink') && !$request->has('purple')) {
+        if (
+            !$request->has('blue') && !$request->has('brown') && !$request->has('black')
+            && !$request->has('yellow') && !$request->has('green') && !$request->has('red')
+            && !$request->has('white') && !$request->has('grey') && !$request->has('orange')
+            && !$request->has('pink') && !$request->has('purple')
+        ) {
             $blue = 1;
             $green = 2;
             $brown = 3;
@@ -624,7 +629,7 @@ class AuctionController extends Controller
                 AND id_status = 0
                 ORDER BY ending_date;
                 "), array(
-                'text' => '%' . $request->input('search') . '%',
+                'text' => $request->input('search') . ':*',
                 'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
                 'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
                 'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
@@ -677,10 +682,10 @@ class AuctionController extends Controller
             $auctions = DB::select(DB::raw("
                 SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
                 FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), to_tsquery(:text) AS query, 
-                    to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
+                    to_tsvector(species_name || ' ' || name || ' ' || description ) AS textsearch
                 WHERE query @@ textsearch AND id_status = 0
                 ORDER BY rank DESC;
-                "), array('text' => '%' . $search . '%'));
+                "), array('text' => $search . ':*'));
         } else {
             $auctions = DB::table('auctions')
                 ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
@@ -688,6 +693,10 @@ class AuctionController extends Controller
                 ->where('auctions.id_status', '=', 0)
                 ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
                 ->get();
+        }
+
+        foreach ($auctions as $auction) {
+            Log::emergency($auction->species_name . ' - ' . $auction->rank);
         }
 
         if (Auth::check()) {
@@ -708,7 +717,6 @@ class AuctionController extends Controller
 
     public function addReport(Request $request, $id_auction)
     {
-
         try {
 
             $auction = Auction::find($id_auction);

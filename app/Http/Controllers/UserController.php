@@ -52,10 +52,13 @@ class UserController extends Controller
             $watchlist = null;
         } else {
 
-            if (Seller::find($id) == null)
+            if (Seller::find($id) == null){
                 $my_auctions = [];
+                $previous_auctions = [];
+            }
             else {
-                $my_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->orderBy('ending_date')->get();
+                $my_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->where('id_status', '=', 0)->orderBy('ending_date')->get();
+                $previous_auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')->where('id_seller', $id)->select('auctions.id as id', 'species_name', 'current_price', 'age', 'ending_date', 'url', 'id_status')->where('id_status', '<>', 0)->orderBy('ending_date')->get();
 
                 if (Auth::check()) {
                     foreach ($my_auctions as $auction) {
@@ -133,7 +136,7 @@ class UserController extends Controller
                 }
         }
 
-        return view('pages.view_profile',  ['profile' => $user, 'picture_name' => $url, 'purchase_history' => $purchase_history, 'my_auctions' => $my_auctions, 'bidding' => $bidding, 'didnt_win' => $didnt_win, 'watchlist' => $watchlist]); // 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
+        return view('pages.view_profile',  ['profile' => $user, 'picture_name' => $url, 'purchase_history' => $purchase_history, 'my_auctions' => $my_auctions, 'previous_auctions' => $previous_auctions, 'bidding' => $bidding, 'didnt_win' => $didnt_win, 'watchlist' => $watchlist]); // 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
     }
 
     public function delete($id)

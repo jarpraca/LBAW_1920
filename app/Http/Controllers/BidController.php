@@ -64,6 +64,10 @@ class BidController extends Controller
             return back()->withError("Your bid must be higher than the previous bid")->withInput();
         }
 
+        if ($auction->buyout_price <= $request->input('bid_value')) {
+            return back()->withError("Auto bid cannot be higher than the buyout price")->withInput();
+        }
+
         $bid = new Bid;
         // $this->authorize('create', $bid);
 

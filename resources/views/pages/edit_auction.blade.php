@@ -57,13 +57,13 @@
                     <label class="form-check-label font-weight-bold font-size" for="starting_price">
                         Starting Price
                     </label>
-                    <input type="text" id="starting_price" name="starting_price" class="form-control outline-green" value="{{  $auction->starting_price }}" />
+                    <input type="number" id="starting_price" name="starting_price" class="form-control outline-green" value="{{  $auction->starting_price }}" />
                 </div>
                 <div class="col">
                     <label class="form-check-label font-weight-bold font-size" for="buyout_price">
                         Buyout Price
                     </label>
-                    <input type="text" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{  $auction->buyout_price }}" />
+                    <input type="number" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{  $auction->buyout_price }}" />
                 </div>
             </div>
 

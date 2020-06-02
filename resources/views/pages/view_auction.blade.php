@@ -25,8 +25,17 @@
 
             <div class="d-flex flex-column bgColorGrey bid-bar">
                 @if($auction->id_status == 0)
-                <h2 class="text-center mb-3 mx-auto mt-5">{{ $auction->current_price }} €</h2>
-                <h6 class="text-center font-weight-bold" id="countdown" data-id="{{ $countdown }}"></h6>
+                <div class="px-3 w-100">
+                    <h2 class="text-center mb-3 mx-auto mt-5">{{ $auction->current_price }} €</h2>
+                    <div class="d-flex flex-row w-100 justify-content-between">
+                        <h6>Buyout Price: </h6>
+                        <h6 class="font-weight-bold">{{ $auction->buyout_price }} €</h6>
+                    </div>
+                    <div class="d-flex flex-row w-100 justify-content-between">
+                        <h6>Remaining: </h6>
+                        <h6 class="text-center font-weight-bold" id="countdown" data-id="{{ $countdown }}"></h6>
+                    </div>
+                </div>
                 @elseif($auction->id_status == 1)
                 <div class="mb-3 px-3 mt-4 w-100">
                     <h2 class="text-center mb-4">Finished</h2>
@@ -108,11 +117,11 @@
                 <a class="btn btn-green mt-3 mx-3 no-print" href="{{ route('add_report', ['id' => $auction]) }}">Report </a>
 
                 @if($auction->id_status == 0)
-                    @if($add_watchlist)
-                        <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#" >Add to Watchlist</a>
-                    @else
-                        <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 remWatchlist" href="#" >Remove from Watchlist</a>
-                    @endif
+                @if($add_watchlist)
+                <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#">Add to Watchlist</a>
+                @else
+                <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 remWatchlist" href="#">Remove from Watchlist</a>
+                @endif
                 @endif
 
                 @endif

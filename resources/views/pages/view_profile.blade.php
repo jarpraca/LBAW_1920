@@ -45,7 +45,7 @@
         </div>
         @endif
 
-        @if($my_auctions != [] && $my_auctions != null)
+        @if($my_auctions != [] && $my_auctions != null) 
         <div class="collapsible mt-2 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left d-flex flex-row justify-content-between align-items-center" data-toggle="collapse" data-target="#my_auctions" aria-expanded="false" aria-controls="my_auctions">
                 <span class="h5 font-weight-bold">My Auctions</span>
@@ -54,11 +54,12 @@
             </button>
 
             <div class="collapse bgColorGrey" id="my_auctions">
-                @if(sizeof($my_auctions) == 0)
+                @if((sizeof($my_auctions) == 0)  &&  (sizeof($previous_auctions) == 0))
                 <p class="ml-3 mt-3">You still haven't created any auctions </p>
                 @else
                 <div class="d-flex flex-wrap text-left justify-flex-start">
                     @each('partials.card', $my_auctions, 'auction')
+                    @each('partials.card', $previous_auctions, 'auction')
                 </div>
                 @endif
             </div>

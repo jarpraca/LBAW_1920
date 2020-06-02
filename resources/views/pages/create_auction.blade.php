@@ -81,7 +81,7 @@
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Starting Price Help">
                         </a>
                     </div>
-                    <input type="text" id="starting_price" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" />
+                    <input type="number" id="starting_price" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" />
                 </div>
                 <div class="col">
                     <div class="d-flex flex-row">
@@ -92,7 +92,7 @@
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Buyout Price Help">
                         </a>
                     </div>
-                    <input type="text" id="buyout_price" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" />
+                    <input type="number" id="buyout_price" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" />
                 </div>
             </div>
 

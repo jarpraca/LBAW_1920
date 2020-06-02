@@ -501,6 +501,8 @@ CREATE TRIGGER buyout_price_bidded
 
 INSERT INTO users ("name",email,"password") VALUES 
 ('Dante Copeland','demo_admin@fe.up.pt','$2b$10$O.queTOIhP0.7NieNlBXceoTPoFhP5eBaodhAnrnpDNJT/3Vn7pXe'),
+('Christopher Nolan','demo_seller@fe.up.pt', '$2y$10$8HwqtZkcbPVQuW1Uiufe9OJlSzxpTXLjT3i6Li2JRFLWRxJYXmVC2'),
+('Tristan Adams', 'demo_buyer@fe.up.pt', '$2y$10$uk1br9yqDM7s/cUCFzlwieqLv2jMa2TIMrghiX2t7n1yAMzM3aAri'),
 ('Kevin Sandoval','lectus.Nullam.suscipit@senectuset.net','OJU69NCH6XM'),
 ('Nolan Y. Morgan','arcu@auctorodioa.net','PZN13XLL1XF'),
 ('Dean Galloway','ipsum.sodales.purus@Cras.com','JRD25APR5CM'),
@@ -551,7 +553,7 @@ INSERT INTO users ("name",email,"password") VALUES
 ('Chaim O. Parrish','mus@lectusCumsociis.net','ILK34IXW0MZ'),
 ('Lacy X. Wiley','Duis.dignissim@ipsumcursusvestibulum.edu','SJZ34DSG7UY');
 
-INSERT INTO admins (id) VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
+INSERT INTO admins (id) VALUES (1),(4),(5),(6),(7),(8),(9),(10);
 
 INSERT INTO skills (TYPE) VALUES 
     ('Climbs'),
@@ -795,9 +797,9 @@ INSERT INTO watchlists (id_auction,id_buyer) VALUES
 
 
 INSERT INTO blocks (end_date,id_admin,id_user) VALUES 
-    ('2020-07-27',3,40),
-    ('2020-06-23',3,41),
-    ('2020-07-15',3,42);
+    ('2020-07-27',4,40),
+    ('2020-06-23',4,41),
+    ('2020-07-15',4,42);
 
 INSERT INTO features (id_auction,id_skill) VALUES 
     (48,6),
