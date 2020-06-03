@@ -22,7 +22,6 @@ class AdminController extends Controller
 
     public function show()
     {
-        // if ($this->authorize('show', Auth::user()))
         if (Admin::find(Auth::id()) == null)
             return redirect()->route('homepage');
 
@@ -30,7 +29,7 @@ class AdminController extends Controller
             ->leftJoin('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
             ->orderBy('s.name', 'asc')
-            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id'])
+            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id', 'reports.description AS description'])
             ->paginate(10);
 
         $admins = DB::table('admins')->select(['id']);
@@ -50,7 +49,7 @@ class AdminController extends Controller
             ->leftJoin('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
             ->orderBy('s.name', 'asc')
-            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id'])
+            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id', 'reports.description AS description'])
             ->paginate(10);
 
         return view('partials.reports', ['reports' => $reports])->render();
@@ -77,8 +76,6 @@ class AdminController extends Controller
             if ($report == null)
                 return -1;
 
-            // $this->authorize('update');
-
             if ($decision == "1")
                 $decision = 1;
             else if ($decision == "2")
@@ -90,7 +87,7 @@ class AdminController extends Controller
             return $report->id;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return $exception->getMessage();
+            return $exception->__toString();
         }
     }
 
@@ -103,10 +100,13 @@ class AdminController extends Controller
             $blocks->end_date = Carbon::now()->addMonth()->toDateString();
             $blocks->save();
 
-            return $id;
+            $response['id'] = $id;
+            $response['user'] = User::find($id)->name;
+
+            return json_encode($response);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return $exception->getMessage();
+            return $exception->__toString();
         }
     }
 
@@ -121,10 +121,13 @@ class AdminController extends Controller
             $user->blocked = FALSE;
             $user->save();
 
-            return $id;
+            $response['id'] = $id;
+            $response['user'] = $user->name;
+
+            return json_encode($response);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return $exception->getMessage();
+            return $exception->__toString();
         }
     }
 
@@ -144,7 +147,7 @@ class AdminController extends Controller
             return $id;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return $exception->getMessage();
+            return $exception->__toString();
         }
     }
 }

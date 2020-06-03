@@ -81,23 +81,6 @@ class RegisterController extends Controller
         $user->password =  bcrypt($data['password']);
         $user->save();
 
-        // if(Input::hasfile($data['profile_picture'])){
-        //     $image = Input::file($data['profile_picture']);
-        //     $name = Str::slug($data['name']) . '_' . time();
-        //     $folder = '/uploads/profile_images/';
-        //     $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
-        //     $this->uploadOne($image, $folder, 'public', $name);
-
-        //     $image = new Image();
-        //     $image->url = $filePath;
-        //     $image->save();
-
-        //     $profile_photo = new ProfilePhoto();
-        //     $profile_photo->id_user = $user->id;
-        //     $profile_photo->id = $image->id;
-        //     $profile_photo->save();
-        // }
-
         return $user;
     }
 }

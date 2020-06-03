@@ -11,30 +11,24 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class BidCreated
+class BidCreated implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+  use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $bid;
+  public $message;
 
-    /**
-     * Create a new event instance.
-     *
-     * @param  \App\Bid  $bid
-     * @return void
-     */
-    public function __construct(Bid $bid)
-    {
-        $this->bid = $bid;
-    }
+  public function __construct($message)
+  {
+      $this->message = $message;
+  }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+  public function broadcastOn()
+  {
+      return ['my-channel'];
+  }
+
+  public function broadcastAs()
+  {
+      return 'my-event';
+  }
 }

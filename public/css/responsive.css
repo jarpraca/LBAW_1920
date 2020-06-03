@@ -1,7 +1,6 @@
 @media(max-width:1220px){
     .imgAuction {
         width: 100vw !important;
-        background-color: aqua;
         display: block;
     }
 
@@ -14,6 +13,14 @@
 @media(max-width: 1100px) {
     .category-card {
         width: 50%;
+    }
+
+    #alert_admin {
+        position: static;
+        text-align: center;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .popup .popuptext {
@@ -42,11 +49,10 @@
 @media(max-width: 991px) {
     .navbar-search {
         width: 100% !important;
-        justify-content: space-between !important;
     }
 
     .navbar-search input {
-        width: 75% !important;
+        width: 50% !important;
     }
 
     .navbar-collapse {
@@ -132,7 +138,7 @@
         margin-bottom: 1em;
     }
 
-    .image_edit {
+    .image_delete {
         height: 50px;
         width: 50px;
     }
@@ -158,6 +164,7 @@
     .font-size {
         font-size: 0.8em;
     }
+
 }
 
 @media(max-width: 415px){
@@ -173,16 +180,6 @@
 
     #login_btn, #signup_btn{
         top: 75% !important;
-    }
-}
-
-@media (max-width: 395px){
-    #navbarSupportedContent > form{
-        display: flex;
-        flex-direction: column;
-    }
-    #navbarSupportedContent > form > input{
-        width: 100%!important;
     }
 }
 
@@ -221,7 +218,7 @@
 
 @media(max-height: 1200px){
     #signup_bg #main{
-        height: 450px !important;
+        height: 550px !important;
     }
 }
 

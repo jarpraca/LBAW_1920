@@ -32,21 +32,14 @@ DROP TYPE IF EXISTS dev_stage;
 DROP TYPE IF EXISTS color;
 DROP TYPE IF EXISTS report_status_name;
 DROP TYPE IF EXISTS auction_status_name;
+DROP TYPE IF EXISTS notification_type;
 
-DROP TYPE IF EXISTS skill_name;
-DROP TYPE IF EXISTS category_name;
-DROP TYPE IF EXISTS shipping;
-DROP TYPE IF EXISTS payment;
-DROP TYPE IF EXISTS dev_stage;
-DROP TYPE IF EXISTS color;
-DROP TYPE IF EXISTS report_status_name;
-DROP TYPE IF EXISTS auction_status_name;
-
-DROP INDEX IF EXISTS user_email;
-DROP INDEX IF EXISTS search_auction;
+DROP INDEX IF EXISTS ix_auctions_tsv;
 DROP INDEX IF EXISTS admin_search;
-DROP INDEX IF EXISTS auction_id;
 DROP INDEX IF EXISTS notification_id;
+DROP INDEX IF EXISTS watchlists_id;
+DROP INDEX IF EXISTS auction_id;
+DROP INDEX IF EXISTS bids_id;
 
 DROP TRIGGER IF EXISTS create_buyer ON users;
 DROP TRIGGER IF EXISTS create_seller ON users;
@@ -59,6 +52,7 @@ DROP TRIGGER IF EXISTS update_rating ON auctions;
 DROP TRIGGER IF EXISTS remove_watchlists ON auctions;
 DROP TRIGGER IF EXISTS block_user ON blocks;
 DROP TRIGGER IF EXISTS buyout_price_bidded ON bids;
+DROP TRIGGER IF EXISTS full_text_search ON auctions;
 
 DROP FUNCTION IF EXISTS create_buyer();
 DROP FUNCTION IF EXISTS create_seller();
@@ -71,6 +65,8 @@ DROP FUNCTION IF EXISTS update_rating();
 DROP FUNCTION IF EXISTS remove_watchlists();
 DROP FUNCTION IF EXISTS block_user();
 DROP FUNCTION IF EXISTS buyout_price_bidded();
+DROP FUNCTION IF EXISTS full_text_search();
+
 -----------------------------------------
 -- TYPES
 ----------------------------------------- 
@@ -82,6 +78,7 @@ CREATE TYPE dev_stage AS ENUM ('Baby', 'Child', 'Teen', 'Adult', 'Elderly');
 CREATE TYPE category_name AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', 'Birds', 'Amphibians');
 CREATE TYPE report_status_name as ENUM('Pending', 'Approved', 'Denied');
 CREATE TYPE auction_status_name as ENUM('Ongoing', 'Finished', 'Cancelled');
+CREATE TYPE notification_type as ENUM('winner', 'bid_surpassed', 'ending', 'ended', 'payment_shipping', 'rate');
 
 -----------------------------------------
 -- TABLES
@@ -172,8 +169,9 @@ CREATE TABLE auctions
     id_payment_method integer REFERENCES payment_methods (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_shipping_method integer REFERENCES shipping_methods (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_seller integer REFERENCES sellers (id) ON UPDATE CASCADE ON DELETE SET NULL,
-    id_winner integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    id_winner integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL DEFAULT NULL,
     id_status integer NOT NULL REFERENCES auction_status (id) ON UPDATE CASCADE,
+    tsv  tsvector,
     CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
     CONSTRAINT "current_price_ck" CHECK (current_price >= starting_price),
     CONSTRAINT "ending_date_ck" CHECK ((ending_date >= 'now'::timestamp) OR (id_status = 1 OR id_status = 2))
@@ -194,6 +192,7 @@ CREATE TABLE notifications
     id SERIAL PRIMARY KEY,
     "message" text NOT NULL,
     "read" boolean DEFAULT FALSE,
+    TYPE notification_type NOT NULL,
     id_auction integer NOT NULL REFERENCES auctions (id) ON UPDATE CASCADE ON DELETE CASCADE,
     id_buyer integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -277,8 +276,7 @@ CREATE TABLE password_resets (
 -----------------------------------------
 -- INDEXES
 -----------------------------------------
-
--- CREATE INDEX search_auction ON auctions USING GIST (to_tsvector('english', name || ' ' || species_name || ' ' || description ));
+CREATE INDEX ix_auctions_tsv ON auctions USING GIN(tsv);
 
 CREATE INDEX admin_search ON users USING GIST (to_tsvector('english', name || ' ' || email));
 
@@ -297,16 +295,33 @@ CREATE INDEX bids_id ON bids USING hash(id_buyer);
 CREATE FUNCTION notify_winner() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF(NEW.id_status <> OLD.id_status)
+    IF(NEW.id_status <> OLD.id_status AND NEW.id_status = 1)
     THEN
-        INSERT INTO notifications ("message", "read", id_auction, id_buyer)
-        SELECT 'You won an auction!', FALSE, info.id_auction, info.id_buyer
-        FROM (SELECT value, id_auction, id_buyer
+        INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
+        SELECT CONCAT('Congratulations! You won ', NEW.species_name, '! Click here to get your animal!'), FALSE, 'winner', info.id_auction, info.id_buyer
+        FROM (SELECT id_auction, id_buyer
                 FROM  bids
                 WHERE id_auction = NEW.id
                 ORDER BY value DESC 
                 LIMIT 1
             ) AS info;
+
+        UPDATE auctions 
+            SET id_winner = (SELECT id_buyer
+                FROM  bids
+                WHERE id_auction = NEW.id
+                ORDER BY value DESC 
+                LIMIT 1
+            )
+            WHERE id = NEW.id;
+
+        INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
+        SELECT CONCAT('Ohh! ', NEW.species_name, '''s auction ended! Try again next time!'), FALSE, 'ended', NEW.id, id_user.id
+        FROM 
+            (SELECT DISTINCT id_buyer AS id FROM bids WHERE id_auction = NEW.id AND id_buyer != (SELECT id_winner FROM auctions WHERE id = NEW.id)
+            UNION
+            SELECT DISTINCT id_buyer AS id FROM watchlists WHERE id_auction = NEW.id AND id_buyer != (SELECT id_winner FROM auctions WHERE id = NEW.id)
+            ) AS id_user;
     END IF;
     RETURN NULL;
 END
@@ -361,7 +376,7 @@ BEGIN
         SET rating = (
             SELECT AVG(rating_seller)
             FROM auctions
-            WHERE auctions.id = NEW.id AND auctions.rating_seller >= 1 AND auctions.rating_seller <= 5
+            WHERE auctions.id_seller = NEW.id_seller AND auctions.rating_seller >= 1 AND auctions.rating_seller <= 5
         )
         WHERE sellers.id = NEW.id_seller;
     END IF;
@@ -378,16 +393,23 @@ CREATE TRIGGER update_rating
 CREATE FUNCTION send_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF EXISTS(SELECT * FROM bids WHERE id_auction = NEW.id_auction)
+    IF EXISTS(SELECT * FROM bids WHERE id_auction = NEW.id_auction) 
+        AND 
+        NEW.id_buyer != (SELECT id_buyer FROM bids WHERE id_auction = NEW.id_auction ORDER BY value DESC LIMIT 1)
     THEN 
-        INSERT INTO notifications ("message", "read", id_auction, id_buyer)
-        SELECT 'Your bid has been surpassed', FALSE, info.id_auction, info.id_buyer
+        INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
+        SELECT CONCAT('Your bid on ', auction.species_name,' has been surpassed!'), FALSE, 'bid_surpassed', info.id_auction, info.id_buyer
         FROM (SELECT value, id_auction, id_buyer
                 FROM  bids
                 WHERE id_auction = NEW.id_auction
                 ORDER BY value DESC 
                 LIMIT 1
-            ) AS info;
+            ) AS info,
+            (SELECT species_name
+                FROM  auctions
+                WHERE id = NEW.id_auction
+                LIMIT 1
+            ) AS auction;
     END IF;
 	RETURN NEW;
 END
@@ -498,6 +520,25 @@ CREATE TRIGGER buyout_price_bidded
     AFTER INSERT ON bids
 	FOR EACH ROW
     EXECUTE PROCEDURE buyout_price_bidded();
+
+
+CREATE FUNCTION full_text_search() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE auctions SET tsv =
+        setweight(to_tsvector(coalesce(species_name,'')), 'A') ||
+        setweight(to_tsvector(coalesce("name",'')), 'B') || 
+        setweight(to_tsvector(coalesce("description",'')), 'C')
+    WHERE id = NEW.id;
+	RETURN NEW;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER full_text_search
+    AFTER INSERT ON auctions
+	FOR EACH ROW
+    EXECUTE PROCEDURE full_text_search();
 
 INSERT INTO users ("name",email,"password") VALUES 
 ('Dante Copeland','demo_admin@fe.up.pt','$2b$10$O.queTOIhP0.7NieNlBXceoTPoFhP5eBaodhAnrnpDNJT/3Vn7pXe'),
@@ -908,12 +949,3 @@ INSERT INTO animal_photos (id,id_auction) VALUES
     (18,48),
     (19,31),
     (20,30);
-
-ALTER TABLE auctions ADD COLUMN tsv tsvector;
-
-UPDATE auctions SET tsv =
-setweight(to_tsvector(coalesce(species_name,'')), 'A') ||
-setweight(to_tsvector(coalesce("name",'')), 'B') || 
-setweight(to_tsvector(coalesce("description",'')), 'C');
-
-CREATE INDEX ix_auctions_tsv ON auctions USING GIN(tsv);

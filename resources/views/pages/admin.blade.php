@@ -3,6 +3,7 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
+<div id="alert_admin" class="alert mt-5 mx-3 alert-success fade">Silvia J. Rocha blocked!</div>
 
 <section class="mainBody mb-3">
 
@@ -23,13 +24,6 @@
     <div id="users" class="card my-5">
         <div class="card-header border-transparent">
             <h3 class="card-title text-dark">Block and Delete Users</h3>
-
-            <form class="form-inline ml-3 py-2 my-lg-0">
-                <label style="visibility:hidden" for="search"></label>
-                <input class="form-control w-50 mr-sm-2" type="search" placeholder="Search" id="search" aria-label="Search">
-                <button class="btn btn-green2 my-2 my-sm-0" type="submit">Search</button>
-            </form>
-
         </div>
         <!-- /.card-header -->
         <div class="users card-body p-0">

@@ -89,11 +89,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Seller::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -115,7 +110,7 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 60,
+            'expire' => 1500,
         ],
     ],
 

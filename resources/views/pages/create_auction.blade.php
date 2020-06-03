@@ -18,38 +18,41 @@
                 <h1 class="mt-3 colorGreen mx-auto">Create Your Auction</h1>
             </div>
             @if (session('error'))
-            <div class="alert alert-danger my-4">{{ session('error') }}</div>
+            <div class="alert alert-danger my-4">
+                <i class='fas fa-exclamation-triangle' style='font-size:24px'></i>
+                <span>{{ session('error') }}</span>
+            </div>
             @endif
             <div class="d-flex flex-wrap mt-3">
                 <div class="col-12 col-sm-6">
                     <div class="d-flex flex-row">
-                        <label class="form-check-label font-weight-bold" for="species_name">Species Name</label>
+                        <label class="form-check-label font-weight-bold" for="species_name">Species Name <span class="text-danger">* </span></label>
                         <a class="d-flex justify-content-center align-items-center ml-3" data-toggle="tooltip" data-placement="right" title="Common name of the animal's species">
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Species Help">
                         </a>
                     </div>
-                    <input type="text" id="species_name" name="species_name" class="form-control outline-green mx-0" placeholder="E.g.: Guinea Monkey" value="{{ old('species_name') }}" />
+                    <input type="text" id="species_name" name="species_name" class="form-control outline-green mx-0" placeholder="E.g.: Guinea Monkey" value="{{ old('species_name') }}" required />
                 </div>
                 <div class="col-12 col-sm-6 mt-4 mt-sm-0">
                     <div class="d-flex flex-row">
-                        <label class="form-check-label font-weight-bold" for="name"> Name </label>
+                        <label class="form-check-label font-weight-bold" for="name"> Name <span class="text-danger">* </span></label>
                         <a class="d-flex justify-content-center align-items-center ml-3" data-toggle="tooltip" data-placement="right" title="Name you've given the animal">
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Name Help">
                         </a>
                     </div>
-                    <input type="text" id="name" name="name" class="form-control outline-green mx-0" placeholder="E.g.: Albert" value="{{ old('name') }}" />
+                    <input type="text" id="name" name="name" class="form-control outline-green mx-0" placeholder="E.g.: Albert" value="{{ old('name') }}" required />
                 </div>
             </div>
 
             <div class="d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="form-check-label font-weight-bold" for="description"> Description </label>
-                    <textarea name="description" id="description" class="form-control borderColorGreen w-100" rows="7"></textarea>
+                    <label class="form-check-label font-weight-bold" for="description"> Description <span class="text-danger">* </span></label>
+                    <textarea name="description" id="description" class="form-control borderColorGreen w-100" rows="7" required></textarea>
                 </div>
             </div>
             <div class="form-group d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="form-check-label font-weight-bold" for="category"> Select Category </label>
+                    <label class="form-check-label font-weight-bold" for="category"> Select Category <span class="text-danger">* </span></label>
                     <select name="category" id="category" class="outline-green form-control" required>
                         <option value="" hidden>Select Category</option>
                         <option value="1">Mammal</option>
@@ -62,12 +65,12 @@
                 </div>
                 <div class="col">
                     <div class="d-flex flex-row">
-                        <label class="form-check-label font-weight-bold" for="age">Age</label>
+                        <label class="form-check-label font-weight-bold" for="age">Age <span class="text-danger">* </span></label>
                         <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="Age of the animal, must specify the weeks/months/years">
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Age Help">
                         </a>
                     </div>
-                    <input type="text" id="age" name="age" class="form-control outline-green" placeholder="E.g.: 3 years" value="{{ old('age') }}" />
+                    <input type="text" id="age" name="age" class="form-control outline-green" placeholder="E.g.: 3 years" value="{{ old('age') }}" required />
                 </div>
             </div>
 
@@ -75,24 +78,24 @@
                 <div class="col">
                     <div class="d-flex flex-row">
                         <label class="form-check-label font-weight-bold" for="starting_price">
-                            Starting Price
+                            Starting Price <span class="text-danger">* </span>
                         </label>
                         <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="Minimum value for the first bid">
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Starting Price Help">
                         </a>
                     </div>
-                    <input type="number" id="starting_price" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" />
+                    <input type="number" min="0" id="starting_price" name="starting_price" class="form-control outline-green" placeholder="E.g.: 300€" value="{{ old('starting_price') }}" required />
                 </div>
                 <div class="col">
                     <div class="d-flex flex-row">
                         <label class="form-check-label font-weight-bold" for="buyout_price">
-                            Buyout Price
+                            Buyout Price <span class="text-danger">* </span>
                         </label>
                         <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="Minimum value to instantly purchase an animal">
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Buyout Price Help">
                         </a>
                     </div>
-                    <input type="number" id="buyout_price" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" />
+                    <input type="number" min="0" id="buyout_price" name="buyout_price" class="form-control outline-green" placeholder="E.g.: 1000€" value="{{ old('buyout_price') }}" required />
                 </div>
             </div>
 
@@ -162,7 +165,7 @@
 
             <div class="d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold" for="color"> Select Color </label>
+                    <label class="font-weight-bold" for="color"> Select Color <span class="text-danger">* </span></label>
                     <select id="color" name="color" class="outline-green form-control" required>
                         <option value="" hidden>Select Color</option>
                         <option value="1">Blue</option>
@@ -179,7 +182,7 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold" for="dev_stage"> Select Dev. Stage </label>
+                    <label class="font-weight-bold" for="dev_stage"> Select Dev. Stage <span class="text-danger">* </span></label>
                     <select name="dev_stage" id="dev_stage" class="outline-green form-control" required>
                         <option value="" hidden>Select Development Stage</option>
                         <option value="1">Baby</option>
@@ -193,18 +196,18 @@
 
             <div class="d-flex flex-wrap mt-4">
                 <div class="col-12 col-sm-6">
-                <div class="d-flex flex-row">
-                    <label for="date-input" class="form-check-label font-weight-bold">Ending Date</label>
+                    <div class="d-flex flex-row">
+                        <label for="date-input" class="form-check-label font-weight-bold">Ending Date <span class="text-danger">* </span></label>
                         <a class="d-flex justify-content-center align-items-center ml-2" data-toggle="tooltip" data-placement="right" title="If you're using an older browser, please enter the date and time in this format: YYYY/MM/DD, HH:MM AM/PM">
                             <img src="{{asset('assets/help_icon.png')}}" width="15" height="15" alt="Species Help">
                         </a>
                     </div>
-                    <input class="form-control outline-green" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}" step="" id="date-input" name="ending_date" placeholder="2021/06/08, 11:00 AM" required>
+                    <input class="form-control outline-green" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}" id="date-input" name="ending_date" required>
                 </div>
                 <div class="col-12 col-sm-6 mt-4 mt-sm-0">
-                    <label class="font-weight-bold"> Images </label>
+                    <label class="form-check-label font-weight-bold"> Images <span class="text-danger">* </span></label>
                     <div class="custom-file">
-                        <input id="animal_picture" type="file" class="form-control" name="animal_picture">
+                        <input id="animal_picture" type="file" class="form-control" name="animal_picture" required>
                         <label class="custom-file-label" for="animal_picture" id="animal_picture_label">Add Photo</label>
                     </div>
                 </div>

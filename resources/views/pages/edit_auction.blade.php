@@ -14,28 +14,31 @@
                 <h1 class="mt-3 colorGreen mx-auto">Edit Your Auction</h1>
             </div>
             @if (session('error'))
-            <div class="alert alert-danger my-4">{{ session('error') }}</div>
+            <div class="alert alert-danger my-4">
+                <i class='fas fa-exclamation-triangle' style='font-size:24px'></i>
+                <span>{{ session('error') }}</span>
+            </div>
             @endif
             <div class="d-flex flex-wrap mt-3">
                 <div class="col-12 col-sm-6">
-                    <label for="species_name"> Species Name </label>
-                    <input type="text" name="species_name" id="species_name" class="form-control outline-green mx-0" value="{{  $auction->species_name }}" />
+                    <label for="species_name"> Species Name <span class="text-danger">* </span></label>
+                    <input type="text" name="species_name" id="species_name" class="form-control outline-green mx-0" value="{{  $auction->species_name }}" required />
                 </div>
                 <div class="col-12 col-sm-6">
-                    <label for="name"> Name </label>
-                    <input type="text" id="name" name="name" class="form-control outline-green mx-0" value="{{  $auction->name }}" />
+                    <label for="name"> Name <span class="text-danger">* </span></label>
+                    <input type="text" id="name" name="name" class="form-control outline-green mx-0" value="{{  $auction->name }}" required />
                 </div>
             </div>
 
             <div class="d-flex flex-row">
                 <div class="col">
-                    <label for="description" class="mt-3"> Description </label>
-                    <textarea name="description" id="description" class="form-control borderColorGreen w-100" rows="7">{{ $auction->description }}</textarea>
+                    <label for="description" class="mt-3"> Description <span class="text-danger">* </span></label>
+                    <textarea name="description" id="description" class="form-control borderColorGreen w-100" rows="7" required>{{ $auction->description }}</textarea>
                 </div>
             </div>
             <div class="form-group d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold font-size" for="category"> Select Category </label>
+                    <label class="font-weight-bold font-size" for="category"> Select Category <span class="text-danger">* </span></label>
                     <select name="category" id="category" class="outline-green form-control" required>
                         <option value="" hidden>Select Category</option>
                         <option value="1" @if($auction->id_category == '1') selected @endif >Mammal</option>
@@ -47,23 +50,23 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold font-size" for="age"> Age </label>
-                    <input type="text" name="age" id="age" class="form-control outline-green" value="{{  $auction->age }}" />
+                    <label class="font-weight-bold font-size" for="age"> Age <span class="text-danger">* </span></label>
+                    <input type="text" name="age" id="age" class="form-control outline-green" value="{{  $auction->age }}" required />
                 </div>
             </div>
 
             <div class="d-flex flex-row mt-4">
                 <div class="col">
                     <label class="form-check-label font-weight-bold font-size" for="starting_price">
-                        Starting Price
+                        Starting Price <span class="text-danger">* </span>
                     </label>
-                    <input type="number" id="starting_price" name="starting_price" class="form-control outline-green" value="{{  $auction->starting_price }}" />
+                    <input type="number" min="0" id="starting_price" name="starting_price" class="form-control outline-green" value="{{ $auction->starting_price }}" @if(!$starting_price) disabled @else required @endif/>
                 </div>
                 <div class="col">
                     <label class="form-check-label font-weight-bold font-size" for="buyout_price">
-                        Buyout Price
+                        Buyout Price <span class="text-danger">* </span>
                     </label>
-                    <input type="number" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{  $auction->buyout_price }}" />
+                    <input type="number" min="{{ $highest_bid }}" name="buyout_price" id="buyout_price" class="form-control outline-green" value="{{ $auction->buyout_price }}" required/>
                 </div>
             </div>
 
@@ -133,7 +136,7 @@
 
             <div class="d-flex flex-row mt-3">
                 <div class="col">
-                    <label class="font-weight-bold font-size" for="color"> Select Color </label>
+                    <label class="font-weight-bold font-size" for="color"> Select Color <span class="text-danger">* </span></label>
                     <select id="color" name="color" class="outline-green form-control" required>
                         <option value="" hidden>Select Color</option>
                         <option value="1" @if($auction->id_main_color == '1') selected @endif >Blue</option>     
@@ -150,7 +153,7 @@
                     </select>
                 </div>
                 <div class="col">
-                    <label class="font-weight-bold font-size" for="dev_stage"> Select Development Stage </label>
+                    <label class="font-weight-bold font-size" for="dev_stage"> Select Development Stage <span class="text-danger">* </span></label>
                     <select name="dev_stage" id="dev_stage" class="outline-green form-control" required>
                         <option value="" hidden>Select Development Stage</option>
                         <option value="1" @if($auction->id_dev_stage == '1') selected @endif >Baby</option>
@@ -162,11 +165,11 @@
                 </div>
             </div>
             <div class="col-12 col-sm-6 mt-3">
-                <label for="date-input" class="font-weight-bold font-size">Date</label>
-                <input class="form-control outline-green" type="datetime-local" value="{{ $auction->ending_date }}" min="{{ now()->format('Y-m-d\TH:i') }}" id="date-input" name="ending_date">
+                <label for="date-input" class="font-weight-bold font-size">Ending Date <span class="text-danger">* </span></label>
+                <input class="form-control outline-green" type="datetime-local" value="{{ (new DateTime($auction->ending_date))->format('Y-m-d\TH:i') }}" min="{{ now()->format('Y-m-d\TH:i') }}" id="date-input" name="ending_date" required>
             </div>
             <div class="col-12 mt-3">
-                <label class="font-weight-bold font-size"> Images </label>
+                <label class="font-weight-bold font-size"> Images <span class="text-danger">* </span></label>
                 <div class="d-flex flex-row">
                     @isset($photo)
                     <a href="#" class="image_delete w-25 mr-5" data-id="{{ $photo->id }}">
@@ -174,7 +177,7 @@
                     </a>
                     @endisset
                     <div class="custom-file">
-                        <input id="animal_picture" type="file" class="form-control" name="animal_picture">
+                        <input id="animal_picture" type="file" class="form-control" name="animal_picture" required>
                         <label class="custom-file-label" for="animal_picture" id="animal_picture_label">Add Photo</label>
                     </div>
                 </div>

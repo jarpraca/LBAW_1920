@@ -4,7 +4,7 @@
 
 @section('content')
 
-<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:title" content="BidMonkeys - Your animal auction website" />
 <meta property="og:description" content="Come back, there's lots more animals waiting..." />
 <meta property="og:image" content="{{asset('assets/logo.png')}}" />
 <meta property="og:locale" content="en_GB" />
@@ -16,17 +16,17 @@
 
             <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
-                <label style="display:none" for="email"></label>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
+                <label class="form-check-label ml-1 mt-3" for="email">Email Address <span class="text-danger">* </span></label>
+                <input id="email" type="email" name="email"  class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
                 @if ($errors->has('email'))
-                <span class="error text-danger">
+                <span class="invalid-feedback d-block">
                     {{ $errors->first('email') }}
                 </span>
                 @endif
-                <label style="display:none" for="password"></label>
-                <input id="password" type="password" name="password" placeholder="Password" required>
+                <label class="form-check-label  ml-1 mt-3" for="password">Password <span class="text-danger">* </span></label>
+                <input id="password" type="password" name="password"  class="form-control @error('password') is-invalid @enderror" placeholder="Password" required>
                 @if ($errors->has('password'))
-                <span class="error text-danger">
+                <span class="invalid-feedback d-block">
                     {{ $errors->first('password') }}
                 </span>
                 @endif
@@ -51,21 +51,21 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="d-flex justify-content-around align-items-center">
-                        
+
                         <button class="btn btn-outline-black ml-0" onclick="fb_login();">
                             <fb:login-button class="d-none" scope="public_profile,email" onlogin="checkLoginState();">
                             </fb:login-button>
                             Sign up with&nbsp;
                             <i class="fab fa-facebook-f"></i>
                         </button>
-                        
+
 
                         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                        
+
                     </div>
-                </div>
+                </div> -->
 
                 <div class="d-flex mt-2 flex-row justify-content-center align-items-center">
                     <p>Don't have an account?&nbsp;</p>

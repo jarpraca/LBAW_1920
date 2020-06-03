@@ -64,19 +64,23 @@
             <form class="navbar-search form-inline my-2 my-lg-0" method="GET" action="{{ route('search') }}">
                 <label style="display:none" for="search"></label>
                 <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
-                <button type="submit" class="btn btn-green2 mt-2 mt-sm-0">Search</button>
+                <button type="submit" class="btn btn-green2 mt-sm-0">Search</button>
             </form>
             @endif
             <ul class="navbar-nav align-items-center">
                 @auth
-                <li class="nav-item">
-                    <div class="btn btn-green mx-auto p-2 my-2 my-sm-0 popup" data-toggle="modal" data-target="#exampleModal">
-                        <img src="{{asset('assets/bell.png')}}" height="30" alt="Notifications">
-                    </div>
-                </li>
 
                 @inject('admin', 'App\Admin')
                 @if($admin::find(Auth::user()->id) == null)
+                <li class="nav-item dropdown">
+                    <a id="notification_bell" class="btn btn-green mx-auto p-2 my-2 my-sm-0" role="button" data-toggle="dropdown" data-id="{{Auth::id()}}" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{asset('assets/bell.png')}}" height="30" alt="Notifications">
+                    </a>
+
+                    <div id="notifications" class="dropdown-menu dropdown-menu-right" aria-labelledby="notification_bell">
+
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link btn mx-sm-2 px-2 {!! Route::currentRouteName() == 'create_auction' ? 'btn-darkGreen' : 'btn-add-auction' !!}" href="/auctions">+ Add Auction</a>
                 </li>
@@ -108,18 +112,19 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="exampleModal" role="dialog" aria-hidden="true">
+    <!-- Modal PaymentShipping -->
+    <div class="modal fade" id="payment_shipping_modal" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content mx-auto">
                 <div class="modal-header">
-                    <h2 class="mt-3">Auction Name</h2>
+                    <h2 class="mt-3">Choose Methods For Auction</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group ml-3 mr-3 mt-3">
-                        <label class="text-left" for="pay_method">Payment Method</label>
+                        <label class="text-left" for="pay_method">Payment Method <span class="text-danger">* </span></label>
                         <select id="pay_method" name="categories" class="outline-green form-control" required>
                             <option value="" selected hidden>Choose payment method</option>
                             <option value="1">Debit Card</option>
@@ -128,7 +133,7 @@
                     </div>
 
                     <div class="form-group ml-3 mr-3 mt-3">
-                        <label class="text-left" for="ship_method">Shipping Method</label>
+                        <label class="text-left" for="ship_method">Shipping Method <span class="text-danger">* </span></label>
                         <select id="ship_method" name="categories" class="outline-green form-control" required>
                             <option value="" selected hidden>Choose shipping method</option>
                             <option value="1">Standard Mail</option>
@@ -137,8 +142,39 @@
                         </select>
                     </div>
 
+                    <div id="alert_method" class="alert my-4 mx-3" hidden></div>
+
                     <div class="modal-footer">
-                        <a id="method_button" class="btn btn-green2" data-dismiss="modal">Submit</a>
+                        <button class="btn btn-secondary text-white" id="method_modal_cancel" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success text-white" id="method_button">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Rate -->
+    <div class="modal fade" id="rate_modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content mx-auto">
+                <div class="modal-header">
+                    <h2 class="mt-3">Rate Auction</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group ml-3 mr-3 mt-3">
+                        <label class="text-left" for="rating_value">Rate</label>
+                        <input type="number" min="1" max="5" id="rating_value" name="rating_value" class="form-control outline-green" placeholder="E.g.: 4" />
+                    </div>
+
+                    <div id="alert_rate" class="alert my-4 mx-3" hidden></div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary text-white" id="rate_modal_cancel" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success text-white" id="rate_button">Submit</button>
                     </div>
 
                 </div>

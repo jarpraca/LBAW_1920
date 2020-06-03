@@ -29,8 +29,6 @@ class ImageController extends Controller
 
             $photo = Image::find($id);
 
-            // $this->authorize('deleteAnimalPhoto', Auction::findOrFail($animal_photo->id_auction));
-
             $this->deleteOne($photo->url);
             $photo->delete();
             return $photo;
@@ -38,8 +36,6 @@ class ImageController extends Controller
             $profile_photo->delete();
 
             $photo = Image::find($id);
-
-            // $this->authorize('deleteAnimalPhoto', Auction::findOrFail($animal_photo->id_auction));
 
             $this->deleteOne($photo->url);
             $photo->delete();

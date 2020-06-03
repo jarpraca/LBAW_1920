@@ -14,7 +14,6 @@ class AdminPolicy
     public function show(User $user)
     {
         // Only an admin can view the admin page
-        // return TRUE;
         return Admin::find(Auth::id()) == null;
     }
 

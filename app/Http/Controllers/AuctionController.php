@@ -14,14 +14,19 @@ use App\Auction;
 use App\User;
 use App\Admin;
 use App\AnimalPhoto;
+use App\Bid;
 use App\Image;
 use App\Feature;
 use App\Report;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
-use \stdClass;
 
+use App\Http\Controllers\Controller;
+use App\Notification;
+use App\Seller;
 
 class AuctionController extends Controller
 {
@@ -41,11 +46,13 @@ class AuctionController extends Controller
         if ($auction == null)
             return redirect()->route('homepage');
 
-        $seller = User::find($auction->id_seller);
+        $seller = Seller::find($auction->id_seller);
         if ($seller == null) {
             $seller = new stdClass();
             $seller->name = "Deleted User";
             $seller->rating = "0";
+        } else {
+            $seller->name = User::find($auction->id_seller)->name;
         }
 
         $seller_photo_id = DB::table('profile_photos')->where('id_user', $auction->id_seller)->first();
@@ -72,7 +79,7 @@ class AuctionController extends Controller
             $role = "user";
             $admin = DB::table('admins')->where('id', Auth::user()->id)->first();
             $check_watchlists = Watchlist::where('id_auction', $id)->where('id_buyer', Auth::id())->first();
-            // $check_watchlists = DB::table('watchlists')->where('id_auction', $id)->where('id_buyer', Auth::user()->id)->get();
+
             if ($check_watchlists != null)
                 $add_watchlist = false;
             else
@@ -94,23 +101,53 @@ class AuctionController extends Controller
 
         DB::commit();
 
-        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history, 'add_watchlist' => $add_watchlist,  'countdown' => $countdown]);
+        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'add_watchlist' => $add_watchlist, 'bidding_history' => $bidding_history, 'countdown' => $countdown]);
+    }
+
+    public function biddingHistory($id)
+    {
+        $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
+        return $bidding_history;
+    }
+
+
+    public function topBids($id)
+    {
+        $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
+        return $last_bids;
     }
 
     public function showEditForm($id)
     {
         $auction = Auction::find($id);
 
+        if ($auction == null)
+            return redirect()->route('homepage');
+
         if (Auth::id() != $auction->id_seller)
             return redirect()->route('homepage');
+
+        if ($auction->id_status != 0)
+            return redirect()->route('homepage');
+
+        $bids = Bid::where('id_auction', $id)->get();
+
+        if (sizeof($bids) == 0) {
+            $starting_price = true;
+            $highest_bid = $auction->starting_price;
+        } else {
+            $starting_price = false;
+            $highest_bid = Bid::where('id_auction', $id)->orderBy('value', 'desc')->limit(1)->get();
+            $highest_bid = $highest_bid[0]->value;
+        }
 
         $photo = DB::table('animal_photos')->where('id_auction', $auction->id)->first();
 
         if (!empty($photo)) {
             $image = Image::find($photo->id);
-            return view('pages.edit_auction', ['auction' => $auction, 'photo' => $image]);
+            return view('pages.edit_auction', ['auction' => $auction, 'starting_price' => $starting_price, 'highest_bid' => $highest_bid, 'photo' => $image]);
         } else
-            return view('pages.edit_auction', ['auction' => $auction]);
+            return view('pages.edit_auction', ['auction' => $auction, 'starting_price' => $starting_price, 'highest_bid' => $highest_bid]);
     }
 
     public function showCreateForm()
@@ -139,7 +176,7 @@ class AuctionController extends Controller
             return $id_auction;
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
-            return $e->getMessage();
+            return $e->__toString();
         }
     }
 
@@ -151,7 +188,7 @@ class AuctionController extends Controller
             return $id_auction;
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
-            return $e->getMessage();
+            return $e->__toString();
         }
     }
 
@@ -166,17 +203,22 @@ class AuctionController extends Controller
             return back()->withError("Please sign in before creating an auction.")->withInput();
         }
 
-        $date = new Carbon($request->input('ending_date'), 'GMT+01');
+        try {
+            $date = new Carbon($request->input('ending_date'), 'GMT+01');
+        } catch (Exception $e) {
+            return back()->withError("The ending date format is invalid. Please enter the date and time in this format: YYYY/MM/DD, HH:MM AM/PM ")->withInput();
+        }
 
         if (Carbon::now('GMT+01')->greaterThanOrEqualTo($date))
             return back()->withError("The ending date must be in the future")->withInput();
 
         if (
             $request->input('name') == null || $request->input('species_name') == null || $request->input('description') == null || $request->input('starting_price') == null || $request->input('buyout_price') == null
-            || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null
+            || $request->input('category') == null ||  $request->input('age') == null || $request->input('color') == null || $request->input('dev_stage') == null || $request->input('ending_date') == null || $request->file('animal_picture') == null
         ) {
             return back()->withError("Please fill out all the fields.")->withInput();
         }
+
 
         try {
             $auction = new Auction();
@@ -264,16 +306,14 @@ class AuctionController extends Controller
 
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
-            // return back()->withError($exception->getMessage())->withInput();
             Log::error($exception->getMessage());
-            return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+            return back()->withError($exception->__toString())->withInput();
         }
     }
 
     public function stop($id)
     {
         $auction = Auction::find($id);
-        //$this->authorize('update', $auction);
         $auction->id_status = 2;
         $auction->save();
         return redirect()->route('view_auction', ['id' => $auction->id]);
@@ -282,27 +322,39 @@ class AuctionController extends Controller
     public function choose_methods(Request $request, $id)
     {
         $auction = Auction::find($id);
-        //$this->authorize('update', $auction);
         $auction->id_payment_method = $request->input('payM');
         $auction->id_shipping_method = $request->input('shipM');
         $auction->save();
-        return $id;
+
+        $notification = Notification::find($request->input('id_notif'));
+
+        $new_notification = new Notification();
+        $new_notification->message = $auction->species_name . " has been delivered! Click here to rate the auction";
+        $new_notification->read = FALSE;
+        $new_notification->type = "rate";
+        $new_notification->id_auction = $notification->id_auction;
+        $new_notification->id_buyer = $notification->id_buyer;
+
+        $notification->delete();
+        $new_notification->save();
+        return $request->input('id_notif');
     }
 
     public function delete($id)
     {
-        $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
-        $image = Image::find($photo_id);
-        $auction = Auction::find($id);
+        $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first();
+        if ($photo_id != null) {
+            $image = Image::find($photo_id->id);
+            $auction = Auction::find($id);
 
-        DB::table('animal_photos')->where('id', $photo_id)->delete();
+            DB::table('animal_photos')->where('id', $photo_id->id)->delete();
 
-        // $image->authorize('deleteAnimalPhoto', $auction);
 
-        $image->delete(null, $photo_id);
-        DB::table('images')->where('id', $photo_id)->delete();
+            $image->delete(null, $photo_id->id);
+            DB::table('images')->where('id', $photo_id->id)->delete();
 
-        $auction->delete();
+            $auction->delete();
+        }
 
         return redirect()->route('homepage');
     }
@@ -351,6 +403,13 @@ class AuctionController extends Controller
 
         try {
             $auction = Auction::find($id);
+
+            if ($request->input('buyout_price') <= $auction->current_price)
+                return back()->withError("Buyout price cannot be lower than or equal to the current price")->withInput();
+
+            $bids = Bid::where('id_auction', $id)->get();
+            if ($auction->starting_price != $request->input('starting_price') && sizeof($bids) > 0)
+                return back()->withError("Starting price cannot be changed because the auction has already been bidded")->withInput();
 
             $this->authorize('update', $auction);
 
@@ -420,8 +479,7 @@ class AuctionController extends Controller
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return back()->withError($exception->getMessage())->withInput();
-            // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+            return back()->withError($exception->__toString())->withInput();
         }
     }
 
@@ -435,10 +493,8 @@ class AuctionController extends Controller
             setweight(to_tsvector(coalesce('description','')), 'C');
             ");
             if (!$request->exists('max_price')) {
-                Log::emergency("FTS");
                 return $this->fullTextSearch($request);
             }
-            Log::emergency("SEARCH");
 
             if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
                 $mammals = 1;
@@ -473,7 +529,6 @@ class AuctionController extends Controller
                 else
                     $amphibians = null;
             }
-
 
             if (
                 !$request->has('blue') && !$request->has('brown') && !$request->has('black')
@@ -539,7 +594,6 @@ class AuctionController extends Controller
                     $grey = null;
             }
 
-
             if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
                 $baby = 1;
                 $child = 2;
@@ -568,7 +622,6 @@ class AuctionController extends Controller
                 else
                     $elderly = null;
             }
-
 
             if (!$request->has('climbs') && !$request->has('jumps') && !$request->has('talks') && !$request->has('skates') && !$request->has('olfaction') && !$request->has('navigation') && !$request->has('echo') && !$request->has('acrobatics')) {
                 $climbs = 1;
@@ -614,125 +667,62 @@ class AuctionController extends Controller
                     $acrobatics = null;
             }
 
+            if ($request->input('max_price') == null)
+                $max_price = 9999999;
+            else
+                $max_price = intval($request->input('max_price'));
+
+            if ($request->input('min_price') == null)
+                $min_price = 0;
+            else
+                $min_price = intval($request->input('min_price'));
+
             if ($request->input('search') != null) {
                 $search = "'" . $request->input('search') . "':*";
 
-                $auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
-                FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                to_tsquery(:text) AS query, 
-                to_tsvector(name || ' ' || species_name || ' ' || description ) AS textsearch
-                WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
-                AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
-                AND (current_price < :max_price OR :max_price IS NULL)
-                AND (current_price > :min_price OR :min_price IS NULL)
-                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
-                AND query @@ textsearch
-                AND id_status = 0
-                ORDER BY rank DESC;
-                "), array(
-                    'text' => $search,
-                    'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                    'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
-                    'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
-                    'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
-                    'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-                ));
-                $search = $request->input('search');
-
-                foreach ($auctions as $auction) {
-                    Log::emergency($auction->species_name . ' - ' . $auction->rank);
-                }
-            } else {
-                $auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
-                FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
-                WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
-                AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
-                AND (current_price < :max_price OR :max_price IS NULL)
-                AND (current_price > :min_price OR :min_price IS NULL)
-                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
-                AND id_status = 0
-                ORDER BY ending_date;
-                "), array(
-                    'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                    'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
-                    'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
-                    'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
-                    'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-                ));
-                $search = "";
-            }
-
-
-
-            if (Auth::check()) {
-                foreach ($auctions as $auction) {
-                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
-                    if ($watchlist != null)
-                        $auction->watchlisted = true;
-                    else
-                        $auction->watchlisted = false;
-                }
-            } else
-                foreach ($auctions as $auction) {
-                    $auction->watchlisted = false;
-                }
-
-            return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
-        } catch (Exception $e) {
-            //  Log::emergency($e->getMessage());
-            return back()->withError($e->getMessage());
-        }
-    }
-
-    public function fullTextSearch(Request $request)
-    {
-        try {
-            $search = $request->input('search');
-            if ($search != "") {
-                $search = "'" . $search . "':*";
-
-
-                // $auctions = DB::select(DB::raw("
-                // SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(textsearch, query) AS rank
-                // FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                // to_tsquery(:text) AS query, 
-                // to_tsvector(setweight(species_name, 'A') || ' ' ||
-                // setweight(name, 'B') || ' ' ||
-                // setweight(description, 'C')) AS textseacrh
-                //                 WHERE query @@ textsearch
-                // AND id_status = 0
-                // ORDER BY rank DESC;
-                // "), array(
-                //     'text' => $search,
-                // ));
-
-                $auctions = DB::select(DB::raw("
-                SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
-                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                to_tsquery('english', :text) AS query
-
-                WHERE tsv @@ query AND id_status = 0
-                ORDER BY rank DESC;
-                "), array('text' => $search));
-
-                $search = $request->input('search');
-
-                foreach ($auctions as $auction) {
-                    Log::emergency($auction->species_name . ' - ' . $auction->rank);
-                }
-            } else {
                 $auctions = DB::table('auctions')
+                    ->distinct()
                     ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
                     ->join('images', 'animal_photos.id', '=', 'images.id')
-                    ->where('auctions.id_status', '=', 0)
-                    ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
-                    ->get();
-            }
+                    ->leftJoin('features', 'auctions.id', '=', 'features.id_auction')
+                    ->select('auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->where('id_status', '=', 0)
+                    ->whereIn('id_category', [$mammals, $insects, $reptiles, $birds, $fishes, $amphibians])
+                    ->whereIn('id_main_color', [$blue, $green, $brown, $red, $black, $white, $yellow, $orange, $pink, $purple, $grey])
+                    ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
+                    ->where('current_price', '<', $max_price)
+                    ->where('current_price', '>', $min_price)
+                    ->where(function ($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
+                        $q->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                            ->orWhereNull('id_skill');
+                    })
+                    ->whereRaw("tsv @@ to_tsquery('english', ?)", [$search])
+                    ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
+                    ->paginate(12);
 
+                $search = $request->input('search');
+            } else {
+                $auctions = DB::table('auctions')
+                    ->distinct()
+                    ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+                    ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->leftJoin('features', 'auctions.id', '=', 'features.id_auction')
+                    ->select('auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->where('id_status', '=', 0)
+                    ->whereIn('id_category', [$mammals, $insects, $reptiles, $birds, $fishes, $amphibians])
+                    ->whereIn('id_main_color', [$blue, $green, $brown, $red, $black, $white, $yellow, $orange, $pink, $purple, $grey])
+                    ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
+                    ->where('current_price', '<', $max_price)
+                    ->where('current_price', '>', $min_price)
+                    ->where(function ($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
+                        $q->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                            ->orWhereNull('id_skill');
+                    })
+                    ->orderBy('ending_date')
+                    ->paginate(12);
+
+                $search = "";
+            }
 
             if (Auth::check()) {
                 foreach ($auctions as $auction) {
@@ -750,66 +740,105 @@ class AuctionController extends Controller
             return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
-            return back()->withError($e->getMessage());
+            return back()->withError($e->__toString())->withInput();
+        }
+    }
+
+    public function fullTextSearch(Request $request)
+    {
+        try {
+            $search = $request->input('search');
+            if ($search != "") {
+                $search = "'" . $search . "':*";
+
+                $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->select('auctions.id AS id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->where('id_status', '=', 0)->whereRaw("tsv @@ to_tsquery('english', ?)", [$search])
+                    ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
+                    ->paginate(12);
+
+
+                $search = $request->input('search');
+            } else {
+                $auctions = DB::table('auctions')
+                    ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+                    ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->where('auctions.id_status', '=', 0)
+                    ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
+                    ->orderBy('ending_date')
+                    ->paginate(12);
+            }
+
+            if (Auth::check()) {
+                foreach ($auctions as $auction) {
+                    $watchlist = Watchlist::where('id_auction', $auction->id)->where('id_buyer', Auth::id())->first();
+                    if ($watchlist != null)
+                        $auction->watchlisted = true;
+                    else
+                        $auction->watchlisted = false;
+                }
+            } else
+                foreach ($auctions as $auction) {
+                    $auction->watchlisted = false;
+                }
+
+            return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return back()->withError($e->__toString())->withInput();
         }
     }
 
     public function addReport(Request $request, $id_auction)
     {
-
         try {
+            $auction = Auction::find($id_auction);
+            $report = new Report();
 
-            if($request->input("description") == null){
+            if ($request->input("description") == null) {
                 $response['state'] = "danger";
-                $response['data'] = "The report description cannot be empty";
+                $response['data'] = "Report's description cannot be empty!";
 
                 return json_encode($response);
             }
-            else{
-
-                $auction = Auction::find($id_auction);
-                $report = new Report();
-
-                // $this->authorize('create', $report);
-
-                $report->date = now()->toDateString();
-                $report->description = $request->input("description");
-                $report->id_buyer = Auth::user()->id;
-                $report->id_seller = $auction->id_seller;
-                $report->id_status = 0;
-                $report->save();
 
 
-                $response['state'] = "success";
-                $response['data'] = "Report successfully sent";
-                
-                return json_encode($response);
-            }
-            
-            
+            $report->date = now()->toDateString();
+            $report->description = $request->input("description");
+            $report->id_buyer = Auth::user()->id;
+            $report->id_seller = $auction->id_seller;
+            $report->id_status = 0;
+            $report->save();
+
+
+            $response['state'] = "success";
+            $response['data'] = "Report successfully sent";
+
+            return json_encode($response);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            
+
             $response['state'] = "danger";
             $response['data'] = $exception->getMessage();
-            
+
             return json_encode($response);
         }
     }
 
-    public function rate(Request $request, $id_auction)
+    public function rate(Request $request, $id)
     {
-        $auction = Auction::find($id_auction);
-
         $possible_values = array(1, 2, 3, 4, 5);
-
-        if (!in_array($request->input('rate'), $possible_values)) {
-            return back()->withError("The rate must be an integer between 1 and 5")->withInput();
+        if (!in_array($request->input('rating'), $possible_values)) {
+            return 0;
         }
 
-        $auction->rating_seller = $request->input('rate');
+        $auction = Auction::find($id);
+        $auction->rating_seller = $request->input('rating');
         $auction->save();
 
-        return back();
+        $notification = Notification::find($request->input('id_notif'));
+        $notification->delete();
+
+        return $request->input('id_notif');
     }
 }

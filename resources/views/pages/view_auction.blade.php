@@ -25,8 +25,17 @@
 
             <div class="d-flex flex-column bgColorGrey bid-bar">
                 @if($auction->id_status == 0)
-                <h2 class="text-center mb-3 mx-auto mt-5">{{ $auction->current_price }} €</h2>
-                <h6 class="text-center font-weight-bold" id="countdown" data-id="{{ $countdown }}"></h6>
+                <div class="px-3 w-100">
+                    <h2 class="text-center mb-3 mx-auto mt-5">{{ $auction->current_price }} €</h2>
+                    <div class="d-flex flex-row w-100 justify-content-between">
+                        <h6>Buyout Price: </h6>
+                        <h6 class="font-weight-bold">{{ $auction->buyout_price }} €</h6>
+                    </div>
+                    <div class="d-flex flex-row w-100 justify-content-between">
+                        <h6>Remaining: </h6>
+                        <h6 class="text-center font-weight-bold" id="countdown" data-id="{{ $countdown }}"></h6>
+                    </div>
+                </div>
                 @elseif($auction->id_status == 1)
                 <div class="mb-3 px-3 mt-4 w-100">
                     <h2 class="text-center mb-4">Finished</h2>
@@ -70,7 +79,11 @@
                 @if($role == 'admin')
 
                 @if($auction->id_status == 0)
-                <a id="stop_button" data-id="{{ $auction->id }}" class="btn btn-green mx-3 no-print" href="#">Stop Auction</a>
+                <form class="d-flex flex-row mt-3 mx-3 no-print" method="POST" action="{{ route('stop_auction', ['id' => $auction->id]) }}">
+                    {{ csrf_field() }}
+                    {{method_field('PUT')}}
+                    <button class="btn btn-green mx-auto w-100" type="submit">Stop Auction</button>
+                </form>
                 @endif
                 <form class="d-flex flex-row mt-3 mx-3 no-print" method="POST" action="{{ route('delete_auction', ['id' => $auction->id]) }}">
                     {{ csrf_field() }}
@@ -86,8 +99,8 @@
                     <div class="d-flex flex-row mx-3 no-print">
                         {{ csrf_field() }}
                         <label style="display:none" for="bid_value">Bid Value</label>
-                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
-                        <button class="btn btn-green mx-auto w-100" type="submit">Bid</button>
+                        <input type="number" min="{{ $auction->current_price }}" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
+                        <button class="btn btn-green mx-auto w-50" type="submit">Bid</button>
                     </div>
                 </form>
 
@@ -95,21 +108,18 @@
                     <div class="d-flex flex-row mt-3 mx-3 no-print">
                         {{ csrf_field() }}
                         <label style="display:none" for="bid_value"></label>
-                        <input type="number" id="auto_bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1" required>
-                        <label style="display:none" for="current_price"></label>
-                        <input type="hidden" id="current_price" name="current_price" value="{{ $auction->current_price }}" class="form-control mr-1">
-                        <button class="btn btn-green mx-auto w-100" type="submit">Auto Bid</button>
+                        <input type="number" id="auto_bid_value" min="{{ $auction->current_price }}" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
+                        <button class="btn btn-green mx-auto w-50" type="submit">Auto Bid</button>
                     </div>
                 </form>
                 @endif
-
 
                 <button type="button" id="report-auction" class="btn btn-green mt-3 mx-3 no-print" data-toggle="modal" data-target="#modal_{{ $auction->id }}" data-id="{{ $auction->id }}">Report</button>
 
                 <!-- Modal -->
                 <div class="modal fade" id="modal_{{ $auction->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
+                        <div class="modal-content mx-auto">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Confirm report</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -118,24 +128,24 @@
                             </div>
                             <div class="modal-body">
                                 <p>
-                                Why are you reporting this auction?
+                                    Why are you reporting this auction?
                                 </p>
-                                <textarea class="form-control" id="description" rows="3" required="required"></textarea>
+                                <textarea class="form-control" id="description" rows="3"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary report_auction_cancel" data-id="{{ $auction->id }}" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger report_auction_confirm" data-id="{{ $auction->id }}">Yes</button>
+                                <button type="button" class="btn btn-success report_auction_confirm" data-id="{{ $auction->id }}">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 @if($auction->id_status == 0)
-                    @if($add_watchlist)
-                        <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#" >Add to Watchlist</a>
-                    @else
-                        <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 remWatchlist" href="#" >Remove from Watchlist</a>
-                    @endif
+                @if($add_watchlist)
+                <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 addWatchlist" href="#">Add to Watchlist</a>
+                @else
+                <a data-id="{{ $auction->id }}" class="btn btn-green mx-3 mt-3 remWatchlist" href="#">Remove from Watchlist</a>
+                @endif
                 @endif
 
                 @endif
@@ -143,13 +153,13 @@
                 @if($auction->id_status == 0)
                 <div class="d-flex flex-row mx-3 no-print">
                     <label style="display:none" for="bid_value"></label>
-                    <input type="number" id="bid_value" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="/login">Bid</a>
+                    <input type="number" min="{{ $auction->current_price }}" id="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
+                    <a class="btn btn-green mx-auto w-50" href="/login">Bid</a>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3 no-print">
                     <label style="display:none" for="autobid_value"></label>
-                    <input type="number" id="autobid_value" placeholder="Bid Value" class="form-control mr-1">
-                    <a class="btn btn-green mx-auto w-75" href="/login">Auto Bid</a>
+                    <input type="number" min="{{ $auction->current_price }}" id="autobid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
+                    <a class="btn btn-green mx-auto w-50" href="/login">Auto Bid</a>
                 </div>
                 @endif
                 <a class="btn btn-green mt-3 mx-3 no-print" href="/login">Report</a>
@@ -160,16 +170,18 @@
                 <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
 
                 <div class="h-25 mx-3">
+                    <div id="top_bids" data-id="{{ $auction->id }}">
                     @each('partials.bid_entry', $last_bids, 'bid')
-
+                    </div>
                     @if(sizeof($last_bids) == 0)
                     <p class="text-center">No bids yet</p>
                     @elseif(sizeof($bidding_history) > 4)
-                    <div class="p-2 popup w-100" data-toggle="modal" data-target="#bidsModal">
+                    <div class="p-2 btn w-100" data-toggle="modal" id="bidding_history" data-id="{{ $auction->id }}" data-target="#bidsModal">
                         <p class="colorGreen text-center text-decoration-underline mx-auto no-print"><u class="text-center">See More</u></p>
                     </div>
                     @endif
 
+                    <!-- Modal Bidding History -->
                     <div class="modal fade" id="bidsModal" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content mx-auto">
@@ -180,8 +192,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="overflow-auto h-100 mx-2">
-                                        @each('partials.bid_entry', $bidding_history, 'bid')
+                                    <div id="bids_list" class="overflow-auto h-100 mx-2">
                                     </div>
                                 </div>
                             </div>
@@ -214,6 +225,9 @@
                         @foreach($skills as $skill)
                         <p>&#8226; {{ $skill->type }}</p>
                         @endforeach
+                        @if(sizeof($skills) == 0)
+                        <p>None</p>
+                        @endif
                     </div>
                 </div>
                 <div class="d-flex flex-row">

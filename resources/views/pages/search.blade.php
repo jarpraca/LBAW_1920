@@ -11,7 +11,9 @@
 
 <div class="bg-white pt-4">
     <section class="mainBody">
-
+        @if (session('error'))
+        <div class="alert alert-danger my-4">{{ session('error') }}</div>
+        @endif
         <div class="bgColorGrey">
 
             <form method="GET" action="{{ route('search') }}">
@@ -290,8 +292,13 @@
         </div>
 
         @if(sizeof($auctions) != 0)
-        <div class="d-flex flex-wrap mb-5">
-            @each('partials.card', $auctions, 'auction')
+        <div class="mb-5">
+            <div class="d-flex flex-wrap">
+                @each('partials.card', $auctions, 'auction')
+            </div>
+            <div class="d-flex justify-content-center w-100">
+            {{ $auctions->links() }}
+            </div>
         </div>
         @else
         <div class="d-flex justify-content-center mt-5">

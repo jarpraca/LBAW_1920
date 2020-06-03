@@ -23,7 +23,7 @@ Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
 Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 Route::post('auctions/{id}/bids/{id_user}/auto', 'BidController@auto')->name('auto_bid');
-Route::post('api/auctions/{id}/report', 'AuctionController@addReport')->name('add_report');
+Route::put('auctions/{id}/stop', 'AuctionController@stop')->name('stop_auction');
 
 // Profiles
 Route::get('profiles/{id}', 'UserController@show')->name('profiles');
@@ -39,7 +39,6 @@ Route::view('help', 'pages.help');
 
 // API
 Route::delete('api/images/{id}', 'ImageController@delete');
-Route::put('api/auctions/{id}/stop', 'AuctionController@stop');
 Route::put('api/reports/{id}/{decision}', 'AdminController@updateReportStatus');
 Route::get('api/reports', 'AdminController@indexReports');
 Route::get('api/users', 'AdminController@indexUsers');
@@ -49,7 +48,14 @@ Route::delete('api/users/{id}', 'AdminController@delete');
 Route::put('api/auctions/{id}/choose_methods', 'AuctionController@choose_methods');
 Route::post('api/watchlists/{id_auction}', 'AuctionController@addWatchlist');
 Route::delete('api/watchlists/{id_auction}', 'AuctionController@removeWatchlist');
-Route::put('api/rates/{id}', 'AuctionController@rate')->name('rate');
+Route::put('api/rates/{id}', 'AuctionController@rate');
+Route::delete('api/users/{id}/image', 'UserController@deletePhoto');
+Route::post('api/auctions/{id}/report', 'AuctionController@addReport');
+Route::get('api/auctions/{id}/biddingHistory', 'AuctionController@biddingHistory');
+Route::get('api/auctions/{id}/topBids', 'AuctionController@topBids');
+Route::get('api/profiles/{id}/notifications', 'UserController@showNotifications');
+Route::get('api/profiles/{id}/notif_count', 'UserController@hasUnreadNotifications');
+Route::put('api/notifications/{id}/read', 'UserController@markRead');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

@@ -45,7 +45,7 @@
         </div>
         @endif
 
-        @if($my_auctions != [] && $my_auctions != null) 
+        @if($my_auctions != [] && $my_auctions != null)
         <div class="collapsible mt-2 mb-4">
             <button class="collapsible_btn ml-0 w-100 py-2 text-left d-flex flex-row justify-content-between align-items-center" data-toggle="collapse" data-target="#my_auctions" aria-expanded="false" aria-controls="my_auctions">
                 <span class="h5 font-weight-bold">My Auctions</span>
@@ -54,7 +54,7 @@
             </button>
 
             <div class="collapse bgColorGrey" id="my_auctions">
-                @if((sizeof($my_auctions) == 0)  &&  (sizeof($previous_auctions) == 0))
+                @if((sizeof($my_auctions) == 0) && (sizeof($previous_auctions) == 0))
                 <p class="ml-3 mt-3">You still haven't created any auctions </p>
                 @else
                 <div class="d-flex flex-wrap text-left justify-flex-start">
@@ -126,12 +126,38 @@
         </div>
         @endif
 
-        <div class="no-print mx-auto d-flex">
-            <form class="btn w-75 mx-auto" method="POST" action="{{ route('delete_profile', ['id' => Auth::user()->id]) }}">
-                {{ csrf_field() }}
-                {{method_field('DELETE')}}
-                <button class="btn btn-red py-2 mb-5 w-75 mx-auto" type="submit">Delete Account</button>
-            </form>
+        @inject('admin', 'App\Admin')
+        @if(!$admin::find(Auth::id()))
+        <div class="no-print mx-auto mt-5 d-flex">
+                <button class="btn btn-danger py-2 mb-5 w-50 mx-auto" data-toggle="modal" data-target="#modal_{{ $profile->id }}">Delete Account</button>
+        </div>
+        @endif
+        <!-- Modal -->
+        <div class="modal fade" id="modal_{{ $profile->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirm account deletion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Are you sure you want to delete your account?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-id="{{ $profile->id }}" data-dismiss="modal">Cancel</button>
+                        <form class="mr-3 ml-0" method="POST" action="{{ route('delete_profile', ['id' => Auth::user()->id]) }}">
+                            {{ csrf_field() }}
+                            {{method_field('DELETE')}}
+                            <button class="btn btn-danger w-100" type="submit">Yes</button>
+                        </form>
+                        <!-- <button type="button" class="btn btn-danger" data-id="{{ $profile->id }}">Yes</button> -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

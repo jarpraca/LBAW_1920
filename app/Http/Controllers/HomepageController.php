@@ -19,7 +19,7 @@ class HomepageController extends Controller
         SELECT auctionsB.id, auctionsB.species_name, auctionsB.current_price, auctionsB.age, auctionsB.ending_date, url, auctionsB.id_status
             FROM (((
             SELECT auctions.*, count(*) AS num_bids
-                FROM  (auctions JOIN bids ON auctions.id = bids.id_auction)
+                FROM  (auctions LEFT JOIN bids ON auctions.id = bids.id_auction)
                 WHERE id_status=0
                 GROUP BY  auctions.id) AS auctionsB
             JOIN animal_photos ON auctionsB.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id)   
