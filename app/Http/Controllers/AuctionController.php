@@ -759,27 +759,38 @@ class AuctionController extends Controller
 
         try {
 
-            $auction = Auction::find($id_auction);
-            $report = new Report();
+            if($request->input("description") == null){
+                $response['state'] = "danger";
+                $response['data'] = "The report description cannot be empty";
 
-            // $this->authorize('create', $report);
+                return json_encode($response);
+            }
+            else{
 
-            $report->date = now()->toDateString();
-            $report->description = $request->input("description");
-            $report->id_buyer = Auth::user()->id;
-            $report->id_seller = $auction->id_seller;
-            $report->id_status = 0;
-            $report->save();
+                $auction = Auction::find($id_auction);
+                $report = new Report();
+
+                // $this->authorize('create', $report);
+
+                $report->date = now()->toDateString();
+                $report->description = $request->input("description");
+                $report->id_buyer = Auth::user()->id;
+                $report->id_seller = $auction->id_seller;
+                $report->id_status = 0;
+                $report->save();
 
 
-            $response['state'] = "success";
-            $response['data'] = "Report successfully sent";
+                $response['state'] = "success";
+                $response['data'] = "Report successfully sent";
+                
+                return json_encode($response);
+            }
             
-            return json_encode($response);
+            
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             
-            $response['state'] = "error";
+            $response['state'] = "danger";
             $response['data'] = $exception->getMessage();
             
             return json_encode($response);

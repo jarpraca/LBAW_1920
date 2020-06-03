@@ -120,7 +120,7 @@
                                 <p>
                                 Why are you reporting this auction?
                                 </p>
-                                <textarea class="form-control" id="description" rows="3" ></textarea>
+                                <textarea class="form-control" id="description" rows="3" required="required"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary report_auction_cancel" data-id="{{ $auction->id }}" data-dismiss="modal">Cancel</button>

@@ -263,10 +263,24 @@ function reportAuctionEyeHandler() {
     let closeModal = document.querySelector('.report_auction_cancel');
     closeModal.click();
     let alert = document.querySelector("#alert");
+    alert.classList.remove("alert-danger");
+    alert.classList.remove("alert-success");
     alert.classList.add("alert-" + message.state);
     alert.innerHTML = message.data;
-    alert.removeAttribute("hidden"); 
-    
+    alert.removeAttribute("hidden");
+    if(message.state == "success"){
+        var myVar;
+        myVar = setTimeout(resetAlert, 2000);
+    }
+}
+
+function alertFunc() {
+    alert("Hello!");
+  }
+
+function resetAlert() {
+    let alert = document.querySelector("#alert");
+     alert.setAttribute("hidden","");
 }
 
 function addListenerPageReports() {
