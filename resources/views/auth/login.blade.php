@@ -17,14 +17,14 @@
             <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <label class="form-check-label ml-1 mt-3" for="email">Email Address <span class="text-danger">* </span></label>
-                <input id="email" type="email" name="email"  class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
+                <input id="email" type="email" name="email"  class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email Address"  autofocus>
                 @if ($errors->has('email'))
                 <span class="invalid-feedback d-block">
                     {{ $errors->first('email') }}
                 </span>
                 @endif
                 <label class="form-check-label  ml-1 mt-3" for="password">Password <span class="text-danger">* </span></label>
-                <input id="password" type="password" name="password"  class="form-control @error('password') is-invalid @enderror" placeholder="Password" required>
+                <input id="password" type="password" name="password"  class="form-control @error('password') is-invalid @enderror" placeholder="Password" >
                 @if ($errors->has('password'))
                 <span class="invalid-feedback d-block">
                     {{ $errors->first('password') }}
@@ -51,21 +51,18 @@
                     </div>
                 </div>
 
-                <!-- <div class="form-group">
-                    <div class="d-flex justify-content-around align-items-center">
-
-                        <button class="btn btn-outline-black ml-0" onclick="fb_login();">
-                            <fb:login-button class="d-none" scope="public_profile,email" onlogin="checkLoginState();">
-                            </fb:login-button>
+                <div >
+                    <div class="d-flex align-self-center justify-content-around align-items-center">
+                        <a href="{{ url('login/facebook') }}" class="btn btn-outline-black ml-0">
                             Sign up with&nbsp;
                             <i class="fab fa-facebook-f"></i>
-                        </button>
-
-
-                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
+                        </a>
+                        <a href="{{ url('login/google') }}" class="btn btn-outline-black ml-0">
+                            Sign up with&nbsp;
+                            <i class="fab fa-google"></i>
+                        </a>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="d-flex mt-2 flex-row justify-content-center align-items-center">
                     <p>Don't have an account?&nbsp;</p>

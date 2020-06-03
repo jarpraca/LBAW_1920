@@ -86,9 +86,11 @@ CREATE TYPE notification_type as ENUM('winner', 'bid_surpassed', 'ending', 'ende
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
+    "provider" text,
+    provider_id text,
     "name" text NOT NULL,
     email text NOT NULL UNIQUE,
-    "password" text NOT NULL,
+    "password" text,
     remember_token VARCHAR,
     blocked boolean DEFAULT FALSE
 );

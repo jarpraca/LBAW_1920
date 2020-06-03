@@ -45,22 +45,22 @@
                     <input id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password" required>
                 </div>
 
-                <!-- <div class="form-group">
-                    <div class="d-flex align-self-center justify-content-around align-items-center">
-                        <button class="btn btn-outline-black ml-0">
-                            Sign up with&nbsp;
-                            <i class="fab fa-facebook-f"></i>
-                        </button>
-                        <button class="btn btn-outline-black ml-0">
-                            Sign up with&nbsp;
-                            <i class="fab fa-google"></i>
-                        </button>
-                    </div>
-                </div> -->
-
                 <div class="form-group">
                     <div class="d-flex align-self-center justify-content-center align-items-center">
                         <button class="mx-auto btn btn-green" type="submit">SIGN UP</button>
+                    </div>
+                </div>
+
+                <div >
+                    <div class="d-flex align-self-center justify-content-around align-items-center">
+                        <a href="{{ url('login/facebook') }}" class="btn btn-outline-black ml-0">
+                            Sign up with&nbsp;
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="{{ url('login/google') }}" class="btn btn-outline-black ml-0">
+                            Sign up with&nbsp;
+                            <i class="fab fa-google"></i>
+                        </a>
                     </div>
                 </div>
 
