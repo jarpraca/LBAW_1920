@@ -1,27 +1,24 @@
-# lbaw2053
+## 1. Installation
 
-## Online auctions - Bid Monkey
-
-### 1. Installation
+Final version of the source code in the group's git repository:
+* https://git.fe.up.pt/lbaw/lbaw1920/lbaw2053/-/tags/A9
 
 Docker command to test our Docker Hub image using the DBM database:
-* docker run -it lbaw2053/lbaw2053  
+* docker run -it lbaw2053/lbaw2053
 
-### 2. Usage
+## 2. Usage
 
-URL to the product: http://lbaw2053.lbaw-prod.fe.up.pt  
+URL to the product: http://lbaw2053.lbaw-prod.fe.up.pt/
 
-### 3. Credentials
+### 2.1. Administration Credentials
 
-#### 3.1 Admin Credentials
-
-> Administration URL: http://lbaw2053.lbaw-prod.fe.up.pt/admin
+Administration URL: http://lbaw2053.lbaw-prod.fe.up.pt/admin
 
 | Username             | Password |
 | --------             | -------- |
 | demo_admin@fe.up.pt  | admin123 |
 
-#### 3.2. User Credentials
+### 2.2. User Credentials
 
 | Type          | Username              | Password   |
 | ------------- | ---------             | --------   |
@@ -33,4 +30,3 @@ URL to the product: http://lbaw2053.lbaw-prod.fe.up.pt
 * João Alberto Preto Rodrigues Praça, up201704748@fe.up.pt
 * Lucas Tomás Martins Ribeiro, up201705227@fe.up.pt
 * Silvia Jorge Moreira da Rocha, up201704684@fe.up.pt
-
