@@ -283,7 +283,7 @@ body > div{
     left: 19px !important;
 }
 
-#alert_admin {
+#alert_admin, #alert_bid {
     width: 150px;
     position: fixed;
     top: 50px !important;

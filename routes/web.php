@@ -21,7 +21,6 @@ Route::get('auctions/{id}/edit', 'AuctionController@showEditForm')->name('edit_a
 Route::put('auctions/{id}/edit', 'AuctionController@update')->name('edit_auction');
 Route::get('auctions/{id}', 'AuctionController@show')->name('view_auction');
 Route::delete('auctions/{id}', 'AuctionController@delete')->name('delete_auction');
-Route::post('auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 Route::post('auctions/{id}/bids/{id_user}/auto', 'BidController@auto')->name('auto_bid');
 Route::put('auctions/{id}/stop', 'AuctionController@stop')->name('stop_auction');
 
@@ -38,6 +37,7 @@ Route::view('help', 'pages.help');
 
 
 // API
+Route::post('api/auctions/{id}/bids/{id_user}', 'BidController@create')->name('create_bid');
 Route::delete('api/images/{id}', 'ImageController@delete');
 Route::put('api/reports/{id}/{decision}', 'AdminController@updateReportStatus');
 Route::get('api/reports', 'AdminController@indexReports');

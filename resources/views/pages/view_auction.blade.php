@@ -9,6 +9,8 @@
 <meta property="og:image" content="{{asset('assets/logo.png')}}" />
 <meta property="og:locale" content="en_GB" />
 
+<div id="alert_bid" class="alert my-4 mx-3 fade"></div>
+
 <div class="bg-white pt-4">
     <section class="mainBody">
 
@@ -26,10 +28,10 @@
             <div class="d-flex flex-column bgColorGrey bid-bar">
                 @if($auction->id_status == 0)
                 <div class="px-3 w-100">
-                    <h2 class="text-center mb-3 mx-auto mt-5">{{ $auction->current_price }} €</h2>
+                    <h2 class="text-center mb-3 mx-auto mt-5" id="current_price" data-id="{{ $auction->current_price }}">{{ $auction->current_price }} €</h2>
                     <div class="d-flex flex-row w-100 justify-content-between">
                         <h6>Buyout Price: </h6>
-                        <h6 class="font-weight-bold">{{ $auction->buyout_price }} €</h6>
+                        <h6 class="font-weight-bold" id="buyout_price" data-id="{{ $auction->buyout_price }}">{{ $auction->buyout_price }} €</h6>
                     </div>
                     <div class="d-flex flex-row w-100 justify-content-between">
                         <h6>Remaining: </h6>
@@ -62,8 +64,6 @@
                 </div>
                 @endif
 
-                <div id="alert" class="alert my-4 mx-3" hidden></div>
-
                 @if($role == 'seller')
 
                 @if($auction->id_status == 0)
@@ -95,14 +95,11 @@
                 @if($role == 'user')
 
                 @if($auction->id_status == 0)
-                <form method="POST" action="{{ route('create_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
                     <div class="d-flex flex-row mx-3 no-print">
-                        {{ csrf_field() }}
                         <label style="display:none" for="bid_value">Bid Value</label>
                         <input type="number" min="{{ $auction->current_price }}" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
-                        <button class="btn btn-green mx-auto w-50" type="submit">Bid</button>
+                        <button class="btn btn-green mx-auto w-50" id="bid_button" data-id="{{ $auction->id }}" data-id_user="{{ Auth::id() }}">Bid</button>
                     </div>
-                </form>
 
                 <form method="POST" action="{{ route('auto_bid', ['id' => $auction->id, 'id_user' => Auth::id()]) }}">
                     <div class="d-flex flex-row mt-3 mx-3 no-print">

@@ -23,7 +23,10 @@ class BidController extends Controller
         $auction = Auction::find($id_auction);
 
         if ($auction->current_price >= $request->input('bid_value')) {
-            return back()->withError("Your bid must be higher than the previous bid")->withInput();
+            $response['state'] = "danger";
+            $response['data'] = "Your bid must be higher than the current price";
+
+            return json_encode($response);
         }
 
         $bid = new Bid;
@@ -45,7 +48,12 @@ class BidController extends Controller
             $bid2->save();
         }
 
-        return redirect()->route('view_auction', ['id' => $id_auction]);
+        $response['state'] = "success";
+        $response['data'] = "Bidded successfully";
+
+        return json_encode($response);
+
+        return $id_auction;
     }
 
     public function auto(Request $request, $id_auction, $id_user)
@@ -81,7 +89,6 @@ class BidController extends Controller
                 $bid2->id_buyer = $bid->id_buyer;
                 $bid2->value = $highest[0]->maximum + 1;
                 $bid2->save();
-
             } else {
 
                 $bid2 = new Bid;

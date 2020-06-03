@@ -802,7 +802,6 @@ class AuctionController extends Controller
                 return json_encode($response);
             }
 
-
             $report->date = now()->toDateString();
             $report->description = $request->input("description");
             $report->id_buyer = Auth::user()->id;
