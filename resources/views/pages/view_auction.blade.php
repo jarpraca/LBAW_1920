@@ -120,7 +120,7 @@
                 <!-- Modal -->
                 <div class="modal fade" id="modal_{{ $auction->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
+                        <div class="modal-content mx-auto">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Confirm report</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -135,7 +135,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary report_auction_cancel" data-id="{{ $auction->id }}" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger report_auction_confirm" data-id="{{ $auction->id }}">Yes</button>
+                                <button type="button" class="btn btn-success report_auction_confirm" data-id="{{ $auction->id }}">Submit</button>
                             </div>
                         </div>
                     </div>

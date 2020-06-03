@@ -169,7 +169,7 @@ CREATE TABLE auctions
     id_payment_method integer REFERENCES payment_methods (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_shipping_method integer REFERENCES shipping_methods (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     id_seller integer REFERENCES sellers (id) ON UPDATE CASCADE ON DELETE SET NULL,
-    id_winner integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    id_winner integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE SET NULL DEFAULT NULL,
     id_status integer NOT NULL REFERENCES auction_status (id) ON UPDATE CASCADE,
     tsv  tsvector,
     CONSTRAINT "buyout_price_ck" CHECK (buyout_price > starting_price),
@@ -298,8 +298,8 @@ BEGIN
     IF(NEW.id_status <> OLD.id_status AND NEW.id_status = 1)
     THEN
         INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
-        SELECT CONCAT('Congratulations! You won ', NEW.species_name, '! Click here to get your animal'), FALSE, 'winner', info.id_auction, info.id_buyer
-        FROM (SELECT value, id_auction, id_buyer
+        SELECT CONCAT('Congratulations! You won ', NEW.species_name, '! Click here to get your animal!'), FALSE, 'winner', info.id_auction, info.id_buyer
+        FROM (SELECT id_auction, id_buyer
                 FROM  bids
                 WHERE id_auction = NEW.id
                 ORDER BY value DESC 
@@ -314,6 +314,14 @@ BEGIN
                 LIMIT 1
             )
             WHERE id = NEW.id;
+
+        INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
+        SELECT CONCAT('Ohh! ', NEW.species_name, '''s auction ended! Try again next time!'), FALSE, 'ended', NEW.id, id_user.id
+        FROM 
+            (SELECT DISTINCT id_buyer AS id FROM bids WHERE id_auction = NEW.id AND id_buyer != (SELECT id_winner FROM auctions WHERE id = NEW.id)
+            UNION
+            SELECT DISTINCT id_buyer AS id FROM watchlists WHERE id_auction = NEW.id AND id_buyer != (SELECT id_winner FROM auctions WHERE id = NEW.id)
+            ) AS id_user;
     END IF;
     RETURN NULL;
 END
@@ -368,7 +376,7 @@ BEGIN
         SET rating = (
             SELECT AVG(rating_seller)
             FROM auctions
-            WHERE auctions.id = NEW.id AND auctions.rating_seller >= 1 AND auctions.rating_seller <= 5
+            WHERE auctions.id_seller = NEW.id_seller AND auctions.rating_seller >= 1 AND auctions.rating_seller <= 5
         )
         WHERE sellers.id = NEW.id_seller;
     END IF;
@@ -385,7 +393,9 @@ CREATE TRIGGER update_rating
 CREATE FUNCTION send_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF EXISTS(SELECT * FROM bids WHERE id_auction = NEW.id_auction)
+    IF EXISTS(SELECT * FROM bids WHERE id_auction = NEW.id_auction) 
+        AND 
+        NEW.id_buyer != (SELECT id_buyer FROM bids WHERE id_auction = NEW.id_auction ORDER BY value DESC LIMIT 1)
     THEN 
         INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
         SELECT CONCAT('Your bid on ', auction.species_name,' has been surpassed!'), FALSE, 'bid_surpassed', info.id_auction, info.id_buyer

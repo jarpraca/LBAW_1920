@@ -54,9 +54,8 @@ Route::post('api/auctions/{id}/report', 'AuctionController@addReport');
 Route::get('api/auctions/{id}/biddingHistory', 'AuctionController@biddingHistory');
 Route::get('api/auctions/{id}/topBids', 'AuctionController@topBids');
 Route::get('api/profiles/{id}/notifications', 'UserController@showNotifications');
-
-// Notifications
-Route::post('notifications/{id}/read', 'UserController@markRead');
+Route::get('api/profiles/{id}/notif_count', 'UserController@hasUnreadNotifications');
+Route::put('api/notifications/{id}/read', 'UserController@markRead');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

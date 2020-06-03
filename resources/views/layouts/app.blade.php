@@ -69,32 +69,13 @@
             @endif
             <ul class="navbar-nav align-items-center">
                 @auth
-                <li class="nav-item dropdown show">
+                <li class="nav-item dropdown">
                     <a id="notification_bell" class="btn btn-green mx-auto p-2 my-2 my-sm-0" role="button" data-toggle="dropdown" data-id="{{Auth::id()}}" aria-haspopup="true" aria-expanded="false">
                         <img src="{{asset('assets/bell.png')}}" height="30" alt="Notifications">
                     </a>
 
                     <div id="notifications" class="dropdown-menu dropdown-menu-right" aria-labelledby="notification_bell">
-                        <a class="dropdown-item d-flex" href="#">
-                            <span class="text-danger h3 mr-3 align-middle">&#8226;</span>
-                            <p>You just won Guinea Monkey 3!</p>
-                        </a>
-                        <a class="dropdown-item d-flex" href="#">
-                            <span class="text-danger h3 mr-3 align-middle">&#8226;</span>
-                            <p>Your bid on Paul has been surpassed!</p>
-                        </a>
-                        <form method="POST" action="{{ route('delete_auction', ['id' => 3]) }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button class="dropdown-item d-flex w-100 m-0" type="submit">
-                                <span class="text-secondary h3 mr-3 align-middle">&#8226;</span>
-                                <p>Your bid on Guinea Monkey 2 has been surpassed!</p>
-                            </button>
-                        </form>
-                        <a class="dropdown-item d-flex" href="#">
-                            <span class="text-secondary h3 mr-3 align-middle">&#8226;</span>
-                            <p>Your bid on Guinea Monkey 2 has been surpassed!</p>
-                        </a>
+
                     </div>
                 </li>
 
@@ -131,18 +112,19 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true">
+    <!-- Modal PaymentShipping -->
+    <div class="modal fade" id="payment_shipping_modal" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content mx-auto">
                 <div class="modal-header">
-                    <h2 class="mt-3">Auction Name</h2>
+                    <h2 class="mt-3">Choose Methods For Auction</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group ml-3 mr-3 mt-3">
-                        <label class="text-left" for="pay_method">Payment Method</label>
+                        <label class="text-left" for="pay_method">Payment Method <span class="text-danger">* </span></label>
                         <select id="pay_method" name="categories" class="outline-green form-control" required>
                             <option value="" selected hidden>Choose payment method</option>
                             <option value="1">Debit Card</option>
@@ -151,7 +133,7 @@
                     </div>
 
                     <div class="form-group ml-3 mr-3 mt-3">
-                        <label class="text-left" for="ship_method">Shipping Method</label>
+                        <label class="text-left" for="ship_method">Shipping Method <span class="text-danger">* </span></label>
                         <select id="ship_method" name="categories" class="outline-green form-control" required>
                             <option value="" selected hidden>Choose shipping method</option>
                             <option value="1">Standard Mail</option>
@@ -160,8 +142,39 @@
                         </select>
                     </div>
 
+                    <div id="alert_method" class="alert my-4 mx-3" hidden></div>
+
                     <div class="modal-footer">
-                        <a id="method_button" class="btn btn-green2" data-dismiss="modal">Submit</a>
+                        <button class="btn btn-secondary text-white" id="method_modal_cancel" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success text-white" id="method_button">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Rate -->
+    <div class="modal fade" id="rate_modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content mx-auto">
+                <div class="modal-header">
+                    <h2 class="mt-3">Rate Auction</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group ml-3 mr-3 mt-3">
+                        <label class="text-left" for="rating_value">Rate</label>
+                        <input type="number" min="1" max="5" id="rating_value" name="rating_value" class="form-control outline-green" placeholder="E.g.: 4" />
+                    </div>
+
+                    <div id="alert_rate" class="alert my-4 mx-3" hidden></div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary text-white" id="rate_modal_cancel" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success text-white" id="rate_button">Submit</button>
                     </div>
 
                 </div>

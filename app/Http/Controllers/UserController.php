@@ -13,6 +13,7 @@ use App\Traits\UploadTrait;
 use App\Auction;
 use App\User;
 use App\Image;
+use App\Notification;
 use App\ProfilePhoto;
 use App\Seller;
 use App\Watchlist;
@@ -136,15 +137,10 @@ class UserController extends Controller
     public function deletePhoto($id)
     {
         $photo = DB::table('profile_photos')->where('id_user', $id)->first();
-        Log::emergency("1");
         if ($photo != null) {
-            Log::emergency("2");
             DB::table('profile_photos')->where('id_user', $id)->delete();
-            Log::emergency("3");
             $old_image = Image::find($photo->id);
-            Log::emergency("4");
-            $old_image->delete();
-            Log::emergency("5");
+            $old_image->delete(null, $photo->id);
         }
 
         return $id;
@@ -229,15 +225,20 @@ class UserController extends Controller
     }
 
     public function showNotifications($id) {
-        $notifications = DB::table('notifications')->where('id_buyer', $id)->orderBy('id', 'desc')->limit(5)->get();
+        $notifications = Notification::where('id_buyer', '=',$id)->orderBy('id', 'desc')->limit(5)->get();
+        return $notifications;
+    }
+
+    public function hasUnreadNotifications($id) {
+        $notifications = Notification::where('id_buyer', '=', $id)->where('read', '=', FALSE)->count();
         return $notifications;
     }
 
     public function markRead($id) {
-        $notification = DB::table('notifications')->where('id', $id)->first();
+        $notification = Notification::find($id);
         $notification->read = TRUE;
         $notification->save();
 
-        return redirect()->route('view_auction', ['id' => $notification->id_auction]);
+        return $id;
     }
 }

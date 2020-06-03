@@ -760,12 +760,6 @@ a {
     animation: fadeInIn 0.5s;
 } */
 
-#method_button {
-  background-color: var(--myLightGreen);
-  color: white;
-  border-color: var(--myDarkGreen);
-}
-
 #close_bt {
   color: var(--myDarkGreen);
 }

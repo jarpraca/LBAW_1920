@@ -19,29 +19,30 @@
                 {{ csrf_field() }}
 
                 <div class="form-group">
-                    <label style="display:none" for="name"></label>
-                    <input class="" id="name" type="text" name="name" value="{{ old('name') }}" placeholder="Full Name" required autofocus>
+                    <label class="form-check-label ml-1 mt-3" for="name">Name <span class="text-danger">* </span></label>
+                    <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="First and Last Name" required autofocus>
                     @if ($errors->has('name'))
-                    <span class="error">
+                    <span class="invalid-feedback d-block">
                         {{ $errors->first('name') }}
                     </span>
                     @endif
-                    <label style="display:none" for="email"></label>
-                    <input class="" id="email" type="text" name="email" value="{{ old('email') }}" placeholder="Email Address" required>
+                    <label class="form-check-label ml-1 mt-3" for="email">Email Address <span class="text-danger">* </span></label>
+                    <input id="email" type="email" name="email"  class="form-control @error('email') is-invalid @enderror" placeholder="Email Address" required autofocus>
                     @if ($errors->has('email'))
-                    <span class="error">
+                    <span class="invalid-feedback d-block">
                         {{ $errors->first('email') }}
                     </span>
                     @endif
                     <label style="display:none" for="password"></label>
-                    <input class="" id="password" type="password" name="password" value="{{ old('password') }}" placeholder="Password" required>
+                    <label class="form-check-label ml-1 mt-3" for="password">Password <span class="text-danger">* </span></label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required>
                     @if ($errors->has('password'))
-                    <span class="error">
+                    <span class="invalid-feedback d-block">
                         {{ $errors->first('password') }}
                     </span>
                     @endif
-                    <label style="display:none" for="password-confirm"></label>
-                    <input class="" id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    <label class="form-check-label ml-1 mt-3" for="password-confirm">Confirm Password <span class="text-danger">* </span></label>
+                    <input id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password" required>
                 </div>
 
                 <div class="form-group">

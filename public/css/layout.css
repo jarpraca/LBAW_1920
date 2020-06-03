@@ -7,6 +7,7 @@ body {
     flex-direction: column;
     width: 100%;
     margin: 0;
+    line-height: 1.4;
     padding-top: 4.1em;
     position: relative;
     min-height: 100vh;
@@ -291,6 +292,12 @@ body > div{
 
 #welcome {
     margin: 1rem;
+}
+
+#red_dot {
+    position: absolute;
+    bottom: 8px !important;
+    left: 19px !important;
 }
 
 /* .close {

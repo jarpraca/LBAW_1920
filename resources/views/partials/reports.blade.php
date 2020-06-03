@@ -48,8 +48,8 @@
                         <div class="modal-footer d-flex justify-content-between">
                             <button type="button" class="btn btn-secondary approve_report_cancel" data-id="{{ $report->id }}" data-dismiss="modal">Cancel</button>
                             <div>
-                            <button type="button" class="btn btn-success accept_report" data-id="{{ $report->id }}">Accept</button>
-                            <button type="button" class="btn btn-danger deny_report" data-id="{{ $report->id }}">Deny</button>
+                                <button type="button" class="btn btn-success accept_report" data-id="{{ $report->id }}">Accept</button>
+                                <button type="button" class="btn btn-danger deny_report" data-id="{{ $report->id }}">Deny</button>
                             </div>
                         </div>
                     </div>

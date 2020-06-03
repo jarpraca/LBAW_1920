@@ -17,9 +17,6 @@ function addEventListeners() {
         deleter.addEventListener("click", sendDeleteImageRequest);
     });
 
-    let methodButton = document.querySelector("#method_button");
-    if (methodButton != null) methodButton.addEventListener("click", saveMethods);
-
     let addwatchlistButton = document.querySelector(".addWatchlist");
     if (addwatchlistButton != null)
         addwatchlistButton.addEventListener("click", addToWatchlistButton);
@@ -54,12 +51,13 @@ function addEventListeners() {
         }, 2000);
 
     let notifications = document.querySelector("#notification_bell");
-    if (notifications != null)
+    if (notifications != null) {
         notifications.addEventListener('click', getLastNotifications);
-    // if (notifications != null)
-    //     setInterval(function () {
-    //         getLastNotifications(notifications);
-    //     }, 2000);
+        hasUnreadNotifications(notifications);
+        setInterval(function () {
+            hasUnreadNotifications(notifications);
+        }, 2000);
+    }
 
     addListenerPageReports();
     addListenerPageUsers();
@@ -192,14 +190,25 @@ function topBidsHandler() {
 }
 
 function saveMethods() {
+    let id = this.getAttribute("data-id_auction");
+    let id_notif = this.getAttribute("data-id");
     let payMethodSelect = document.querySelector("#pay_method");
     let shipMethodSelect = document.querySelector("#ship_method");
-    let pay_method = payMethodSelect.options[payMethodSelect.selectedIndex].value;
-    let ship_method =
-        shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
-    let data = { payM: pay_method, shipM: ship_method };
 
-    //sendAjaxRequest("put", '/api/auctions/' + idk man + '/choose_methods', data, methodSelectionHandler);
+    if (payMethodSelect.selectedIndex == "0" || shipMethodSelect.selectedIndex == "0") {
+        let alert = document.querySelector("#alert_method");
+        alert.classList.add("alert-danger");
+        alert.innerHTML = "All inputs must be filled!";
+        alert.style.display = "grid";
+        alert.removeAttribute("hidden");
+        return;
+    }
+
+    let pay_method = payMethodSelect.options[payMethodSelect.selectedIndex].value;
+    let ship_method = shipMethodSelect.options[shipMethodSelect.selectedIndex].value;
+    let data = { payM: pay_method, shipM: ship_method, id_notif: id_notif };
+
+    sendAjaxRequest("put", '/api/auctions/' + id + '/choose_methods', data, methodSelectionHandler);
 }
 
 function methodSelectionHandler() {
@@ -207,8 +216,60 @@ function methodSelectionHandler() {
         console.log(this.status);
         console.log(this);
     }
-    let close_button = document.querySelector(".moder-header button");
-    close_button.click();
+    let id = JSON.parse(this.responseText);
+
+    let alert = document.querySelector("#alert_method");
+    if (alert.classList.contains("alert-danger"))
+        alert.classList.remove("alert-danger");
+    alert.style.display = "none";
+    alert.setAttribute("hidden", true);
+
+    let close = document.querySelector('#method_modal_cancel[data-id="' + id + '"]');
+    close.click();
+}
+
+function saveRate() {
+    let id = this.getAttribute("data-id_auction");
+    let id_notif = this.getAttribute("data-id");
+    let rating = parseInt(document.querySelector("#rating_value").value);
+
+    if (rating < 1 || rating > 5) {
+        let alert = document.querySelector("#alert_rate");
+        alert.classList.add("alert-danger");
+        alert.innerHTML = "Rating must be an integer between 1 and 5!";
+        alert.style.display = "grid";
+        alert.removeAttribute("hidden");
+        return;
+    }
+
+    let data = { rating: rating, id_notif: id_notif };
+
+    sendAjaxRequest("put", '/api/rates/' + id, data, saveRateHandler);
+}
+
+function saveRateHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let id = JSON.parse(this.responseText);
+    if (id == 0) {
+        let alert = document.querySelector("#alert_rate");
+        alert.classList.add("alert-danger");
+        alert.innerHTML = "Rating must be an integer between 1 and 5!";
+        alert.style.display = "grid";
+        alert.removeAttribute("hidden");
+    }
+    else {
+        let alert = document.querySelector("#alert_rate");
+        if (alert.classList.contains("alert-danger"))
+            alert.classList.remove("alert-danger");
+        alert.style.display = "none";
+        alert.setAttribute("hidden", true);
+
+        let close = document.querySelector('#rate_modal_cancel[data-id="' + id + '"]');
+        close.click();
+    }
 }
 
 function addToWatchlistButton() {
@@ -378,16 +439,20 @@ function reportAuctionEyeHandler() {
     let message = JSON.parse(this.responseText);
     let closeModal = document.querySelector(".report_auction_cancel");
     closeModal.click();
+
     let alert = document.querySelector("#alert");
     alert.classList.add("alert-" + message.state);
+    alert.style.display = "grid";
     alert.innerHTML = message.data;
-
     alert.removeAttribute("hidden");
+
+    let description = document.querySelector("#description");
+    description.value = "";
 
     setTimeout(function () {
         alert.classList.remove("alert-" + message.state);
         alert.style.display = "none";
-        alert.setAttribute("hidden");
+        alert.setAttribute("hidden", true);
     }, 5000);
 }
 
@@ -709,15 +774,41 @@ function deleteProfileImageHandler() {
     close.click();
 }
 
+function hasUnreadNotifications(notifications) {
+    let id = notifications.getAttribute("data-id");
+    sendAjaxRequest("get", "/api/profiles/" + id + "/notif_count", null, hasUnreadNotificationsHandler);
+}
+
+function hasUnreadNotificationsHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+    let count = JSON.parse(this.responseText);
+    let notifications = document.querySelector("#notification_bell");
+    if (count > 0) {
+        if (notifications.childElementCount == 1) {
+            let img = document.createElement('img');
+            img.setAttribute("src", "/assets/red_dot.png");
+            img.setAttribute("height", "7");
+            img.setAttribute("alt", "Unread Notifications");
+            img.setAttribute("id", "red_dot");
+            notifications.appendChild(img);
+        }
+    }
+    else {
+        console.log("no new");
+        console.log(notifications.childElementCount);
+        console.log(notifications);
+        if (notifications.childElementCount == 2)
+            notifications.lastElementChild.remove();
+    }
+}
+
 function getLastNotifications() {
     event.preventDefault();
     let id = this.getAttribute("data-id");
-    sendAjaxRequest(
-        "get",
-        "/api/profiles/" + id + "/notifications",
-        null,
-        getLastNotificationsHandler
-    );
+    sendAjaxRequest("get", "/api/profiles/" + id + "/notifications", null, getLastNotificationsHandler);
 }
 
 function getLastNotificationsHandler() {
@@ -726,49 +817,111 @@ function getLastNotificationsHandler() {
         console.log(this);
     }
     let notifications_list = JSON.parse(this.responseText);
-    if (notifications_list.length == 0)
-        return;
 
     let notifications = document.querySelector("#notifications");
     notifications.innerHTML = "";
 
+    if (notifications_list.length == 0) {
+        let p = document.createElement("p");
+        p.setAttribute("class", "dropdown-item d-flex");
+        p.innerHTML = "You have no new notifications";
+        notifications.appendChild(p);
+        return;
+    }
+
     [].forEach.call(notifications_list, function (notification) {
-        if (notification.type == "bid_surpassed") {
-            let form = document.createElement("form");
-            form.setAttribute("method", "POST");
-            form.setAttribute("action", "/notifications/" + notification.id + "/read");
+        let a = document.createElement("a");
+        a.setAttribute("class", "dropdown-item d-flex");
+        a.setAttribute("data-id", notification.id);
 
-            let input = document.createElement("input");
-            input.setAttribute("type", "hidden");
-            // input.type = "hidden";
-            input.setAttribute("value", document.querySelector('meta[name="csrf-token"]').content);
-            // input.value = document.querySelector('meta[name="csrf-token"]').content;
-            input.setAttribute("id", "token");
-            // input.id = "token";
-            input.setAttribute("name", "token");
-            // input.name = "token";
-
-            let button = document.createElement("button");
-            button.setAttribute("class", "dropdown-item d-flex w-100 m-0");
-            button.setAttribute("type", "submit");
-            
-            let span = document.createElement("span");
-            if (notification.read)
+        let span = document.createElement("span");
+        if (notification.read)
             span.setAttribute("class", "text-secondary h3 mr-3 align-middle");
-            else
+        else
             span.setAttribute("class", "text-danger h3 mr-3 align-middle");
-            
-            span.innerHTML = "&#8226;";
-            
-            let message = document.createElement("p");
-            message.innerHTML = notification.message;
 
-            button.appendChild(span);
-            button.appendChild(message);
-            form.appendChild(button);
-            notifications.appendChild(form);
+        span.innerHTML = "&#8226;";
+
+        let message = document.createElement("p");
+        message.innerHTML = notification.message;
+
+        if (notification.type == "bid_surpassed" || notification.type == "ended") {
+            a.setAttribute("href", "/auctions/" + notification.id_auction);
+            a.addEventListener('click', markRead);
         }
+        else if (notification.type == "winner") {
+            a.setAttribute("data-toggle", "modal");
+            a.setAttribute("data-target", "#payment_shipping_modal");
+            a.setAttribute("data-msg", notification.message);
+            a.setAttribute("data-id_auction", notification.id_auction);
+            a.setAttribute("href", "#");
+            a.addEventListener("click", openMethodModal)
+        }
+        else if (notification.type == "rate") {
+            a.setAttribute("data-toggle", "modal");
+            a.setAttribute("data-target", "#rate_modal");
+            a.setAttribute("data-msg", notification.message);
+            a.setAttribute("data-id_auction", notification.id_auction);
+            a.setAttribute("href", "#");
+            a.addEventListener("click", openRateModal);
+        }
+
+        a.appendChild(span);
+        a.appendChild(message);
+        notifications.appendChild(a);
     });
+}
+
+function markRead() {
+    let id = this.getAttribute("data-id");
+    sendAjaxRequest("put", "/api/notifications/" + id + "/read", null, markReadHandler);
+}
+
+function markReadHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+}
+
+function openMethodModal(event) {
+    event.preventDefault();
+    let title = document.querySelector("#payment_shipping_modal .modal-header h2");
+    let msg = this.getAttribute("data-msg");
+    let name = msg.substring(25, msg.length - 31);
+    title.innerHTML = "Choose Methods For " + name + "'s Auction";
+
+    let payMethodSelect = document.querySelector("#pay_method");
+    let shipMethodSelect = document.querySelector("#ship_method");
+    payMethodSelect.selectedIndex = "0";
+    shipMethodSelect.selectedIndex = "0";
+
+    let submit = document.querySelector("#method_button");
+    submit.setAttribute("data-id_auction", this.getAttribute("data-id_auction"));
+    submit.setAttribute("data-id", this.getAttribute("data-id"));
+    submit.addEventListener("click", saveMethods);
+
+    let close = document.querySelector("#method_modal_cancel");
+    close.setAttribute("data-id", this.getAttribute("data-id"));
+}
+
+function openRateModal(event) {
+    event.preventDefault();
+    let title = document.querySelector("#rate_modal .modal-header h2");
+    let msg = this.getAttribute("data-msg");
+    let name = msg.substring(0, msg.length - 51);
+    title.innerHTML = name + "'s Auction";
+
+    let rating = document.querySelector("#rating_value");
+    rating.value = "";
+
+    let submit = document.querySelector("#rate_button");
+    submit.setAttribute("data-id_auction", this.getAttribute("data-id_auction"));
+    submit.setAttribute("data-id", this.getAttribute("data-id"));
+    submit.addEventListener("click", saveRate);
+
+    let close = document.querySelector("#rate_modal_cancel");
+    close.setAttribute("data-id", this.getAttribute("data-id"));
 }
 
 addEventListeners();

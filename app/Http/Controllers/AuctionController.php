@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\Controller;
+use App\Notification;
+use App\Seller;
 
 class AuctionController extends Controller
 {
@@ -44,11 +46,13 @@ class AuctionController extends Controller
         if ($auction == null)
             return redirect()->route('homepage');
 
-        $seller = User::find($auction->id_seller);
+        $seller = Seller::find($auction->id_seller);
         if ($seller == null) {
             $seller = new stdClass();
             $seller->name = "Deleted User";
             $seller->rating = "0";
+        } else {
+            $seller->name = User::find($auction->id_seller)->name;
         }
 
         $seller_photo_id = DB::table('profile_photos')->where('id_user', $auction->id_seller)->first();
@@ -199,7 +203,12 @@ class AuctionController extends Controller
             return back()->withError("Please sign in before creating an auction.")->withInput();
         }
 
-        $date = new Carbon($request->input('ending_date'), 'GMT+01');
+        try {
+            $date = new Carbon($request->input('ending_date'), 'GMT+01');
+        }
+        catch(Exception $e) {
+            return back()->withError("The ending date format is invalid. Please enter the date and time in this format: YYYY/MM/DD, HH:MM AM/PM ")->withInput();
+        }
 
         if (Carbon::now('GMT+01')->greaterThanOrEqualTo($date))
             return back()->withError("The ending date must be in the future")->withInput();
@@ -321,23 +330,37 @@ class AuctionController extends Controller
         $auction->id_payment_method = $request->input('payM');
         $auction->id_shipping_method = $request->input('shipM');
         $auction->save();
-        return $id;
+
+        $notification = Notification::find($request->input('id_notif'));
+
+        $new_notification = new Notification();
+        $new_notification->message = $auction->species_name . " has been delivered! Click here to rate the auction";
+        $new_notification->read = FALSE;
+        $new_notification->type = "rate";
+        $new_notification->id_auction = $notification->id_auction;
+        $new_notification->id_buyer = $notification->id_buyer;
+
+        $notification->delete();
+        $new_notification->save();
+        return $request->input('id_notif');
     }
 
     public function delete($id)
     {
-        $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first()->id;
-        $image = Image::find($photo_id);
-        $auction = Auction::find($id);
+        $photo_id = DB::table('animal_photos')->where('id_auction', $id)->first();
+        if ($photo_id != null) {
+            $image = Image::find($photo_id->id);
+            $auction = Auction::find($id);
 
-        DB::table('animal_photos')->where('id', $photo_id)->delete();
+            DB::table('animal_photos')->where('id', $photo_id->id)->delete();
 
-        // $image->authorize('deleteAnimalPhoto', $auction);
+            // $image->authorize('deleteAnimalPhoto', $auction);
 
-        $image->delete(null, $photo_id);
-        DB::table('images')->where('id', $photo_id)->delete();
+            $image->delete(null, $photo_id->id);
+            DB::table('images')->where('id', $photo_id->id)->delete();
 
-        $auction->delete();
+            $auction->delete();
+        }
 
         return redirect()->route('homepage');
     }
@@ -477,10 +500,8 @@ class AuctionController extends Controller
             setweight(to_tsvector(coalesce('description','')), 'C');
             ");
             if (!$request->exists('max_price')) {
-                Log::emergency("FTS");
                 return $this->fullTextSearch($request);
             }
-            Log::emergency("SEARCH");
 
             if (!$request->has('mammals') && !$request->has('insects') && !$request->has('reptiles') && !$request->has('birds') && !$request->has('fishes') && !$request->has('amphibians')) {
                 $mammals = 1;
@@ -683,32 +704,8 @@ class AuctionController extends Controller
                     ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
                     ->paginate(12);
 
-                /*$auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
-                FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                to_tsquery('english', :text) AS query
-                WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
-                AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
-                AND (current_price < :max_price OR :max_price IS NULL)
-                AND (current_price > :min_price OR :min_price IS NULL)
-                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
-                AND tsv @@ query
-                AND id_status = 0
-                ORDER BY rank DESC;
-                "), array(
-                    'text' => $search,
-                    'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                    'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
-                    'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
-                    'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
-                    'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-                ));*/
-
                 $search = $request->input('search');
             } else {
-
-
                 $auctions = DB::table('auctions')
                     ->distinct()
                     ->join('features', 'auctions.id', '=', 'features.id_auction')
@@ -726,26 +723,6 @@ class AuctionController extends Controller
                     ->orderBy('ending_date')
                     ->paginate(12);
 
-
-
-                /*$auctions = DB::select(DB::raw("
-                SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
-                FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
-                WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
-                AND (id_main_color IN (:blue, :green, :brown, :red, :black, :white, :yellow, :orange, :pink, :purple, :grey))
-                AND (id_dev_stage IN (:baby, :child, :teen, :adult, :elderly))
-                AND (current_price < :max_price OR :max_price IS NULL)
-                AND (current_price > :min_price OR :min_price IS NULL)
-                AND (id_skill IN (:climbs, :jumps, :talks, :skates, :olfaction, :navigation, :echo, :acrobatics) OR id_skill IS NULL)
-                AND id_status = 0
-                ORDER BY ending_date;
-                "), array(
-                    'mammals' => $mammals, 'insects' => $insects, 'reptiles' => $reptiles, 'birds' => $birds, 'fishes' => $fishes, 'amphibians' => $amphibians,
-                    'blue' => $blue, 'green' => $green, 'brown' => $brown, 'red' => $red, 'black' => $black, 'white' => $white, 'yellow' => $yellow, 'orange' => $orange, 'pink' => $pink, 'purple' => $purple, 'grey' => $grey,
-                    'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
-                    'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
-                    'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-                ));*/
                 $search = "";
             }
 
@@ -814,28 +791,18 @@ class AuctionController extends Controller
         }
     }
 
-    public function arrayPaginator($array, $request)
-    {
-        $page = Input::get('page', 1);
-        $perPage = 12;
-        $offset = ($page * $perPage) - $perPage;
-
-        return new LengthAwarePaginator(
-            array_slice($array, $offset, $perPage, false),
-            count($array),
-            $perPage,
-            $page,
-            ['path' => $request->url(), 'query' => $request->query()]
-        );
-    }
-
     public function addReport(Request $request, $id_auction)
     {
-
         try {
-
             $auction = Auction::find($id_auction);
             $report = new Report();
+
+            if ($request->input("description") == null) {
+                $response['state'] = "danger";
+                $response['data'] = "Report's description cannot be empty!";
+
+                return json_encode($response);
+            }
 
             // $this->authorize('create', $report);
 
@@ -854,26 +821,27 @@ class AuctionController extends Controller
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
 
-            $response['state'] = "error";
+            $response['state'] = "danger";
             $response['data'] = $exception->getMessage();
 
             return json_encode($response);
         }
     }
 
-    public function rate(Request $request, $id_auction)
+    public function rate(Request $request, $id)
     {
-        $auction = Auction::find($id_auction);
-
         $possible_values = array(1, 2, 3, 4, 5);
-
-        if (!in_array($request->input('rate'), $possible_values)) {
-            return back()->withError("The rate must be an integer between 1 and 5")->withInput();
+        if (!in_array($request->input('rating'), $possible_values)) {
+            return 0;
         }
 
-        $auction->rating_seller = $request->input('rate');
+        $auction = Auction::find($id);
+        $auction->rating_seller = $request->input('rating');
         $auction->save();
 
-        return back();
+        $notification = Notification::find($request->input('id_notif'));
+        $notification->delete();
+
+        return $request->input('id_notif');
     }
 }
