@@ -868,7 +868,7 @@ function getLastNotificationsHandler() {
         let message = document.createElement("p");
         message.innerHTML = notification.message;
 
-        if (notification.type == "bid_surpassed" || notification.type == "ended"  || notification.type == "ending") {
+        if (notification.type == "bid_surpassed" || notification.type == "ended" || notification.type == "ending") {
             a.setAttribute("href", "/auctions/" + notification.id_auction);
             a.addEventListener('click', markRead);
         }
