@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Socialite;
+use App\Image;
+use App\ProfilePhoto;
 
 class LoginController extends Controller
 {
@@ -95,8 +97,18 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->stateless()->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        //return $user->id;
+
+        $image = new Image();
+        $image->url = $user->getAvatar();
+        $image->save();
+
+        $profile_photo = new ProfilePhoto();
+        $profile_photo->id_user = $authUser->id;
+        $profile_photo->id = $image->id;
+        $profile_photo->save();
+
         return redirect($this->redirectTo);
+
     }
 
     public function findOrCreateUser($user, $provider){
