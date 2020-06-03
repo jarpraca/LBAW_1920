@@ -20,9 +20,11 @@ use App\Feature;
 use App\Report;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
-use \stdClass;
 
+use App\Http\Controllers\Controller;
 
 class AuctionController extends Controller
 {
@@ -95,14 +97,27 @@ class AuctionController extends Controller
 
         DB::commit();
 
-        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'bidding_history' => $bidding_history, 'add_watchlist' => $add_watchlist,  'countdown' => $countdown]);
+        return view('pages.view_auction',  ['auction' => $auction, 'category' => $category, 'dev_stage' => $dev_stage, 'color' => $color, 'skills' => $skills, 'seller' => $seller, 'seller_photo' => $seller_photo, 'picture_name' => $image->url, 'role' => $role, 'winner' => $winner, 'last_bids' => $last_bids, 'add_watchlist' => $add_watchlist, 'bidding_history' => $bidding_history, 'countdown' => $countdown]);
+    }
+
+    public function biddingHistory($id)
+    {
+        $bidding_history = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->get();
+        return $bidding_history;
+    }
+
+
+    public function topBids($id)
+    {
+        $last_bids = DB::table('bids')->where('id_auction', $id)->leftJoin('users', 'users.id', '=', 'bids.id_buyer')->select('users.name as name', 'bids.value as value', 'bids.id as id')->orderBy('value', 'desc')->take(4)->get();
+        return $last_bids;
     }
 
     public function showEditForm($id)
     {
         $auction = Auction::find($id);
 
-        if($auction == null)
+        if ($auction == null)
             return redirect()->route('homepage');
 
         if (Auth::id() != $auction->id_seller)
@@ -113,11 +128,10 @@ class AuctionController extends Controller
 
         $bids = Bid::where('id_auction', $id)->get();
 
-        if(sizeof($bids) == 0){
+        if (sizeof($bids) == 0) {
             $starting_price = true;
             $highest_bid = $auction->starting_price;
-        }
-        else{
+        } else {
             $starting_price = false;
             $highest_bid = Bid::where('id_auction', $id)->orderBy('value', 'desc')->limit(1)->get();
             $highest_bid = $highest_bid[0]->value;
@@ -373,11 +387,11 @@ class AuctionController extends Controller
         try {
             $auction = Auction::find($id);
 
-            if($request->input('buyout_price') <= $auction->current_price)
+            if ($request->input('buyout_price') <= $auction->current_price)
                 return back()->withError("Buyout price cannot be lower than or equal to the current price")->withInput();
 
             $bids = Bid::where('id_auction', $id)->get();
-            if($auction->starting_price != $request->input('starting_price') && sizeof($bids) > 0)
+            if ($auction->starting_price != $request->input('starting_price') && sizeof($bids) > 0)
                 return back()->withError("Starting price cannot be changed because the auction has already been bidded")->withInput();
 
             $this->authorize('update', $auction);
@@ -502,7 +516,6 @@ class AuctionController extends Controller
                     $amphibians = null;
             }
 
-
             if (
                 !$request->has('blue') && !$request->has('brown') && !$request->has('black')
                 && !$request->has('yellow') && !$request->has('green') && !$request->has('red')
@@ -567,7 +580,6 @@ class AuctionController extends Controller
                     $grey = null;
             }
 
-
             if (!$request->has('baby') && !$request->has('child') && !$request->has('teen') && !$request->has('adult') && !$request->has('elderly')) {
                 $baby = 1;
                 $child = 2;
@@ -596,7 +608,6 @@ class AuctionController extends Controller
                 else
                     $elderly = null;
             }
-
 
             if (!$request->has('climbs') && !$request->has('jumps') && !$request->has('talks') && !$request->has('skates') && !$request->has('olfaction') && !$request->has('navigation') && !$request->has('echo') && !$request->has('acrobatics')) {
                 $climbs = 1;
@@ -641,11 +652,38 @@ class AuctionController extends Controller
                 else
                     $acrobatics = null;
             }
-            
+
+            if ($request->input('max_price') == null)
+                $max_price = 9999999;
+            else
+                $max_price = intval($request->input('max_price'));
+
+            if ($request->input('min_price') == null)
+                $min_price = 0;
+            else
+                $min_price = intval($request->input('min_price'));
+
             if ($request->input('search') != null) {
                 $search = "'" . $request->input('search') . "':*";
 
-                $auctions = DB::select(DB::raw("
+
+                $auctions = DB::table('auctions')
+                    ->join('features', 'auctions.id', '=', 'features.id_auction')
+                    ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+                    ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->select('auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->whereIn('id_category', [$mammals, $insects, $reptiles, $birds, $fishes, $amphibians])
+                    ->whereIn('id_main_color', [$blue, $green, $brown, $red, $black, $white, $yellow, $orange, $pink, $purple, $grey])
+                    ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
+                    ->where('current_price', '<', $max_price)
+                    ->where('current_price', '>', $min_price)
+                    ->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                    ->whereRaw("tsv @@ to_tsquery('english', ?)", [$search])
+                    ->where('id_status', '=', 0)
+                    ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
+                    ->paginate(12);
+
+                /*$auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
                 FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
                 to_tsquery('english', :text) AS query
@@ -665,10 +703,32 @@ class AuctionController extends Controller
                     'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
                     'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
                     'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-                ));
+                ));*/
+
                 $search = $request->input('search');
             } else {
-                $auctions = DB::select(DB::raw("
+
+
+                $auctions = DB::table('auctions')
+                    ->distinct()
+                    ->join('features', 'auctions.id', '=', 'features.id_auction')
+                    ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
+                    ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->select('auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->whereIn('id_category', [$mammals, $insects, $reptiles, $birds, $fishes, $amphibians])
+                    ->whereIn('id_main_color', [$blue, $green, $brown, $red, $black, $white, $yellow, $orange, $pink, $purple, $grey])
+                    ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
+                    ->where('current_price', '<', $max_price)
+                    ->where('current_price', '>', $min_price)
+                    ->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                    ->orWhereNull('id_skill')
+                    ->where('id_status', '=', 0)
+                    ->orderBy('ending_date')
+                    ->paginate(12);
+
+
+
+                /*$auctions = DB::select(DB::raw("
                 SELECT DISTINCT auctions.id as id, url, species_name, current_price, age, ending_date, id_status
                 FROM (((auctions LEFT JOIN features ON auctions.id = features.id_auction) JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id) 
                 WHERE (id_category IN (:mammals, :insects, :reptiles, :birds, :fishes, :amphibians ))  
@@ -685,11 +745,9 @@ class AuctionController extends Controller
                     'baby' => $baby,  'child' => $child, 'teen' => $teen, 'adult' => $adult, 'elderly' => $elderly,
                     'max_price' => $request->input('max_price'), 'min_price' => $request->input('min_price'),
                     'climbs' => $climbs, 'jumps' => $jumps, 'talks' => $talks, 'skates' => $skates, 'olfaction' => $olfaction, 'navigation' => $navigation, 'echo' => $echo, 'acrobatics' => $acrobatics
-                ));
+                ));*/
                 $search = "";
             }
-
-
 
             if (Auth::check()) {
                 foreach ($auctions as $auction) {
@@ -718,14 +776,12 @@ class AuctionController extends Controller
             if ($search != "") {
                 $search = "'" . $search . "':*";
 
-                $auctions = DB::select(DB::raw("
-                SELECT auctions.id as id, url, species_name, current_price, age, ending_date, id_status, ts_rank_cd(tsv, query) AS rank
-                FROM ((auctions JOIN animal_photos ON auctions.id = animal_photos.id_auction) JOIN images ON animal_photos.id = images.id), 
-                to_tsquery('english', :text) AS query
+                $auctions = DB::table('auctions')->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->select('auctions.id AS id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->where('id_status', '=', 0)->whereRaw("tsv @@ to_tsquery('english', ?)", [$search])
+                    ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
+                    ->paginate(12);
 
-                WHERE tsv @@ query AND id_status = 0
-                ORDER BY rank DESC;
-                "), array('text' => $search));
 
                 $search = $request->input('search');
             } else {
@@ -735,9 +791,8 @@ class AuctionController extends Controller
                     ->where('auctions.id_status', '=', 0)
                     ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
                     ->orderBy('ending_date', 'desc')
-                    ->get();
+                    ->paginate(12);
             }
-
 
             if (Auth::check()) {
                 foreach ($auctions as $auction) {
@@ -757,6 +812,21 @@ class AuctionController extends Controller
             Log::emergency($e->getMessage());
             return back()->withError($e->getMessage());
         }
+    }
+
+    public function arrayPaginator($array, $request)
+    {
+        $page = Input::get('page', 1);
+        $perPage = 12;
+        $offset = ($page * $perPage) - $perPage;
+
+        return new LengthAwarePaginator(
+            array_slice($array, $offset, $perPage, false),
+            count($array),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
     }
 
     public function addReport(Request $request, $id_auction)
@@ -779,14 +849,14 @@ class AuctionController extends Controller
 
             $response['state'] = "success";
             $response['data'] = "Report successfully sent";
-            
+
             return json_encode($response);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            
+
             $response['state'] = "error";
             $response['data'] = $exception->getMessage();
-            
+
             return json_encode($response);
         }
     }

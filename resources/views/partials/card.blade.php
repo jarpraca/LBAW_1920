@@ -9,7 +9,8 @@
             </div>
             <div class="d-flex flex-row justify-content-between align-items-center">
                 <p><span class="card-text smallFont mr-1">@if($auction->id_status == 0) Ending: @else Ended: @endif</span> {{ $auction->ending_date }} </p>
-                @if($auction->id_status == 0)
+                @inject('admin', 'App\Admin')
+                @if($auction->id_status == 0 && Auth::check() && !$admin::find(Auth::id()))
                 <i class="{{ $auction->watchlisted ? 'fas colorGreen' : 'far colorGrey' }} fa-eye fa-2x {{ $auction->watchlisted ? 'remWatchlistEye' : 'addWatchlistEye' }}" data-id="{{ $auction->id }}"></i>
                 @endif
             </div>

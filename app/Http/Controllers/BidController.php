@@ -34,7 +34,7 @@ class BidController extends Controller
         $bid->value = $request->input('bid_value');
         $bid->save();
 
-        event(new BidCreated($bid));
+        // event(new BidCreated($bid));
 
         $highest = DB::select('select maximum, id_buyer from bids where id_auction=' . $bid->id_auction . ' and maximum is not null order by maximum desc limit 1');
 
@@ -48,7 +48,7 @@ class BidController extends Controller
             $bid2->value = $bid->value + 1;
             $bid2->save();
 
-            event(new BidCreated($bid2));
+            // event(new BidCreated($bid2));
         }
 
         return redirect()->route('view_auction', ['id' => $id_auction]);
@@ -78,7 +78,7 @@ class BidController extends Controller
         $bid->maximum = $request->input('auto_bid_value');
         $bid->save();
 
-        event(new BidCreated($bid));
+        // event(new BidCreated($bid));
 
         if ((count($highest) > 0)  && ($highest[0]->maximum > $bid->value) && ($id_user != $highest[0]->id_buyer)) {
 
@@ -92,7 +92,7 @@ class BidController extends Controller
                 $bid2->value = $highest[0]->maximum + 1;
                 $bid2->save();
 
-                event(new BidCreated($bid2));
+                // event(new BidCreated($bid2));
             } else {
 
                 $bid2 = new Bid;
@@ -103,7 +103,7 @@ class BidController extends Controller
                 $bid2->value = $bid->maximum + 1;
                 $bid2->save();
 
-                event(new BidCreated($bid2));
+                // event(new BidCreated($bid2));
             }
         }
 

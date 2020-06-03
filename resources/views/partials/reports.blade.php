@@ -25,18 +25,36 @@
                 <td class="col-4 col-sm-2 d-flex align-items-center">
                     @if($report->status == 0)
                     <div class="dropdown show">
-                        <a class="btn btn-outline-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
+                        <a class="btn btn-outline-green" href="#" data-toggle="modal" data-target="#modal_report_{{ $report->id }}">
+                            View
                         </a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item accept_report" data-id="{{ $report->id }}" href="#">Accept</a>
-                            <a class="dropdown-item deny_report" data-id="{{ $report->id }}" href="#">Deny</a>
-                        </div>
                     </div>
                     @endif
                 </td>
             </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="modal_report_{{ $report->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ $report->seller_name }}'s Report</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ $report->description }}</p>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary approve_report_cancel" data-id="{{ $report->id }}" data-dismiss="modal">Cancel</button>
+                            <div>
+                            <button type="button" class="btn btn-success accept_report" data-id="{{ $report->id }}">Accept</button>
+                            <button type="button" class="btn btn-danger deny_report" data-id="{{ $report->id }}">Deny</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endforeach
         </tbody>
     </table>

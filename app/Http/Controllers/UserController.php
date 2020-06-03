@@ -227,4 +227,17 @@ class UserController extends Controller
             return back()->withError($exception->__toString())->withInput();
         }
     }
+
+    public function showNotifications($id) {
+        $notifications = DB::table('notifications')->where('id_buyer', $id)->orderBy('id', 'desc')->limit(5)->get();
+        return $notifications;
+    }
+
+    public function markRead($id) {
+        $notification = DB::table('notifications')->where('id', $id)->first();
+        $notification->read = TRUE;
+        $notification->save();
+
+        return redirect()->route('view_auction', ['id' => $notification->id_auction]);
+    }
 }

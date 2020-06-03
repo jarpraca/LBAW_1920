@@ -30,7 +30,7 @@ class AdminController extends Controller
             ->leftJoin('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
             ->orderBy('s.name', 'asc')
-            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id'])
+            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id', 'reports.description AS description'])
             ->paginate(10);
 
         $admins = DB::table('admins')->select(['id']);
@@ -50,7 +50,7 @@ class AdminController extends Controller
             ->leftJoin('users as b', 'b.id', '=', 'reports.id_buyer')
             ->orderBy('reports.date', 'desc')
             ->orderBy('s.name', 'asc')
-            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id'])
+            ->select(['reports.date AS date', 'reports.id_status AS status', 'b.name AS buyer_name', 's.name AS seller_name', 'reports.id AS id', 'reports.description AS description'])
             ->paginate(10);
 
         return view('partials.reports', ['reports' => $reports])->render();

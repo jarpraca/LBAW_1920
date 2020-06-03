@@ -19,6 +19,6 @@ class Bid extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'created' => BidCreated::class,
+        // 'created' => BidCreated::class,
     ];
 }

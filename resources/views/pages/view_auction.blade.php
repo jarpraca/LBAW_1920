@@ -171,16 +171,18 @@
                 <h2 class="mb-3 mx-auto mt-5">Bidding History</h2>
 
                 <div class="h-25 mx-3">
+                    <div id="top_bids" data-id="{{ $auction->id }}">
                     @each('partials.bid_entry', $last_bids, 'bid')
-
+                    </div>
                     @if(sizeof($last_bids) == 0)
                     <p class="text-center">No bids yet</p>
                     @elseif(sizeof($bidding_history) > 4)
-                    <div class="p-2 popup w-100" data-toggle="modal" data-target="#bidsModal">
+                    <div class="p-2 btn w-100" data-toggle="modal" id="bidding_history" data-id="{{ $auction->id }}" data-target="#bidsModal">
                         <p class="colorGreen text-center text-decoration-underline mx-auto no-print"><u class="text-center">See More</u></p>
                     </div>
                     @endif
 
+                    <!-- Modal Bidding History -->
                     <div class="modal fade" id="bidsModal" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content mx-auto">
@@ -191,8 +193,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="overflow-auto h-100 mx-2">
-                                        @each('partials.bid_entry', $bidding_history, 'bid')
+                                    <div id="bids_list" class="overflow-auto h-100 mx-2">
                                     </div>
                                 </div>
                             </div>

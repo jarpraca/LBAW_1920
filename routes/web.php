@@ -48,9 +48,15 @@ Route::delete('api/users/{id}', 'AdminController@delete');
 Route::put('api/auctions/{id}/choose_methods', 'AuctionController@choose_methods');
 Route::post('api/watchlists/{id_auction}', 'AuctionController@addWatchlist');
 Route::delete('api/watchlists/{id_auction}', 'AuctionController@removeWatchlist');
-Route::put('api/rates/{id}', 'AuctionController@rate')->name('rate');
+Route::put('api/rates/{id}', 'AuctionController@rate');
 Route::delete('api/users/{id}/image', 'UserController@deletePhoto');
-Route::post('api/auctions/{id}/report', 'AuctionController@addReport')->name('add_report');
+Route::post('api/auctions/{id}/report', 'AuctionController@addReport');
+Route::get('api/auctions/{id}/biddingHistory', 'AuctionController@biddingHistory');
+Route::get('api/auctions/{id}/topBids', 'AuctionController@topBids');
+Route::get('api/profiles/{id}/notifications', 'UserController@showNotifications');
+
+// Notifications
+Route::post('notifications/{id}/read', 'UserController@markRead');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

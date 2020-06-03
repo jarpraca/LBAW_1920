@@ -32,21 +32,14 @@ DROP TYPE IF EXISTS dev_stage;
 DROP TYPE IF EXISTS color;
 DROP TYPE IF EXISTS report_status_name;
 DROP TYPE IF EXISTS auction_status_name;
+DROP TYPE IF EXISTS notification_type;
 
-DROP TYPE IF EXISTS skill_name;
-DROP TYPE IF EXISTS category_name;
-DROP TYPE IF EXISTS shipping;
-DROP TYPE IF EXISTS payment;
-DROP TYPE IF EXISTS dev_stage;
-DROP TYPE IF EXISTS color;
-DROP TYPE IF EXISTS report_status_name;
-DROP TYPE IF EXISTS auction_status_name;
-
-DROP INDEX IF EXISTS user_email;
-DROP INDEX IF EXISTS search_auction;
+DROP INDEX IF EXISTS ix_auctions_tsv;
 DROP INDEX IF EXISTS admin_search;
-DROP INDEX IF EXISTS auction_id;
 DROP INDEX IF EXISTS notification_id;
+DROP INDEX IF EXISTS watchlists_id;
+DROP INDEX IF EXISTS auction_id;
+DROP INDEX IF EXISTS bids_id;
 
 DROP TRIGGER IF EXISTS create_buyer ON users;
 DROP TRIGGER IF EXISTS create_seller ON users;
@@ -85,6 +78,7 @@ CREATE TYPE dev_stage AS ENUM ('Baby', 'Child', 'Teen', 'Adult', 'Elderly');
 CREATE TYPE category_name AS ENUM ('Mammals', 'Insects', 'Reptiles', 'Fishes', 'Birds', 'Amphibians');
 CREATE TYPE report_status_name as ENUM('Pending', 'Approved', 'Denied');
 CREATE TYPE auction_status_name as ENUM('Ongoing', 'Finished', 'Cancelled');
+CREATE TYPE notification_type as ENUM('winner', 'bid_surpassed', 'ending', 'ended', 'payment_shipping', 'rate');
 
 -----------------------------------------
 -- TABLES
@@ -198,6 +192,7 @@ CREATE TABLE notifications
     id SERIAL PRIMARY KEY,
     "message" text NOT NULL,
     "read" boolean DEFAULT FALSE,
+    TYPE notification_type NOT NULL,
     id_auction integer NOT NULL REFERENCES auctions (id) ON UPDATE CASCADE ON DELETE CASCADE,
     id_buyer integer REFERENCES buyers (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -302,14 +297,15 @@ $BODY$
 BEGIN
     IF(NEW.id_status <> OLD.id_status AND NEW.id_status = 1)
     THEN
-        INSERT INTO notifications ("message", "read", id_auction, id_buyer)
-        SELECT 'You won an auction!', FALSE, info.id_auction, info.id_buyer
+        INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
+        SELECT CONCAT('Congratulations! You won ', NEW.species_name, '! Click here to get your animal'), FALSE, 'winner', info.id_auction, info.id_buyer
         FROM (SELECT value, id_auction, id_buyer
                 FROM  bids
                 WHERE id_auction = NEW.id
                 ORDER BY value DESC 
                 LIMIT 1
             ) AS info;
+
         UPDATE auctions 
             SET id_winner = (SELECT id_buyer
                 FROM  bids
@@ -391,14 +387,19 @@ $BODY$
 BEGIN
     IF EXISTS(SELECT * FROM bids WHERE id_auction = NEW.id_auction)
     THEN 
-        INSERT INTO notifications ("message", "read", id_auction, id_buyer)
-        SELECT 'Your bid has been surpassed', FALSE, info.id_auction, info.id_buyer
+        INSERT INTO notifications ("message", "read", TYPE, id_auction, id_buyer)
+        SELECT CONCAT('Your bid on ', auction.species_name,' has been surpassed!'), FALSE, 'bid_surpassed', info.id_auction, info.id_buyer
         FROM (SELECT value, id_auction, id_buyer
                 FROM  bids
                 WHERE id_auction = NEW.id_auction
                 ORDER BY value DESC 
                 LIMIT 1
-            ) AS info;
+            ) AS info,
+            (SELECT species_name
+                FROM  auctions
+                WHERE id = NEW.id_auction
+                LIMIT 1
+            ) AS auction;
     END IF;
 	RETURN NEW;
 END

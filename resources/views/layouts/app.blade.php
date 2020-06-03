@@ -69,9 +69,32 @@
             @endif
             <ul class="navbar-nav align-items-center">
                 @auth
-                <li class="nav-item">
-                    <div class="btn btn-green mx-auto p-2 my-2 my-sm-0 popup" data-toggle="modal" data-target="#exampleModal">
+                <li class="nav-item dropdown show">
+                    <a id="notification_bell" class="btn btn-green mx-auto p-2 my-2 my-sm-0" role="button" data-toggle="dropdown" data-id="{{Auth::id()}}" aria-haspopup="true" aria-expanded="false">
                         <img src="{{asset('assets/bell.png')}}" height="30" alt="Notifications">
+                    </a>
+
+                    <div id="notifications" class="dropdown-menu dropdown-menu-right" aria-labelledby="notification_bell">
+                        <a class="dropdown-item d-flex" href="#">
+                            <span class="text-danger h3 mr-3 align-middle">&#8226;</span>
+                            <p>You just won Guinea Monkey 3!</p>
+                        </a>
+                        <a class="dropdown-item d-flex" href="#">
+                            <span class="text-danger h3 mr-3 align-middle">&#8226;</span>
+                            <p>Your bid on Paul has been surpassed!</p>
+                        </a>
+                        <form method="POST" action="{{ route('delete_auction', ['id' => 3]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button class="dropdown-item d-flex w-100 m-0" type="submit">
+                                <span class="text-secondary h3 mr-3 align-middle">&#8226;</span>
+                                <p>Your bid on Guinea Monkey 2 has been surpassed!</p>
+                            </button>
+                        </form>
+                        <a class="dropdown-item d-flex" href="#">
+                            <span class="text-secondary h3 mr-3 align-middle">&#8226;</span>
+                            <p>Your bid on Guinea Monkey 2 has been surpassed!</p>
+                        </a>
                     </div>
                 </li>
 
@@ -108,7 +131,7 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="exampleModal" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="notificationModal" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content mx-auto">
                 <div class="modal-header">

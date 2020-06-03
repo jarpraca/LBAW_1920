@@ -29,8 +29,7 @@ class UpdateBidHistory
     {
         // @{{ sendAjaxRequest("delete", "/api/images/" + id, null, imageDeletedHandler) }};
         // echo '<script type="text/javascript> alert("hello!");  </script>';
-        echo '<script> console.log('.json_encode($event->bid).')</script>';
-        echo $event->bid;
+
         return redirect()->route('view_auction', ['id' => $event->bid->id_auction]);
     }
 }

@@ -787,9 +787,12 @@ button[aria-expanded="false"] .fa-chevron-up {
 }
 
 .text-box {
-
   line-height: 1.4;
+}
 
+.search_box::after {
+  content: '';
+  flex: auto;
 }
 
 /* Add animation (fade in the popup) */
