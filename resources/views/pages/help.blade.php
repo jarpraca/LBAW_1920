@@ -46,8 +46,8 @@
 
 
         <h2 class="my-3 text-dark">Contacts</h2>
-            <p>Support Email: geral.bidmonkey@gmail.com</p>
-            <p>Phone Number: + 351 912 345 678</p>
+            <p><span class="font-weight-bold">Support Email:</span> geral.bidmonkey@gmail.com</p>
+            <p><span class="font-weight-bold">Phone Number:</span> + 351 912 345 678</p>
     </div>
 </div>
 @endsection

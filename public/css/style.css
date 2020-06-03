@@ -293,7 +293,6 @@ textarea {
   border-bottom-color: var(--myLightGreen);
   border-bottom-style: solid;
   background-color: transparent;
-  /* color: var(--myYellow); */
 }
 
 .submit {
@@ -384,12 +383,6 @@ a {
 }
 
 /* Login / Sign up */
-
-/* body { */
-  /* margin: 0px; */
-  /* padding: 0px; */
-  /* background-color: var(--myLightGreen); */
-/* } */
 
 #signup_bg::before {
   content: "";
@@ -554,7 +547,6 @@ a {
   border-bottom-color: var(--myDarkGreen);
   color: var(--myLightGreen);
   font-size: 15px;
-  /* transition: all 0.2s; */
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -581,8 +573,6 @@ a {
 }
 
 .active:after {
-  /* content: "\2796"; */
-  /* Unicode character for "minus" sign (-) */
   outline: none;
 }
 
@@ -748,18 +738,6 @@ a {
 
 /* Toggle this class - hide and show the popup */
 
-.popup .show {
-  /* visibility: visible;
-    -webkit-animation: fadeInIn 0.5s;
-    animation: fadeInIn 0.5s; */
-}
-
-/* .fadeInIn {
-    visibility: visible;
-    -webkit-animation: fadeInIn 0.5s;
-    animation: fadeInIn 0.5s;
-} */
-
 #close_bt {
   color: var(--myDarkGreen);
 }
@@ -788,23 +766,3 @@ button[aria-expanded="false"] .fa-chevron-up {
   content: '';
   flex: auto;
 }
-
-/* Add animation (fade in the popup) */
-
-/* @-webkit-keyframes fadeInIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: .6;
-    }
-}
-
-@keyframes fadeInIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: .6;
-    }
-} */

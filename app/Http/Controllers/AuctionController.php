@@ -79,7 +79,7 @@ class AuctionController extends Controller
             $role = "user";
             $admin = DB::table('admins')->where('id', Auth::user()->id)->first();
             $check_watchlists = Watchlist::where('id_auction', $id)->where('id_buyer', Auth::id())->first();
-            // $check_watchlists = DB::table('watchlists')->where('id_auction', $id)->where('id_buyer', Auth::user()->id)->get();
+
             if ($check_watchlists != null)
                 $add_watchlist = false;
             else
@@ -176,7 +176,7 @@ class AuctionController extends Controller
             return $id_auction;
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
-            return $e->getMessage();
+            return $e->__toString();
         }
     }
 
@@ -188,7 +188,7 @@ class AuctionController extends Controller
             return $id_auction;
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
-            return $e->getMessage();
+            return $e->__toString();
         }
     }
 
@@ -219,7 +219,6 @@ class AuctionController extends Controller
             return back()->withError("Please fill out all the fields.")->withInput();
         }
 
-        // if($request->input('name') == )
 
         try {
             $auction = new Auction();
@@ -307,16 +306,14 @@ class AuctionController extends Controller
 
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
-            // return back()->withError($exception->getMessage())->withInput();
             Log::error($exception->getMessage());
-            return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+            return back()->withError($exception->__toString())->withInput();
         }
     }
 
     public function stop($id)
     {
         $auction = Auction::find($id);
-        //$this->authorize('update', $auction);
         $auction->id_status = 2;
         $auction->save();
         return redirect()->route('view_auction', ['id' => $auction->id]);
@@ -325,7 +322,6 @@ class AuctionController extends Controller
     public function choose_methods(Request $request, $id)
     {
         $auction = Auction::find($id);
-        //$this->authorize('update', $auction);
         $auction->id_payment_method = $request->input('payM');
         $auction->id_shipping_method = $request->input('shipM');
         $auction->save();
@@ -353,7 +349,6 @@ class AuctionController extends Controller
 
             DB::table('animal_photos')->where('id', $photo_id->id)->delete();
 
-            // $image->authorize('deleteAnimalPhoto', $auction);
 
             $image->delete(null, $photo_id->id);
             DB::table('images')->where('id', $photo_id->id)->delete();
@@ -484,8 +479,7 @@ class AuctionController extends Controller
             return redirect()->route('view_auction', ['id' => $auction->id]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            return back()->withError($exception->getMessage())->withInput();
-            // return back()->withError('An error occured while trying to create the auction, please verify if your inputs are valid and try again.')->withInput();
+            return back()->withError($exception->__toString())->withInput();
         }
     }
 
@@ -687,6 +681,7 @@ class AuctionController extends Controller
                 $search = "'" . $request->input('search') . "':*";
 
                 $auctions = DB::table('auctions')
+                    ->distinct()
                     ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
                     ->join('images', 'animal_photos.id', '=', 'images.id')
                     ->leftJoin('features', 'auctions.id', '=', 'features.id_auction')
@@ -697,9 +692,9 @@ class AuctionController extends Controller
                     ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
                     ->where('current_price', '<', $max_price)
                     ->where('current_price', '>', $min_price)
-                    ->where(function($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
+                    ->where(function ($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
                         $q->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
-                        ->orWhereNull('id_skill');
+                            ->orWhereNull('id_skill');
                     })
                     ->whereRaw("tsv @@ to_tsquery('english', ?)", [$search])
                     ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
@@ -708,6 +703,7 @@ class AuctionController extends Controller
                 $search = $request->input('search');
             } else {
                 $auctions = DB::table('auctions')
+                    ->distinct()
                     ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
                     ->join('images', 'animal_photos.id', '=', 'images.id')
                     ->leftJoin('features', 'auctions.id', '=', 'features.id_auction')
@@ -718,9 +714,9 @@ class AuctionController extends Controller
                     ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
                     ->where('current_price', '<', $max_price)
                     ->where('current_price', '>', $min_price)
-                    ->where(function($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
+                    ->where(function ($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
                         $q->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
-                        ->orWhereNull('id_skill');
+                            ->orWhereNull('id_skill');
                     })
                     ->orderBy('ending_date')
                     ->paginate(12);
@@ -743,8 +739,8 @@ class AuctionController extends Controller
 
             return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
         } catch (Exception $e) {
-            //  Log::emergency($e->getMessage());
-            return back()->withError($e->getMessage());
+            Log::emergency($e->getMessage());
+            return back()->withError($e->__toString())->withInput();
         }
     }
 
@@ -789,7 +785,7 @@ class AuctionController extends Controller
             return view('pages.search', ['auctions' => $auctions, 'search' => $search]);
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
-            return back()->withError($e->getMessage());
+            return back()->withError($e->__toString())->withInput();
         }
     }
 
@@ -806,7 +802,6 @@ class AuctionController extends Controller
                 return json_encode($response);
             }
 
-            // $this->authorize('create', $report);
 
             $report->date = now()->toDateString();
             $report->description = $request->input("description");

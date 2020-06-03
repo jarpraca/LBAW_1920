@@ -3,6 +3,7 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
+<div id="alert_admin" class="alert mt-5 mx-3 alert-success fade">Silvia J. Rocha blocked!</div>
 
 <section class="mainBody mb-3">
 

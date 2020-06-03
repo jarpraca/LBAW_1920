@@ -45,7 +45,7 @@
                     <input id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password" required>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="d-flex align-self-center justify-content-around align-items-center">
                         <button class="btn btn-outline-black ml-0">
                             Sign up with&nbsp;
@@ -56,7 +56,7 @@
                             <i class="fab fa-google"></i>
                         </button>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <div class="d-flex align-self-center justify-content-center align-items-center">

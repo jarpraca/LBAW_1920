@@ -116,7 +116,7 @@ class UserController extends Controller
             }
         }
 
-        return view('pages.view_profile',  ['profile' => $user, 'picture_name' => $url, 'purchase_history' => $purchase_history, 'my_auctions' => $my_auctions, 'previous_auctions' => $previous_auctions, 'bidding' => $bidding, 'didnt_win' => $didnt_win, 'watchlist' => $watchlist]); // 'last_bids' => $last_bids, 'bidding_history' => $bidding_history]);
+        return view('pages.view_profile',  ['profile' => $user, 'picture_name' => $url, 'purchase_history' => $purchase_history, 'my_auctions' => $my_auctions, 'previous_auctions' => $previous_auctions, 'bidding' => $bidding, 'didnt_win' => $didnt_win, 'watchlist' => $watchlist]);
     }
 
     public function delete($id)
@@ -175,9 +175,6 @@ class UserController extends Controller
             }
 
             $profile = User::find($id);
-
-            // $this->authorize('update', $auction);
-
             $profile->name = $request->input('name');
             $profile->email = $request->input('email');
 
@@ -219,7 +216,6 @@ class UserController extends Controller
             return redirect()->route('profiles', ['id' => $profile->id]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
-            // return back()->withError('An error occured while trying to edit your profile, please verify if your inputs are valid and try again.')->withInput();
             return back()->withError($exception->__toString())->withInput();
         }
     }

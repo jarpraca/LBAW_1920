@@ -15,6 +15,14 @@
         width: 50%;
     }
 
+    #alert_admin {
+        position: static;
+        text-align: center;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .popup .popuptext {
         width: 50%;
         position: fixed;

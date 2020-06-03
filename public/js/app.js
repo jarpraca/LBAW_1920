@@ -601,12 +601,20 @@ function unblockUserHandler() {
         console.log(this.status);
         console.log(this);
     }
-    let id = JSON.parse(this.responseText);
-    let button = document.querySelector('.unblock_button[data-id="' + id + '"]');
+    let response = JSON.parse(this.responseText);
+    console.log(response)
+    let button = document.querySelector('.unblock_button[data-id="' + response.id + '"]');
     button.className = "btn btn-warning block_button";
     button.innerHTML = "Block";
     button.removeEventListener("click", unblockUser);
     button.addEventListener("click", blockUser);
+
+    let alert = document.querySelector("#alert_admin");
+    alert.innerHTML = response.user + " unblocked!";
+    alert.classList.add("show");
+    setTimeout(() => {
+        alert.classList.remove("show");
+    }, 2000);
 }
 
 function blockUser(event) {
@@ -621,12 +629,20 @@ function blockUserHandler() {
         console.log(this.status);
         console.log(this);
     }
-    let id = JSON.parse(this.responseText);
-    let button = document.querySelector('.block_button[data-id="' + id + '"]');
+    let response = JSON.parse(this.responseText);
+    console.log(response);
+    let button = document.querySelector('.block_button[data-id="' + response.id + '"]');
     button.className = "btn btn-success unblock_button";
     button.innerHTML = "Unblock";
     button.removeEventListener("click", blockUser);
     button.addEventListener("click", unblockUser);
+
+    let alert = document.querySelector("#alert_admin");
+    alert.innerHTML = response.user + " blocked!";
+    alert.classList.add("show");
+    setTimeout(() => {
+        alert.classList.remove("show");
+    }, 2000);
 }
 
 function deleteUser(event) {

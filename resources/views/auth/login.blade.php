@@ -4,7 +4,7 @@
 
 @section('content')
 
-<meta property="og:title" content="BidMonkeys- Your animal auction website" />
+<meta property="og:title" content="BidMonkeys - Your animal auction website" />
 <meta property="og:description" content="Come back, there's lots more animals waiting..." />
 <meta property="og:image" content="{{asset('assets/logo.png')}}" />
 <meta property="og:locale" content="en_GB" />
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="d-flex justify-content-around align-items-center">
 
                         <button class="btn btn-outline-black ml-0" onclick="fb_login();">
@@ -65,7 +65,7 @@
                         <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
                     </div>
-                </div>
+                </div> -->
 
                 <div class="d-flex mt-2 flex-row justify-content-center align-items-center">
                     <p>Don't have an account?&nbsp;</p>

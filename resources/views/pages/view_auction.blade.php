@@ -99,7 +99,7 @@
                     <div class="d-flex flex-row mx-3 no-print">
                         {{ csrf_field() }}
                         <label style="display:none" for="bid_value">Bid Value</label>
-                        <input type="number" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
+                        <input type="number" min="{{ $auction->current_price }}" id="bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
                         <button class="btn btn-green mx-auto w-50" type="submit">Bid</button>
                     </div>
                 </form>
@@ -108,12 +108,11 @@
                     <div class="d-flex flex-row mt-3 mx-3 no-print">
                         {{ csrf_field() }}
                         <label style="display:none" for="bid_value"></label>
-                        <input type="number" id="auto_bid_value" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
+                        <input type="number" id="auto_bid_value" min="{{ $auction->current_price }}" name="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50" required>
                         <button class="btn btn-green mx-auto w-50" type="submit">Auto Bid</button>
                     </div>
                 </form>
                 @endif
-
 
                 <button type="button" id="report-auction" class="btn btn-green mt-3 mx-3 no-print" data-toggle="modal" data-target="#modal_{{ $auction->id }}" data-id="{{ $auction->id }}">Report</button>
 
@@ -154,12 +153,12 @@
                 @if($auction->id_status == 0)
                 <div class="d-flex flex-row mx-3 no-print">
                     <label style="display:none" for="bid_value"></label>
-                    <input type="number" id="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
+                    <input type="number" min="{{ $auction->current_price }}" id="bid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
                     <a class="btn btn-green mx-auto w-50" href="/login">Bid</a>
                 </div>
                 <div class="d-flex flex-row mx-3 mt-3 no-print">
                     <label style="display:none" for="autobid_value"></label>
-                    <input type="number" id="autobid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
+                    <input type="number" min="{{ $auction->current_price }}" id="autobid_value" placeholder="Bid Value" class="form-control mr-1 w-50">
                     <a class="btn btn-green mx-auto w-50" href="/login">Auto Bid</a>
                 </div>
                 @endif
