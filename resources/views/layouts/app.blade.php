@@ -64,11 +64,14 @@
             <form class="navbar-search form-inline my-2 my-lg-0" method="GET" action="{{ route('search') }}">
                 <label style="display:none" for="search"></label>
                 <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
-                <button type="submit" class="btn btn-green2 mt-2 mt-sm-0">Search</button>
+                <button type="submit" class="btn btn-green2 mt-sm-0">Search</button>
             </form>
             @endif
             <ul class="navbar-nav align-items-center">
                 @auth
+
+                @inject('admin', 'App\Admin')
+                @if($admin::find(Auth::user()->id) == null)
                 <li class="nav-item dropdown">
                     <a id="notification_bell" class="btn btn-green mx-auto p-2 my-2 my-sm-0" role="button" data-toggle="dropdown" data-id="{{Auth::id()}}" aria-haspopup="true" aria-expanded="false">
                         <img src="{{asset('assets/bell.png')}}" height="30" alt="Notifications">
@@ -78,9 +81,6 @@
 
                     </div>
                 </li>
-
-                @inject('admin', 'App\Admin')
-                @if($admin::find(Auth::user()->id) == null)
                 <li class="nav-item">
                     <a class="nav-link btn mx-sm-2 px-2 {!! Route::currentRouteName() == 'create_auction' ? 'btn-darkGreen' : 'btn-add-auction' !!}" href="/auctions">+ Add Auction</a>
                 </li>

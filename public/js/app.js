@@ -797,9 +797,6 @@ function hasUnreadNotificationsHandler() {
         }
     }
     else {
-        console.log("no new");
-        console.log(notifications.childElementCount);
-        console.log(notifications);
         if (notifications.childElementCount == 2)
             notifications.lastElementChild.remove();
     }

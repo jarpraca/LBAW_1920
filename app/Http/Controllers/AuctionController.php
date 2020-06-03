@@ -205,8 +205,7 @@ class AuctionController extends Controller
 
         try {
             $date = new Carbon($request->input('ending_date'), 'GMT+01');
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             return back()->withError("The ending date format is invalid. Please enter the date and time in this format: YYYY/MM/DD, HH:MM AM/PM ")->withInput();
         }
 
@@ -687,39 +686,42 @@ class AuctionController extends Controller
             if ($request->input('search') != null) {
                 $search = "'" . $request->input('search') . "':*";
 
-
                 $auctions = DB::table('auctions')
-                    ->join('features', 'auctions.id', '=', 'features.id_auction')
                     ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
                     ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->leftJoin('features', 'auctions.id', '=', 'features.id_auction')
                     ->select('auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->where('id_status', '=', 0)
                     ->whereIn('id_category', [$mammals, $insects, $reptiles, $birds, $fishes, $amphibians])
                     ->whereIn('id_main_color', [$blue, $green, $brown, $red, $black, $white, $yellow, $orange, $pink, $purple, $grey])
                     ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
                     ->where('current_price', '<', $max_price)
                     ->where('current_price', '>', $min_price)
-                    ->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                    ->where(function($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
+                        $q->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                        ->orWhereNull('id_skill');
+                    })
                     ->whereRaw("tsv @@ to_tsquery('english', ?)", [$search])
-                    ->where('id_status', '=', 0)
                     ->orderByRaw("ts_rank(tsv, to_tsquery('english', ?)) DESC", [$search])
                     ->paginate(12);
 
                 $search = $request->input('search');
             } else {
                 $auctions = DB::table('auctions')
-                    ->distinct()
-                    ->join('features', 'auctions.id', '=', 'features.id_auction')
                     ->join('animal_photos', 'auctions.id', '=', 'animal_photos.id_auction')
                     ->join('images', 'animal_photos.id', '=', 'images.id')
+                    ->leftJoin('features', 'auctions.id', '=', 'features.id_auction')
                     ->select('auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status')
+                    ->where('id_status', '=', 0)
                     ->whereIn('id_category', [$mammals, $insects, $reptiles, $birds, $fishes, $amphibians])
                     ->whereIn('id_main_color', [$blue, $green, $brown, $red, $black, $white, $yellow, $orange, $pink, $purple, $grey])
                     ->whereIn('id_dev_stage', [$baby, $child, $teen, $adult, $elderly])
                     ->where('current_price', '<', $max_price)
                     ->where('current_price', '>', $min_price)
-                    ->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
-                    ->orWhereNull('id_skill')
-                    ->where('id_status', '=', 0)
+                    ->where(function($q) use ($climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics) {
+                        $q->whereIn('id_skill', [$climbs, $jumps, $talks, $skates, $olfaction, $navigation, $echo, $acrobatics])
+                        ->orWhereNull('id_skill');
+                    })
                     ->orderBy('ending_date')
                     ->paginate(12);
 
@@ -767,7 +769,7 @@ class AuctionController extends Controller
                     ->join('images', 'animal_photos.id', '=', 'images.id')
                     ->where('auctions.id_status', '=', 0)
                     ->select(['auctions.id as id', 'url', 'species_name', 'current_price', 'age', 'ending_date', 'id_status'])
-                    ->orderBy('ending_date', 'desc')
+                    ->orderBy('ending_date')
                     ->paginate(12);
             }
 
