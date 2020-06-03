@@ -35,10 +35,10 @@ function addEventListeners() {
         eye.addEventListener("click", remToWatchlistEye);
     });
 
-    let reportAuction = document.querySelectorAll(".report_auction_confirm");
-    [].forEach.call(reportAuction, function (eye) {
-        eye.addEventListener("click", reportAuctionEye);
-    });
+    let reportAuctionButton = document.querySelector(".report_auction_confirm");
+    if (reportAuctionButton != null)
+        reportAuctionButton.addEventListener("click", reportAuction);
+
 
     let biddingHistory = document.querySelector("#bidding_history");
     if (biddingHistory != null)
@@ -49,6 +49,10 @@ function addEventListeners() {
         setInterval(function () {
             getTopBids(topBids);
         }, 2000);
+
+    let bid_button = document.querySelector("#bid_button");
+    if (bid_button != null)
+        bid_button.addEventListener("click", bidAuction);
 
     let notifications = document.querySelector("#notification_bell");
     if (notifications != null) {
@@ -166,8 +170,15 @@ function topBidsHandler() {
     if (top_bids.length == 0)
         return;
     let top_bids_div = document.querySelector("#top_bids");
-
+    let current_price = document.querySelector("#current_price");
+    let buyout_price = document.querySelector("#buyout_price").getAttribute("data-id");
     top_bids_div.innerHTML = "";
+
+    if (top_bids[0].value >= buyout_price)
+        location.reload();
+
+    current_price.innerHTML = top_bids[0].value + " €";
+    current_price.setAttribute("data-id", top_bids[0].value);
 
     [].forEach.call(top_bids, function (bid) {
         if (bid.name == null) bid.name = "Deleted User";
@@ -422,16 +433,16 @@ function remToWatchlistEyeHandler() {
     });
 }
 
-function reportAuctionEye(event) {
+function reportAuction(event) {
     event.preventDefault();
     let id_auction = this.getAttribute("data-id");
     let description = document.querySelector("#description");
     let data = { description: description.value };
     url = "/api/auctions/" + id_auction + "/report";
-    sendAjaxRequest("post", url, data, reportAuctionEyeHandler);
+    sendAjaxRequest("post", url, data, reportAuctionHandler);
 }
 
-function reportAuctionEyeHandler() {
+function reportAuctionHandler() {
     if (this.status != 200) {
         console.log(this.status);
         console.log(this);
@@ -440,20 +451,19 @@ function reportAuctionEyeHandler() {
     let closeModal = document.querySelector(".report_auction_cancel");
     closeModal.click();
 
-    let alert = document.querySelector("#alert");
-    alert.classList.add("alert-" + message.state);
-    alert.style.display = "grid";
+    let alert = document.querySelector("#alert_bid");
     alert.innerHTML = message.data;
-    alert.removeAttribute("hidden");
+    alert.classList.add("alert-" + message.state);
+    alert.classList.add("show");
 
     let description = document.querySelector("#description");
     description.value = "";
 
     setTimeout(function () {
         alert.classList.remove("alert-" + message.state);
-        alert.style.display = "none";
-        alert.setAttribute("hidden", true);
-    }, 5000);
+        alert.classList.remove("show");
+        alert.innerHTML = "";
+    }, 2000);
 }
 
 function addListenerPageReports() {
@@ -858,7 +868,7 @@ function getLastNotificationsHandler() {
         let message = document.createElement("p");
         message.innerHTML = notification.message;
 
-        if (notification.type == "bid_surpassed" || notification.type == "ended") {
+        if (notification.type == "bid_surpassed" || notification.type == "ended"  || notification.type == "ending") {
             a.setAttribute("href", "/auctions/" + notification.id_auction);
             a.addEventListener('click', markRead);
         }
@@ -935,6 +945,35 @@ function openRateModal(event) {
 
     let close = document.querySelector("#rate_modal_cancel");
     close.setAttribute("data-id", this.getAttribute("data-id"));
+}
+
+function bidAuction(event) {
+    event.preventDefault();
+    let id = this.getAttribute("data-id");
+    let id_user = this.getAttribute("data-id_user");
+    let bid_value = document.querySelector("#bid_value").value;
+    let data = { bid_value: bid_value };
+    sendAjaxRequest("post", "/api/auctions/" + id + "/bids/" + id_user, data, bidAuctionHandler);
+}
+
+function bidAuctionHandler() {
+    if (this.status != 200) {
+        console.log(this.status);
+        console.log(this);
+    }
+
+    let message = JSON.parse(this.responseText);
+
+    let alert = document.querySelector("#alert_bid");
+    alert.innerHTML = message.data;
+    alert.classList.add("alert-" + message.state);
+    alert.classList.add("show");
+
+    setTimeout(function () {
+        alert.classList.remove("alert-" + message.state);
+        alert.classList.remove("show");
+        alert.innerHTML = "";
+    }, 2000);
 }
 
 addEventListeners();

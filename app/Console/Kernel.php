@@ -4,7 +4,11 @@ namespace App\Console;
 
 use App\Auction;
 use App\Bid;
+use App\Notification;
+use App\User;
+use App\Watchlist;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -37,9 +41,29 @@ class Kernel extends ConsoleKernel
                     $auction->id_status = 1;
                     $auction->save();
                 }
+
+                try {
+                    $date->subHours(2);
+                    if (Carbon::now('GMT+01')->equalTo($date)) {
+                        $bids = Bid::distinct()->where('id_auction', $auction->id)->get();
+                        $watchs = Watchlist::distinct()->where('id_auction', $auction->id)->whereNotIn('id_buyer', $bids)->get();
+                        $users = $bids->merge($watchs);
+
+                        foreach ($users as $user) {
+                            $notification = new Notification();
+                            $notification->message = $auction->species_name . "'s auction ends in 2 hours! Hurry up!";
+                            $notification->read = FALSE;
+                            $notification->type = "ending";
+                            $notification->id_auction = $auction->id;
+                            $notification->id_buyer = $user->id_buyer;
+                            $notification->save();
+                        }
+                    }
+                } catch (Exception $e) {
+                    Log::emergency($e->getMessage());
+                }
             }
-        })->everyMinute();
-        ;
+        })->everyMinute();;
     }
 
     /**

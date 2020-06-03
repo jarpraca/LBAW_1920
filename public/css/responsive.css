@@ -15,7 +15,7 @@
         width: 50%;
     }
 
-    #alert_admin {
+    #alert_admin, #alert_bid  {
         position: static;
         text-align: center;
         width: 90%;
