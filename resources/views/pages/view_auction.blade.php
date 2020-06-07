@@ -9,8 +9,6 @@
 <meta property="og:image" content="{{asset('assets/logo.png')}}" />
 <meta property="og:locale" content="en_GB" />
 
-<div id="alert_bid" class="alert my-4 mx-3 fade"></div>
-
 <div class="bg-white pt-4">
     <section class="mainBody">
 
@@ -38,6 +36,9 @@
                         <h6 class="text-center font-weight-bold" id="countdown" data-id="{{ $countdown }}"></h6>
                     </div>
                 </div>
+
+
+
                 @elseif($auction->id_status == 1)
                 <div class="mb-3 px-3 mt-4 w-100">
                     <h2 class="text-center mb-4">Finished</h2>
@@ -63,6 +64,8 @@
                     </div>
                 </div>
                 @endif
+
+                <div id="alert_bid" class="alert my-4 mx-3 fade"></div>
 
                 @if($role == 'seller')
 
