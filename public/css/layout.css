@@ -1,0 +1,300 @@
+html{
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    line-height: 1.4;
+    padding-top: 4.1em;
+    position: relative;
+    min-height: 100vh;
+}
+
+body > div{
+    padding-bottom: 60px;
+}
+
+#footer{
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.container {
+    margin-right: auto;
+    height: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.navbar-search {
+    width: 50%;
+    justify-content: center !important;
+}
+
+.navbar-search input {
+    width: 75% !important;
+}
+
+.auct-card{
+    width: 280px;
+    margin: 1em;
+}
+
+.card-img {
+    height: 290px; 
+    object-fit: cover;
+}
+
+.card-img-top {
+    height: 200px ; 
+    width: 100% !important;
+    object-fit: cover;
+}
+
+.category-card {
+    width: 33.3%;
+}
+
+.alignCenter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.editAuction {
+    width: 75%;
+}
+
+.title {
+    margin-left: 0.5rem;
+}
+
+.search_text_input {
+    width: 300px;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+.verticalForm {
+    margin: 1em 0 0 0;
+    text-align: left;
+    width: 614px;
+}
+
+.commentForm {
+    width: 100%;
+    height: 40em;
+}
+
+
+.verticalForm input, .verticalForm select, textarea {
+    display: block;
+    width: 100%;
+    padding: 0.5em;
+    -webkit-box-sizing: border-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;
+    /* Firefox, other Gecko */
+    box-sizing: border-box;
+}
+
+.verticalForm label {
+    display: block;
+    padding: 1em;
+}
+
+.verticalForm td{
+    padding-left: 1em;
+}
+
+.verticalForm p{
+    margin-left: 1rem;
+}
+
+.verticalForm .submit {
+    width: 25%;
+    float: right;
+    margin: 1em;
+    padding: 1em;
+}
+
+#cancel_button {
+    padding: 0;
+}
+
+#homepage {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.mainBody {
+    width: 70% !important;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100% !important;
+}
+
+#search {
+    display: flex;
+    align-items: center;
+}
+
+#search p {
+    margin-left: 2em;
+    margin-right: 0.5em;
+}
+
+#homepage #search {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+#homepage .search_text_input {
+    border-radius: 0.2em;
+}
+
+.homepageForm {
+    width: 17em;
+}
+
+.homepageForm h3{
+    align-self: flex-start;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+}
+
+#trending {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+}
+
+.auction {
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: black;
+    border-style: solid;
+    overflow: hidden;
+}
+
+.auction p {
+    margin-left: 2em;
+}
+
+#trending :nth-child(2) {
+    margin-right: 2em;
+    margin-left: 2em;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0%;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown h5 {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dropdown-content a {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-content p {
+    display: block;
+    padding: 0.5em;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.rightText {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    width: 75%;
+}
+
+.rightText h1, h3, h4, p {
+    margin: 0;
+    padding: 0.3rem 0 0.3rem 0;
+}
+
+.horizontalElements {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+}
+
+.horizontalElements a, button {
+    margin-left: 1em;
+}
+
+.horizontalElements h3 {
+    padding: 0;
+}
+
+.horizontalElements p {
+    padding: 0.5em;
+}
+
+.subtitle {
+    margin: 1rem;
+}
+
+#welcome {
+    margin: 1rem;
+}
+
+#red_dot {
+    position: absolute;
+    bottom: 8px !important;
+    left: 19px !important;
+}
+
+#alert_admin{
+    width: 150px;
+    position: fixed;
+    top: 50px !important;
+    right: 20px !important;
+}
+
+#alert_bid{
+    width: auto;
+    text-align: center;
+    position: static;
+    top: 50px !important;
+    right: 20px !important;
+}
+
