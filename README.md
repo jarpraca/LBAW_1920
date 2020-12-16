@@ -1,3 +1,7 @@
+# LBAW_1920
+
+Final Grade: 97/100
+
 ## 1. Installation
 
 Final version of the source code in the group's git repository:
